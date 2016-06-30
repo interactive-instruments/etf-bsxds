@@ -40,6 +40,7 @@ dependencies {
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.0.0'+project.snapshotSuffix
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.0'+project.snapshotSuffix
 
+    compile group: 'commons-io', name: 'commons-io', version: etf_commonsIoVersion
     compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
     compile group: 'org.basex', name: 'basex', version: basexVersion
 

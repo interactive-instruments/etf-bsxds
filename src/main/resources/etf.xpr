@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="18.0">
+    <meta>
+        <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options>
+            <serialized version="18.0" xml:space="preserve">
+                <serializableOrderedMap>
+                    <entry>
+                        <String>enable.project.master.files.support</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                </serializableOrderedMap>
+            </serialized>
+        </options>
+    </meta>
+    <projectTree name="etf.xpr">
+        <folder path="schema/basic/"/>
+        <folder path="schema/model/"/>
+        <folder path="schema/service/"/>
+        <folder path="xquery"/>
+        <folder path="../../test/resources/database"/>
+    </projectTree>
+</project>
