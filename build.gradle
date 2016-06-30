@@ -36,14 +36,14 @@ repositories {
 }
 
 dependencies {
-  compile group: 'de.interactive_instruments', name: 'ii-commons-util', version:'2.0.0'+project.snapshotSuffix
-  compile group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.0.0'+project.snapshotSuffix
-  compile group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.0'+project.snapshotSuffix
+    compileOnly group: 'de.interactive_instruments', name: 'ii-commons-util', version:'2.0.0'+project.snapshotSuffix
+    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.0.0'+project.snapshotSuffix
+    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.0'+project.snapshotSuffix
 
-  compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
-  compile group: 'org.basex', name: 'basex', version: basexVersion
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
+    compile group: 'org.basex', name: 'basex', version: basexVersion
 
-  testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
+    testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
 }
 
