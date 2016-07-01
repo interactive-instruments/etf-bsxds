@@ -93,7 +93,7 @@
                 <xs:element name="Dependency" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="reason" type="TranslationTemplateRefType"/>
+                            <xs:element name="reason" type="TranslationTemplateParameterType"/>
                         </xs:sequence>
                         <xs:attribute name="dependsOn" type="IdRefType"/>
                     </xs:complexType>

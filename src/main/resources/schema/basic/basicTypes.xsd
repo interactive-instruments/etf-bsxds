@@ -72,7 +72,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="defaultValue" type="xs:string" minOccurs="0"/>
-                            <xs:element name="description" type="TranslationTemplateRefType" minOccurs="0"/>
+                            <xs:element name="description" type="TranslationTemplateParameterType" minOccurs="0"/>
                             <xs:element name="allowedValues" type="xs:string" minOccurs="0">
                                 <xs:annotation>
                                     <xs:documentation>Regular expression</xs:documentation>
@@ -174,7 +174,7 @@
                 <xs:element name="dependency" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="reason" type="TranslationTemplateRefType">
+                            <xs:element name="reason" type="TranslationTemplateParameterType">
                                 <xs:annotation>
                                     <xs:documentation>Reason why this dependency is required</xs:documentation>
                                 </xs:annotation>
@@ -304,9 +304,9 @@
     </xs:group>
 
     <!-- =============================================================== -->
-    <!--xs:attributeGroup name="IdentifierAttributeGroup">
+    <xs:attributeGroup name="IdentifierAttributeGroup">
         <xs:attribute name="id" type="IdType" use="required"/>
-    </xs:attributeGroup-->
+    </xs:attributeGroup>
 
     <!-- =============================================================== -->
     <xs:group name="MetaDataItemGroup">

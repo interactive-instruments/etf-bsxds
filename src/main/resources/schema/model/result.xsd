@@ -135,7 +135,7 @@
                 <xs:element name="messages">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element name="message" type="TranslationTemplateRefType"/>
+                            <xs:element name="message" type="TranslationTemplateParameterType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
