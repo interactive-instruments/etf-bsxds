@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor type="o-x">
+   <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
+   <class-handle>
+      <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
+   </class-handle>
+   <transactional-policy type="ox">
+      <descriptor-alias>TestObjectDto</descriptor-alias>
+      <refresh-cache-policy/>
+      <caching-policy/>
+      <query-manager type="ox"/>
+      <locking-policy type="ox"/>
+      <primary-key-policy>
+         <primary-keys>
+            <xml-field>etf:id/text()</xml-field>
+         </primary-keys>
+      </primary-key-policy>
+   </transactional-policy>
+   <mappings>
+      <mapping type="xml-direct">
+         <name>author</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>author</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:author/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>creationDate</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>creationDate</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:creationDate/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>description</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+            <attribute-name>description</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:description/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>itemHash</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>itemHash</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:itemHash/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>label</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+            <attribute-name>label</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:label/text()</xml-field>
+      </mapping>
+      <mapping type="xml-object-reference">
+         <name>replacedBy</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>replacedBy</attribute-name>
+         </attribute-handle>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xml-field-pairs>
+            <field-pair>
+               <source-xml-field>etf:replacedBy</source-xml-field>
+               <target-xml-field>etf:id/text()</target-xml-field>
+            </field-pair>
+         </xml-field-pairs>
+      </mapping>
+   </mappings>
+   <inherited-attribute-handles>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>author</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>creationDate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>description</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>itemHash</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>label</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>lastEditor</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>lastUpdateDate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</attribute-declaring-type-name>
+         <attribute-name>parent</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>reference</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>replacedBy</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>tags</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>version</attribute-name>
+      </attribute-handle>
+   </inherited-attribute-handles>
+   <schema-context-handle>
+      <schema>storage</schema>
+      <qname-path>
+         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObject"/>
+      </qname-path>
+   </schema-context-handle>
+   <default-root-element-handle>
+      <schema>storage</schema>
+      <qname-path>
+         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObject"/>
+      </qname-path>
+   </default-root-element-handle>
+   <root-descriptor>true</root-descriptor>
+</descriptor>

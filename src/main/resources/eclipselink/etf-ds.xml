@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" version="Eclipse Persistence Services - 2.6.3.v20160428-59c81c5">
+   <name>etf-ds</name>
+   <class-mapping-descriptors>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</class>
+         <alias>TestObjectDto</alias>
+         <primary-key>
+            <field name="etf:id/text()" xsi:type="node"/>
+         </primary-key>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>label</attribute-name>
+               <field name="etf:label/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>description</attribute-name>
+               <field name="etf:description/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>replacedBy</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="etf:replacedBy" xsi:type="node"/>
+                     <target-field name="etf:id/text()" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="etf:replacedBy" xsi:type="node"/>
+               </source-to-target-key-fields>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>itemHash</attribute-name>
+               <field name="etf:itemHash/text()" xsi:type="node">
+                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>author</attribute-name>
+               <field name="etf:author/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>creationDate</attribute-name>
+               <field name="etf:creationDate/text()" xsi:type="node">
+                  <schema-type>{http://www.w3.org/2001/XMLSchema}dateTime</schema-type>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <default-root-element>etf:TestObject</default-root-element>
+         <default-root-element-field name="etf:TestObject"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/1.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/storage.xsd</resource>
+            <schema-context>/etf:TestObject</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+   </class-mapping-descriptors>
+   <login xsi:type="xml-login">
+      <platform-class>org.eclipse.persistence.oxm.platform.SAXPlatform</platform-class>
+      <user-name></user-name>
+   </login>
+</object-persistence>
