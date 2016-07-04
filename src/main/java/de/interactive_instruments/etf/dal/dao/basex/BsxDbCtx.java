@@ -38,4 +38,6 @@ interface BsxDbCtx {
 	Context getBsxCtx();
 
 	JAXBContext getJaxbCtx();
+
+	Logger getLogger();
 }
