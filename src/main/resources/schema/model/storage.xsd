@@ -95,7 +95,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="tags">
+    <xs:element name="tagDtos">
         <xs:annotation>
             <xs:documentation>Fully mapped</xs:documentation>
         </xs:annotation>
@@ -167,7 +167,7 @@
                 <xs:element ref="testObjects"/>
                 <xs:element ref="credentials"/>
                 <xs:element ref="users"/>
-                <xs:element ref="tags"/>
+                <xs:element ref="tagDtos"/>
                 <xs:element ref="translationTemplates"/>
                 <xs:element ref="resultStyles"/>
                 <xs:element ref="abstractTestSuites"/>

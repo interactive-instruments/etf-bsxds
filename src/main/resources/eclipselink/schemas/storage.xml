@@ -64,14 +64,6 @@
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
                                              <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
-                                             <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                                 <type type="complex-type-ref">
@@ -174,7 +166,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -417,14 +409,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -527,14 +511,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -621,14 +597,6 @@
                                     <particles>
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
-                                             <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
                                              <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -732,7 +700,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -836,7 +804,7 @@
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                            </particle>
                            <particle type="element-ref">
-                              <name>tags</name>
+                              <name>tagDtos</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                            </particle>
                            <particle type="element-ref">
@@ -953,14 +921,6 @@
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
                                              <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
-                                             <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                                 <type type="complex-type-ref">
@@ -1063,7 +1023,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -1685,14 +1645,6 @@
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
                                              <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
-                                             <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                                 <type type="complex-type-ref">
@@ -1795,7 +1747,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -1966,14 +1918,6 @@
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
                                              <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
-                                             <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                                 <type type="complex-type-ref">
@@ -2076,7 +2020,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -2207,14 +2151,6 @@
                               <particles>
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
-                                       <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
                                        <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -2394,14 +2330,6 @@
                               <particles>
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
-                                       <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
                                        <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -2643,14 +2571,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -2761,14 +2681,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -2851,14 +2763,6 @@
                                     <particles>
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
-                                             <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
                                              <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -2962,7 +2866,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3042,6 +2946,16 @@
                      <name>anyType</name>
                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                   </base-type>
+                  <attributes>
+                     <attribute type="attribute">
+                        <name>id</name>
+                        <use>required</use>
+                        <type type="simple-type-ref">
+                           <name>IdType</name>
+                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                        </type>
+                     </attribute>
+                  </attributes>
                   <content type="complex">
                      <mixed-flag>true</mixed-flag>
                      <particle compositor="sequence" type="model-group">
@@ -3050,14 +2964,6 @@
                               <particles>
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
-                                       <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
                                        <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3267,14 +3173,6 @@
                                        <particle compositor="sequence" type="model-group">
                                           <particles>
                                              <particle type="element">
-                                                <name>id</name>
-                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                <type type="simple-type-ref">
-                                                   <name>IdType</name>
-                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                                </type>
-                                             </particle>
-                                             <particle type="element">
                                                 <name>parent</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                                 <type type="complex-type-ref">
@@ -3377,7 +3275,7 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tags</name>
+                                    <name>tagDtos</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3514,14 +3412,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -3652,14 +3542,6 @@
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
                                        <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
-                                       <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                           <type type="complex-type-ref">
@@ -3772,14 +3654,6 @@
                               <particles>
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
-                                       <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
                                        <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3984,14 +3858,6 @@
                               <particles>
                                  <particle compositor="sequence" type="model-group">
                                     <particles>
-                                       <particle type="element">
-                                          <name>id</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          <type type="simple-type-ref">
-                                             <name>IdType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </type>
-                                       </particle>
                                        <particle type="element">
                                           <name>parent</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -4203,14 +4069,6 @@
                            <particle compositor="sequence" type="model-group">
                               <particles>
                                  <particle type="element">
-                                    <name>id</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>IdType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
                                     <name>parent</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type-ref">
@@ -4376,7 +4234,7 @@
                </type>
             </element-declaration>
             <element-declaration type="element">
-               <name>tags</name>
+               <name>tagDtos</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <type type="complex-type">
                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -4892,14 +4750,6 @@
                      <particle compositor="sequence" type="model-group">
                         <particles>
                            <particle type="element">
-                              <name>id</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                              <type type="simple-type-ref">
-                                 <name>IdType</name>
-                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                              </type>
-                           </particle>
-                           <particle type="element">
                               <name>parent</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <type type="complex-type-ref">
@@ -4949,14 +4799,6 @@
                <model-group compositor="sequence" type="model-group">
                   <particles>
                      <particle type="element">
-                        <name>id</name>
-                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                        <type type="simple-type-ref">
-                           <name>IdType</name>
-                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                        </type>
-                     </particle>
-                     <particle type="element">
                         <name>parent</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                         <type type="complex-type-ref">
@@ -4977,14 +4819,6 @@
                         <particles>
                            <particle compositor="sequence" type="model-group">
                               <particles>
-                                 <particle type="element">
-                                    <name>id</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>IdType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    </type>
-                                 </particle>
                                  <particle type="element">
                                     <name>parent</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -5088,7 +4922,7 @@
                         <min-occurs>0</min-occurs>
                      </particle>
                      <particle type="element">
-                        <name>tags</name>
+                        <name>tagDtos</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                         <type type="complex-type">
                            <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -5127,14 +4961,6 @@
                   <particles>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle type="element">
-                              <name>id</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                              <type type="simple-type-ref">
-                                 <name>IdType</name>
-                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                              </type>
-                           </particle>
                            <particle type="element">
                               <name>parent</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>

@@ -63,7 +63,7 @@
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>tags</name>
+         <name>tagDtos</name>
          <modifier>4</modifier>
          <type-declaration>
             <type-handle>

@@ -6,9 +6,12 @@
    <class-repository>
       <classpath-entries>
          <entry>../../../../../etf-core/build/libs/etf-core-1.0.0-SNAPSHOT.jar</entry>
+         <entry>../../../../build/libs/etf-bsxds-2.0.0-SNAPSHOT.jar</entry>
       </classpath-entries>
       <user-type-names>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</name>
          <name>de.interactive_instruments.etf.dal.dto.Dto</name>
          <name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</name>
          <name>de.interactive_instruments.etf.dal.dto.ModelItemDto</name>
@@ -16,7 +19,9 @@
       </user-type-names>
    </class-repository>
    <descriptor-names>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</descriptor-name>
    </descriptor-names>
    <defaults-policy type="o-x">
       <use-method-accessing>false</use-method-accessing>

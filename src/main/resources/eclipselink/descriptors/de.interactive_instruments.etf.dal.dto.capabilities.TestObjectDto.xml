@@ -12,7 +12,7 @@
       <locking-policy type="ox"/>
       <primary-key-policy>
          <primary-keys>
-            <xml-field>etf:id/text()</xml-field>
+            <xml-field>@id</xml-field>
          </primary-keys>
       </primary-key-policy>
    </transactional-policy>
@@ -24,7 +24,7 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
             <attribute-name>author</attribute-name>
          </attribute-handle>
-         <xml-field>etf:author/text()</xml-field>
+         <xml-field>author/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
          <name>creationDate</name>
@@ -33,7 +33,7 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
             <attribute-name>creationDate</attribute-name>
          </attribute-handle>
-         <xml-field>etf:creationDate/text()</xml-field>
+         <xml-field>creationDate/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
          <name>description</name>
@@ -42,7 +42,29 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
             <attribute-name>description</attribute-name>
          </attribute-handle>
-         <xml-field>etf:description/text()</xml-field>
+         <xml-field>description/text()</xml-field>
+      </mapping>
+      <mapping type="xml-transformation">
+         <name>id</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>
+            <attribute-name>id</attribute-name>
+         </attribute-handle>
+         <attribute-transformer type="class-based">
+            <transformer-class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dao.basex.transformers.EidAttributeTransformer</type-name>
+            </transformer-class-handle>
+         </attribute-transformer>
+         <field-transformer-associations type="xml">
+            <field-transformer type="class-based">
+               <transformer-class-handle>
+                  <type-name>de.interactive_instruments.etf.dal.dao.basex.transformers.EidFieldTransformer</type-name>
+               </transformer-class-handle>
+            </field-transformer>
+            <xml-field>@id</xml-field>
+         </field-transformer-associations>
+         <mutable>true</mutable>
       </mapping>
       <mapping type="xml-direct">
          <name>itemHash</name>
@@ -51,7 +73,7 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
             <attribute-name>itemHash</attribute-name>
          </attribute-handle>
-         <xml-field>etf:itemHash/text()</xml-field>
+         <xml-field>itemHash/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
          <name>label</name>
@@ -60,7 +82,34 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
             <attribute-name>label</attribute-name>
          </attribute-handle>
-         <xml-field>etf:label/text()</xml-field>
+         <xml-field>label/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>lastEditor</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>lastEditor</attribute-name>
+         </attribute-handle>
+         <xml-field>lastEditor/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>lastUpdateDate</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>lastUpdateDate</attribute-name>
+         </attribute-handle>
+         <xml-field>lastUpdateDate/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>reference</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+            <attribute-name>reference</attribute-name>
+         </attribute-handle>
+         <xml-field>reference/text()</xml-field>
       </mapping>
       <mapping type="xml-object-reference">
          <name>replacedBy</name>
@@ -74,10 +123,53 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>etf:replacedBy</source-xml-field>
-               <target-xml-field>etf:id/text()</target-xml-field>
+               <source-xml-field>etf:replacedBy/@ref</source-xml-field>
+               <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>
+      </mapping>
+      <mapping type="xml-collection-reference">
+         <name>tagDtos</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>tagDtos</attribute-name>
+         </attribute-handle>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xml-field-pairs>
+            <field-pair>
+               <source-xml-field>tagDtos/tag</source-xml-field>
+               <target-xml-field>@id</target-xml-field>
+            </field-pair>
+         </xml-field-pairs>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
+      <mapping type="xml-collection-reference">
+         <name>testObjectTypes</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</attribute-declaring-type-name>
+            <attribute-name>testObjectTypes</attribute-name>
+         </attribute-handle>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xml-field-pairs>
+            <field-pair>
+               <source-xml-field>testObjectTypes/testObjectType</source-xml-field>
+               <target-xml-field>@id</target-xml-field>
+            </field-pair>
+         </xml-field-pairs>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
       </mapping>
    </mappings>
    <inherited-attribute-handles>
@@ -92,6 +184,10 @@
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
          <attribute-name>description</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>
+         <attribute-name>id</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
@@ -123,7 +219,7 @@
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
-         <attribute-name>tags</attribute-name>
+         <attribute-name>tagDtos</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>

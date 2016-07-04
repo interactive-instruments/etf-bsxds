@@ -294,7 +294,6 @@
     <!-- =============================================================== -->
     <xs:group name="ModelItemGroup">
         <xs:sequence>
-            <xs:element name="id" type="IdType"/>
             <xs:element name="parent" type="RefType" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation> Optional reference to parent model item</xs:documentation>
@@ -335,7 +334,7 @@
             <xs:element name="creationDate" type="xs:dateTime" minOccurs="1"/>
             <xs:element name="lastEditor" type="xs:string" minOccurs="0"/>
             <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0"/>
-            <xs:element name="tags" minOccurs="0">
+            <xs:element name="tagDtos" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="tag" type="RefType" minOccurs="1" maxOccurs="unbounded"/>

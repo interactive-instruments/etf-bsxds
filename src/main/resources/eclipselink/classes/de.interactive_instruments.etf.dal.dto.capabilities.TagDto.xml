@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class>
+   <name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</name>
+   <modifier>1</modifier>
+   <superclass-handle>
+      <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
+   </superclass-handle>
+   <last-refresh-timestamp>2016-07-04T11:59:33.029+02:00</last-refresh-timestamp>
+   <methods>
+      <method>
+         <name>TagDto</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+      </method>
+   </methods>
+</class>
