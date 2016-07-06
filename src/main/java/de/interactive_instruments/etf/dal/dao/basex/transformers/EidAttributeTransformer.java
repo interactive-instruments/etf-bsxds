@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Objects;
 
 /**
+ * Reads the string form XML and transform it to an EID
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public class EidAttributeTransformer implements AttributeTransformer {
@@ -41,6 +43,6 @@ public class EidAttributeTransformer implements AttributeTransformer {
 	@Override public Object buildAttributeValue(final Record record, final Object object, final Session session) {
 		return factory.createAndPreserveStr(
 				SUtils.requireNonNullOrEmpty(((String) record.get("@id")).substring(3),
-						"ID attribute is null or empty"));
+					"ID attribute is null or empty"));
 	}
 }

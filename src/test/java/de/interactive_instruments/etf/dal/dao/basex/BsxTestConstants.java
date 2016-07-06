@@ -36,6 +36,8 @@ class BsxTestConstants {
 
 	public final static TestObjectDto TO_DTO_1;
 
+	public static IFile DATA_STORAGE_DIR;
+
 	static {
 		DATA_STORAGE = new BsxDataStorage();
 
@@ -49,19 +51,18 @@ class BsxTestConstants {
 	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException {
 		if(!DATA_STORAGE.isInitialized()) {
 
-			final IFile dataStorageDir;
 			if(System.getenv("ETF_DS_DIR")!=null) {
-				dataStorageDir = new IFile(System.getenv("ETF_DS_DIR"));
-				dataStorageDir.mkdirs();
+				DATA_STORAGE_DIR = new IFile(System.getenv("ETF_DS_DIR"));
+				DATA_STORAGE_DIR.mkdirs();
 			}else if(new IFile("./build").exists()) {
-				dataStorageDir = new IFile("./build/tmp/etf-ds");
-				dataStorageDir.mkdirs();
+				DATA_STORAGE_DIR = new IFile("./build/tmp/etf-ds");
+				DATA_STORAGE_DIR.mkdirs();
 			}else{
-				dataStorageDir=null;
+				DATA_STORAGE_DIR =null;
 			}
 
-			assertTrue(dataStorageDir!=null && dataStorageDir.exists());
-			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR, dataStorageDir.getAbsolutePath());
+			assertTrue(DATA_STORAGE_DIR !=null && DATA_STORAGE_DIR.exists());
+			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR, DATA_STORAGE_DIR.getAbsolutePath());
 			DATA_STORAGE.init();
 		}
 	}

@@ -17,15 +17,49 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
+import de.interactive_instruments.etf.model.item.EID;
+import de.interactive_instruments.exceptions.StoreException;
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.DropDB;
 
-import javax.xml.bind.JAXBContext;
+import java.util.List;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class TestObjectDao extends BsxWriteDao<TestObjectDto> {
+class TestObjectDao extends BsxWriteDao<TestObjectDto> {
 
-	public TestObjectDao(final BsxDbCtx ctx) {
-		super("/etf:TestObject", "TestObject", ctx);
+	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
+
+	private static class TestObjectResultGetCmd implements MainDtoResultGetCmd<TestObjectDto> {
+
+		@Override public List<TestObjectDto> getMainDtos(final DataStorageResult dataStorageResult) {
+			return dataStorageResult.getTestObjects();
+		}
+
+		@Override public TestObjectDto getMainDto(final DataStorageResult dataStorageResult) {
+			final List<TestObjectDto> colResult = dataStorageResult.getTestObjects();
+			return colResult!=null && !colResult.isEmpty() ? colResult.get(0): null;
+		}
+	}
+
+	public TestObjectDao(final BsxDbCtx ctx) throws StoreException {
+		super("/etf:TestObject", "TestObject", ctx, new TestObjectResultGetCmd());
+	}
+
+	@Override public Class<TestObjectDto> getDtoType() {
+		return TestObjectDto.class;
+	}
+
+	@Override protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+		for (int i = 0; i < 10; i++) {
+			final String testDbName = ETF_TESTDB_PREFIX + eid.toString() + "-" + i;
+			final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));
+			if (dropped) {
+				ctx.getLogger().info("Dropped test database {}", testDbName);
+			} else {
+				break;
+			}
+		}
 	}
 }

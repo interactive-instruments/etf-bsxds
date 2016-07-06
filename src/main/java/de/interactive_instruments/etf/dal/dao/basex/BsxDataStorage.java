@@ -27,22 +27,26 @@ import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.StoreException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
+import de.interactive_instruments.properties.ConfigProperties;
 import de.interactive_instruments.properties.ConfigPropertyHolder;
 import org.basex.BaseX;
 import org.basex.core.BaseXException;
 import org.basex.core.Context;
 import org.basex.core.cmd.*;
 import org.basex.core.cmd.Set;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,51 +60,45 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 
 	private final Logger logger = LoggerFactory.getLogger(BsxDataStorage.class);
 
-	private final JAXBContext jaxbContext;
+	public final static String ID_PREFIX = "EID";
+
+	private final InputStream storageSchema;
 
 	private static final String ETF_DB_NAME = "etf-ds";
 
-	private static final String resPrefix = "eclipselink/classes/";
+	private static final String sessionsRes = "sessions.xml";
 
-	static final String DECLARATIONS =
-			"declare namespace etf='" + EtfConstants.ETF_XMLNS + "'; " +
-			"declare namespace xs='http://www.w3.org/2001/XMLSchema'; " +
-			"declare namespace xsi='http://www.w3.org/2001/XMLSchema-instance'; ";
-	private final Map<Class, Dao> daoMapping;
+	private JAXBContext jaxbContext;
+
+	final Map<String, Object> properties;
+
+	private Map<Class, Dao> daoMapping;
 
 	private IFile storeDir;
+
 	private IFile backupDir;
 
-	private Context ctx;
-	private final AtomicBoolean initialized = new AtomicBoolean(false);
-	private ConfigPropertyHolder configProperties;
+	private Context ctx = new Context();
 
-	BsxDataStorage() throws JAXBException {
+	private final AtomicBoolean initialized = new AtomicBoolean(false);
+
+	private ConfigPropertyHolder configProperties = new ConfigProperties(EtfConstants.ETF_DATASOURCE_DIR);
+
+	BsxDataStorage() {
 		logger.debug("Preparing BsxDataStorage");
 
 		final ClassLoader cL = getClass().getClassLoader();
-		final Map<String, Source> metadataSources = Collections.unmodifiableMap(new HashMap<String, Source>() {{
-			put("de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto",
-					new StreamSource(cL.getResourceAsStream(resPrefix+
-							"de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto.xml")));
-		}});
 
-		{
-			final Map<Class, Dao> tmpDaoMapping = new HashMap<>();
-			tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
-			daoMapping = Collections.unmodifiableMap(tmpDaoMapping);
-		}
+		storageSchema = cL.getResourceAsStream("schema/model/storage.xsd");
 
-		final Map<String, Object> properties = Collections.unmodifiableMap(new HashMap<String, Object>() {{
-			put(JAXBContextProperties.OXM_METADATA_SOURCE, metadataSources);
+		properties = Collections.unmodifiableMap(new HashMap<String, Object>() {{
 			put(JAXBContextProperties.DEFAULT_TARGET_NAMESPACE, EtfConstants.ETF_XMLNS);
 		}});
 
-		jaxbContext = JAXBContext.newInstance(daoMapping.keySet().toArray(new Class[daoMapping.size()]), properties);
 
 		logger.info("BsxDataStorage {} prepared", this.getClass().getPackage().getImplementationVersion());
 		logger.info("using BaseX {} ", BaseX.class.getPackage().getImplementationVersion());
-		logger.info("using EclipseLink MOXy {} ", JAXBContext.class.getPackage().getImplementationVersion());
+		logger.info("using EclipseLink {} ", org.eclipse.persistence.Version.getVersion());
 	}
 
 	@Override
@@ -109,10 +107,16 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 			logger.debug("Initializing BsxDataStorage");
 			this.configProperties.expectAllRequiredPropertiesSet();
 
-			try {
-				// Initialize
+		try {
+				final Map<Class, Dao> tmpDaoMapping = new HashMap<>();
+				tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
+				daoMapping = Collections.unmodifiableMap(tmpDaoMapping);
+
+				jaxbContext = JAXBContext.newInstance("de.interactive_instruments.etf.dal.bsx.moxy",Thread.currentThread().getContextClassLoader(),properties);
+
 				this.storeDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_DATASOURCE_DIR).expandPath("obj");
-				this.backupDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_BACKUP_DIR);
+				// TODO 
+				// this.backupDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_BACKUP_DIR);
 				this.storeDir.ensureDir();
 
 				new Set("AUTOFLUSH", "false").execute(ctx);
@@ -137,7 +141,7 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 				logger.info(new InfoDB().execute(ctx));
 				this.initialized.set(true);
 				notifyAll();
-			} catch (IOException e) {
+			} catch (JAXBException | IOException |StoreException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -154,15 +158,51 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 		return daoMapping;
 	}
 
+	@Override public void cleanAndOptimize() {
+		this.initialized.set(false);
+		long start = System.currentTimeMillis();
+		try {
+			// Sleep 3 seconds
+			wait(3000);
+		} catch (final InterruptedException e) {
+			ExcUtils.suppress(e);
+		}
+
+		// TODO delete unused items
+		logger.info("Optimizing " + ETF_DB_NAME);
+		try {
+			new OptimizeAll().execute(ctx);
+		} catch (BaseXException e) {
+			logger.error("Optimization failed: {} - Try to reset database manually!");
+			return;
+		}
+		logger.info("Cleaned and optimized store in: " + TimeUtils.currentDurationAsMinsSeconds(start));
+		this.initialized.set(true);
+	}
+
+	public Dao getDao(final Class clasz) {
+		return daoMapping.get(clasz);
+	}
+
+	public InputStream getStorageSchema() {
+		return storageSchema;
+	}
+
 	@Override
 	public synchronized void reset() throws StoreException {
 		this.initialized.set(false);
 		long start = System.currentTimeMillis();
 		try {
+			// Sleep 7 seconds
+			wait(7000);
+		} catch (final InterruptedException e) {
+			ExcUtils.suppress(e);
+		}
+		try {
 			try {
 				new DropDB(ETF_DB_NAME).execute(ctx);
 			} catch (Exception e) {
-				ExcUtils.supress(e);
+				ExcUtils.suppress(e);
 			}
 			new CreateDB(ETF_DB_NAME).execute(ctx);
 			System.gc();
@@ -190,7 +230,6 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 	}
 
 	@Override public String createBackup() throws StoreException {
-		// TODO not implemented in this version
 		final String bakName = "ETFDS-"+TimeUtils.dateToIsoString(new Date());
 		try {
 			new CreateBackup(bakName).execute(getBsxCtx());
@@ -206,7 +245,6 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 	}
 
 	@Override public void restoreBackup(final String name) throws StoreException {
-		// TODO not implemented in this version
 		try {
 			new Restore(name).execute(getBsxCtx());
 		} catch (BaseXException e) {
@@ -225,7 +263,7 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 				try {
 					wait(timeoutInMinutes * 60000);
 				} catch (final InterruptedException e) {
-					ExcUtils.supress(e);
+					ExcUtils.suppress(e);
 				}
 				if (!this.initialized.get()) {
 					final String errMsg = "Data source not up after " + timeoutInMinutes + " minutes";
@@ -241,8 +279,18 @@ public class BsxDataStorage implements BsxDbCtx, DataStorage {
 		return this.storeDir;
 	}
 
-	@Override public JAXBContext getJaxbCtx() {
-		return this.jaxbContext;
+	@Override public Unmarshaller createUnmarshaller() throws JAXBException {
+		final Unmarshaller um =  jaxbContext.createUnmarshaller();
+		// um.setProperty(UnmarshallerProperties.ID_RESOLVER, new BsxIDResolver());
+		return um;
+	}
+
+	@Override public Marshaller createMarshaller() throws JAXBException {
+		return jaxbContext.createMarshaller();
+	}
+
+	@Override public Logger getLogger() {
+		return logger;
 	}
 
 	@Override public ConfigPropertyHolder getConfigurationProperties() {

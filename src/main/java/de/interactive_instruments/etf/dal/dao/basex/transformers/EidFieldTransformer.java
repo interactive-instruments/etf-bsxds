@@ -17,12 +17,15 @@
 package de.interactive_instruments.etf.dal.dao.basex.transformers;
 
 import de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage;
+import de.interactive_instruments.etf.dal.dto.ReferenceDto;
 import de.interactive_instruments.etf.model.item.EID;
 import org.eclipse.persistence.mappings.foundation.AbstractTransformationMapping;
 import org.eclipse.persistence.mappings.transformers.FieldTransformer;
 import org.eclipse.persistence.sessions.Session;
 
 /**
+ * Writes a EID to XML as String
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public class EidFieldTransformer implements FieldTransformer {
@@ -31,6 +34,8 @@ public class EidFieldTransformer implements FieldTransformer {
 
 	@Override public void initialize(final AbstractTransformationMapping mapping) {
 		this.mapping = mapping;
+		this.mapping.getFieldTransformations().get(0).getField().setPrimaryKey(true);
+		this.mapping.getFieldTransformations().get(0).getField().setType(String.class);
 	}
 
 	@Override public Object buildFieldValue(final Object instance, final String fieldName, final Session session) {

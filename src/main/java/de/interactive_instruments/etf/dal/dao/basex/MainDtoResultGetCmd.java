@@ -16,33 +16,15 @@
 
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.exceptions.ExcUtils;
-import de.interactive_instruments.exceptions.StoreException;
-import org.basex.core.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.interactive_instruments.etf.dal.dao.basex.DataStorageResult;
+import de.interactive_instruments.etf.dal.dto.Dto;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.List;
 
 /**
- * Basex database context
- *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-interface BsxDbCtx {
-
-	IFile getStoreDir();
-
-	Context getBsxCtx();
-
-	Unmarshaller createUnmarshaller() throws JAXBException;
-
-	Marshaller createMarshaller() throws JAXBException;
-
-	Logger getLogger();
+public interface MainDtoResultGetCmd<T extends Dto> {
+	List<T> getMainDtos(final DataStorageResult dataStorageResult);
+	T getMainDto(final DataStorageResult dataStorageResult);
 }
