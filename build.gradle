@@ -27,12 +27,20 @@ apply from: 'build/gradle/ii-bda.gradle'
 group = 'de.interactive_instruments.etf'
 description = "ETF BaseX data source"
 
-ext.basexVersion = '8.4.4'
+ext.basexVersion = '8.5'
 ext.moxyVersion = '2.6.3'
+
+ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
+        project.getProperty('etf.ds.dir') :
+        project.file('./build/tmp/etf-ds').absolutePath
 
 repositories {
 	// BaseX
 	maven { url 'http://files.basex.org/maven' }
+}
+
+configurations {
+    testCompile.extendsFrom compileOnly
 }
 
 dependencies {
@@ -46,6 +54,11 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
+}
+
+test {
+    environment "ETF_DS_DIR", testDataStorageDir
+    dependsOn = ["compileTestJava"]
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
