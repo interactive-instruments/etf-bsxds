@@ -17,16 +17,11 @@
 package de.interactive_instruments.etf.dal.dao.basex.transformers;
 
 import de.interactive_instruments.SUtils;
-import de.interactive_instruments.etf.model.item.EID;
-import de.interactive_instruments.etf.model.item.EidFactory;
-import de.interactive_instruments.model.std.IdFactory;
+import de.interactive_instruments.etf.model.EidFactory;
 import org.eclipse.persistence.mappings.foundation.AbstractTransformationMapping;
 import org.eclipse.persistence.mappings.transformers.AttributeTransformer;
 import org.eclipse.persistence.sessions.Record;
 import org.eclipse.persistence.sessions.Session;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Objects;
 
 /**
  * Reads the string form XML and transform it to an EID
