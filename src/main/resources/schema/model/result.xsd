@@ -24,7 +24,11 @@
             <xs:element name="resultStatus" type="TestResultStatusType"/>
             <xs:element name="startTimestamp" type="xs:dateTime"/>
             <xs:element name="duration" type="xs:unsignedLong"/>
-            <xs:element name="resultedFrom" type="RefType"/>
+            <xs:element name="resultedFrom" type="RefType">
+                <xs:annotation>
+                    <xs:documentation>Test model item reference</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:group>
 
