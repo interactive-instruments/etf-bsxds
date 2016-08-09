@@ -37,9 +37,10 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:group ref="ResultModelItemGroup"/>
+                <xs:element name="testObject" type="RefType"/>
                 <xs:element name="attachments">
                     <xs:annotation>
-                        <xs:documentation>At least one log file</xs:documentation>
+                        <xs:documentation>Contains at least one log file</xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -47,10 +48,10 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="testSuiteResults">
+                <xs:element name="testModuleResults">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element ref="TestSuiteResult"/>
+                            <xs:element ref="TestModuleResult"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -84,7 +85,7 @@
     </xs:element>
 
     <!-- =============================================================== -->
-    <xs:element name="TestSuiteResult">
+    <xs:element name="TestModuleResult">
         <xs:complexType>
             <xs:sequence>
                 <xs:group ref="ResultModelItemGroup"/>
