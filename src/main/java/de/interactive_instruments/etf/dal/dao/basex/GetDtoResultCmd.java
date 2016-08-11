@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,18 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
-
-import de.interactive_instruments.etf.dal.dao.basex.DataStorageResult;
-import de.interactive_instruments.etf.dal.dto.Dto;
 
 import java.util.List;
 
+import de.interactive_instruments.etf.dal.dto.Dto;
+
 /**
+ * Command object for getting the specific Dtos from a DsResultSet
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public interface MainDtoResultGetCmd<T extends Dto> {
-	List<T> getMainDtos(final DataStorageResult dataStorageResult);
-	T getMainDto(final DataStorageResult dataStorageResult);
+@FunctionalInterface
+interface GetDtoResultCmd<T extends Dto> {
+
+	List<T> getMainDtos(final DsResultSet dsResultSet);
+
+	default T getMainDto(final DsResultSet dsResultSet) {
+		final List<T> colResult = getMainDtos(dsResultSet);
+		return colResult != null && !colResult.isEmpty() ? colResult.get(0) : null;
+	}
 }

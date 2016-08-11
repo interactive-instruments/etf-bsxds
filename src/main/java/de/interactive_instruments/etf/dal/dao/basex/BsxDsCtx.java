@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.exceptions.ExcUtils;
-import de.interactive_instruments.exceptions.StoreException;
-import org.basex.core.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.basex.core.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dto.Dto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.ExcUtils;
+import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
+import de.interactive_instruments.exceptions.StoreException;
 
 /**
- * Basex database context
+ * Basex data storage context
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-interface BsxDbCtx {
+interface BsxDsCtx {
 
 	IFile getStoreDir();
 
@@ -45,4 +49,9 @@ interface BsxDbCtx {
 	Marshaller createMarshaller() throws JAXBException;
 
 	Logger getLogger();
+
+	Dto getFromCache(final EID eid);
+
+	Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException;
+
 }
