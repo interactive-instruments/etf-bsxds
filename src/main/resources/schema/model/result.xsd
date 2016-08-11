@@ -21,7 +21,7 @@
     <xs:group name="ResultModelItemGroup">
         <xs:sequence>
             <xs:group ref="ModelItemGroup"/>
-            <xs:element name="resultStatus" type="TestResultStatusType"/>
+            <xs:element name="status" type="TestResultStatusType"/>
             <xs:element name="startTimestamp" type="xs:dateTime"/>
             <xs:element name="duration" type="xs:unsignedLong"/>
             <xs:element name="resultedFrom" type="RefType">

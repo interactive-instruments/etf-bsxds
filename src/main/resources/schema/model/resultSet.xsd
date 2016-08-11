@@ -59,6 +59,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="testItemTypes">
+        <xs:annotation>
+            <xs:documentation>not implemented yet</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="TestItemType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="executableTestSuites">
         <xs:annotation>
             <xs:documentation>ETF Components: read/write/update (test drivers) | Client:
@@ -192,6 +202,7 @@
                 <xs:element ref="components" minOccurs="0"/>
                 <xs:element ref="testCases" minOccurs="0"/>
                 <xs:element ref="testAssertions" minOccurs="0"/>
+                <xs:element ref="testItemTypes" minOccurs="0"/>
                 <xs:element ref="executableTestSuites" minOccurs="0"/>
                 <xs:element ref="testObjects" minOccurs="0"/>
                 <xs:element ref="testObjectTypes" minOccurs="0"/>

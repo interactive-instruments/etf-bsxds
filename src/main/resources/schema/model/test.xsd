@@ -3,7 +3,7 @@
     xmlns="http://www.interactive-instruments.de/etf/1.0"
     targetNamespace="http://www.interactive-instruments.de/etf/1.0"
     xmlns:etf="http://www.interactive-instruments.de/etf/1.0" elementFormDefault="qualified"
-    version="1.0">
+    xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0" version="1.0">
 
     <xs:annotation>
         <!-- Author: Jon Herrmann (interactive instruments) -->
@@ -126,6 +126,21 @@
     </xs:element>
 
     <!-- =============================================================== -->
+    <xs:element name="TestItemType">
+        <xs:annotation>
+            <xs:appinfo>
+                <etfAppinfo:cacheStrategy>permanent</etfAppinfo:cacheStrategy>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="MetaDataItemGroup"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="IdentifierAttributeGroup"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- =============================================================== -->
     <xs:element name="TestStep">
         <xs:complexType>
             <xs:sequence>
@@ -136,7 +151,7 @@
                             test project</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="typeRef" type="RefType">
+                <xs:element name="type" type="RefType">
                     <xs:annotation>
                         <xs:documentation>Test step type</xs:documentation>
                     </xs:annotation>
@@ -173,8 +188,7 @@
                             test project</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <!--xs:element name="type" type="RefType"-->
-                <xs:element name="type" type="xs:string">
+                <xs:element name="type" type="RefType">
                     <xs:annotation>
                         <xs:documentation>Assertion type</xs:documentation>
                     </xs:annotation>
@@ -219,8 +233,7 @@
                             test project</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <!--xs:element name="type" type="RefType"-->
-                <xs:element name="type" type="xs:string">
+                <xs:element name="type" type="RefType">
                     <xs:annotation>
                         <xs:documentation>Assertion type</xs:documentation>
                     </xs:annotation>
