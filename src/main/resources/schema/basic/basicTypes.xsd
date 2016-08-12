@@ -229,7 +229,7 @@
     <xs:element name="Dependencies">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="dependency" minOccurs="0">
+                <xs:element name="dependency" minOccurs="0" macOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="reason" type="TranslationTemplateArgumentType">
