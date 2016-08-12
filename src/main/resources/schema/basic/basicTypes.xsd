@@ -402,7 +402,7 @@
 
     <!-- =============================================================== -->
     <xs:attributeGroup name="TranslationTemplateRefAttributeGroup">
-        <xs:attribute name="bundleName" type="IdRefType" use="required">
+        <xs:attribute name="bundleId" type="IdRefType" use="required">
             <xs:annotation>
                 <xs:documentation> References the TranslationTemplateBundle by its id
                 </xs:documentation>
