@@ -158,7 +158,9 @@
                                                 <xs:annotation>
                                                   <xs:documentation> Used by
                                                   TranslationTemplateArgumentType to reference this
-                                                  translation template </xs:documentation>
+                                                  translation template. This is not an ID type in
+                                                  the schema, as there may be multiple occurences
+                                                  for different languages.</xs:documentation>
                                                 </xs:annotation>
                                             </xs:attribute>
                                             <xs:attribute name="language" type="xs:language"
@@ -171,7 +173,11 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="name" type="xs:ID"/>
+            <xs:attribute name="name" type="TranslationIdType">
+                <xs:annotation>
+                    <xs:documentation> Translation ID type, starting with 'TR.' </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
@@ -269,6 +275,17 @@
         </xs:annotation>
         <xs:restriction base="xs:anyURI">
             <xs:pattern value="https?://.+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="TranslationIdType">
+        <xs:annotation>
+            <xs:documentation>Translation ID, starting with 'TR.', at least 6 characters (including
+                [0-9] [a-z] [A-Z] . - _ ), max 45</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:ID">
+            <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,45}"/>
         </xs:restriction>
     </xs:simpleType>
 
