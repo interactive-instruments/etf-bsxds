@@ -125,17 +125,17 @@ class BsxTestUtil {
 		final List<TranslationTemplateDto> translationTemplateDtos = new ArrayList<TranslationTemplateDto>() {
 			{
 				final TranslationTemplateDto template1En = new TranslationTemplateDto(
-						"Template.1", Locale.ENGLISH.toLanguageTag(),
-						"Template.1 with three tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}");
+						"TR.Template.1", Locale.ENGLISH.toLanguageTag(),
+						"TR.Template.1 with three tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}");
 				final TranslationTemplateDto template1De = new TranslationTemplateDto(
-						"Template.1", Locale.GERMAN.toLanguageTag(),
-						"Template.1 mit drei tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}");
+						"TR.Template.1", Locale.GERMAN.toLanguageTag(),
+						"TR.Template.1 mit drei tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}");
 				final TranslationTemplateDto template2En = new TranslationTemplateDto(
-						"Template.2", Locale.ENGLISH.toLanguageTag(),
-						"Template.2 with three tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}");
+						"TR.Template.2", Locale.ENGLISH.toLanguageTag(),
+						"TR.Template.2 with three tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}");
 				final TranslationTemplateDto template2De = new TranslationTemplateDto(
-						"Template.2", Locale.GERMAN.toLanguageTag(),
-						"Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}");
+						"TR.Template.2", Locale.GERMAN.toLanguageTag(),
+						"TR.Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}");
 				add(template1En);
 				add(template1De);
 				add(template2En);
@@ -274,7 +274,7 @@ class BsxTestUtil {
 						testAssertionResultDto.setMessages(new ArrayList<TranslationTemplateParameterDto>() {
 							{
 								final TranslationTemplateParameterDto messages1 = new TranslationTemplateParameterDto();
-								messages1.setRefTemplateName("Template.1");
+								messages1.setRefTemplateName("TR.Template.1");
 								messages1.addTokenValue("TOKEN.1", "Value1");
 								messages1.addTokenValue("TOKEN.2", "Value2");
 								messages1.addTokenValue("TOKEN.3", "Value3");
@@ -343,8 +343,8 @@ class BsxTestUtil {
 						testAssertionDto.setExpectedResult("ExpectedResult");
 						testAssertionDto.setExpression("Expression");
 						testAssertionDto.setType(ASSERTION_TYPE_1);
-						testAssertionDto.addTranslationTemplateWithName("Template.1");
-						testAssertionDto.addTranslationTemplateWithName("Template.2");
+						testAssertionDto.addTranslationTemplateWithName("TR.Template.1");
+						testAssertionDto.addTranslationTemplateWithName("TR.Template.2");
 						testAssertionDtos.add(testAssertionDto);
 					}
 					testStepDto.setTestAssertions(testAssertionDtos);
