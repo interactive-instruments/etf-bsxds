@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,41 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dao.WriteDao;
-import de.interactive_instruments.etf.dal.dao.basex.transformers.EidAdapter;
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
-import de.interactive_instruments.etf.model.item.EidFactory;
-import de.interactive_instruments.exceptions.InitializationException;
-import de.interactive_instruments.exceptions.InvalidStateTransitionException;
-import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
-import de.interactive_instruments.exceptions.config.ConfigurationException;
-import de.interactive_instruments.model.std.IdFactory;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import java.io.*;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.nio.charset.Charset;
+import org.apache.commons.io.IOUtils;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestConstants.DATA_STORAGE;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.MediaType;
+import de.interactive_instruments.etf.dal.dao.Filter;
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
+import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.OutputFormat;
+import de.interactive_instruments.etf.model.Parameterizable;
+import de.interactive_instruments.exceptions.*;
+import de.interactive_instruments.exceptions.config.ConfigurationException;
+import de.interactive_instruments.properties.PropertyHolder;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -55,86 +61,312 @@ import static org.junit.Assert.assertNull;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestObjectDaoTest {
 
+	private static final String TO_DTO_1_REPLACED_ID = "893c4274-fce8-3543-ac13-c9e7a37b79ee";
+	final int maxDtos = 250;
 	private static WriteDao<TestObjectDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException {
-		BsxTestConstants.ensureInitialization();
-		writeDao = ((WriteDao)DATA_STORAGE.getDao(TestObjectDto.class));
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException {
+		BsxTestUtil.ensureInitialization();
+		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestObjectDto.class));
 
-		try {
-			writeDao.delete(BsxTestConstants.TO_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StoreException e) {
-		}
-		try {
-			writeDao.delete(EidFactory.getDefault().createAndPreserveStr("0c1582de-fe75-3d0c-b6f9-982bfc79c008"));
-		} catch (ObjectWithIdNotFoundException | StoreException e) {
-		}
-		try {
-			BsxTestConstants.DATA_STORAGE.reset();
-		} catch (StoreException e) {
-		}
+		final WriteDao<TagDto> tagDao = (WriteDao<TagDto>) DATA_STORAGE.getDao(TagDto.class);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TAG_DTO_1);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TAG_DTO_2);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TAG_DTO_3);
+
+		final WriteDao<TestObjectTypeDto> testObjectTypeDao = (WriteDao<TestObjectTypeDto>) DATA_STORAGE.getDao(TestObjectTypeDto.class);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TOT_DTO_1);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TOT_DTO_2);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TOT_DTO_3);
+	}
+
+	@AfterClass
+	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+		BsxTestUtil.forceDelete(writeDao, EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
+
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TAG_DTO_1.getId());
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TAG_DTO_2.getId());
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TAG_DTO_3.getId());
+
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TOT_DTO_1.getId());
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TOT_DTO_2.getId());
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TOT_DTO_3.getId());
+	}
+
+	@Before
+	public void clean() throws StoreException {
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TO_DTO_1.getId());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_1_0_type_check() throws StoreException {
+		final WriteDao dao = writeDao;
+		dao.add(BsxTestUtil.TOT_DTO_1);
 	}
 
 	@Test
-	public void test_1_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
-		writeDao.add(BsxTestConstants.TO_DTO_1);
-		assertTrue(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
-		writeDao.delete(BsxTestConstants.TO_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
+	public void test_1_1_failOnInvalidDto() throws StoreException, ObjectWithIdNotFoundException {
+		final TestObjectDto invalidDto = new TestObjectDto();
+		BsxTestUtil.setBasicProperties(invalidDto, 666);
+		BsxTestUtil.forceDelete(writeDao, invalidDto.getId());
+
+		// Must fail because no resources and test object types are set
+		try {
+			writeDao.add(invalidDto);
+		} catch (IllegalArgumentException e) {
+			assertFalse(writeDao.exists(invalidDto.getId()));
+			return;
+		}
+		BsxTestUtil.forceDelete(writeDao, invalidDto.getId());
+		fail("No Exception thrown");
 	}
 
 	@Test
-	public void test_11_basic_unmarshalling() throws JAXBException, IOException {
+	public void test_1_2_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+		assertTrue(writeDao.isInitialized());
+		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		writeDao.add(BsxTestUtil.TO_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		writeDao.delete(BsxTestUtil.TO_DTO_1.getId());
+		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+	}
+
+	@Test
+	public void test_1_2_unmarshalling() throws JAXBException, IOException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
 				"database/testobjects.xml").getPath());
 		testObjectXmlFile.expectFileIsReadable();
-		final Unmarshaller um = BsxTestConstants.DATA_STORAGE.createUnmarshaller();
-		um.setAdapter(new EidAdapter());
-		final DataStorageResult dtos = (DataStorageResult) um.unmarshal(new StringReader(testObjectXmlFile.readContent().toString()));
+		final Unmarshaller um = BsxTestUtil.DATA_STORAGE.createUnmarshaller();
+		final DsResultSet dtos = (DsResultSet) um.unmarshal(new StringReader(
+				testObjectXmlFile.readContent().toString()));
 		assertNotNull(dtos);
 		assertNotNull(dtos.getTestObjects());
 	}
 
-
 	@Test
-	public void test_2_getById() throws StoreException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
-		writeDao.add(BsxTestConstants.TO_DTO_1);
-		assertTrue(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
-		final PreparedDto<TestObjectDto> preparedDto = writeDao.
-				getById(BsxTestConstants.TO_DTO_1.getId());
-		final TestObjectDto dto =  preparedDto.getDto();
-		assertNotNull(dto);
-		assertEquals(BsxTestConstants.TO_DTO_1.getId(), dto.getId());
-		assertEquals(BsxTestConstants.TO_DTO_1.toString(), dto.toString());
-		writeDao.delete(BsxTestConstants.TO_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
+	public void test_2_0_getById() throws StoreException, ObjectWithIdNotFoundException {
+		final PreparedDto<TestObjectDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TO_DTO_1);
+
+		// Check references
+		assertNotNull(preparedDto.getDto().getResources());
+		assertEquals(BsxTestUtil.TO_DTO_1.getResources().size(),
+				preparedDto.getDto().getResources().size());
+		assertNotNull(preparedDto.getDto().getTestObjectTypes());
+		assertEquals(BsxTestUtil.TO_DTO_1.getTestObjectTypes().size(),
+				preparedDto.getDto().getTestObjectTypes().size());
+		assertNotNull(preparedDto.getDto().getTags());
+		assertEquals(BsxTestUtil.TO_DTO_1.getTags().size(),
+				preparedDto.getDto().getTags().size());
+
+		writeDao.delete(BsxTestUtil.TO_DTO_1.getId());
+		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+	}
+
+	@Test(expected = ObjectWithIdNotFoundException.class)
+	public void test_2_1_get_non_existing_id() throws StoreException, ObjectWithIdNotFoundException {
+		final EID nonExistingId = EidFactory.getDefault().createAndPreserveStr("FOO");
+		assertFalse(writeDao.exists(nonExistingId));
+		writeDao.getById(nonExistingId);
+	}
+
+	private void cleanGeneratedItems() throws StoreException {
+		// Clean
+		for (int i = 0; i <= maxDtos; i++) {
+			final String iStr = BsxTestUtil.toStrWithTrailingZeros(i);
+			BsxTestUtil.forceDelete(writeDao, EidFactory.getDefault().createUUID("TestObjectDto." + iStr));
+		}
+	}
+
+	@Test(timeout = 30000L)
+	public void test_3_0_pagination() throws StoreException {
+
+		// Clean
+		try {
+			writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
+		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+
+		cleanGeneratedItems();
+
+		{
+			// This test only works if there are now Test Objects in database
+			final PreparedDtoCollection<TestObjectDto> clResult = writeDao.getAll(new Filter() {
+				@Override
+				public int offset() {
+					return 0;
+				}
+
+				@Override
+				public int limit() {
+					return 10000;
+				}
+			});
+			assertTrue("Test only works with data storage that does not contain any Test Objects!", clResult.isEmpty());
+		}
+
+		final Date creationDate = new Date();
+
+		final List<TestObjectTypeDto> testObjectTypeDtos = new ArrayList<TestObjectTypeDto>() {
+			{
+				add(BsxTestUtil.TOT_DTO_1);
+				add(BsxTestUtil.TOT_DTO_2);
+				add(BsxTestUtil.TOT_DTO_3);
+			}
+		};
+
+		final List<TagDto> tagDtos = new ArrayList<TagDto>() {
+			{
+				add(BsxTestUtil.TAG_DTO_1);
+				add(BsxTestUtil.TAG_DTO_2);
+				add(BsxTestUtil.TAG_DTO_2);
+			}
+		};
+
+		// Add
+		final List<TestObjectDto> dtos = new ArrayList<>();
+		for (int i = 0; i <= maxDtos; i++) {
+			final TestObjectDto dto = new TestObjectDto();
+			BsxTestUtil.setBasicProperties(dto, i);
+			dto.setLastEditor("TestObjectDto." + BsxTestUtil.toStrWithTrailingZeros(i) + ".author");
+			dto.setLastUpdateDate(creationDate);
+			dto.setReference("https://reference.reference/spec/3");
+			dto.setTestObjectTypes(testObjectTypeDtos);
+			dto.setTags(tagDtos);
+
+			final ResourceDto resourceDto = new ResourceDto();
+			resourceDto.setName("Resource." + BsxTestUtil.toStrWithTrailingZeros(i));
+			resourceDto.setUri(URI.create("http://nowhere.com/" + BsxTestUtil.toStrWithTrailingZeros(i)));
+			dto.addResource(resourceDto);
+			dtos.add(dto);
+		}
+		writeDao.addAll(dtos);
+
+		// Test paginagtion
+		final int min1 = 30;
+		final int max1 = 150;
+		final PreparedDtoCollection<TestObjectDto> result1 = writeDao.getAll(new Filter() {
+			@Override
+			public int offset() {
+				return min1;
+			}
+
+			@Override
+			public int limit() {
+				return max1;
+			}
+		});
+		{
+			assertNotNull(result1);
+			assertEquals(max1, result1.size());
+			int i1 = min1;
+			for (final TestObjectDto testObjectDto : result1) {
+				final String iStr = BsxTestUtil.toStrWithTrailingZeros(i1);
+				// Result shall be sorted based on its labeld
+				assertEquals("TestObjectDto." + iStr + ".label", testObjectDto.getLabel());
+				++i1;
+			}
+		}
+		final int min2 = 52;
+		final int max2 = 198;
+		final PreparedDtoCollection<TestObjectDto> result2 = writeDao.getAll(new Filter() {
+			@Override
+			public int offset() {
+				return min2;
+			}
+
+			@Override
+			public int limit() {
+				return max2;
+			}
+		});
+		{
+			assertNotNull(result2);
+			assertEquals(max2, result2.size());
+			int i2 = min2;
+			for (final TestObjectDto testObjectDto : result2) {
+				final String iStr = BsxTestUtil.toStrWithTrailingZeros(i2);
+				// Result shall be sorted based on its label
+				assertEquals("TestObjectDto." + iStr + ".label", testObjectDto.getLabel());
+				++i2;
+			}
+		}
+		assertNotEquals(0, result1.compareTo(result2));
 	}
 
 	@Test
-	public void test_3_pagination() {
-		throw new IllegalArgumentException();
+	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException {
+		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		writeDao.add(BsxTestUtil.TO_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		final PreparedDto<TestObjectDto> preparedDto = writeDao.getById(BsxTestUtil.TO_DTO_1.getId());
+
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		preparedDto.streamTo(new OutputFormat() {
+			@Override
+			public EID getId() {
+				return null;
+			}
+
+			@Override
+			public String getLabel() {
+				return null;
+			}
+
+			@Override
+			public MediaType getMediaTypeType() {
+				return null;
+			}
+
+			@Override
+			public Parameterizable getParameters() {
+				return null;
+			}
+
+			@Override
+			public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream) throws IOException {
+				IOUtils.copy(inputStream, outputStream);
+			}
+
+			@Override
+			public int compareTo(final OutputFormat o) {
+				return 0;
+			}
+		}, null, outputStream);
+
+		assertNotNull(outputStream.toString("UTF-8"));
+
 	}
 
 	@Test
-	public void test_4_streaming() {
-		throw new IllegalArgumentException();
-	}
+	public void test_5_0_update() throws StoreException, ObjectWithIdNotFoundException {
 
-	@Test
-	public void test_5_update() throws StoreException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
-		writeDao.add(BsxTestConstants.TO_DTO_1);
-		assertTrue(writeDao.exists(BsxTestConstants.TO_DTO_1.getId()));
+		// Clean
+		try {
+			writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
+		} catch (ObjectWithIdNotFoundException | StoreException e) {
+			ExcUtils.suppress(e);
+		}
 
-		final String originalLabel = BsxTestConstants.TO_DTO_1.getLabel();
+		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		writeDao.add(BsxTestUtil.TO_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 
-		// Query dto
-		final PreparedDto<TestObjectDto> preparedDto = writeDao.
-				getById(BsxTestConstants.TO_DTO_1.getId());
+		final String originalLabel = BsxTestUtil.TO_DTO_1.getLabel();
+
+		// Prepare query
+		final PreparedDto<TestObjectDto> preparedDto = writeDao.getById(BsxTestUtil.TO_DTO_1.getId());
+		assertNotNull(preparedDto);
+		// Will execute the query
 		assertNull(preparedDto.getDto().getReplacedBy());
+
+		// Check references
+		assertNotNull(preparedDto.getDto().getResources());
+		assertEquals(BsxTestUtil.TO_DTO_1.getResources().size(),
+				preparedDto.getDto().getResources().size());
+		assertNotNull(preparedDto.getDto().getTestObjectTypes());
+		assertEquals(BsxTestUtil.TO_DTO_1.getTestObjectTypes().size(),
+				preparedDto.getDto().getTestObjectTypes().size());
+
 		// Change its label
 		preparedDto.getDto().setLabel("NEW LABEL");
 		assertEquals("NEW LABEL", preparedDto.getDto().getLabel());
@@ -142,26 +374,99 @@ public class TestObjectDaoTest {
 		final TestObjectDto newDto = writeDao.update(preparedDto.getDto());
 		assertEquals("NEW LABEL", newDto.getLabel());
 
-		// Check that the old one still exists, same ID, same label, but with a reference
-		final PreparedDto<TestObjectDto> preparedOldDto = writeDao.
-				getById(BsxTestConstants.TO_DTO_1.getId());
+		// Check that the old one still exists
+		final PreparedDto<TestObjectDto> preparedOldDto = writeDao.getById(BsxTestUtil.TO_DTO_1.getId());
+
+		// Check for identical ID, same label and referencedBy property
+		assertEquals(BsxTestUtil.TO_DTO_1.getId(), preparedOldDto.getDto().getId());
 		assertEquals(originalLabel, preparedOldDto.getDto().getLabel());
 		assertFalse("NEW LABEL".equals(preparedOldDto.getDto().getLabel()));
 		assertNotNull(preparedOldDto.getDto().getReplacedBy());
 		assertEquals(newDto.getId(), preparedOldDto.getDto().getReplacedBy().getId());
 
 		// And check that the new one exists
-		assertEquals("NEW LABEL", ((TestObjectDto)preparedOldDto.getDto().getReplacedBy()).getLabel());
+		assertEquals("NEW LABEL", ((TestObjectDto) preparedOldDto.getDto().getReplacedBy()).getLabel());
 
 		// query and compare new one
-		final PreparedDto<TestObjectDto> preparedNewDto = writeDao.
-				getById(newDto.getId());
+		final PreparedDto<TestObjectDto> preparedNewDto = writeDao.getById(newDto.getId());
 		assertEquals(newDto.toString(), preparedNewDto.getDto().toString());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_5_1_fail_on_update_replaced_item() throws StoreException, ObjectWithIdNotFoundException {
+		test_5_0_update();
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
+		writeDao.update(BsxTestUtil.TO_DTO_1);
+	}
+
 	@Test
-	public void test_6_updateWithReset() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_5_2_reset_after_update() throws StoreException, ObjectWithIdNotFoundException {
+		test_5_0_update();
 		DATA_STORAGE.reset();
-		throw new IllegalArgumentException();
+		// Updated item still exists after reset
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
+		writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
+	}
+
+	@Test
+	public void test_6_0_pagination_history_items_filter() throws StoreException, ObjectWithIdNotFoundException {
+		cleanGeneratedItems();
+
+		test_5_0_update();
+		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
+		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
+
+		{
+			final PreparedDtoCollection<TestObjectDto> result1 = writeDao.getAll(new Filter() {
+				@Override
+				public int offset() {
+					return 0;
+				}
+
+				@Override
+				public int limit() {
+					return 3;
+				}
+
+			});
+			assertNotNull(result1);
+			assertEquals(1, result1.size());
+			final TestObjectDto dto1 = result1.get(TO_DTO_1_REPLACED_ID);
+			assertNotNull(dto1);
+			assertEquals(TO_DTO_1_REPLACED_ID, dto1.getId().toString());
+			assertNull(result1.get(BsxTestUtil.TO_DTO_1));
+		}
+
+		{
+			final PreparedDtoCollection<TestObjectDto> result2 = writeDao.getAll(new Filter() {
+				@Override
+				public int offset() {
+					return 0;
+				}
+
+				@Override
+				public int limit() {
+					return 3;
+				}
+
+				@Override
+				public LevelOfDetail levelOfDetail() {
+					return LevelOfDetail.HISTORY;
+				}
+			});
+			assertEquals(2, result2.size());
+			assertNotNull(result2);
+			assertTrue(result2.toString().contains("cachedDtos=2"));
+
+			final TestObjectDto dto1 = result2.get(TO_DTO_1_REPLACED_ID);
+			assertNotNull(dto1);
+			assertEquals(TO_DTO_1_REPLACED_ID, dto1.getId().toString());
+
+			final TestObjectDto dto2 = result2.get(BsxTestUtil.TO_DTO_1.getId());
+			assertNotNull(dto2);
+			assertEquals(BsxTestUtil.TO_DTO_1.getId(), dto2.getId());
+		}
 	}
 }

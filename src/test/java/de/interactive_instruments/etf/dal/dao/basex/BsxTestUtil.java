@@ -36,9 +36,9 @@ import de.interactive_instruments.etf.dal.dto.result.*;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.dal.dto.test.*;
+import de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.*;
@@ -86,6 +86,8 @@ class BsxTestUtil {
 
 		COMP_DTO_1 = new ComponentDto();
 		setBasicProperties(COMP_DTO_1, 1);
+		COMP_DTO_1.setVendor("ii");
+		COMP_DTO_1.setVersion("1.1.0");
 
 		TAG_DTO_1 = new TagDto();
 		setBasicProperties(TAG_DTO_1, 1);
@@ -271,14 +273,14 @@ class BsxTestUtil {
 						testAssertionResultDto.setResultedFrom(
 								((TestStepDto) testStepResultDto.getResultedFrom()).getTestAssertions().get(ta));
 
-						testAssertionResultDto.setMessages(new ArrayList<TranslationTemplateParameterDto>() {
+						testAssertionResultDto.setMessages(new ArrayList<TranslationArgumentCollectionDto>() {
 							{
-								final TranslationTemplateParameterDto messages1 = new TranslationTemplateParameterDto();
+								final TranslationArgumentCollectionDto messages1 = new TranslationArgumentCollectionDto();
 								messages1.setRefTemplateName("TR.Template.1");
 								messages1.addTokenValue("TOKEN.1", "Value1");
 								messages1.addTokenValue("TOKEN.2", "Value2");
 								messages1.addTokenValue("TOKEN.3", "Value3");
-								final TranslationTemplateParameterDto messages2 = new TranslationTemplateParameterDto();
+								final TranslationArgumentCollectionDto messages2 = new TranslationArgumentCollectionDto();
 								messages2.setRefTemplateName("Template.2");
 								messages2.addTokenValue("TOKEN.4", "Value4");
 								messages2.addTokenValue("TOKEN.5", "Value5");
@@ -382,7 +384,7 @@ class BsxTestUtil {
 
 	static void forceDelete(final Dao dao, final EID eid) throws StoreException {
 		try {
-			((WriteDao)dao).delete(eid);
+			((WriteDao) dao).delete(eid);
 		} catch (ObjectWithIdNotFoundException e) {
 			ExcUtils.suppress(e);
 		}
@@ -397,18 +399,24 @@ class BsxTestUtil {
 		return (WriteDao) dao;
 	}
 
-	static void forceAdd(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
+	static void forceDeleteAndAdd(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
+		forceDeleteAndAdd(dto, true);
+	}
+
+	static void forceDeleteAndAdd(final Dto dto, boolean check) throws StoreException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
 		forceDelete(dao, dto.getId());
 		assertFalse(dao.exists(dto.getId()));
 		try {
-			((WriteDao)dao).add(dto);
+			((WriteDao) dao).add(dto);
 		} catch (StoreException e) {
 			ExcUtils.suppress(e);
 		}
 		assertTrue(dao.exists(dto.getId()));
-		assertNotNull(dao.getById(dto.getId()).getDto());
+		if (check) {
+			assertNotNull(dao.getById(dto.getId()).getDto());
+		}
 	}
 
 	static void existsAndAddAndDeleteTest(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
@@ -421,16 +429,15 @@ class BsxTestUtil {
 		assertFalse(dao.exists(dto.getId()));
 	}
 
-	/**
-	 *
-	 * @return queried Dto
-	 */
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+	static void addTest(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
-
 		assertFalse(dao.exists(dto.getId()));
 		dao.add(dto);
 		assertTrue(dao.exists(dto.getId()));
+	}
+
+	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+		final WriteDao dao = getDao(dto);
 
 		final PreparedDto<T> preparedDto = dao.getById(dto.getId());
 		// Check internal ID
@@ -448,6 +455,11 @@ class BsxTestUtil {
 		assertEquals(0, preparedDto2.compareTo(preparedDto));
 
 		return preparedDto;
+	}
+
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+		addTest(dto);
+		return getByIdTest(dto);
 	}
 
 }
