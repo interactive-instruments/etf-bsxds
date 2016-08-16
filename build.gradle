@@ -14,7 +14,7 @@ buildscript {
             }}
     }
     dependencies {
-        classpath group: 'de.interactive_instruments.bda', name: 'etf-bda', version:'1.0.22'
+        classpath group: 'de.interactive_instruments.bda', name: 'etf-bda', version:'1.0.23'
     }
     dependencies {
         ant.unjar src: configurations.classpath.files.find {it.path.contains('etf')}, dest: 'build/gradle'
@@ -27,7 +27,7 @@ apply from: 'build/gradle/ii-bda.gradle'
 group = 'de.interactive_instruments.etf'
 description = "ETF BaseX data source"
 
-ext.basexVersion = '8.5'
+ext.basexVersion = '8.5.3'
 ext.moxyVersion = '2.6.3'
 
 ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
@@ -48,12 +48,24 @@ dependencies {
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.0.0'+project.snapshotSuffix
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.0'+project.snapshotSuffix
 
+    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.3.1'
+
+    compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.4.16'
+
     compile group: 'commons-io', name: 'commons-io', version: etf_commonsIoVersion
+
     compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
+
     compile group: 'org.basex', name: 'basex', version: basexVersion
 
+    compile group: 'net.sf.saxon', name: 'Saxon-HE', version: etf_saxonHe
+
     testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
+
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
+
+    testCompile group: 'xml-apis', name: 'xml-apis', version: etf_xmlApisVersion
+    testCompile group: 'xerces', name: 'xercesImpl', version: etf_xercesVersion
 }
 
 test {
