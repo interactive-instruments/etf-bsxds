@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns="http://www.interactive-instruments.de/etf/2.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exclude-result-prefixes="xs" version="2.0">
 
     <xsl:output method="xml" />
@@ -19,7 +19,7 @@
 
     <xsl:attribute-set name="CollectionAttributes">
         <xsl:attribute name="version">1.0</xsl:attribute>
-        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/1.0
+        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0
             file:/Users/herrmann/Projects/etf-fbs/etf-bsxds/src/main/resources/schema/service/service.xsd</xsl:attribute>
     </xsl:attribute-set>
 
@@ -88,7 +88,7 @@
     <!-- =============================================================== -->
     <xsl:template match="etf:translationTemplate">
         <xsl:element name="{name()}"
-            xpath-default-namespace="http://www.interactive-instruments.de/etf/1.0">
+            xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:choose>
                 <xsl:when test="key('translationNames', $reference)">
@@ -124,7 +124,7 @@
     <!-- =============================================================== -->
     <xsl:template match="etf:parent">
         <xsl:element name="{name()}"
-            xpath-default-namespace="http://www.interactive-instruments.de/etf/1.0">
+            xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$parentMapping/*[@key=$parent]"/>
@@ -157,7 +157,7 @@
     <!-- =============================================================== -->
     <xsl:template match="etf:resultedFrom">
         <xsl:element name="{name()}"
-            xpath-default-namespace="http://www.interactive-instruments.de/etf/1.0">
+            xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$parentMapping/*[@key=$parent]"/>

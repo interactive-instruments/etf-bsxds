@@ -5,8 +5,8 @@
  :)
 module namespace  etfxdb = "http://interactive_instruments.de/etf/etfxdb" ;
 
-declare default element namespace "http://www.interactive-instruments.de/etf/1.0";
-declare namespace etf = "http://www.interactive-instruments.de/etf/1.0";
+declare default element namespace "http://www.interactive-instruments.de/etf/2.0";
+declare namespace etf = "http://www.interactive-instruments.de/etf/2.0";
 
 (:~
  : ----------------------------------------------------------------

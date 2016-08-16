@@ -130,13 +130,13 @@
    <schema-context-handle>
       <schema>Result Set</schema>
       <qname-path>
-         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObjectType"/>
+         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/2.0" local-name="TestObjectType"/>
       </qname-path>
    </schema-context-handle>
    <default-root-element-handle>
       <schema>Result Set</schema>
       <qname-path>
-         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObjectType"/>
+         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/2.0" local-name="TestObjectType"/>
       </qname-path>
    </default-root-element-handle>
    <root-descriptor>true</root-descriptor>
