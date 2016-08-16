@@ -67,7 +67,7 @@
         match="etf:testDriver | etf:tag | etf:testObject | etf:testTaskResult | etf:executableTestSuite | etf:testObjectType | etf:type | etf:translationTemplateBundle">
         <xsl:element name="{name()}">
             <xsl:variable name="reference" select="@ref"/>
-            <xsl:variable name="type" select="concat(upper-case(substring(name(),1,1)), substring(name(),2))"/>
+            <xsl:variable name="type" select="concat(upper-case(substring(local-name(),1,1)), substring(local-name(),2))"/>
             <xsl:choose>
                 <xsl:when test="key('ids', $reference)">
                     <xsl:attribute name="xsi:type">loc</xsl:attribute>
@@ -78,7 +78,7 @@
                 <xsl:otherwise>
                     <xsl:attribute name="xsi:type">ext</xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', $reference)"/>
+                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', substring-after($reference, 'EID'))"/>
                     </xsl:attribute>
                 </xsl:otherwise>
             </xsl:choose>
@@ -100,7 +100,7 @@
                 <xsl:otherwise>
                     <xsl:attribute name="xsi:type">ext</xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="concat($serviceUrl, '../', $reference)"/>
+                        <xsl:value-of select="concat($serviceUrl, '../', substring-after($reference, 'EID'))"/>
                     </xsl:attribute>
                 </xsl:otherwise>
             </xsl:choose>
@@ -126,7 +126,7 @@
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/1.0">
             <xsl:variable name="reference" select="@ref"/>
-            <xsl:variable name="parent" select="../name()"/>
+            <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$parentMapping/*[@key=$parent]"/>
             <xsl:choose>
                 <xsl:when test="key('ids', $reference)">
@@ -138,7 +138,7 @@
                 <xsl:otherwise>
                     <xsl:attribute name="xsi:type">ext</xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', $reference)"/>
+                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', substring-after($reference, 'EID'))"/>
                     </xsl:attribute>
                 </xsl:otherwise>
             </xsl:choose>
@@ -159,7 +159,7 @@
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/1.0">
             <xsl:variable name="reference" select="@ref"/>
-            <xsl:variable name="parent" select="../name()"/>
+            <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$parentMapping/*[@key=$parent]"/>
             <xsl:choose>
                 <xsl:when test="key('ids', $reference)">
@@ -171,7 +171,7 @@
                 <xsl:otherwise>
                     <xsl:attribute name="xsi:type">ext</xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', $reference)"/>
+                        <xsl:value-of select="concat($serviceUrl, '/', $type, '/', substring-after($reference, 'EID'))"/>
                     </xsl:attribute>
                 </xsl:otherwise>
             </xsl:choose>
