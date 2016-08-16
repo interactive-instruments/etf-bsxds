@@ -12,7 +12,7 @@
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.model.item.EID</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -28,7 +28,7 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.model.item.EID</type-name>
+               <type-name>de.interactive_instruments.etf.model.EID</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -40,15 +40,15 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.model.item.EID</type-name>
+                     <type-name>de.interactive_instruments.etf.model.EID</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
    </methods>
 </class>

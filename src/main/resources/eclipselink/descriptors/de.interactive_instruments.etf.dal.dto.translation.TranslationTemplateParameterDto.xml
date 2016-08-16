@@ -44,7 +44,7 @@
       </mapping>
    </mappings>
    <schema-context-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="complex-type" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TranslationTemplateArgumentType"/>
       </qname-path>

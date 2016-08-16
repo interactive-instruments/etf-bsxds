@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class>
+   <name>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</name>
+   <modifier>1</modifier>
+   <superclass-handle>
+      <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
+   </superclass-handle>
+   <last-refresh-timestamp>2016-08-11T01:17:50.604+02:00</last-refresh-timestamp>
+   <methods>
+      <method>
+         <name>TestItemTypeDto</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+      </method>
+   </methods>
+</class>

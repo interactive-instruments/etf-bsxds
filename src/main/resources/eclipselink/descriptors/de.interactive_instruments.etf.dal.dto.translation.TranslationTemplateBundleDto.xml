@@ -50,7 +50,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.LangTranslationTemplateCollectionDto</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>etf:translationTemplateCollections/etf:LangTranslationTemplateCollection</xpath>
+         <xpath>translationTemplateCollections/LangTranslationTemplateCollection</xpath>
          <container-policy type="map">
             <key-method-handle>
                <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.translation.LangTranslationTemplateCollectionDto</method-declaring-type-name>
@@ -77,13 +77,13 @@
       </attribute-handle>
    </inherited-attribute-handles>
    <schema-context-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TranslationTemplateBundle"/>
       </qname-path>
    </schema-context-handle>
    <default-root-element-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TranslationTemplateBundle"/>
       </qname-path>

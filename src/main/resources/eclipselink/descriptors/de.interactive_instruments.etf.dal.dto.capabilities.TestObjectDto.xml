@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <descriptor type="o-x">
    <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
+   <comment>There is no need to map the &quot;parent&quot; property yet.</comment>
    <class-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
    </class-handle>
@@ -123,10 +124,31 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>etf:replacedBy/@ref</source-xml-field>
+               <source-xml-field>replacedBy/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>
+      </mapping>
+      <mapping type="composite-collection">
+         <name>resources</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</attribute-declaring-type-name>
+            <attribute-name>resources</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>ResourceCollection/resource</xpath>
+         <container-policy type="map">
+            <key-method-handle>
+               <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</method-declaring-type-name>
+               <method-signature>getName()</method-signature>
+            </key-method-handle>
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
       </mapping>
       <mapping type="xml-collection-reference">
          <name>tagDtos</name>
@@ -140,7 +162,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>tagDtos/tag</source-xml-field>
+               <source-xml-field>tags/tag/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>
@@ -161,7 +183,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>testObjectTypes/testObjectType</source-xml-field>
+               <source-xml-field>testObjectTypes/testObjectType/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>
@@ -170,6 +192,15 @@
                <uses-default-container-class>true</uses-default-container-class>
             </container-class>
          </container-policy>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>version</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>version</attribute-name>
+         </attribute-handle>
+         <xml-field>version/text()</xml-field>
       </mapping>
    </mappings>
    <inherited-attribute-handles>
@@ -227,13 +258,13 @@
       </attribute-handle>
    </inherited-attribute-handles>
    <schema-context-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObject"/>
       </qname-path>
    </schema-context-handle>
    <default-root-element-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="TestObject"/>
       </qname-path>

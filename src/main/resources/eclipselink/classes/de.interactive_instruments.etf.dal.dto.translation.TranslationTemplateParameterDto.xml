@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-13T01:29:17.918+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-11T01:17:50.602+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>arguments</name>
@@ -33,7 +33,7 @@
          <modifier>1</modifier>
       </method>
       <method>
-         <name>addTokenReplacement</name>
+         <name>addTokenValue</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -67,7 +67,7 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>getTokenReplacements</name>
+         <name>getTokenValues</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>

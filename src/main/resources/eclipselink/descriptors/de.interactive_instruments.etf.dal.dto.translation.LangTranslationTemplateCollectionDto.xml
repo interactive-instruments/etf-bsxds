@@ -10,7 +10,11 @@
       <caching-policy/>
       <query-manager type="ox"/>
       <locking-policy type="ox"/>
-      <primary-key-policy/>
+      <primary-key-policy>
+         <primary-keys>
+            <xml-field>@name</xml-field>
+         </primary-keys>
+      </primary-key-policy>
    </transactional-policy>
    <mappings>
       <mapping type="xml-direct">
@@ -32,7 +36,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>etf:translationTemplates/etf:TranslationTemplate</xpath>
+         <xpath>translationTemplates/TranslationTemplate</xpath>
          <container-policy type="map">
             <key-method-handle>
                <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</method-declaring-type-name>
@@ -45,10 +49,16 @@
       </mapping>
    </mappings>
    <schema-context-handle>
-      <schema>storage</schema>
+      <schema>Result Set</schema>
       <qname-path>
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="LangTranslationTemplateCollection"/>
       </qname-path>
    </schema-context-handle>
-   <root-descriptor>false</root-descriptor>
+   <default-root-element-handle>
+      <schema>Result Set</schema>
+      <qname-path>
+         <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/1.0" local-name="LangTranslationTemplateCollection"/>
+      </qname-path>
+   </default-root-element-handle>
+   <root-descriptor>true</root-descriptor>
 </descriptor>

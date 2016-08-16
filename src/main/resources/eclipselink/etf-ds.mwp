@@ -9,19 +9,72 @@
          <entry>../../../../build/libs/etf-bsxds-2.0.0-SNAPSHOT.jar</entry>
       </classpath-entries>
       <user-type-names>
+         <name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</name>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.CredentialDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.DefaultReferenceDto</name>
          <name>de.interactive_instruments.etf.dal.dto.Dto</name>
+         <name>de.interactive_instruments.etf.dal.dto.ExternalReferenceDto</name>
          <name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</name>
          <name>de.interactive_instruments.etf.dal.dto.ModelItemDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.ReferenceDto</name>
          <name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.DependencyDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestAssertionDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestStepDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.translation.LangTranslationTemplateCollectionDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</name>
       </user-type-names>
    </class-repository>
    <descriptor-names>
+      <descriptor-name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.CredentialDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.DependencyDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestAssertionDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestStepDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.LangTranslationTemplateCollectionDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</descriptor-name>
    </descriptor-names>
    <defaults-policy type="o-x">
       <use-method-accessing>false</use-method-accessing>
@@ -29,7 +82,7 @@
    <deployment-xml-file>etf-ds.xml</deployment-xml-file>
    <xml-schema-repository>
       <schema-names>
-         <name>storage</name>
+         <name>Result Set</name>
       </schema-names>
    </xml-schema-repository>
 </project>

@@ -5,16 +5,16 @@
    <default-namespace-url>http://www.interactive-instruments.de/etf/1.0</default-namespace-url>
    <should-default-namespace-url>true</should-default-namespace-url>
    <schema-source type="file">
-      <location>../schema/model/storage.xsd</location>
+      <location>../schema/model/resultSet.xsd</location>
    </schema-source>
    <built-in-namespaces>
-      <namespace url="http://www.w3.org/2001/XMLSchema" prefix="xs"/>
-      <namespace url="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi"/>
+      <namespace url="http://www.w3.org/2001/XMLSchema" prefix="xs" declared="true"/>
+      <namespace url="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi" declared="true"/>
    </built-in-namespaces>
    <declared-namespaces>
       <namespace>
          <namespace-prefix>etf</namespace-prefix>
-         <namespace-prefix-is-user-defined>false</namespace-prefix-is-user-defined>
+         <namespace-prefix-is-user-defined>true</namespace-prefix-is-user-defined>
          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
          <declared>true</declared>
          <attribute-declarations>
@@ -109,9 +109,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -166,7 +197,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -643,9 +692,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -700,7 +780,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -732,12 +830,13 @@
                               </particles>
                            </particle>
                            <particle type="element">
-                              <name>applicableTestObjectTypeRef</name>
+                              <name>applicableTo</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <type type="complex-type-ref">
                                  <name>RefType</name>
                                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               </type>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>applicableUri</name>
@@ -746,86 +845,15 @@
                                  <name>anyURI</name>
                                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                               </type>
-                           </particle>
-                           <particle type="wildcard">
                               <min-occurs>0</min-occurs>
-                              <max-occurs>2147483640</max-occurs>
                            </particle>
-                        </particles>
-                     </particle>
-                  </content>
-               </type>
-            </element-declaration>
-            <element-declaration type="element">
-               <name>DataStorage</name>
-               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               <type type="complex-type">
-                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                  <abstract>false</abstract>
-                  <derivation-method>restriction</derivation-method>
-                  <base-type type="complex-type-ref">
-                     <name>anyType</name>
-                     <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                  </base-type>
-                  <content type="complex">
-                     <mixed-flag>false</mixed-flag>
-                     <particle compositor="sequence" type="model-group">
-                        <particles>
-                           <particle type="element-ref">
-                              <name>components</name>
+                           <particle type="element">
+                              <name>cipher</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testCases</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testAssertions</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>executableTestSuites</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testObjectTypes</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testObjects</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>credentials</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>users</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>tagDtos</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>translationTemplates</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>resultStyles</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>abstractTestSuites</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testRunTemplates</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>testRuns</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="simple-type-ref">
+                                 <name>byte</name>
+                                 <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                              </type>
                            </particle>
                         </particles>
                      </particle>
@@ -866,7 +894,7 @@
                                              <name>reason</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
-                                                <name>TranslationTemplateParameterType</name>
+                                                <name>TranslationTemplateArgumentType</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              </type>
                                           </particle>
@@ -882,6 +910,101 @@
                                     </particle>
                                  </content>
                               </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                        </particles>
+                     </particle>
+                  </content>
+               </type>
+            </element-declaration>
+            <element-declaration type="element">
+               <name>DsResultSet</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+               <type type="complex-type">
+                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                  <abstract>false</abstract>
+                  <derivation-method>restriction</derivation-method>
+                  <base-type type="complex-type-ref">
+                     <name>anyType</name>
+                     <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                  </base-type>
+                  <content type="complex">
+                     <mixed-flag>false</mixed-flag>
+                     <particle compositor="sequence" type="model-group">
+                        <particles>
+                           <particle type="element-ref">
+                              <name>components</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testCases</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testAssertions</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>executableTestSuites</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testObjectTypes</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testObjects</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>credentials</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>users</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>tagDtos</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>translationTemplateBundles</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>resultStyles</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>abstractTestSuites</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testRunTemplates</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testRuns</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>testTaskResults</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <min-occurs>0</min-occurs>
                            </particle>
                         </particles>
@@ -966,9 +1089,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -1023,7 +1177,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -1055,7 +1227,7 @@
                               </particles>
                            </particle>
                            <particle type="element">
-                              <name>testDriverRef</name>
+                              <name>testDriver</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <type type="complex-type-ref">
                                  <name>RefType</name>
@@ -1063,7 +1235,7 @@
                               </type>
                            </particle>
                            <particle type="element">
-                              <name>translationTemplate</name>
+                              <name>translationTemplateCollection</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <type type="complex-type-ref">
                                  <name>RefType</name>
@@ -1233,6 +1405,90 @@
                </type>
             </element-declaration>
             <element-declaration type="element">
+               <name>LangTranslationTemplateCollection</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+               <type type="complex-type">
+                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                  <abstract>false</abstract>
+                  <derivation-method>restriction</derivation-method>
+                  <base-type type="complex-type-ref">
+                     <name>anyType</name>
+                     <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                  </base-type>
+                  <attributes>
+                     <attribute type="attribute">
+                        <name>name</name>
+                        <use>optional</use>
+                        <type type="simple-type-ref">
+                           <name>string</name>
+                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        </type>
+                     </attribute>
+                  </attributes>
+                  <content type="complex">
+                     <mixed-flag>false</mixed-flag>
+                     <particle compositor="sequence" type="model-group">
+                        <particles>
+                           <particle type="element">
+                              <name>translationTemplates</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <particles>
+                                          <particle type="element">
+                                             <name>TranslationTemplate</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             <type type="complex-type">
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                <abstract>false</abstract>
+                                                <derivation-method>extension</derivation-method>
+                                                <base-type type="simple-type-ref">
+                                                   <name>stringWithTokens</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                </base-type>
+                                                <attributes>
+                                                   <attribute type="attribute">
+                                                      <name>language</name>
+                                                      <use>required</use>
+                                                      <type type="simple-type-ref">
+                                                         <name>language</name>
+                                                         <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                      </type>
+                                                   </attribute>
+                                                   <attribute type="attribute">
+                                                      <name>name</name>
+                                                      <use>required</use>
+                                                      <type type="simple-type-ref">
+                                                         <name>string</name>
+                                                         <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                      </type>
+                                                   </attribute>
+                                                </attributes>
+                                                <content type="simple"/>
+                                             </type>
+                                             <min-occurs>0</min-occurs>
+                                             <max-occurs>2147483640</max-occurs>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                           </particle>
+                        </particles>
+                     </particle>
+                  </content>
+               </type>
+            </element-declaration>
+            <element-declaration type="element">
                <name>ParameterList</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <type type="complex-type">
@@ -1311,7 +1567,7 @@
                                              <name>description</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
-                                                <name>TranslationTemplateParameterType</name>
+                                                <name>TranslationTemplateArgumentType</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              </type>
                                              <min-occurs>0</min-occurs>
@@ -1390,7 +1646,7 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>typeRef</name>
+                                    <name>type</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type-ref">
                                        <name>RefType</name>
@@ -1398,11 +1654,11 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>translationTemplateRef</name>
+                                    <name>translationTemplateBundle</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>string</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     </type>
                                  </particle>
                               </particles>
@@ -1431,7 +1687,7 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>typeRef</name>
+                                    <name>type</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type-ref">
                                        <name>RefType</name>
@@ -1439,11 +1695,11 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>translationTemplateRef</name>
+                                    <name>translationTemplateBundle</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>string</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     </type>
                                  </particle>
                               </particles>
@@ -1595,7 +1851,7 @@
                                        <min-occurs>0</min-occurs>
                                        <particles>
                                           <particle type="element">
-                                             <name>credentials</name>
+                                             <name>credential</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
                                                 <name>RefType</name>
@@ -1690,9 +1946,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -1747,7 +2034,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -1963,9 +2268,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -2020,7 +2356,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -2243,7 +2597,7 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>typeRef</name>
+                                    <name>type</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type-ref">
                                        <name>RefType</name>
@@ -2251,11 +2605,11 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>translationTemplateRef</name>
+                                    <name>translationTemplateBundle</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>string</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     </type>
                                  </particle>
                               </particles>
@@ -2279,7 +2633,7 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>typeRef</name>
+                                    <name>type</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type-ref">
                                        <name>RefType</name>
@@ -2287,11 +2641,11 @@
                                     </type>
                                  </particle>
                                  <particle type="element">
-                                    <name>translationTemplateRef</name>
+                                    <name>translationTemplateBundle</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>string</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     </type>
                                  </particle>
                               </particles>
@@ -2400,7 +2754,7 @@
                                              <name>message</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
-                                                <name>TranslationTemplateParameterType</name>
+                                                <name>TranslationTemplateArgumentType</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              </type>
                                           </particle>
@@ -2497,7 +2851,7 @@
                                              <name>reason</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
-                                                <name>TranslationTemplateParameterType</name>
+                                                <name>TranslationTemplateArgumentType</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              </type>
                                           </particle>
@@ -2809,9 +3163,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -2866,7 +3251,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3023,7 +3426,7 @@
                                     <particle compositor="sequence" type="model-group">
                                        <particles>
                                           <particle type="element">
-                                             <name>testObjectTypeRef</name>
+                                             <name>testObjectType</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                              <type type="complex-type-ref">
                                                 <name>RefType</name>
@@ -3218,9 +3621,40 @@
                                  <particle type="element">
                                     <name>replacedBy</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
+                                    <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <abstract>false</abstract>
+                                       <derivation-method>extension</derivation-method>
+                                       <base-type type="complex-type-ref">
+                                          <name>RefType</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       </base-type>
+                                       <attributes>
+                                          <attribute type="attribute">
+                                             <name>ref</name>
+                                             <use>required</use>
+                                             <type type="simple-type-ref">
+                                                <name>IdRefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                       </attributes>
+                                       <content type="complex">
+                                          <mixed-flag>false</mixed-flag>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element">
+                                                   <name>reason</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                   <type type="simple-type-ref">
+                                                      <name>string</name>
+                                                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                                   </type>
+                                                   <min-occurs>0</min-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                       </content>
                                     </type>
                                     <min-occurs>0</min-occurs>
                                  </particle>
@@ -3275,7 +3709,25 @@
                                     <min-occurs>0</min-occurs>
                                  </particle>
                                  <particle type="element">
-                                    <name>tagDtos</name>
+                                    <name>remoteResource</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>httpUriType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>localPath</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>anyURI</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                    <min-occurs>0</min-occurs>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>tags</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                                     <type type="complex-type">
                                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3338,6 +3790,19 @@
                                                       <min-occurs>0</min-occurs>
                                                       <max-occurs>2147483640</max-occurs>
                                                       <particles>
+                                                         <particle compositor="sequence" type="model-group">
+                                                            <particles>
+                                                               <particle type="element">
+                                                                  <name>parent</name>
+                                                                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                                  <type type="complex-type-ref">
+                                                                     <name>RefType</name>
+                                                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                                                  </type>
+                                                                  <min-occurs>0</min-occurs>
+                                                               </particle>
+                                                            </particles>
+                                                         </particle>
                                                          <particle type="element">
                                                             <name>executableTestSuite</name>
                                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3596,6 +4061,36 @@
                               <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
+                              <name>messages</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <max-occurs>2147483640</max-occurs>
+                                       <particles>
+                                          <particle type="element">
+                                             <name>message</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             <type type="complex-type-ref">
+                                                <name>TranslationTemplateArgumentType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             </type>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
                               <name>testAssertionResults</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                               <type type="complex-type">
@@ -3626,7 +4121,7 @@
                </type>
             </element-declaration>
             <element-declaration type="element">
-               <name>TestSuiteResult</name>
+               <name>TestModuleResult</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <type type="complex-type">
                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3756,6 +4251,19 @@
                         <particles>
                            <particle compositor="sequence" type="model-group">
                               <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
                                  <particle type="element">
                                     <name>executableTestSuite</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -3787,42 +4295,13 @@
                                  </particle>
                               </particles>
                            </particle>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle type="element">
-                                    <name>executableTestSuite</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>testObject</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>styleResultWith</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                    </type>
-                                    <min-occurs>0</min-occurs>
-                                 </particle>
-                                 <particle type="element-ref">
-                                    <name>ArgumentList</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                 </particle>
-                              </particles>
-                           </particle>
-                           <particle type="element-ref">
-                              <name>TestTaskResult</name>
+                           <particle type="element">
+                              <name>testTaskResult</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="complex-type-ref">
+                                 <name>RefType</name>
+                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              </type>
                            </particle>
                         </particles>
                      </particle>
@@ -3928,70 +4407,14 @@
                                  </content>
                               </type>
                            </particle>
-                           <particle type="element">
-                              <name>testSuiteResults</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                              <type type="complex-type">
-                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                 <abstract>false</abstract>
-                                 <derivation-method>restriction</derivation-method>
-                                 <base-type type="complex-type-ref">
-                                    <name>anyType</name>
-                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                 </base-type>
-                                 <content type="complex">
-                                    <mixed-flag>false</mixed-flag>
-                                    <particle compositor="sequence" type="model-group">
-                                       <max-occurs>2147483640</max-occurs>
-                                       <particles>
-                                          <particle type="element-ref">
-                                             <name>TestSuiteResult</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                                          </particle>
-                                       </particles>
-                                    </particle>
-                                 </content>
-                              </type>
-                           </particle>
+
                         </particles>
                      </particle>
                   </content>
                </type>
             </element-declaration>
             <element-declaration type="element">
-               <name>TranslationTemplate</name>
-               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               <type type="complex-type">
-                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                  <abstract>false</abstract>
-                  <derivation-method>extension</derivation-method>
-                  <base-type type="simple-type-ref">
-                     <name>stringWithTokens</name>
-                     <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                  </base-type>
-                  <attributes>
-                     <attribute type="attribute">
-                        <name>lang</name>
-                        <use>required</use>
-                        <type type="simple-type-ref">
-                           <name>language</name>
-                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                        </type>
-                     </attribute>
-                     <attribute type="attribute">
-                        <name>name</name>
-                        <use>required</use>
-                        <type type="simple-type-ref">
-                           <name>string</name>
-                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                        </type>
-                     </attribute>
-                  </attributes>
-                  <content type="simple"/>
-               </type>
-            </element-declaration>
-            <element-declaration type="element">
-               <name>TranslationTemplateCollection</name>
+               <name>TranslationTemplateBundle</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <type type="complex-type">
                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -4011,14 +4434,6 @@
                         </type>
                      </attribute>
                      <attribute type="attribute">
-                        <name>lang</name>
-                        <use>required</use>
-                        <type type="simple-type-ref">
-                           <name>language</name>
-                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                        </type>
-                     </attribute>
-                     <attribute type="attribute">
                         <name>source</name>
                         <use>optional</use>
                         <type type="simple-type-ref">
@@ -4028,13 +4443,33 @@
                      </attribute>
                   </attributes>
                   <content type="complex">
-                     <mixed-flag>true</mixed-flag>
+                     <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
-                        <min-occurs>0</min-occurs>
                         <particles>
-                           <particle type="element-ref">
-                              <name>TranslationTemplate</name>
+                           <particle type="element">
+                              <name>translationTemplateCollections</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <particles>
+                                          <particle type="element-ref">
+                                             <name>LangTranslationTemplateCollection</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                             <max-occurs>2147483640</max-occurs>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
                            </particle>
                         </particles>
                      </particle>
@@ -4122,6 +4557,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4147,6 +4583,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4172,6 +4609,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4197,6 +4635,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4222,6 +4661,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4247,6 +4687,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4272,6 +4713,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4297,6 +4739,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4322,6 +4765,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4347,6 +4791,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4372,6 +4817,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4397,6 +4843,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4409,7 +4856,7 @@
                </type>
             </element-declaration>
             <element-declaration type="element">
-               <name>translationTemplates</name>
+               <name>testTaskResults</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <type type="complex-type">
                   <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -4422,10 +4869,37 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
-                              <name>TranslationTemplateCollection</name>
+                              <name>TestTaskResult</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                           </particle>
+                        </particles>
+                     </particle>
+                  </content>
+               </type>
+            </element-declaration>
+            <element-declaration type="element">
+               <name>translationTemplateBundles</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+               <type type="complex-type">
+                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                  <abstract>false</abstract>
+                  <derivation-method>restriction</derivation-method>
+                  <base-type type="complex-type-ref">
+                     <name>anyType</name>
+                     <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                  </base-type>
+                  <content type="complex">
+                     <mixed-flag>false</mixed-flag>
+                     <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
+                        <max-occurs>2147483640</max-occurs>
+                        <particles>
+                           <particle type="element-ref">
+                              <name>TranslationTemplateBundle</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                            </particle>
                         </particles>
@@ -4447,6 +4921,7 @@
                   <content type="complex">
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
+                        <min-occurs>0</min-occurs>
                         <max-occurs>2147483640</max-occurs>
                         <particles>
                            <particle type="element-ref">
@@ -4460,35 +4935,6 @@
             </element-declaration>
          </element-declarations>
          <type-definitions>
-            <type-definition type="complex-type">
-               <name>ExternalReference</name>
-               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               <abstract>false</abstract>
-               <derivation-method>extension</derivation-method>
-               <base-type type="complex-type-ref">
-                  <name>RefType</name>
-                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               </base-type>
-               <attributes>
-                  <attribute type="attribute">
-                     <name>href</name>
-                     <use>required</use>
-                     <type type="simple-type-ref">
-                        <name>ExternalUriType</name>
-                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                     </type>
-                  </attribute>
-                  <attribute type="attribute">
-                     <name>title</name>
-                     <use>optional</use>
-                     <type type="simple-type-ref">
-                        <name>string</name>
-                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                     </type>
-                  </attribute>
-               </attributes>
-               <content type="empty"/>
-            </type-definition>
             <type-definition type="simple-type">
                <name>ExternalUriType</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -4506,27 +4952,6 @@
                   <name>IDREF</name>
                   <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                </base-type>
-            </type-definition>
-            <type-definition type="complex-type">
-               <name>IdReference</name>
-               <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               <abstract>false</abstract>
-               <derivation-method>extension</derivation-method>
-               <base-type type="complex-type-ref">
-                  <name>RefType</name>
-                  <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               </base-type>
-               <attributes>
-                  <attribute type="attribute">
-                     <name>ref</name>
-                     <use>required</use>
-                     <type type="simple-type-ref">
-                        <name>IdRefType</name>
-                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                     </type>
-                  </attribute>
-               </attributes>
-               <content type="empty"/>
             </type-definition>
             <type-definition type="simple-type">
                <name>IdType</name>
@@ -4549,12 +4974,22 @@
             <type-definition type="complex-type">
                <name>RefType</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-               <abstract>true</abstract>
+               <abstract>false</abstract>
                <derivation-method>restriction</derivation-method>
                <base-type type="complex-type-ref">
                   <name>anyType</name>
                   <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                </base-type>
+               <attributes>
+                  <attribute type="attribute">
+                     <name>ref</name>
+                     <use>required</use>
+                     <type type="simple-type-ref">
+                        <name>IdRefType</name>
+                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                     </type>
+                  </attribute>
+               </attributes>
                <content type="empty"/>
             </type-definition>
             <type-definition type="simple-type">
@@ -4567,7 +5002,7 @@
                </base-type>
             </type-definition>
             <type-definition type="complex-type">
-               <name>TranslationTemplateParameterType</name>
+               <name>TranslationTemplateArgumentType</name>
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <abstract>false</abstract>
                <derivation-method>restriction</derivation-method>
@@ -4724,7 +5159,7 @@
                         </type>
                      </particle>
                      <particle type="element">
-                        <name>typeRef</name>
+                        <name>type</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                         <type type="complex-type-ref">
                            <name>RefType</name>
@@ -4732,11 +5167,11 @@
                         </type>
                      </particle>
                      <particle type="element">
-                        <name>translationTemplateRef</name>
+                        <name>translationTemplateBundle</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                        <type type="simple-type-ref">
-                           <name>string</name>
-                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        <type type="complex-type-ref">
+                           <name>RefType</name>
+                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                         </type>
                      </particle>
                   </particles>
@@ -4865,9 +5300,40 @@
                      <particle type="element">
                         <name>replacedBy</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
-                        <type type="complex-type-ref">
-                           <name>RefType</name>
+                        <type type="complex-type">
                            <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                           <abstract>false</abstract>
+                           <derivation-method>extension</derivation-method>
+                           <base-type type="complex-type-ref">
+                              <name>RefType</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                           </base-type>
+                           <attributes>
+                              <attribute type="attribute">
+                                 <name>ref</name>
+                                 <use>required</use>
+                                 <type type="simple-type-ref">
+                                    <name>IdRefType</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                 </type>
+                              </attribute>
+                           </attributes>
+                           <content type="complex">
+                              <mixed-flag>false</mixed-flag>
+                              <particle compositor="sequence" type="model-group">
+                                 <particles>
+                                    <particle type="element">
+                                       <name>reason</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                                       <type type="simple-type-ref">
+                                          <name>string</name>
+                                          <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                       </type>
+                                       <min-occurs>0</min-occurs>
+                                    </particle>
+                                 </particles>
+                              </particle>
+                           </content>
                         </type>
                         <min-occurs>0</min-occurs>
                      </particle>
@@ -4922,7 +5388,25 @@
                         <min-occurs>0</min-occurs>
                      </particle>
                      <particle type="element">
-                        <name>tagDtos</name>
+                        <name>remoteResource</name>
+                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                        <type type="simple-type-ref">
+                           <name>httpUriType</name>
+                           <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                        </type>
+                        <min-occurs>0</min-occurs>
+                     </particle>
+                     <particle type="element">
+                        <name>localPath</name>
+                        <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                        <type type="simple-type-ref">
+                           <name>anyURI</name>
+                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        </type>
+                        <min-occurs>0</min-occurs>
+                     </particle>
+                     <particle type="element">
+                        <name>tags</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                         <type type="complex-type">
                            <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -5045,6 +5529,19 @@
                <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
                <model-group compositor="sequence" type="model-group">
                   <particles>
+                     <particle compositor="sequence" type="model-group">
+                        <particles>
+                           <particle type="element">
+                              <name>parent</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              <type type="complex-type-ref">
+                                 <name>RefType</name>
+                                 <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                        </particles>
+                     </particle>
                      <particle type="element">
                         <name>executableTestSuite</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/1.0</namespace-url>
@@ -5078,6 +5575,34 @@
                </model-group>
             </model-group-definition>
          </model-group-definitions>
+      </namespace>
+      <namespace>
+         <namespace-prefix>etfAppinfo</namespace-prefix>
+         <namespace-prefix-is-user-defined>false</namespace-prefix-is-user-defined>
+         <namespace-url>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-url>
+         <declared>true</declared>
+         <element-declarations>
+            <element-declaration type="element">
+               <name>cacheStrategy</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-url>
+               <type type="simple-type">
+                  <namespace-url>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-url>
+                  <variety>atomic</variety>
+                  <base-type type="simple-type-ref">
+                     <name>string</name>
+                     <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                  </base-type>
+               </type>
+            </element-declaration>
+            <element-declaration type="element">
+               <name>replaceableByExternalRef</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-url>
+               <type type="simple-type-ref">
+                  <name>boolean</name>
+                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+               </type>
+            </element-declaration>
+         </element-declarations>
       </namespace>
    </declared-namespaces>
 </xml-schema>

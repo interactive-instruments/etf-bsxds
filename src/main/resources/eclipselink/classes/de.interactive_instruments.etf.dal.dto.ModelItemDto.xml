@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-02T13:33:23.259+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-07-06T23:13:33.925+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>parent</name>
@@ -40,7 +40,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -48,7 +48,16 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
+      </method>
+      <method>
+         <name>toString</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
    </methods>
 </class>

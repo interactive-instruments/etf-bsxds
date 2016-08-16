@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
    <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</name>
-   <modifier>1</modifier>
+   <modifier>9</modifier>
    <declaring-type-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
    </declaring-type-handle>
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-13T01:29:17.9+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-11T01:17:50.564+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>token</name>
@@ -32,14 +32,12 @@
          <name>TranslationTemplateParameterDto$Argument</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>TranslationTemplateParameterDto$Argument</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
          <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
             <method-parameter>
                <type-declaration>
                   <type-handle>

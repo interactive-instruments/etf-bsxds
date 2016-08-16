@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-02T13:33:23.26+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-07-05T18:32:33.808+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>author</name>
@@ -143,7 +143,7 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>getTags</name>
+         <name>getTagDtos</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -168,7 +168,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -176,7 +176,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setCreationDate</name>
@@ -186,7 +186,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -194,7 +194,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setItemHash</name>
@@ -204,7 +204,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -213,7 +213,7 @@
                   <dimensionality>1</dimensionality>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setLastEditor</name>
@@ -223,7 +223,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -231,7 +231,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setLastUpdateDate</name>
@@ -241,7 +241,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -249,7 +249,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setReplacedBy</name>
@@ -259,7 +259,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -267,17 +267,17 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
-         <name>setTags</name>
+         <name>setTagDtos</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -285,7 +285,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>setVersion</name>
@@ -295,7 +295,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
+         <method-parameterSet>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -303,7 +303,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameters>
+         </method-parameterSet>
       </method>
       <method>
          <name>toString</name>
