@@ -10,35 +10,36 @@ declare variable $qids external := "";
 
 declare variable $offset external := 0;
 declare variable $limit external := 0;
+declare variable $levelOfDetail external := 'SIMPLE';
 
-declare function local:get-translationtemplatebundles($offset as xs:integer, $limit as xs:integer) {
+declare function local:get-tags($offset as xs:integer, $limit as xs:integer) {
         <DsResultSet
         xmlns="http://www.interactive-instruments.de/etf/1.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 file:/../src/main/resources/schema/model/resultSet.xsd">
-            <translationTemplateBundles>
-                {etfxdb:get-all(db:open('etf-ds')/etf:TranslationTemplateBundle, $offset, $limit)}
-            </translationTemplateBundles>
+            <tags>
+                {etfxdb:get-all(db:open('etf-ds')/etf:Tag, $offset, $limit)}
+            </tags>
         </DsResultSet>
 };
 
-declare function local:get-translationtemplatebundle($ids as xs:string*) {
-    let $translationTemplateBundles := db:open('etf-ds')/etf:TranslationTemplateBundle[@id = $ids]
+declare function local:get-tag($ids as xs:string*) {
+    let $tag := db:open('etf-ds')/etf:Tag[@id = $ids]
     return
         <DsResultSet
         xmlns="http://www.interactive-instruments.de/etf/1.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 file:/../src/main/resources/schema/model/resultSet.xsd">
-            <translationTemplateBundles>
-                {$translationTemplateBundles}
-            </translationTemplateBundles>
+            <tags>
+                {$tag}
+            </tags>
         </DsResultSet>
 };
 
 if ($function = 'byId')
 then
-    local:get-translationtemplatebundle($qids)
+    local:get-tag($qids)
 else
-    local:get-translationtemplatebundles($offset, $limit)
+    local:get-tags($offset, $limit)

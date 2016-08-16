@@ -10,35 +10,36 @@ declare variable $qids external := "";
 
 declare variable $offset external := 0;
 declare variable $limit external := 0;
+declare variable $levelOfDetail external := 'SIMPLE';
 
-declare function local:get-translationtemplatebundles($offset as xs:integer, $limit as xs:integer) {
+declare function local:get-testitemtypes($offset as xs:integer, $limit as xs:integer) {
         <DsResultSet
         xmlns="http://www.interactive-instruments.de/etf/1.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 file:/../src/main/resources/schema/model/resultSet.xsd">
-            <translationTemplateBundles>
-                {etfxdb:get-all(db:open('etf-ds')/etf:TranslationTemplateBundle, $offset, $limit)}
-            </translationTemplateBundles>
+            <testItemTypes>
+                {etfxdb:get-all(db:open('etf-ds')/etf:TestItemType, $offset, $limit)}
+            </testItemTypes>
         </DsResultSet>
 };
 
-declare function local:get-translationtemplatebundle($ids as xs:string*) {
-    let $translationTemplateBundles := db:open('etf-ds')/etf:TranslationTemplateBundle[@id = $ids]
+declare function local:get-testitemtype($ids as xs:string*) {
+    let $testItemType := db:open('etf-ds')/etf:TestItemType[@id = $ids]
     return
         <DsResultSet
         xmlns="http://www.interactive-instruments.de/etf/1.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 file:/../src/main/resources/schema/model/resultSet.xsd">
-            <translationTemplateBundles>
-                {$translationTemplateBundles}
-            </translationTemplateBundles>
+            <testItemTypes>
+                {$testItemType}
+            </testItemTypes>
         </DsResultSet>
 };
 
 if ($function = 'byId')
 then
-    local:get-translationtemplatebundle($qids)
+    local:get-testitemtype($qids)
 else
-    local:get-translationtemplatebundles($offset, $limit)
+    local:get-testitemtypes($offset, $limit)
