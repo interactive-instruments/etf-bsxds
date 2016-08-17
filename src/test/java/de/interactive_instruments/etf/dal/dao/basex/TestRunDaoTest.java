@@ -56,7 +56,7 @@ public class TestRunDaoTest {
 	@AfterClass
 	public static void tearDown() throws StoreException, ConfigurationException, InitializationException, InvalidStateTransitionException, ObjectWithIdNotFoundException {
 		TestTaskResultDaoTest.tearDown();
-		BsxTestUtil.addTest(BsxTestUtil.TR_DTO_1);
+		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TR_DTO_1.getId());
 	}
 
 	@Before

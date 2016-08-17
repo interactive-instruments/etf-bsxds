@@ -281,7 +281,7 @@ class BsxTestUtil {
 								messages1.addTokenValue("TOKEN.2", "Value2");
 								messages1.addTokenValue("TOKEN.3", "Value3");
 								final TranslationArgumentCollectionDto messages2 = new TranslationArgumentCollectionDto();
-								messages2.setRefTemplateName("Template.2");
+								messages2.setRefTemplateName("TR.Template.2");
 								messages2.addTokenValue("TOKEN.4", "Value4");
 								messages2.addTokenValue("TOKEN.5", "Value5");
 								messages2.addTokenValue("TOKEN.6", "Value6");

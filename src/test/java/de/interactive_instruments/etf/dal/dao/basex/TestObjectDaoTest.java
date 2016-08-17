@@ -115,7 +115,9 @@ public class TestObjectDaoTest {
 		try {
 			writeDao.add(invalidDto);
 		} catch (IllegalArgumentException e) {
-			assertFalse(writeDao.exists(invalidDto.getId()));
+			if (!DATA_STORAGE.getLogger().isDebugEnabled()) {
+				assertFalse(writeDao.exists(invalidDto.getId()));
+			}
 			return;
 		}
 		BsxTestUtil.forceDelete(writeDao, invalidDto.getId());
