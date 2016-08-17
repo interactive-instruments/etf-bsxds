@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.interactive-instruments.de/etfws/1.0"
-    targetNamespace="http://www.interactive-instruments.de/etfws/1.0" xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
-    elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.interactive-instruments.de/etfws/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etfws/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/2.0" elementFormDefault="qualified"
+    version="1.0">
 
     <xs:annotation>
         <!-- Author: Jon Herrmann (interactive instruments) -->
-        <xs:documentation xml:lang="en">run-monitoring.xsd, (c) 2016 interactive instruments, part of ETF, licensed under the
-            Apache License Version 2.0 </xs:documentation>
+        <xs:documentation xml:lang="en">run-monitoring.xsd, (c) 2016 interactive instruments, part
+            of ETF, licensed under the Apache License Version 2.0 </xs:documentation>
     </xs:annotation>
 
     <!-- =============================================================== -->
     <!-- ================== includes and imports ======================= -->
     <!-- =============================================================== -->
-    <xs:import namespace="http://www.interactive-instruments.de/etf/1.0" schemaLocation="../basic/basicTypes.xsd"/>
-    <xs:include schemaLocation="serviceTypes.xsd"/>
+    <xs:import namespace="http://www.interactive-instruments.de/etf/2.0"
+        schemaLocation="../basic/basicTypes.xsd"/>
     <!-- =============================================================== -->
 
     <!-- ======================== elements ============================= -->
     <xs:element name="TMesg" type="TaskMessageType"/>
     <xs:element name="TStructDesc" type="TaskStructureDescriptionType"/>
     <xs:element name="TStructUpdt" type="TaskStructureUpdateType"/>
-    <xs:element name="ProgressEventLog" type="ProgressEventLogType" substitutionGroup="Item"/>
-    <xs:element name="Progress" type="ProgressType" substitutionGroup="Item">
+    <xs:element name="ProgressEventLog" type="ProgressEventLogType"/>
+    <xs:element name="Progress" type="ProgressType">
         <xs:unique name="SequenceNumber">
             <xs:selector xpath="./*/*"/>
             <xs:field xpath="@seq"/>
@@ -121,7 +123,8 @@
                 </xs:attribute>
                 <xs:attribute name="ref" type="xs:string" use="required">
                     <xs:annotation>
-                        <xs:documentation>ID of the structured item that is updated </xs:documentation>
+                        <xs:documentation>ID of the structured item that is updated
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
                 <xs:attributeGroup ref="MonitoringAttributeGroup"/>
@@ -162,8 +165,8 @@
                 <xs:element ref="ProgressEventLog"/>
                 <xs:element name="next">
                     <xs:annotation>
-                        <xs:documentation> Link to the next progress if multiple test tasks in a test run exist and this progress
-                            has been finished</xs:documentation>
+                        <xs:documentation> Link to the next progress if multiple test tasks in a
+                            test run exist and this progress has been finished</xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:attribute name="href" type="etf:httpUriType"/>
@@ -171,7 +174,8 @@
                 </xs:element>
                 <xs:element name="result">
                     <xs:annotation>
-                        <xs:documentation> Link to result if all test tasks in a test run have ended </xs:documentation>
+                        <xs:documentation> Link to result if all test tasks in a test run have ended
+                        </xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:attribute name="href" type="etf:httpUriType"/>
