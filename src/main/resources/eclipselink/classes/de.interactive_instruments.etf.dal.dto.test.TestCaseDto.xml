@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.602+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.254+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>dependencies</name>
@@ -96,4 +96,9 @@
          </method-parameters>
       </method>
    </methods>
+   <type-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto$TestCaseDependencyDto</type-name>
+      </class-handle>
+   </type-handles>
 </class>

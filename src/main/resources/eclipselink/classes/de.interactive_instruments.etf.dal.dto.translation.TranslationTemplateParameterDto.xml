@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
-   <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</name>
+   <name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</name>
    <modifier>1</modifier>
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
@@ -28,7 +28,7 @@
    </attributes>
    <methods>
       <method>
-         <name>TranslationTemplateParameterDto</name>
+         <name>TranslationArgumentCollectionDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
       </method>
@@ -105,7 +105,7 @@
    </methods>
    <type-handles>
       <class-handle>
-         <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</type-name>
+         <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</type-name>
       </class-handle>
    </type-handles>
 </class>

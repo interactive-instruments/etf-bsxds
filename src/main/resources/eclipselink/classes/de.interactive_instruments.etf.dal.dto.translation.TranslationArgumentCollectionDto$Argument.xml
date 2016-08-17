@@ -8,7 +8,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.564+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.277+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>token</name>

@@ -5,26 +5,8 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-12T18:22:37.684+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:53:51.042+02:00</last-refresh-timestamp>
    <attributes>
-      <class-attribute>
-         <name>description</name>
-         <modifier>4</modifier>
-         <type-declaration>
-            <type-handle>
-               <type-name>java.lang.String</type-name>
-            </type-handle>
-         </type-declaration>
-      </class-attribute>
-      <class-attribute>
-         <name>id</name>
-         <modifier>4</modifier>
-         <type-declaration>
-            <type-handle>
-               <type-name>java.lang.String</type-name>
-            </type-handle>
-         </type-declaration>
-      </class-attribute>
       <class-attribute>
          <name>vendor</name>
          <modifier>4</modifier>
@@ -51,15 +33,6 @@
          <modifier>1</modifier>
       </method>
       <method>
-         <name>getDescription</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.lang.String</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
          <name>getVendor</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -76,42 +49,6 @@
                <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
-      </method>
-      <method>
-         <name>setDescription</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>setId</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
       </method>
       <method>
          <name>setVendor</name>

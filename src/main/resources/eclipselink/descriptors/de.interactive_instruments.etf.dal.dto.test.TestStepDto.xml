@@ -126,7 +126,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>type/@ref</source-xml-field>
+               <source-xml-field>testItemType/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>

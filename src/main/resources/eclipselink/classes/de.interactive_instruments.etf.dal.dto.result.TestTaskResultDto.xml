@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.604+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.257+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>attachments</name>

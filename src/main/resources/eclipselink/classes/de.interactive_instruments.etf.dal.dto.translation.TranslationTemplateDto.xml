@@ -5,8 +5,17 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.602+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.28+02:00</last-refresh-timestamp>
    <attributes>
+      <class-attribute>
+         <name>IDENTIFIER_PREFIX</name>
+         <modifier>10</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>language</name>
          <modifier>2</modifier>

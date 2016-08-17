@@ -204,7 +204,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>testDriver/@ref</source-xml-field>
+               <source-xml-field>etf:testDriver/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>

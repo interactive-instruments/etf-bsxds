@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.594+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.278+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>arguments</name>
@@ -44,7 +44,7 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

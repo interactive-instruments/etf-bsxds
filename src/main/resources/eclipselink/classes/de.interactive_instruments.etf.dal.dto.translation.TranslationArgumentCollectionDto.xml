@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
-   <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
+   <name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</name>
    <modifier>1</modifier>
    <superclass-handle>
-      <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
+      <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:50:12.274+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.212+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
-         <name>resources</name>
+         <name>arguments</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
@@ -17,23 +17,23 @@
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>testObjectTypes</name>
+         <name>translationTemplateName</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
    </attributes>
    <methods>
       <method>
-         <name>TestObjectDto</name>
+         <name>TranslationArgumentCollectionDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
       </method>
       <method>
-         <name>addResource</name>
+         <name>addTokenValue</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -44,14 +44,39 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</type-name>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>addTestObjectType</name>
+         <name>getRefTemplateName</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getTokenValues</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.Map</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>setRefTemplateName</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -62,74 +87,25 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</type-name>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>getResourceNames</name>
+         <name>toString</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.Set</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
-      </method>
-      <method>
-         <name>getResources</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Collection</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getTestObjectTypes</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.List</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>setResources</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.util.Map</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>setTestObjectTypes</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.util.List</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
       </method>
    </methods>
+   <type-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</type-name>
+      </class-handle>
+   </type-handles>
 </class>

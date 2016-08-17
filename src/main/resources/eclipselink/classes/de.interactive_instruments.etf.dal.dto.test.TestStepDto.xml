@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
    <name>de.interactive_instruments.etf.dal.dto.test.TestStepDto</name>
-   <modifier>17</modifier>
+   <modifier>1</modifier>
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.593+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.218+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>statementForExecution</name>

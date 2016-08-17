@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.604+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.261+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>embeddedData</name>
@@ -49,6 +49,15 @@
          <type-declaration>
             <type-handle>
                <type-name>java.net.URI</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>type</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -101,6 +110,15 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.net.URI</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getType</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -189,6 +207,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>java.net.URI</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setType</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

@@ -3,9 +3,9 @@
    <name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</name>
    <modifier>1</modifier>
    <superclass-handle>
-      <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
+      <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.594+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.266+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>defaultLang</name>

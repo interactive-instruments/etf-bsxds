@@ -79,6 +79,14 @@
          </attribute-handle>
          <xml-field>referencedData/@href</xml-field>
       </mapping>
+      <mapping type="xml-direct">
+         <name>type</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</attribute-declaring-type-name>
+            <attribute-name>type</attribute-name>
+         </attribute-handle>
+         <xml-field>@type</xml-field>
+      </mapping>
    </mappings>
    <inherited-attribute-handles>
       <attribute-handle>

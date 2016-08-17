@@ -57,7 +57,7 @@
          </attribute-handle>
          <uses-container-accessor>false</uses-container-accessor>
          <reference-descriptor-handle>
-            <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</descriptor-name>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</descriptor-name>
          </reference-descriptor-handle>
          <xpath>messages/message</xpath>
          <container-policy type="list">

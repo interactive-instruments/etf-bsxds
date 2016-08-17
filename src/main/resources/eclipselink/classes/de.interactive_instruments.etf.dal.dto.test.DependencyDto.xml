@@ -21,7 +21,7 @@
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -46,7 +46,7 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -80,7 +80,7 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

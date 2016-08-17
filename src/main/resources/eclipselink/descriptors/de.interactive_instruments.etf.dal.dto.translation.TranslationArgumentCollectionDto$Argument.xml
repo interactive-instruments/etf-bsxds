@@ -10,11 +10,7 @@
       <caching-policy/>
       <query-manager type="ox"/>
       <locking-policy type="ox"/>
-      <primary-key-policy>
-         <primary-keys>
-            <xml-field>@token</xml-field>
-         </primary-keys>
-      </primary-key-policy>
+      <primary-key-policy/>
    </transactional-policy>
    <mappings>
       <mapping type="xml-direct">

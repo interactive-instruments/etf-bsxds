@@ -97,7 +97,7 @@
             <attribute-name>parent</attribute-name>
          </attribute-handle>
          <reference-descriptor-handle>
-            <descriptor-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</descriptor-name>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</descriptor-name>
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>

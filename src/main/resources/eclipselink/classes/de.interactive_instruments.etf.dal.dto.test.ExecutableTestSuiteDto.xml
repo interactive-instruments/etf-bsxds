@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-11T01:17:50.603+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-17T02:50:12.282+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
@@ -380,4 +380,9 @@
          </method-parameters>
       </method>
    </methods>
+   <type-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto$ExecutableTestSuiteDependencyDto</type-name>
+      </class-handle>
+   </type-handles>
 </class>
