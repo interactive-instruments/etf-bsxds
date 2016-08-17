@@ -38,8 +38,8 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 	private final GetDtoResultCmd<T> getter;
 	private T cachedDto;
 
-	BsxPreparedDto(final EID id, final XQuery xquery, final BsxDsCtx ctx, final GetDtoResultCmd<T> getter) {
-		super(xquery, ctx);
+	BsxPreparedDto(final EID id, final BsXQuery bsXquery, final GetDtoResultCmd<T> getter) {
+		super(bsXquery);
 		this.id = id;
 		this.getter = getter;
 	}
@@ -57,16 +57,16 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 			if (cachedDto == null) {
 				try {
 					final ByteArrayOutputStream output = new ByteArrayOutputStream();
-					xquery.execute(ctx.getBsxCtx(), output);
-					final DsResultSet result = (DsResultSet) ctx.createUnmarshaller().unmarshal(
+					bsXquery.execute(output);
+					final DsResultSet result = (DsResultSet) bsXquery.getCtx().createUnmarshaller().unmarshal(
 							new ByteArrayInputStream(output.toByteArray()));
 					cachedDto = getter.getMainDto(result);
 					if (cachedDto == null) {
-						ctx.getLogger().error("Query ID: {}", "EID" + id);
+						bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
 						throw new IllegalStateException("Data storage returned no data for \"" + id + "\"");
 					}
 				} catch (IOException | JAXBException e) {
-					ctx.getLogger().error("Query ID: {}", "EID" + id);
+					bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
 					logError(e);
 					throw new IllegalStateException(e);
 				}
@@ -93,7 +93,7 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer("BsxPreparedDto{");
-		sb.append("xquery=").append(xquery.toString());
+		sb.append("xquery=").append(bsXquery.toString());
 		sb.append(", id=").append(id);
 		sb.append(", cachedDto=").append(cachedDto != null ? cachedDto.getId() : "unresolved");
 		sb.append('}');

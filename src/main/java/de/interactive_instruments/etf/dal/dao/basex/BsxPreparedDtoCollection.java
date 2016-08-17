@@ -38,8 +38,8 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	private List<T> cachedDtos;
 	private HashMap<EID, T> mappedDtos;
 
-	BsxPreparedDtoCollection(final XQuery xquery, final BsxDsCtx ctx, final GetDtoResultCmd<T> getter) {
-		super(xquery, ctx);
+	BsxPreparedDtoCollection(final BsXQuery bsXQuery, final GetDtoResultCmd<T> getter) {
+		super(bsXQuery);
 		this.getter = getter;
 	}
 
@@ -134,8 +134,8 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 		if (cachedDtos == null) {
 			try {
 				final ByteArrayOutputStream output = new ByteArrayOutputStream();
-				xquery.execute(ctx.getBsxCtx(), output);
-				final DsResultSet result = (DsResultSet) ctx.createUnmarshaller().unmarshal(
+				bsXquery.execute(output);
+				final DsResultSet result = (DsResultSet) bsXquery.getCtx().createUnmarshaller().unmarshal(
 						new ByteArrayInputStream(output.toByteArray()));
 				cachedDtos = getter.getMainDtos(result);
 				if (cachedDtos == null) {
@@ -182,13 +182,13 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 				}
 			}
 		}
-		return this.xquery.toString().compareTo(bsxO.xquery.toString());
+		return this.bsXquery.toString().compareTo(bsxO.bsXquery.toString());
 	}
 
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer("BsxPreparedDtoCollection{");
-		sb.append("xquery=").append(xquery.toString());
+		sb.append("xquery=").append(bsXquery.toString());
 		sb.append(", cachedDtos=").append(cachedDtos != null ? cachedDtos.size() : "unresolved");
 		sb.append('}');
 		return sb.toString();

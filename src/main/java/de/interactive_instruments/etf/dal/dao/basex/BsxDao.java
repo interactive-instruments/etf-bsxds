@@ -116,8 +116,8 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	@Override
 	public PreparedDtoCollection<T> getAll(final Filter filter) throws StoreException {
 		try {
-			final XQuery xquery = createPagedQuery(filter);
-			return new BsxPreparedDtoCollection(xquery, ctx, getDtoResultCmd);
+			final BsXQuery bsXQuery = createPagedQuery(filter);
+			return new BsxPreparedDtoCollection(bsXQuery, getDtoResultCmd);
 		} catch (BaseXException e) {
 			ctx.getLogger().error(e.getMessage());
 			throw new StoreException(e);
@@ -130,8 +130,8 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 			throw new ObjectWithIdNotFoundException(this, eid.getId());
 		}
 		try {
-			final XQuery xquery = createIdQuery(BsxDataStorage.ID_PREFIX + eid.getId(), filter);
-			return new BsxPreparedDto(eid, xquery, ctx, getDtoResultCmd);
+			final BsXQuery bsXQuery = createIdQuery(BsxDataStorage.ID_PREFIX + eid.getId(), filter);
+			return new BsxPreparedDto(eid, bsXQuery, getDtoResultCmd);
 		} catch (IOException e) {
 			ctx.getLogger().error(e.getMessage());
 			throw new ObjectWithIdNotFoundException(this, eid.getId());
@@ -143,12 +143,17 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 		throw new StoreException("Not implemented yet");
 	}
 
-	private XQuery createPagedQuery(final Filter filter) throws BaseXException {
-		return new XQuery(xqueryStatement).bind("$offset", String.valueOf(filter.offset()), "xs:integer").bind("$limit", String.valueOf(filter.limit()), "xs:integer").bind("levelOfDetail", filter != null ? String.valueOf(filter.levelOfDetail()) : "SIMPLE").bind("$function", "paged");
+	private BsXQuery createPagedQuery(final Filter filter) throws BaseXException {
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).
+				parameter("function", "paged").
+				parameter("selection", typeName);
 	}
 
-	private XQuery createIdQuery(final String id, final Filter filter) throws BaseXException {
-		return new XQuery(xqueryStatement).bind("$qids", id).bind("levelOfDetail", filter != null ? String.valueOf(filter.levelOfDetail()) : "SIMPLE").bind("$function", "byId");
+	private BsXQuery createIdQuery(final String id, final Filter filter) throws BaseXException {
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).
+				parameter("qids", id).
+				parameter("function", "byId").
+				parameter("selection", typeName);
 	}
 
 	@Override

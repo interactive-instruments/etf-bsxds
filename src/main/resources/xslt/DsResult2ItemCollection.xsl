@@ -10,7 +10,7 @@
     <xsl:param name="serviceUrl" select="'https://localhost/etf'"/>
     <xsl:param name="selection"/>
     <xsl:param name="offset" select="0"/>
-    <xsl:param name="limit" select="100"/>
+    <xsl:param name="limit" select="0"/>
 
     <xsl:key name="ids" match="/etf:DsResultSet/*//*" use="@id"/>
     <xsl:key name="translationNames"
@@ -19,52 +19,54 @@
 
     <xsl:attribute-set name="CollectionAttributes">
         <xsl:attribute name="version">1.0</xsl:attribute>
-        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0
-            file:/Users/herrmann/Projects/etf-fbs/etf-bsxds/src/main/resources/schema/service/service.xsd</xsl:attribute>
+        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 file:/Users/herrmann/Projects/etf-fbs/etf-bsxds/src/main/resources/schema/service/service.xsd</xsl:attribute>
     </xsl:attribute-set>
 
     <!-- =============================================================== -->
     <xsl:template match="/etf:DsResultSet">
         <xsl:element name="EtfItemCollection" use-attribute-sets="CollectionAttributes">
 
-            <xsl:variable name="subSet" select="*[name() = $selection]"/>
+            <xsl:variable name="subSet" select="*[./*[1]/local-name() = $selection]"/>
             <xsl:attribute name="returnedItems" select="count($subSet/*)"/>
-            <xsl:variable name="position" select="format-number( $offset div $limit, '#')"/>
-            <xsl:attribute name="position" select="$position"/>
+            <xsl:if test="count($subSet/*) eq 0">
+                <xsl:message terminate="yes">ERROR: empty collection for selection "<xsl:value-of select="$selection"/>"</xsl:message>
+            </xsl:if>
             <xsl:element name="etf:ref">
                 <xsl:attribute name="href" select="concat($serviceUrl, '/collection?offset=', $offset, '&amp;limit=', $limit)"/>
             </xsl:element>
             <xsl:choose>
-                <xsl:when test="number($position) gt 0">
+                <xsl:when test="number($limit) gt 0">
+                    <xsl:attribute name="position" select="format-number( $offset div $limit, '#')"/>
                     <xsl:element name="etf:previous">
                         <xsl:attribute name="href" select="concat($serviceUrl, '/collection?offset=', ( $offset - $limit ), '&amp;limit=', $limit)"/>
                     </xsl:element>
+                    <xsl:element name="etf:next">
+                        <xsl:attribute name="href" select="concat($serviceUrl, '/collection?offset=', ($offset + $limit), '&amp;limit=', $limit)"/>
+                    </xsl:element>
                 </xsl:when>
             </xsl:choose>
-            <xsl:element name="etf:next">
-                <xsl:attribute name="href" select="concat($serviceUrl, '/collection?offset=', ($offset + $limit), '&amp;limit=', $limit)"/>
-            </xsl:element>
 
 
             <xsl:apply-templates select="$subSet"/>
 
             <!-- additional referencedItems -->
             <xsl:element name="referencedItems">
-                <xsl:apply-templates select="*[not(name() = $selection)]"/>
+                <xsl:apply-templates select="*[not(./*[1]/local-name() = $selection)]"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
 
     <!-- =============================================================== -->
-    <xsl:template match="@* | node()">
+    <!-- filter itemHash and localPath -->
+    <xsl:template match="@* | /etf:DsResultSet//node()[not(self::etf:itemHash or self::etf:localPath)]">
         <xsl:copy>
-            <xsl:apply-templates select="@* | node()"/>
+            <xsl:apply-templates select="@* | node()[not(self::etf:itemHash or self::etf:localPath)]"/>
         </xsl:copy>
     </xsl:template>
 
     <!-- =============================================================== -->
     <xsl:template
-        match="etf:testDriver | etf:tag | etf:testObject | etf:testTaskResult | etf:executableTestSuite | etf:testObjectType | etf:type | etf:translationTemplateBundle">
+        match="*/etf:testDriver | */etf:tag | */etf:testObject | */etf:testObjectType | */etf:testTaskResult | */etf:executableTestSuite | */etf:testObjectType | */etf:type | */etf:translationTemplateBundle">
         <xsl:element name="{name()}">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="type" select="concat(upper-case(substring(local-name(),1,1)), substring(local-name(),2))"/>
@@ -86,7 +88,7 @@
     </xsl:template>
 
     <!-- =============================================================== -->
-    <xsl:template match="etf:translationTemplate">
+    <xsl:template match="*/etf:translationTemplate">
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
@@ -122,7 +124,7 @@
     </xsl:variable>
 
     <!-- =============================================================== -->
-    <xsl:template match="etf:parent">
+    <xsl:template match="*/etf:parent">
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
@@ -155,7 +157,7 @@
     </xsl:variable>
     
     <!-- =============================================================== -->
-    <xsl:template match="etf:resultedFrom">
+    <xsl:template match="*/etf:resultedFrom">
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>

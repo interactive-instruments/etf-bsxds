@@ -15,6 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.basex.core.BaseXException;
@@ -27,6 +28,8 @@ import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StoreException;
 
+import javax.xml.transform.TransformerConfigurationException;
+
 /**
  * Test Object Data Access Object
  *
@@ -36,9 +39,12 @@ final class TestObjectDao extends BsxWriteDao<TestObjectDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	public TestObjectDao(final BsxDsCtx ctx) throws StoreException {
+	public TestObjectDao(final BsxDsCtx ctx) throws StoreException, IOException, TransformerConfigurationException {
 		super("/etf:TestObject", "TestObject", ctx,
 				(dsResultSet) -> dsResultSet.getTestObjects());
+
+		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(this, "xml", "text/xml", "xslt/DsResult2ItemCollection.xsl");
+		outputFormats.put(reportTransformer.getId(), reportTransformer);
 	}
 
 	@Override

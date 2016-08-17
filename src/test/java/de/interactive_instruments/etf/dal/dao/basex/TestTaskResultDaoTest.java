@@ -16,9 +16,15 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.trimAllWhitespace;
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dao.Filter;
+import de.interactive_instruments.etf.model.OutputFormat;
 import junit.framework.TestCase;
 
 import org.junit.*;
@@ -34,6 +40,11 @@ import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StoreException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -93,6 +104,29 @@ public class TestTaskResultDaoTest {
 
 		writeDao.delete(BsxTestUtil.TTR_DTO_1.getId());
 		TestCase.assertFalse(writeDao.exists(BsxTestUtil.TTR_DTO_1.getId()));
+	}
+
+	@Test
+	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
+		// TestTask required for parent reference
+		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TR_DTO_1, false);
+
+		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TTR_DTO_1);
+
+		final IFile tmpFile = IFile.createTempFile("etf",".html");
+		tmpFile.deleteOnExit();
+		final FileOutputStream fop = new FileOutputStream(tmpFile);
+		final OutputFormat outputFormat = writeDao.getOutputFormats().values().iterator().next();
+
+		preparedDto.streamTo(outputFormat, null, fop);
+
+		final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestTaskResult.html").toURI());
+		assertTrue(cmpResult.exists());
+
+		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()), trimAllWhitespace(tmpFile.readContent().toString()));
 	}
 
 }

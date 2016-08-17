@@ -39,7 +39,7 @@ public class TestTaskResultDao extends BsxWriteDao<TestTaskResultDto> {
 		super("/etf:TestTaskResult", "TestTaskResult", ctx,
 				(dsResultSet) -> dsResultSet.getTestTaskResults());
 
-		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(this, "html", "xslt/default/TestTaskResult2DefaultReport.xsl", "xslt/default/");
+		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(this, "html", "text/html", "xslt/default/TestTaskResult2DefaultReport.xsl", "xslt/default/");
 		outputFormats.put(reportTransformer.getId(), reportTransformer);
 
 	}

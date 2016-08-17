@@ -16,6 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.trimAllWhitespace;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -26,6 +27,7 @@ import static org.junit.Assert.fail;
 
 import java.io.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -296,46 +298,23 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException {
+	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.TO_DTO_1);
 		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		final PreparedDto<TestObjectDto> preparedDto = writeDao.getById(BsxTestUtil.TO_DTO_1.getId());
 
-		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		preparedDto.streamTo(new OutputFormat() {
-			@Override
-			public EID getId() {
-				return null;
-			}
+		final IFile tmpFile = IFile.createTempFile("etf",".xml");
+		tmpFile.deleteOnExit();
+		final FileOutputStream fop = new FileOutputStream(tmpFile);
+		final OutputFormat outputFormat = writeDao.getOutputFormats().values().iterator().next();
 
-			@Override
-			public String getLabel() {
-				return null;
-			}
+		preparedDto.streamTo(outputFormat, null, fop);
 
-			@Override
-			public MediaType getMediaTypeType() {
-				return null;
-			}
+		final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestObjectInItemCollectionResponse.xml").toURI());
+		assertTrue(cmpResult.exists());
 
-			@Override
-			public Parameterizable getParameters() {
-				return null;
-			}
-
-			@Override
-			public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream) throws IOException {
-				IOUtils.copy(inputStream, outputStream);
-			}
-
-			@Override
-			public int compareTo(final OutputFormat o) {
-				return 0;
-			}
-		}, null, outputStream);
-
-		assertNotNull(outputStream.toString("UTF-8"));
+		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()), trimAllWhitespace(tmpFile.readContent().toString()));
 
 	}
 

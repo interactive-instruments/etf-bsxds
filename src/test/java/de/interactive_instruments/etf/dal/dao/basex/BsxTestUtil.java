@@ -26,6 +26,7 @@ import java.util.*;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.EtfConstants;
 import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -437,9 +438,13 @@ class BsxTestUtil {
 	}
 
 	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+		return getByIdTest(dto,null);
+	}
+
+	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
-		final PreparedDto<T> preparedDto = dao.getById(dto.getId());
+		final PreparedDto<T> preparedDto = dao.getById(dto.getId(),filter);
 		// Check internal ID
 		assertEquals(dto.getId(), preparedDto.getDtoId());
 		final T queriedDto = preparedDto.getDto();
@@ -448,7 +453,7 @@ class BsxTestUtil {
 		assertEquals(dto.getDescriptiveLabel(), queriedDto.getDescriptiveLabel());
 
 		// Check compareTo
-		final PreparedDto<T> preparedDto2 = dao.getById(dto.getId());
+		final PreparedDto<T> preparedDto2 = dao.getById(dto.getId(),filter);
 		assertEquals(0, preparedDto2.compareTo(preparedDto));
 		// Will execute the query
 		assertEquals(preparedDto2.getDtoId(), preparedDto2.getDto().getId());
@@ -458,8 +463,31 @@ class BsxTestUtil {
 	}
 
 	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+		return addAndGetByIdTest(dto,null);
+	}
+
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
 		addTest(dto);
-		return getByIdTest(dto);
+		return getByIdTest(dto, filter);
+	}
+
+	public static String trimAllWhitespace(String str) {
+		if (!hasLength(str)) {
+			return str;
+		}
+		int len = str.length();
+		StringBuilder sb = new StringBuilder(str.length());
+		for (int i = 0; i < len; i++) {
+			char c = str.charAt(i);
+			if (!Character.isWhitespace(c)) {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
+	private static boolean hasLength(CharSequence str) {
+		return (str != null && str.length() > 0);
 	}
 
 }

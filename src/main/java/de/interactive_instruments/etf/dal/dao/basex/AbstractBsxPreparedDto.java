@@ -20,14 +20,16 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import de.interactive_instruments.etf.dal.dao.Filter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.BaseXException;
-import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.etf.dal.dao.OutputFormatStreamable;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.properties.PropertyHolder;
+
+import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 /**
  * Abstract class for a prepared XQuery statement whose result can be directly
@@ -37,12 +39,10 @@ import de.interactive_instruments.properties.PropertyHolder;
  */
 abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 
-	protected final XQuery xquery;
-	protected final BsxDsCtx ctx;
+	protected final BsXQuery bsXquery;
 
-	public AbstractBsxPreparedDto(final XQuery xquery, final BsxDsCtx ctx) {
-		this.xquery = xquery;
-		this.ctx = ctx;
+	public AbstractBsxPreparedDto(final BsXQuery xquery) {
+		this.bsXquery = xquery;
 	}
 
 	/**
@@ -55,11 +55,26 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 	 */
 	public void streamTo(final OutputFormat outputFormat, final PropertyHolder arguments, final OutputStream outputStream) {
 		try {
+
+			// DETAILED_WITHOUT_HISTORY level is required
+			bsXquery.parameter("levelOfDetail", String.valueOf(Filter.LevelOfDetail.DETAILED_WITHOUT_HISTORY), "xs:string");
+
+			final String offset = bsXquery.getParameter("offset");
+			if(offset!=null) {
+				outputFormat.setParameter("offset", offset);
+			}
+
+			final String limit = bsXquery.getParameter("limit");
+			if(limit!=null) {
+				outputFormat.setParameter("limit", limit);
+			}
+			outputFormat.setParameter("selection", bsXquery.getParameter("selection"));
+
 			final PipedInputStream in = new PipedInputStream();
 			final PipedOutputStream out = new PipedOutputStream(in);
 			new Thread(() -> {
 				try {
-					xquery.execute(ctx.getBsxCtx(), out);
+					bsXquery.execute(out);
 				} catch (final IOException e) {
 					throw new IllegalStateException(e);
 				} finally {
@@ -73,23 +88,25 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 			outputFormat.streamTo(arguments, in, outputStream);
 			// xquery.execute(ctx.getBsxCtx(), outputStream);
 		} catch (IOException e) {
+			logError(e);
 			throw new IllegalStateException(e);
 		}
 	}
 
-	protected void logError(final Throwable e) {
-		ctx.getLogger().error("Query Exception: {}", ExceptionUtils.getRootCauseMessage(e));
-		if (ctx.getLogger().isDebugEnabled()) {
+
+	protected final void logError(final Throwable e) {
+		bsXquery.getCtx().getLogger().error("Query Exception: {}", ExceptionUtils.getRootCauseMessage(e));
+		if (bsXquery.getCtx().getLogger().isDebugEnabled()) {
 			try {
-				if (ctx.getLogger().isTraceEnabled()) {
-					ctx.getLogger().trace("Query: {}", xquery.toString());
+				if (bsXquery.getCtx().getLogger().isTraceEnabled()) {
+					bsXquery.getCtx().getLogger().trace("Query: {}", bsXquery.toString());
 					if (ExceptionUtils.getRootCause(e) != null &&
 							ExceptionUtils.getRootCause(e) instanceof NullPointerException) {
-						ctx.getLogger().trace("NullPointerException may indicate an invalid mapping!");
+						bsXquery.getCtx().getLogger().trace("NullPointerException may indicate an invalid mapping!");
 					}
 				}
 				Thread.sleep((long) (Math.random() * 2450));
-				ctx.getLogger().debug("Query result: {}", xquery.execute(ctx.getBsxCtx()));
+				bsXquery.getCtx().getLogger().debug("Query result: {}", bsXquery.execute());
 			} catch (InterruptedException | BaseXException e2) {
 				ExcUtils.suppress(e2);
 			}

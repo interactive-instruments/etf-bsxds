@@ -8,6 +8,7 @@ module namespace  etfxdb = "http://interactive_instruments.de/etf/etfxdb" ;
 declare default element namespace "http://www.interactive-instruments.de/etf/2.0";
 declare namespace etf = "http://www.interactive-instruments.de/etf/2.0";
 
+
 (:~
  : ----------------------------------------------------------------
  : get-replacedByRec
@@ -91,7 +92,7 @@ declare function etfxdb:get-parentRec($dbs as node()*, $items as node()*) {
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-testObjectTypes($dbs as node()*, $levelOfDetail as xs:string, $items as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         let $testObjectTypes := $dbs[@id = $items/etf:testObjectType[1]/@ref]
         return
@@ -110,7 +111,7 @@ declare function etfxdb:get-testObjectTypes($dbs as node()*, $levelOfDetail as x
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-testItemTypes($dbs as node()*, $levelOfDetail as xs:string, $items as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         $dbs[@id = $items/etf:type[1]/@ref]
     else
@@ -123,7 +124,7 @@ declare function etfxdb:get-testItemTypes($dbs as node()*, $levelOfDetail as xs:
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-testObjects($dbs as node()*, $levelOfDetail as xs:string, $items as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         $dbs[@id = $items/etf:testObject[1]/@ref]
     else
@@ -146,7 +147,7 @@ declare function etfxdb:get-testObjectTypesRec($dbs as node()*, $testObjectTypes
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-executableTestSuites($dbs as node()*, $levelOfDetail as xs:string, $items as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         $dbs[@id = $items/etf:resultedFrom[1]/@ref or @id = $items/etf:executableTestSuite[1]/@ref]
     else
@@ -159,7 +160,7 @@ declare function etfxdb:get-executableTestSuites($dbs as node()*, $levelOfDetail
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-testTaskResults($dbs as node()*, $levelOfDetail as xs:string, $items as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         $dbs[@id = $items/etf:testTaskResult[1]/@ref]
     else
@@ -172,7 +173,7 @@ declare function etfxdb:get-testTaskResults($dbs as node()*, $levelOfDetail as x
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-tags($dbs as node()*, $levelOfDetail as xs:string, $item as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         let $tags := $dbs[@id = $item/etf:tags[1]/etf:tag/@ref]
         return
@@ -191,7 +192,7 @@ declare function etfxdb:get-tags($dbs as node()*, $levelOfDetail as xs:string, $
  : ----------------------------------------------------------------
  :)
 declare function etfxdb:get-translationTemplateBundles($dbs as node()*, $levelOfDetail as xs:string, $item as node()*) {
-    if ($levelOfDetail = 'DETAILED')
+    if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
         $dbs[@id = $item/etf:translationTemplateBundle[1]/@ref]
     else

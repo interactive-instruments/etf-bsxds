@@ -18,6 +18,8 @@ package de.interactive_instruments.etf.dal.dao.basex;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Map;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
@@ -53,11 +55,36 @@ final class XsltOutputTransformer implements OutputFormat {
 	 */
 	private Templates cachedXSLT;
 
-	private ConfigProperties config;
+	private ConfigProperties config = new ConfigProperties();
 	private IFile stylesheetFile;
 	private long stylesheetLastModified = 0;
 	private final TransformerFactory transFact = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
 	private final Logger logger = LoggerFactory.getLogger(XsltOutputTransformer.class);
+	private final String mimeTypeStr;
+
+	private final MediaType mimeType = new MediaType() {
+		@Override public MediaType getBaseType() {
+			return null;
+		}
+
+		@Override public String getType() {
+			return mimeTypeStr;
+		}
+
+		@Override public String getSubtype() {
+			return null;
+		}
+
+		@Override public Map<String, String> getParameters() {
+			return null;
+		}
+	};
+
+
+	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath)
+			throws IOException, TransformerConfigurationException {
+		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
+	}
 
 	/**
 	 * Create a new XSL Output Transformer
@@ -69,10 +96,11 @@ final class XsltOutputTransformer implements OutputFormat {
 	 * @throws TransformerConfigurationException if stylesheet
 	 * contains errors
 	 */
-	public XsltOutputTransformer(final Dao dao, final String label, final String stylesheetJarPath, final String jarImportPath)
+	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath, final String jarImportPath)
 			throws IOException, TransformerConfigurationException {
 		this.id = EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName());
 		this.label = label;
+		this.mimeTypeStr = mimeTypeStr;
 		this.stylesheetFile = null;
 
 		final ClassLoader cL = getClass().getClassLoader();
@@ -99,9 +127,10 @@ final class XsltOutputTransformer implements OutputFormat {
 	 * @throws TransformerConfigurationException if stylesheet
 	 * contains errors
 	 */
-	public XsltOutputTransformer(final Dao dao, final String label, final IFile stylesheetFile)
+	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final IFile stylesheetFile)
 			throws IOException, TransformerConfigurationException {
 		this.id = EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName());
+		this.mimeTypeStr = mimeTypeStr;
 		this.label = label;
 		this.stylesheetFile = stylesheetFile;
 		stylesheetFile.expectFileIsReadable();
@@ -132,30 +161,26 @@ final class XsltOutputTransformer implements OutputFormat {
 
 	@Override
 	public MediaType getMediaTypeType() {
-		return null;
-	}
-
-	@Override
-	public Parameterizable getParameters() {
-		return null;
+		return mimeType;
 	}
 
 	@Override
 	public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream) throws IOException {
-
 		try {
 			recacheChangedStylesheet();
 
 			final Transformer transformer = cachedXSLT.newTransformer();
 			if (config != null) {
-				config.namePropertyPairs().forEach(p -> {
-					transformer.setParameter(p.getKey(), p.getValue());
-				});
+				config.forEach( c -> transformer.setParameter(c.getKey(), c.getValue()));
 			}
+			if(arguments!=null) {
+				arguments.forEach( a -> transformer.setParameter(a.getKey(), a.getValue()));
+			}
+
 			transformer.transform(
 					new StreamSource(inputStream), new StreamResult(outputStreamStream));
 		} catch (TransformerException e) {
-			throw new IllegalStateException(e.getMessage());
+			throw new IOException(e.getMessage());
 		}
 	}
 
@@ -171,5 +196,21 @@ final class XsltOutputTransformer implements OutputFormat {
 	@Override
 	public int compareTo(final OutputFormat o) {
 		return 0;
+	}
+
+	@Override public String getParamTypeName() {
+		return null;
+	}
+
+	@Override public Collection<Parameter> getParameters() {
+		return null;
+	}
+
+	@Override public Parameter getParameter(final String s) {
+		return null;
+	}
+
+	@Override public void setParameter(final String parameter, final String value) {
+		config.setProperty(parameter, value);
 	}
 }

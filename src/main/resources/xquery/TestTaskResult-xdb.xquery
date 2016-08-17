@@ -12,7 +12,7 @@ declare variable $offset external := 0;
 declare variable $limit external := 0;
 declare variable $levelOfDetail external := 'SIMPLE';
 
-declare function local:get-executableTestSuites($offset as xs:integer, $limit as xs:integer) {
+declare function local:get-testTaskResults($offset as xs:integer, $limit as xs:integer) {
     <DsResultSet
     xmlns="http://www.interactive-instruments.de/etf/2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,7 +25,7 @@ declare function local:get-executableTestSuites($offset as xs:integer, $limit as
 };
 
 
-declare function local:get-executableTestSuite($ids as xs:string*) {
+declare function local:get-testTaskResult($ids as xs:string*) {
     let $testObjectTypesDb := db:open('etf-ds')/etf:TestObjectType
     let $testObjectsDb := db:open('etf-ds')/etf:TestObject
     let $executableTestSuiteDb := db:open('etf-ds')/etf:ExecutableTestSuite
@@ -62,6 +62,6 @@ declare function local:get-executableTestSuite($ids as xs:string*) {
 
 if ($function = 'byId')
 then
-    local:get-executableTestSuite($qids)
+    local:get-testTaskResult($qids)
 else
-    local:get-executableTestSuites($offset, $limit)
+    local:get-testTaskResults($offset, $limit)
