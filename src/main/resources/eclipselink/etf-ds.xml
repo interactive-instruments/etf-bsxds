@@ -22,6 +22,14 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>type</attribute-name>
+               <field name="@type" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -163,6 +171,8 @@
          </remote-caching>
          <instantiation/>
          <copying xsi:type="instantiation-copy-policy"/>
+         <default-root-element>etf:Component</default-root-element>
+         <default-root-element-field name="etf:Component"/>
          <namespace-resolver>
             <namespaces>
                <namespace>
@@ -202,6 +212,16 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>itemHash</attribute-name>
+               <field name="itemHash/text()" xsi:type="node">
+                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -237,16 +257,6 @@
                <source-to-target-key-fields>
                   <field name="replacedBy/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>version</attribute-name>
@@ -353,41 +363,6 @@
          <schema xsi:type="schema-file-reference">
             <resource>../schema/model/resultSet.xsd</resource>
             <schema-context>/etf:Credential</schema-context>
-            <node-type>element</node-type>
-         </schema>
-      </class-mapping-descriptor>
-      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
-         <class>de.interactive_instruments.etf.dal.dto.test.DependencyDto</class>
-         <alias>DependencyDto</alias>
-         <events/>
-         <querying/>
-         <descriptor-type>aggregate</descriptor-type>
-         <caching>
-            <cache-size>-1</cache-size>
-         </caching>
-         <remote-caching>
-            <cache-size>-1</cache-size>
-         </remote-caching>
-         <instantiation/>
-         <copying xsi:type="instantiation-copy-policy"/>
-         <default-root-element>etf:Dependencies</default-root-element>
-         <default-root-element-field name="etf:Dependencies"/>
-         <namespace-resolver>
-            <namespaces>
-               <namespace>
-                  <prefix>etf</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
-               </namespace>
-               <namespace>
-                  <prefix>etfAppinfo</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
-               </namespace>
-            </namespaces>
-            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
-         </namespace-resolver>
-         <schema xsi:type="schema-file-reference">
-            <resource>../schema/model/resultSet.xsd</resource>
-            <schema-context>/etf:Dependencies</schema-context>
             <node-type>element</node-type>
          </schema>
       </class-mapping-descriptor>
@@ -529,6 +504,16 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>itemHash</attribute-name>
+               <field name="itemHash/text()" xsi:type="node">
+                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -564,16 +549,6 @@
                <source-to-target-key-fields>
                   <field name="replacedBy/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>version</attribute-name>
@@ -641,12 +616,12 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
-                     <source-field name="testDriver/@ref" xsi:type="node"/>
+                     <source-field name="etf:testDriver/@ref" xsi:type="node"/>
                      <target-field name="@id" xsi:type="node"/>
                   </field-reference>
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
-                  <field name="testDriver/@ref" xsi:type="node"/>
+                  <field name="etf:testDriver/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
@@ -881,19 +856,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -909,6 +871,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -968,19 +943,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -996,6 +958,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -1026,12 +1001,12 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
-                     <source-field name="type/@ref" xsi:type="node"/>
+                     <source-field name="testItemType/@ref" xsi:type="node"/>
                      <target-field name="@id" xsi:type="node"/>
                   </field-reference>
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
-                  <field name="type/@ref" xsi:type="node"/>
+                  <field name="testItemType/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
@@ -1155,7 +1130,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>messages</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</reference-class>
+               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</reference-class>
                <field name="messages/message" xsi:type="node"/>
                <container xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>
@@ -1211,19 +1186,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -1239,6 +1201,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -1492,19 +1467,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -1520,6 +1482,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -1700,6 +1675,16 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>itemHash</attribute-name>
+               <field name="itemHash/text()" xsi:type="node">
+                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -1735,16 +1720,6 @@
                <source-to-target-key-fields>
                   <field name="replacedBy/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>version</attribute-name>
@@ -1883,19 +1858,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -1911,6 +1873,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -2087,19 +2062,6 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="parent/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="parent/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
@@ -2115,6 +2077,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>reference</attribute-name>
@@ -2137,12 +2112,12 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
-                     <source-field name="type/@ref" xsi:type="node"/>
+                     <source-field name="testItemType/@ref" xsi:type="node"/>
                      <target-field name="@id" xsi:type="node"/>
                   </field-reference>
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
-                  <field name="type/@ref" xsi:type="node"/>
+                  <field name="testItemType/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
@@ -2436,7 +2411,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.run.TestRunDto</reference-class>
+               <reference-class>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
                      <source-field name="parent/@ref" xsi:type="node"/>
@@ -2546,6 +2521,109 @@
          <schema xsi:type="schema-file-reference">
             <resource>../schema/model/resultSet.xsd</resource>
             <schema-context>/etf:TestTaskResult</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</class>
+         <alias>TranslationArgumentCollectionDto</alias>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>translationTemplateName</attribute-name>
+               <field name="@ref" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>arguments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</reference-class>
+               <field name="translationArguments/argument" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>java.util.HashMap</collection-type>
+                  <map-key-method>getToken</map-key-method>
+               </container>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:TranslationTemplateArgumentType</schema-context>
+            <node-type>complex-type</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</class>
+         <alias>TranslationArgumentCollectionDto$Argument</alias>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>token</attribute-name>
+               <field name="@token" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>value</attribute-name>
+               <field name="text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:TranslationTemplateArgumentType/etf:translationArguments/etf:argument</schema-context>
             <node-type>element</node-type>
          </schema>
       </class-mapping-descriptor>
@@ -2674,112 +2752,6 @@
          <schema xsi:type="schema-file-reference">
             <resource>../schema/model/resultSet.xsd</resource>
             <schema-context>/etf:LangTranslationTemplateCollection/etf:translationTemplates/etf:TranslationTemplate</schema-context>
-            <node-type>element</node-type>
-         </schema>
-      </class-mapping-descriptor>
-      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
-         <class>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto</class>
-         <alias>TranslationTemplateParameterDto</alias>
-         <events/>
-         <querying/>
-         <attribute-mappings>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>translationTemplateName</attribute-name>
-               <field name="@ref" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>arguments</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</reference-class>
-               <field name="translationArguments/argument" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>java.util.HashMap</collection-type>
-                  <map-key-method>getToken</map-key-method>
-               </container>
-            </attribute-mapping>
-         </attribute-mappings>
-         <descriptor-type>aggregate</descriptor-type>
-         <caching>
-            <cache-size>-1</cache-size>
-         </caching>
-         <remote-caching>
-            <cache-size>-1</cache-size>
-         </remote-caching>
-         <instantiation/>
-         <copying xsi:type="instantiation-copy-policy"/>
-         <namespace-resolver>
-            <namespaces>
-               <namespace>
-                  <prefix>etf</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
-               </namespace>
-               <namespace>
-                  <prefix>etfAppinfo</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
-               </namespace>
-            </namespaces>
-            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
-         </namespace-resolver>
-         <schema xsi:type="schema-file-reference">
-            <resource>../schema/model/resultSet.xsd</resource>
-            <schema-context>/etf:TranslationTemplateArgumentType</schema-context>
-            <node-type>complex-type</node-type>
-         </schema>
-      </class-mapping-descriptor>
-      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
-         <class>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateParameterDto$Argument</class>
-         <alias>TranslationTemplateParameterDto$Argument</alias>
-         <primary-key>
-            <field name="etf:token/text()" xsi:type="node"/>
-         </primary-key>
-         <events/>
-         <querying/>
-         <attribute-mappings>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>token</attribute-name>
-               <field name="token/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>value</attribute-name>
-               <field name="value/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
-            </attribute-mapping>
-         </attribute-mappings>
-         <descriptor-type>aggregate</descriptor-type>
-         <caching>
-            <cache-size>-1</cache-size>
-         </caching>
-         <remote-caching>
-            <cache-size>-1</cache-size>
-         </remote-caching>
-         <instantiation/>
-         <copying xsi:type="instantiation-copy-policy"/>
-         <namespace-resolver>
-            <namespaces>
-               <namespace>
-                  <prefix>etf</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
-               </namespace>
-               <namespace>
-                  <prefix>etfAppinfo</prefix>
-                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
-               </namespace>
-            </namespaces>
-            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
-         </namespace-resolver>
-         <schema xsi:type="schema-file-reference">
-            <resource>../schema/model/resultSet.xsd</resource>
-            <schema-context>/etf:TranslationTemplateArgumentType/etf:translationArguments/etf:argument</schema-context>
             <node-type>element</node-type>
          </schema>
       </class-mapping-descriptor>
