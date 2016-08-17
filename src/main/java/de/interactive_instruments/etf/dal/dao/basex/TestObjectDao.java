@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,45 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
-
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
-import de.interactive_instruments.etf.model.item.EID;
-import de.interactive_instruments.exceptions.StoreException;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.DropDB;
 
 import java.util.List;
 
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.DropDB;
+
+import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidMap;
+import de.interactive_instruments.etf.model.OutputFormat;
+import de.interactive_instruments.exceptions.StoreException;
+
 /**
+ * Test Object Data Access Object
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-class TestObjectDao extends BsxWriteDao<TestObjectDto> {
+final class TestObjectDao extends BsxWriteDao<TestObjectDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	private static class TestObjectResultGetCmd implements MainDtoResultGetCmd<TestObjectDto> {
-
-		@Override public List<TestObjectDto> getMainDtos(final DataStorageResult dataStorageResult) {
-			return dataStorageResult.getTestObjects();
-		}
-
-		@Override public TestObjectDto getMainDto(final DataStorageResult dataStorageResult) {
-			final List<TestObjectDto> colResult = dataStorageResult.getTestObjects();
-			return colResult!=null && !colResult.isEmpty() ? colResult.get(0): null;
-		}
+	public TestObjectDao(final BsxDsCtx ctx) throws StoreException {
+		super("/etf:TestObject", "TestObject", ctx,
+				(dsResultSet) -> dsResultSet.getTestObjects());
 	}
 
-	public TestObjectDao(final BsxDbCtx ctx) throws StoreException {
-		super("/etf:TestObject", "TestObject", ctx, new TestObjectResultGetCmd());
-	}
-
-	@Override public Class<TestObjectDto> getDtoType() {
+	@Override
+	public Class<TestObjectDto> getDtoType() {
 		return TestObjectDto.class;
 	}
 
-	@Override protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+	@Override
+	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
 		for (int i = 0; i < 10; i++) {
 			final String testDbName = ETF_TESTDB_PREFIX + eid.toString() + "-" + i;
 			final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));

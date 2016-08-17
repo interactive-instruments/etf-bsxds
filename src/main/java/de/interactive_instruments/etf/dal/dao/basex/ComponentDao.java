@@ -19,32 +19,29 @@ import java.util.List;
 
 import org.basex.core.BaseXException;
 
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
+import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StoreException;
 
 /**
- * Translation Template Bundle Data Access Object
- *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TranslationTemplateBundleDao extends BsxWriteDao<TranslationTemplateBundleDto> {
+public class ComponentDao extends BsxWriteDao<ComponentDto> {
 
-	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StoreException {
-		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
-				(dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
+	protected ComponentDao(final BsxDsCtx ctx) throws StoreException {
+		super("/etf:Component", "Component", ctx,
+				(dsResultSet) -> dsResultSet.getComponents());
 	}
 
 	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
-
-	}
+	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
 	@Override
-	public Class<TranslationTemplateBundleDto> getDtoType() {
-		return TranslationTemplateBundleDto.class;
+	public Class<ComponentDto> getDtoType() {
+		return ComponentDto.class;
 	}
 
 }

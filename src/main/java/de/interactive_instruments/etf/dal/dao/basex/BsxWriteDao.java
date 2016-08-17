@@ -46,7 +46,7 @@ import de.interactive_instruments.exceptions.StoreException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-abstract class BsxWriteDao<T extends Dto> extends BsxDao<T>implements WriteDao<T> {
+abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<T> {
 
 	private final List<WriteDaoListener> listeners = new ArrayList<>(2);
 
@@ -69,6 +69,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T>implements WriteDao<T
 				throw new StoreException("Item " + t.getDescriptiveLabel() + " already exists!");
 			}
 		} catch (IOException e) {
+			item.delete();
 			throw new StoreException(e);
 		}
 		try {
@@ -77,11 +78,12 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T>implements WriteDao<T
 			new Add(item.getName(), item.getAbsolutePath()).execute(ctx.getBsxCtx());
 			new Flush().execute(ctx.getBsxCtx());
 		} catch (JAXBException e) {
+			ctx.getLogger().error("Object {} cannot be marshaled.\n\tProperties: {}",
+					t.getDescriptiveLabel(), t.toString());
 			if (ctx.getLogger().isDebugEnabled()) {
-				ctx.getLogger().debug("Object {} cannot be marshaled.\n\tProperties: {}\n\tPath to file: {}",
-						t.getDescriptiveLabel(), t.toString(), item.getAbsolutePath());
+				ctx.getLogger().debug("Path to corrupted file: {}", item.getAbsolutePath());
 			} else {
-				// File may contain invalid content
+				// File contains invalid content
 				item.delete();
 			}
 			throw new IllegalArgumentException(e);

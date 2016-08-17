@@ -19,32 +19,30 @@ import java.util.List;
 
 import org.basex.core.BaseXException;
 
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StoreException;
 
 /**
- * Translation Template Bundle Data Access Object
+ * Test Run Data Access Object
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TranslationTemplateBundleDao extends BsxWriteDao<TranslationTemplateBundleDto> {
+final class TestRunDao extends BsxWriteDao<TestRunDto> {
 
-	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StoreException {
-		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
-				(dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
+	protected TestRunDao(final BsxDsCtx ctx) throws StoreException {
+		super("/etf:TestRun", "TestRun", ctx,
+				(dsResultSet) -> dsResultSet.getTestRuns());
 	}
 
 	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
-
-	}
+	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
 	@Override
-	public Class<TranslationTemplateBundleDto> getDtoType() {
-		return TranslationTemplateBundleDto.class;
+	public Class<TestRunDto> getDtoType() {
+		return TestRunDto.class;
 	}
 
 }

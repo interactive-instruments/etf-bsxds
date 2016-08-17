@@ -26,11 +26,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.xml.XMLConstants;
 import javax.xml.bind.*;
 import javax.xml.bind.JAXBContext;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import de.interactive_instruments.etf.dal.dto.test.*;
+import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -62,6 +63,7 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
+import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.ExcUtils;
@@ -209,7 +211,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				initLazyDtoProxies();
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
-			} catch (JAXBException | IOException | StoreException e) {
+			} catch (TransformerConfigurationException | JAXBException | IOException | StoreException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -264,7 +266,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	private void initMoxyDtoMapping() throws StoreException, JAXBException {
+	private void initMoxyDtoMapping() throws StoreException, JAXBException, IOException, TransformerConfigurationException {
 		final Map<Class<? extends Dto>, Dao<? extends Dto>> tmpDaoMapping = new HashMap<>();
 		tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
 		tmpDaoMapping.put(TestObjectTypeDto.class, new TestObjectTypeDao(this));
@@ -275,6 +277,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		tmpDaoMapping.put(ComponentDto.class, new ComponentDao(this));
 		tmpDaoMapping.put(TestTaskResultDto.class, new TestTaskResultDao(this));
 		tmpDaoMapping.put(TestItemTypeDto.class, new TestItemTypeDao(this));
+		tmpDaoMapping.put(TestTaskDto.class, new TestTaskDao(this));
 		daoMapping = Collections.unmodifiableMap(tmpDaoMapping);
 
 		// Initialize moxy
@@ -599,7 +602,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	private final void initLazyDtoProxies() {
 		for (final Map.Entry<Class<? extends Dto>, Dao<? extends Dto>> classDaoEntry : daoMapping.entrySet()) {
 			final Class<? extends Dto> classType = classDaoEntry.getKey();
-			if(!dtoLazyLoadProxies.containsKey(classType)) {
+			if (!dtoLazyLoadProxies.containsKey(classType)) {
 				logger.debug("Creating proxy class for {}", classType.getSimpleName());
 				final Class<? extends Dto> proxy = new ByteBuddy()
 						.subclass(classType)
@@ -615,10 +618,10 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 
 	private final void initDtoCacheAccessProxies() {
 		final Class[] treeModelDtos = {
-			TestModuleDto.class, TestCaseDto.class, TestStepDto.class, TestAssertionDto.class
+				TestModuleDto.class, TestCaseDto.class, TestStepDto.class, TestAssertionDto.class
 		};
 		for (final Class classType : treeModelDtos) {
-			if(!dtoCacheAccessProxies.containsKey(classType)) {
+			if (!dtoCacheAccessProxies.containsKey(classType)) {
 				logger.debug("Creating direct cache access proxy class for {}", classType.getSimpleName());
 				final Class<? extends Dto> proxy = new ByteBuddy()
 						.subclass(classType)
@@ -643,9 +646,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 */
 	public Dto createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException {
 		final Dao dao = daoMapping.get(type);
-		if(dao==null) {
+		if (dao == null) {
 			final Class<? extends Dto> cacheAccessProxy = dtoCacheAccessProxies.get(type);
-			if(cacheAccessProxy!=null) {
+			if (cacheAccessProxy != null) {
 				try {
 					final Dto dto;
 					dto = dtoCacheAccessProxies.get(type).newInstance();
@@ -656,8 +659,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				}
 			}
 			throw new IllegalArgumentException("No Data Access Object available for type " + type);
-		}else if (!dao.exists(
-						Objects.requireNonNull(eid, "ID is null"))) {
+		} else if (!dao.exists(
+				Objects.requireNonNull(eid, "ID is null"))) {
 			throw new ObjectWithIdNotFoundException(eid.getId(), type.getSimpleName());
 		}
 

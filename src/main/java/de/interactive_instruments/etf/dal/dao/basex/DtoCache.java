@@ -69,6 +69,13 @@ class DtoCache implements WriteDaoListener {
 			this.logger = logger;
 		}
 
+		private void addLookupIdref(final String lookupId) {
+			if (lazyLookupIds == null) {
+				lazyLookupIds = new LinkedHashSet<>();
+			}
+			lazyLookupIds.add(lookupId);
+		}
+
 		/**
 		 * Marks unresolved IDrefs which will be used for creating lazy Dto proxies
 		 *
@@ -82,16 +89,20 @@ class DtoCache implements WriteDaoListener {
 			// reference can be set!
 			// Message extraction only tested with xerces.
 			final String message = event.getMessage();
-			if (message.startsWith("cvc-id") && message.length() > 90) {
-
-				// add this id for creating a lazy lookup
-				final int eidLoc = message.indexOf("for IDREF 'EID");
-				if (eidLoc > 0) {
-					final String eid = message.substring(eidLoc + 14, message.length() - 2);
-					if (lazyLookupIds == null) {
-						lazyLookupIds = new LinkedHashSet<>();
+			if (message.startsWith("cvc-id")) {
+				// Check min length for UUID
+				if (message.length() > 90) {
+					final int eidLoc = message.indexOf("for IDREF 'EID");
+					if (eidLoc > 0) {
+						// add this id for creating a lazy lookup
+						addLookupIdref(message.substring(eidLoc + 14, message.length() - 2));
+						return true;
 					}
-					lazyLookupIds.add(eid);
+				}
+				// Check for translation lookup IDs beginning with "TR."
+				final int etrLoc = message.indexOf("for IDREF 'TR.");
+				if (etrLoc > 0) {
+					addLookupIdref(message.substring(etrLoc + 14, message.length() - 2));
 					return true;
 				}
 			}
@@ -111,12 +122,12 @@ class DtoCache implements WriteDaoListener {
 				if (dto != null) {
 					logger.debug("Returning {} ({}) from cache", dto.getDescriptiveLabel(), type.getSimpleName());
 					return (Callable<Object>) () -> dto;
-				} else if (lazyLookupIds.contains(eid) ) {
+				} else if (lazyLookupIds.contains(eid)) {
 					logger.debug("Creating lazy load proxy for {} ({})", eid, type.getSimpleName());
 					return (Callable<Object>) () -> bsxDsCtx.createProxy(EidFactory.getDefault().createAndPreserveStr(eid), type);
 				}
 			}
-			logger.trace("Cache miss: {} ({})",id, type);
+			logger.trace("Cache miss: {} ({})", id, type);
 			return null;
 		}
 
@@ -182,12 +193,12 @@ class DtoCache implements WriteDaoListener {
 	 * @return cached Dto
 	 */
 	Dto getFromCache(final EID eid) {
-		if (logger.isDebugEnabled()) {
-			final Dto dto = dtoCache.getIfPresent(eid.toString());
+		final Dto dto = dtoCache.getIfPresent(eid.toString());
+		if (logger.isDebugEnabled() && dto!=null) {
 			logger.debug("Returning {} from cache", dto.getDescriptiveLabel());
 			return dto;
 		}
-		return dtoCache.getIfPresent(eid.toString());
+		return dto;
 	}
 
 	/**

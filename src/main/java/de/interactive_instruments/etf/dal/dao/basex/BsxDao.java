@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import de.interactive_instruments.etf.model.DefaultEidMap;
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
@@ -34,6 +35,8 @@ import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidMap;
+import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
@@ -53,6 +56,7 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	protected final BsxDsCtx ctx;
 	protected final String typeName;
 	protected final String xqueryStatement;
+	protected final EidMap<OutputFormat> outputFormats = new DefaultEidMap<>();
 	private final GetDtoResultCmd getDtoResultCmd;
 
 	protected void ensureType(final T t) {
@@ -157,4 +161,8 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 
 	}
 
+	@Override
+	public EidMap<OutputFormat> getOutputFormats() {
+		return outputFormats;
+	}
 }

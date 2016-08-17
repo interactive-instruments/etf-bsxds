@@ -52,10 +52,6 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 	public T getDto() {
 		if (cachedDto == null) {
 
-			// TODO
-			// TODO reactivate dto caching
-			// TODO
-
 			// cachedDto = (T) ctx.getFromCache(id);
 
 			if (cachedDto == null) {
@@ -64,7 +60,11 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 					xquery.execute(ctx.getBsxCtx(), output);
 					final DsResultSet result = (DsResultSet) ctx.createUnmarshaller().unmarshal(
 							new ByteArrayInputStream(output.toByteArray()));
-					cachedDto = Objects.requireNonNull(getter.getMainDto(result), "Database returned no data");
+					cachedDto = getter.getMainDto(result);
+					if (cachedDto == null) {
+						ctx.getLogger().error("Query ID: {}", "EID" + id);
+						throw new IllegalStateException("Data storage returned no data for \"" + id + "\"");
+					}
 				} catch (IOException | JAXBException e) {
 					ctx.getLogger().error("Query ID: {}", "EID" + id);
 					logError(e);

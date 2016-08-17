@@ -137,8 +137,10 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 				xquery.execute(ctx.getBsxCtx(), output);
 				final DsResultSet result = (DsResultSet) ctx.createUnmarshaller().unmarshal(
 						new ByteArrayInputStream(output.toByteArray()));
-				cachedDtos = Objects.requireNonNull(
-						getter.getMainDtos(result), "Database returned no data");
+				cachedDtos = getter.getMainDtos(result);
+				if (cachedDtos == null) {
+					throw new IllegalStateException("Data storage returned no data for collection");
+				}
 			} catch (IOException | JAXBException e) {
 				logError(e);
 				throw new IllegalStateException(e);

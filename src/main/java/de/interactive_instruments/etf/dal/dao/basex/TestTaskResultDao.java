@@ -15,26 +15,33 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.List;
+import java.io.IOException;
+
+import javax.xml.transform.TransformerConfigurationException;
 
 import org.basex.core.BaseXException;
 
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
+import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StoreException;
 
 /**
- * Translation Template Bundle Data Access Object
+ * Test Task Result Data Access Object
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TranslationTemplateBundleDao extends BsxWriteDao<TranslationTemplateBundleDto> {
+public class TestTaskResultDao extends BsxWriteDao<TestTaskResultDto> {
 
-	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StoreException {
-		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
-				(dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
+	protected TestTaskResultDao(final BsxDsCtx ctx) throws StoreException, IOException, TransformerConfigurationException {
+		super("/etf:TestTaskResult", "TestTaskResult", ctx,
+				(dsResultSet) -> dsResultSet.getTestTaskResults());
+
+		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(this, "html", "xslt/default/TestTaskResult2DefaultReport.xsl", "xslt/default/");
+		outputFormats.put(reportTransformer.getId(), reportTransformer);
+
 	}
 
 	@Override
@@ -43,8 +50,8 @@ final class TranslationTemplateBundleDao extends BsxWriteDao<TranslationTemplate
 	}
 
 	@Override
-	public Class<TranslationTemplateBundleDto> getDtoType() {
-		return TranslationTemplateBundleDto.class;
+	public Class<TestTaskResultDto> getDtoType() {
+		return TestTaskResultDto.class;
 	}
 
 }
