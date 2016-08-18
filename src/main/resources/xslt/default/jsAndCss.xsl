@@ -6,108 +6,21 @@
 	
 	<xsl:output method="html" indent="yes" encoding="UTF-8"/>
 	
+	<xsl:variable name="defaultStyleResourcePath">
+		<xsl:text>http://services.interactive-instruments.de/etf/css</xsl:text>
+	</xsl:variable>
+	<xsl:param name="stylePath" select="$defaultStyleResourcePath"/>
+	
 	<!-- JQuery Mobile and Styling includes-->
 	<!-- ########################################################################################## -->
 	<xsl:template name="jsfdeclAndCss">
 		<meta charset="utf-8"/>
-		<!--link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
-		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/-->
+		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
+		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
 		
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.js"></script>
-		
-		<style type="text/css">
-			
-			#rprtStatistics table {
-			}
-			
-			#rprtStatistics td:not(:first-child) {
-			text-align:center; 
-			vertical-align:middle;
-			}
-			
-			td:first-child { 
-			text-align:left; 
-			font-weight:bold; 
-			}
-			
-			
-			
-			#rprtAdditionalStatistics table {
-			margin-left:auto;
-			margin-right:auto;
-			padding-top: 20px;
-			
-			}
-			
-			#rprtAdditionalStatistics td:first-child { 
-			text-align:left; 
-			font-weight:normal;
-			}
-			
-			#rprtAdditionalStatistics td,th { 
-			text-align:left; 
-			}
-			#rprtAdditionalStatistics td { 
-			font-weight:normal;
-			}
-			
-			#rprtAdditionalStatistics tbody tr:nth-child(even) {
-			background: #f1f1f1;
-			}
-			
-			#rprtAdditionalStatistics tbody tr:hover {
-			background-color: #3388cc;
-			color:#ffffff;
-			text-shadow: 1px 2px #000000;
-			box-shadow: 0px 0px 10px #ff0000;
-			}
-			
-			#rprtAdditionalStatistics tbody .highlight {
-			color:#E00000;
-			font-weight:bold !important;
-			}
-			
-			
-			#rprtControl fieldset {
-			margin-right:5px;
-			float: right;
-			}
-			
-			.TestStep.FailureMessage {
-			}
-			
-			.TestStep .Container, .TestStep .FailureMessage, .Expression, .ExpectedResult {
-			padding-top: 12px;
-			}
-			
-			.Container label, .TestStep label, .FailureMessage label, .Expression label, .ExpectedResult label {
-			font-weight:bold !important;
-			}
-			
-			.UrlReferenceContainer a {
-			
-			}
-			
-			.RequirementTH {
-			padding-top: 12px;
-			text-decoration:underline;
-			}
-			
-			.ui-icon-alert:after {
-			background-color: #e63531 !important;
-			}
-			
-			.AssertionsContainer {
-			padding-top: 15px;
-			padding-bottom: 30px;
-			}
-			
-			
-		</style>
-		
-		
 		
 		<!--
 		<link rel="stylesheet" href="{$jqueryPath}/jquery.mobile.icons.min.css"/>

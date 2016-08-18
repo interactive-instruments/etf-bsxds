@@ -60,19 +60,19 @@
     <xsl:key name="testAssertionKey"
         match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep/etf:testAssertions[1]/etf:TestAssertion"
         use="@id"/>
-
+    <xsl:key name="testItemTypeKey" match="/etf:DsResultSet/etf:testItemTypes[1]/etf:TestItemType"
+        use="@id"/>
     <xsl:key name="testObjectKey" match="/etf:DsResultSet/etf:testObjects[1]/etf:TestObject"
+        use="@id"/>
+    <xsl:key name="testObjectTypeKey" match="/etf:DsResultSet/etf:testObjectTypes[1]/etf:TestObjectType"
         use="@id"/>
     <xsl:key name="translationKey"
         match="/etf:DsResultSet/etf:translationTemplateBundles[1]/etf:TranslationTemplateBundle/etf:translationTemplateCollections[1]/etf:LangTranslationTemplateCollection/etf:translationTemplates[1]/etf:TranslationTemplate[@language = $language]"
         use="@name"/>
-
     <xsl:key name="testTaskKey"
         match="/etf:DsResultSet/etf:testRuns[1]/etf:TestRun/etf:testTasks[1]/etf:TestTask" use="@id"/>
-
     <xsl:key name="testTaskResultKey"
         match="/etf:DsResultSet/etf:testTaskResults[1]/etf:TestTaskResult" use="@id"/>
-
     <xsl:key name="attachmentsKey"
         match="/etf:DsResultSet/etf:testTaskResults[1]/etf:TestTaskResult/etf:attachments[1]/etf:Attachment"
         use="@id"/>
@@ -100,8 +100,7 @@
             <body>
                 <div data-role="header">
                     <h1>
-                        <xsl:value-of
-                            select="./etf:testRuns/etf:TestRun/etf:label/text()"/>
+                        <xsl:value-of select="./etf:testRuns[1]/etf:TestRun/etf:label/text()"/>
                     </h1>
                     <a href="{$serviceUrl}/results" data-ajax="false" data-icon="back"
                         data-iconpos="notext"/>
@@ -143,7 +142,9 @@
                         <xsl:value-of select="$lang/x:e[@key = 'PublicationLocation']"/>
                     </td>
                     <td>
-                        <a href="{$serviceUrl}/TestTaskResult/{$testTaskResult/@id}.html?lang={$language}" data-ajax="false">
+                        <a
+                            href="{$serviceUrl}/TestTaskResult/{$testTaskResult/@id}.html?lang={$language}"
+                            data-ajax="false">
                             <xsl:value-of select="$testTaskResult/@id"/>
                         </a>
                     </td>
