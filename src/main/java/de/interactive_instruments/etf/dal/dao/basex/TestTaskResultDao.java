@@ -15,10 +15,23 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
+import javax.xml.bind.ValidationEvent;
+import javax.xml.bind.ValidationEventHandler;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.ValidatorHandler;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dao.TestTaskResultWriteDao;
+import de.interactive_instruments.exceptions.ExcUtils;
+import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
@@ -27,21 +40,54 @@ import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StoreException;
+import org.slf4j.Logger;
+import org.xml.sax.*;
 
 /**
  * Test Task Result Data Access Object
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class TestTaskResultDao extends BsxWriteDao<TestTaskResultDto> {
+public class TestTaskResultDao extends BsxWriteDao<TestTaskResultDto> implements TestTaskResultWriteDao {
+
+	private final Schema schema;
+
+	private static class TestTaskResultValidationErrorHandler implements ErrorHandler {
+
+		private final Logger logger;
+
+		private TestTaskResultValidationErrorHandler(final Logger logger) {
+			this.logger = logger;
+		}
+
+		@Override public void warning(final SAXParseException exception) throws SAXException {
+
+		}
+
+		@Override public void error(final SAXParseException exception) throws SAXException {
+			if (!exception.getMessage().startsWith("cvc-id")) {
+				throw new IllegalStateException(exception);
+			}
+		}
+
+		@Override public void fatalError(final SAXParseException exception) throws SAXException {
+			if (!exception.getMessage().startsWith("cvc-id")) {
+				throw new IllegalStateException(exception);
+			}
+		}
+
+
+	}
 
 	protected TestTaskResultDao(final BsxDsCtx ctx) throws StoreException, IOException, TransformerConfigurationException {
 		super("/etf:TestTaskResult", "TestTaskResult", ctx,
 				(dsResultSet) -> dsResultSet.getTestTaskResults());
 
-		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(this, "html", "text/html", "xslt/default/TestTaskResult2DefaultReport.xsl", "xslt/default/");
+		final XsltOutputTransformer reportTransformer = new XsltOutputTransformer(
+				this, "html", "text/html", "xslt/default/TestTaskResult2DefaultReport.xsl", "xslt/default/");
 		outputFormats.put(reportTransformer.getId(), reportTransformer);
 
+		schema = ((BsxDataStorage)ctx).getSchema();
 	}
 
 	@Override
@@ -54,4 +100,42 @@ public class TestTaskResultDao extends BsxWriteDao<TestTaskResultDto> {
 		return TestTaskResultDto.class;
 	}
 
+	@Override
+	public void add(final InputSource inputSource) throws StoreException {
+		try {
+			final SAXParserFactory spf = SAXParserFactory.newInstance();
+			spf.setNamespaceAware(true);
+			final XMLReader reader = spf.newSAXParser().getXMLReader();
+			final ValidatorHandler vh = schema.newValidatorHandler();
+			TestTaskResultValidationErrorHandler eh = new TestTaskResultValidationErrorHandler(ctx.getLogger());
+			vh.setErrorHandler(eh);
+			reader.setContentHandler(vh);
+			reader.parse(inputSource);
+
+			final IFile dest = new IFile("/tmp/todo");
+
+			try {
+				// move
+				final IFile resultFile = new IFile(URI.create(inputSource.getSystemId()));
+				if(resultFile.exists()) {
+					resultFile.renameTo(dest);
+				}
+			}catch (IllegalArgumentException e) {
+				OutputStream outputStream = null;
+				try {
+					outputStream = new FileOutputStream(dest);
+					int read = 0;
+					byte[] bytes = new byte[1024];
+					while ((read = inputSource.getByteStream().read(bytes)) != -1) {
+						outputStream.write(bytes, 0, read);
+					}
+				}catch (IOException ew) {
+					IFile.closeQuietly(outputStream);
+				}
+			}
+			ctx.getLogger().trace("Wrote result to {}", dest);
+		} catch (IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
+			throw new StoreException(e);
+		}
+	}
 }

@@ -12,7 +12,7 @@
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.ArgumentCollectionDto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.ArgumentsDto</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -64,7 +64,7 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.ArgumentCollectionDto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.ArgumentsDto</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -116,7 +116,7 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.ArgumentCollectionDto</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.ArgumentsDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
