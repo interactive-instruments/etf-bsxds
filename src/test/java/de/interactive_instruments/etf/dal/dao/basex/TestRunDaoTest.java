@@ -19,6 +19,8 @@ import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STOR
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import org.junit.*;
@@ -43,7 +45,7 @@ public class TestRunDaoTest {
 	private static WriteDao<TestRunDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestRunDto.class));
 

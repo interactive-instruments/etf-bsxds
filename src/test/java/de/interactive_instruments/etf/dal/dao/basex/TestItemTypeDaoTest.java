@@ -17,6 +17,8 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -40,7 +42,7 @@ public class TestItemTypeDaoTest {
 	private static WriteDao<TestItemTypeDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestItemTypeDto.class));
 	}

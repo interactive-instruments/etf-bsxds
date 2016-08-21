@@ -15,21 +15,23 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import de.interactive_instruments.etf.dal.dao.Filter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.BaseXException;
 
+import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.OutputFormatStreamable;
+import de.interactive_instruments.etf.dal.dto.Arguments;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.ExcUtils;
+import de.interactive_instruments.properties.Properties;
 import de.interactive_instruments.properties.PropertyHolder;
-
-import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 /**
  * Abstract class for a prepared XQuery statement whose result can be directly
@@ -56,19 +58,22 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 	public void streamTo(final OutputFormat outputFormat, final PropertyHolder arguments, final OutputStream outputStream) {
 		try {
 
+			// create a copy
+			final Properties properties = new Properties(arguments);
+
 			// DETAILED_WITHOUT_HISTORY level is required
 			bsXquery.parameter("levelOfDetail", String.valueOf(Filter.LevelOfDetail.DETAILED_WITHOUT_HISTORY), "xs:string");
 
 			final String offset = bsXquery.getParameter("offset");
-			if(offset!=null) {
-				outputFormat.setParameter("offset", offset);
+			if (offset != null) {
+				properties.setProperty("offset", offset);
 			}
 
 			final String limit = bsXquery.getParameter("limit");
-			if(limit!=null) {
-				outputFormat.setParameter("limit", limit);
+			if (limit != null) {
+				properties.setProperty("limit", limit);
 			}
-			outputFormat.setParameter("selection", bsXquery.getParameter("selection"));
+			properties.setProperty("selection", bsXquery.getParameter("selection"));
 
 			final PipedInputStream in = new PipedInputStream();
 			final PipedOutputStream out = new PipedOutputStream(in);
@@ -85,14 +90,13 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 					}
 				}
 			}).start();
-			outputFormat.streamTo(arguments, in, outputStream);
+			outputFormat.streamTo(properties, in, outputStream);
 			// xquery.execute(ctx.getBsxCtx(), outputStream);
 		} catch (IOException e) {
 			logError(e);
 			throw new IllegalStateException(e);
 		}
 	}
-
 
 	protected final void logError(final Throwable e) {
 		bsXquery.getCtx().getLogger().error("Query Exception: {}", ExceptionUtils.getRootCauseMessage(e));

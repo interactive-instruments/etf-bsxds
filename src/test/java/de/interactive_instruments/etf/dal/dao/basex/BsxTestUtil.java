@@ -20,6 +20,8 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 
@@ -363,7 +365,7 @@ class BsxTestUtil {
 		etsDto.setTestModules(testModuleDtos);
 	}
 
-	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
 		if (!DATA_STORAGE.isInitialized()) {
 
 			if (System.getenv("ETF_DS_DIR") != null) {
@@ -376,8 +378,13 @@ class BsxTestUtil {
 				DATA_STORAGE_DIR = null;
 			}
 
+			final IFile styleDir = new IFile("./src/main/resources/xslt/default/style");
+			styleDir.expectDirIsReadable();
+
 			assertTrue(DATA_STORAGE_DIR != null && DATA_STORAGE_DIR.exists());
 			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR, DATA_STORAGE_DIR.getAbsolutePath());
+			DATA_STORAGE.getConfigurationProperties().setProperty("etf.webapp.base.url", styleDir.getAbsolutePath());
+			DATA_STORAGE.getConfigurationProperties().setProperty("etf.api.base.url", "http://localhost/etf-webapp/v2");
 			DATA_STORAGE.init();
 			BsxTestUtil.DATA_STORAGE.reset();
 		}
@@ -438,13 +445,13 @@ class BsxTestUtil {
 	}
 
 	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
-		return getByIdTest(dto,null);
+		return getByIdTest(dto, null);
 	}
 
 	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
-		final PreparedDto<T> preparedDto = dao.getById(dto.getId(),filter);
+		final PreparedDto<T> preparedDto = dao.getById(dto.getId(), filter);
 		// Check internal ID
 		assertEquals(dto.getId(), preparedDto.getDtoId());
 		final T queriedDto = preparedDto.getDto();
@@ -453,7 +460,7 @@ class BsxTestUtil {
 		assertEquals(dto.getDescriptiveLabel(), queriedDto.getDescriptiveLabel());
 
 		// Check compareTo
-		final PreparedDto<T> preparedDto2 = dao.getById(dto.getId(),filter);
+		final PreparedDto<T> preparedDto2 = dao.getById(dto.getId(), filter);
 		assertEquals(0, preparedDto2.compareTo(preparedDto));
 		// Will execute the query
 		assertEquals(preparedDto2.getDtoId(), preparedDto2.getDto().getId());
@@ -463,7 +470,7 @@ class BsxTestUtil {
 	}
 
 	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
-		return addAndGetByIdTest(dto,null);
+		return addAndGetByIdTest(dto, null);
 	}
 
 	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {

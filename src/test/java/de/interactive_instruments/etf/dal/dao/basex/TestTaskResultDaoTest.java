@@ -22,29 +22,29 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.Filter;
-import de.interactive_instruments.etf.model.OutputFormat;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import junit.framework.TestCase;
 
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
+import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StoreException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -55,7 +55,7 @@ public class TestTaskResultDaoTest {
 	private static WriteDao<TestTaskResultDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
 
@@ -116,12 +116,20 @@ public class TestTaskResultDaoTest {
 
 		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TTR_DTO_1);
 
-		final IFile tmpFile = IFile.createTempFile("etf",".html");
+		final IFile tmpFile = IFile.createTempFile("etf", ".html");
 		tmpFile.deleteOnExit();
 		final FileOutputStream fop = new FileOutputStream(tmpFile);
-		final OutputFormat outputFormat = writeDao.getOutputFormats().values().iterator().next();
 
-		preparedDto.streamTo(outputFormat, null, fop);
+		OutputFormat htmlReportFormat = null;
+		for (final OutputFormat outputFormat : writeDao.getOutputFormats().values()) {
+			if ("text/html".equals(outputFormat.getMediaTypeType().getType())) {
+				htmlReportFormat = outputFormat;
+				break;
+			}
+		}
+		assertNotNull(htmlReportFormat);
+
+		preparedDto.streamTo(htmlReportFormat, null, fop);
 
 		final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestTaskResult.html").toURI());
 		assertTrue(cmpResult.exists());

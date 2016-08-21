@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class TranslationTemplateBundleDaoTest {
 	private static WriteDao<TranslationTemplateBundleDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
 	}

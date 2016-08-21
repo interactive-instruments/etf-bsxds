@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import de.interactive_instruments.etf.model.DefaultEidMap;
+import javax.xml.transform.TransformerConfigurationException;
+
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
@@ -34,6 +35,7 @@ import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
+import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
@@ -57,6 +59,8 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	protected final String typeName;
 	protected final String xqueryStatement;
 	protected final EidMap<OutputFormat> outputFormats = new DefaultEidMap<>();
+	protected ConfigProperties configProperties;
+	protected boolean initialized = false;
 	private final GetDtoResultCmd getDtoResultCmd;
 
 	protected void ensureType(final T t) {
@@ -105,16 +109,37 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 
 	@Override
 	public ConfigPropertyHolder getConfigurationProperties() {
-		return new ConfigProperties();
+		if (configProperties == null) {
+			this.configProperties = new ConfigProperties();
+		}
+		return configProperties;
 	}
 
 	@Override
 	public void init() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
+		if (initialized == true) {
+			throw new InvalidStateTransitionException(getClass().getSimpleName() + " is already initialized");
+		}
 
+		if (configProperties != null) {
+			configProperties.expectAllRequiredPropertiesSet();
+		}
+		try {
+			final XsltOutputTransformer xmlItemCollectionTransformer = new XsltOutputTransformer(this, "xml", "text/xml", "xslt/DsResult2ItemCollection.xsl");
+			xmlItemCollectionTransformer.getConfigurationProperties().setPropertiesFrom(configProperties, true);
+			xmlItemCollectionTransformer.init();
+			outputFormats.put(xmlItemCollectionTransformer.getId(), xmlItemCollectionTransformer);
+		} catch (IOException | TransformerConfigurationException e) {
+			throw new InitializationException(e);
+		}
+		doInit();
+		initialized = true;
 	}
 
+	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {}
+
 	@Override
-	public PreparedDtoCollection<T> getAll(final Filter filter) throws StoreException {
+	public final PreparedDtoCollection<T> getAll(final Filter filter) throws StoreException {
 		try {
 			final BsXQuery bsXQuery = createPagedQuery(filter);
 			return new BsxPreparedDtoCollection(bsXQuery, getDtoResultCmd);
@@ -144,16 +169,11 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	}
 
 	private BsXQuery createPagedQuery(final Filter filter) throws BaseXException {
-		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).
-				parameter("function", "paged").
-				parameter("selection", typeName);
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("function", "paged").parameter("selection", typeName);
 	}
 
 	private BsXQuery createIdQuery(final String id, final Filter filter) throws BaseXException {
-		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).
-				parameter("qids", id).
-				parameter("function", "byId").
-				parameter("selection", typeName);
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("qids", id).parameter("function", "byId").parameter("selection", typeName);
 	}
 
 	@Override
@@ -163,7 +183,7 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 
 	@Override
 	public void release() {
-
+		initialized = false;
 	}
 
 	@Override

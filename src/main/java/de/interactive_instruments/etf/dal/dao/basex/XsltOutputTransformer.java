@@ -25,23 +25,28 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import de.interactive_instruments.etf.dal.dao.Dao;
-import de.interactive_instruments.etf.model.EidFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.interactive_instruments.Configurable;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MediaType;
+import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.etf.model.Parameterizable;
+import de.interactive_instruments.exceptions.InitializationException;
+import de.interactive_instruments.exceptions.InvalidStateTransitionException;
+import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
+import de.interactive_instruments.properties.ConfigPropertyHolder;
 import de.interactive_instruments.properties.PropertyHolder;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class XsltOutputTransformer implements OutputFormat {
+final class XsltOutputTransformer implements OutputFormat, Configurable {
 
 	/**
 	 *  Identifier for the transformer
@@ -55,31 +60,35 @@ final class XsltOutputTransformer implements OutputFormat {
 	 */
 	private Templates cachedXSLT;
 
-	private ConfigProperties config = new ConfigProperties();
+	private ConfigProperties configProperties = new ConfigProperties("etf.webapp.base.url", "etf.api.base.url");
 	private IFile stylesheetFile;
 	private long stylesheetLastModified = 0;
 	private final TransformerFactory transFact = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
 	private final Logger logger = LoggerFactory.getLogger(XsltOutputTransformer.class);
+	private boolean initialized = false;
 	private final String mimeTypeStr;
 
 	private final MediaType mimeType = new MediaType() {
-		@Override public MediaType getBaseType() {
+		@Override
+		public MediaType getBaseType() {
 			return null;
 		}
 
-		@Override public String getType() {
+		@Override
+		public String getType() {
 			return mimeTypeStr;
 		}
 
-		@Override public String getSubtype() {
+		@Override
+		public String getSubtype() {
 			return null;
 		}
 
-		@Override public Map<String, String> getParameters() {
+		@Override
+		public Map<String, String> getParameters() {
 			return null;
 		}
 	};
-
 
 	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath)
 			throws IOException, TransformerConfigurationException {
@@ -98,7 +107,7 @@ final class XsltOutputTransformer implements OutputFormat {
 	 */
 	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath, final String jarImportPath)
 			throws IOException, TransformerConfigurationException {
-		this.id = EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName());
+		this.id = EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + label);
 		this.label = label;
 		this.mimeTypeStr = mimeTypeStr;
 		this.stylesheetFile = null;
@@ -170,11 +179,15 @@ final class XsltOutputTransformer implements OutputFormat {
 			recacheChangedStylesheet();
 
 			final Transformer transformer = cachedXSLT.newTransformer();
-			if (config != null) {
-				config.forEach( c -> transformer.setParameter(c.getKey(), c.getValue()));
+			if (arguments != null) {
+				arguments.forEach(a -> transformer.setParameter(a.getKey(), a.getValue()));
 			}
-			if(arguments!=null) {
-				arguments.forEach( a -> transformer.setParameter(a.getKey(), a.getValue()));
+			if (configProperties != null) {
+				configProperties.forEach(c -> transformer.setParameter(c.getKey(), c.getValue()));
+
+				// Basic properties
+				transformer.setParameter("stylePath", configProperties.getProperty("etf.webapp.base.url"));
+				transformer.setParameter("serviceUrl", configProperties.getProperty("etf.api.base.url"));
 			}
 
 			transformer.transform(
@@ -184,33 +197,39 @@ final class XsltOutputTransformer implements OutputFormat {
 		}
 	}
 
-	// Todo use configureable
-	public void init(PropertyHolder config) {
-		if (config.getProperty("etf.webapp.service.url") != null) {
-			this.config = new ConfigProperties();
-			this.config.setProperty("baseUrl",
-					config.getProperty("etf.webapp.service.url"));
-		}
-	}
-
 	@Override
 	public int compareTo(final OutputFormat o) {
 		return 0;
 	}
 
-	@Override public String getParamTypeName() {
+	@Override
+	public String getParamTypeName() {
 		return null;
 	}
 
-	@Override public Collection<Parameter> getParameters() {
+	@Override
+	public Collection<Parameter> getParameters() {
 		return null;
 	}
 
-	@Override public Parameter getParameter(final String s) {
+	@Override
+	public Parameter getParameter(final String s) {
 		return null;
 	}
 
-	@Override public void setParameter(final String parameter, final String value) {
-		config.setProperty(parameter, value);
+	@Override
+	public ConfigPropertyHolder getConfigurationProperties() {
+		return configProperties;
+	}
+
+	@Override
+	public void init() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
+		configProperties.expectAllRequiredPropertiesSet();
+		initialized = true;
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return initialized;
 	}
 }

@@ -31,7 +31,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -63,6 +62,7 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
+import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.EID;
@@ -186,7 +186,10 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	BsxDataStorage() {
+	/**
+	 * TODO package visibility if SPI is available
+	 */
+	public BsxDataStorage() {
 		logger.debug("Preparing BsxDataStorage");
 
 		properties = Collections.unmodifiableMap(new HashMap<String, Object>() {
@@ -200,6 +203,18 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		logger.info("using EclipseLink {} ", org.eclipse.persistence.Version.getVersion());
 	}
 
+	/**
+	 * will be removed in version 2.1.0
+	 */
+	@Deprecated
+	public void addFile(final IFile file) {
+		try {
+			new Add(file.getName(), file.getAbsolutePath()).execute(ctx);
+		} catch (BaseXException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 	@Override
 	public synchronized void init() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
 		if (!this.initialized.get()) {
@@ -207,7 +222,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			this.configProperties.expectAllRequiredPropertiesSet();
 			initDbSchema();
 			try {
-				initMoxyDtoMapping();
+				initDaosAndMoxyDtoMapping();
 				initLazyDtoProxies();
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
@@ -266,7 +281,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	private void initMoxyDtoMapping() throws StoreException, JAXBException, IOException, TransformerConfigurationException {
+	private void initDaosAndMoxyDtoMapping() throws StoreException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException, InvalidStateTransitionException, InitializationException {
 		final Map<Class<? extends Dto>, Dao<? extends Dto>> tmpDaoMapping = new HashMap<>();
 		tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
 		tmpDaoMapping.put(TestObjectTypeDto.class, new TestObjectTypeDao(this));
@@ -278,6 +293,13 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		tmpDaoMapping.put(TestTaskResultDto.class, new TestTaskResultDao(this));
 		tmpDaoMapping.put(TestItemTypeDto.class, new TestItemTypeDao(this));
 		tmpDaoMapping.put(TestTaskDto.class, new TestTaskDao(this));
+
+		// Configure and init
+		for (final Dao<? extends Dto> dao : tmpDaoMapping.values()) {
+			dao.getConfigurationProperties().setPropertiesFrom(configProperties, true);
+			dao.init();
+		}
+
 		daoMapping = Collections.unmodifiableMap(tmpDaoMapping);
 
 		// Initialize moxy

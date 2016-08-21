@@ -38,6 +38,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="logPath" type="xs:anyURI"/>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
             <xs:attribute name="status" type="TestResultStatusType" use="optional"/>

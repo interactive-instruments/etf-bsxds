@@ -20,6 +20,8 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -40,7 +42,7 @@ public class BsxDataStorageTest {
 	 * @throws SAXException
 	 */
 	@Test
-	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
 		BsxTestUtil.ensureInitialization();
 		assertTrue(DATA_STORAGE.isInitialized());
 		assertNotNull(DATA_STORAGE.getSchema());

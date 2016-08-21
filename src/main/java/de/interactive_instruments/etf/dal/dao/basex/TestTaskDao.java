@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
+
+import java.io.IOException;
+
+import javax.xml.transform.TransformerConfigurationException;
+
+import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StoreException;
-import org.basex.core.BaseXException;
-
-import javax.xml.transform.TransformerConfigurationException;
-import java.io.IOException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -41,7 +42,8 @@ public class TestTaskDao extends BsxWriteDao<TestTaskDto> {
 
 	}
 
-	@Override public boolean exists(final EID eid) {
+	@Override
+	public boolean exists(final EID eid) {
 		// TODO check TestRun
 		return true;
 	}

@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.SUtils;
-import de.interactive_instruments.etf.dal.dao.Filter;
-import net.sf.saxon.value.StringValue;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.XQuery;
+import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 import java.io.OutputStream;
 import java.util.HashMap;
 
-import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
+import net.sf.saxon.value.StringValue;
+
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.XQuery;
+
+import de.interactive_instruments.SUtils;
+import de.interactive_instruments.etf.dal.dao.Filter;
 
 /**
  * Wrapped Xquery
@@ -45,11 +46,11 @@ final class BsXQuery {
 	}
 
 	BsXQuery parameter(final String name, final String value, final String type) {
-		if(xQuery!=null) {
+		if (xQuery != null) {
 			// reset query
 			xQuery = null;
 		}
-		parameter.put(name, new String[] { value, type });
+		parameter.put(name, new String[]{value, type});
 		return this;
 	}
 
@@ -58,31 +59,28 @@ final class BsXQuery {
 	}
 
 	BsXQuery parameter(final Filter filter) {
-		if(filter==null) {
+		if (filter == null) {
 			return this;
 		}
-		return parameter("offset", valueOfOrDefault(filter.offset(), "0") , "xs:integer").
-				parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer").
-				parameter("levelOfDetail", valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)));
+		return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer").parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer").parameter("levelOfDetail", valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)));
 	}
 
 	String getParameter(final String name) {
 		final String[] res = parameter.get(name);
-		if(res!=null) {
+		if (res != null) {
 			return res[0];
 		}
 		return null;
 	}
-
 
 	BsxDsCtx getCtx() {
 		return ctx;
 	}
 
 	private void ensureInitializedQuery() {
-		if(xQuery==null) {
+		if (xQuery == null) {
 			xQuery = new XQuery(queryStr);
-			parameter.entrySet().forEach( e -> xQuery.bind("$"+e.getKey(), e.getValue()[0], e.getValue()[1]) );
+			parameter.entrySet().forEach(e -> xQuery.bind("$" + e.getKey(), e.getValue()[0], e.getValue()[1]));
 		}
 	}
 
@@ -96,7 +94,8 @@ final class BsXQuery {
 		return xQuery.execute(ctx.getBsxCtx());
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return xQuery.toString();
 	}
 }

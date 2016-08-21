@@ -7,7 +7,7 @@
 
     <xsl:output method="xml" />
 
-    <xsl:param name="serviceUrl" select="'https://localhost/etf'"/>
+    <xsl:param name="serviceUrl" select="'https://localhost/etf/api'"/>
     <xsl:param name="selection"/>
     <xsl:param name="offset" select="0"/>
     <xsl:param name="limit" select="0"/>

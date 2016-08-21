@@ -68,7 +68,7 @@ public class TestObjectDaoTest {
 	private static WriteDao<TestObjectDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestObjectDto.class));
 
@@ -304,7 +304,7 @@ public class TestObjectDaoTest {
 		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		final PreparedDto<TestObjectDto> preparedDto = writeDao.getById(BsxTestUtil.TO_DTO_1.getId());
 
-		final IFile tmpFile = IFile.createTempFile("etf",".xml");
+		final IFile tmpFile = IFile.createTempFile("etf", ".xml");
 		tmpFile.deleteOnExit();
 		final FileOutputStream fop = new FileOutputStream(tmpFile);
 		final OutputFormat outputFormat = writeDao.getOutputFormats().values().iterator().next();

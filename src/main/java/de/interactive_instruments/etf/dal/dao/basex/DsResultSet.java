@@ -31,7 +31,8 @@ import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBun
  * may include different object types that are all unmarshaled in the specific
  * lists. Although only one specific type is accessed through the
  * generic {@link BsxPreparedDto } or {@link BsxPreparedDtoCollection }, the objects
- * may possess references to other object types.
+ * may possess references to other object types that were unmarshaled into the other
+ * lists.
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
