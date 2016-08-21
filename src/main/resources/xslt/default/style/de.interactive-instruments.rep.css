@@ -4,11 +4,16 @@
 
 #rprtStatistics td:not(:first-child) {
     text-align:center;
-    vertical-align:middle;
+    vertical-align:top;
+}
+
+td, th {
+    text-align:left;
+    vertical-align:top;
+    font-size: 90%;
 }
 
 td:first-child {
-    text-align:left;
     font-weight:bold;
 }
 
@@ -28,6 +33,7 @@ td:first-child {
 
 #rprtAdditionalStatistics td,th {
     text-align:left;
+    vertical-align:top;
 }
 #rprtAdditionalStatistics td {
     font-weight:normal;
