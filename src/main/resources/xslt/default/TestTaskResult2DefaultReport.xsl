@@ -800,7 +800,7 @@
 			<xsl:attribute name="data-collapsed-icon">
 				<xsl:choose>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">check</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">eye</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">alert</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
