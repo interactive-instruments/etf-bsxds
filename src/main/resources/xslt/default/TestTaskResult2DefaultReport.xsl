@@ -53,7 +53,7 @@
 			</head>
 			<body>
 				<div data-role="header">
-					<h1><xsl:value-of select="./etf:testRuns[1]/etf:TestRun[1]/etf:label/text()"/>: <xsl:value-of select="./etf:executableTestSuites[1]/etf:ExecutableTestSuite[1]/etf:label/text()"/></h1>
+					<h1><xsl:value-of select="./etf:testRuns[1]/etf:TestRun[1]/etf:label/text()"/><br/><xsl:value-of select="./etf:executableTestSuites[1]/etf:ExecutableTestSuite[1]/etf:label/text()"/></h1>
 					<a href="{$serviceUrl}/results" data-ajax="false" data-icon="back" data-iconpos="notext"/>
 				</div>
 				<div data-role="content">
