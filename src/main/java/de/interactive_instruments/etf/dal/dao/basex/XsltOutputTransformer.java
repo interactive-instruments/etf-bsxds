@@ -95,6 +95,23 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
 	}
 
+	private static class ResourceResolver implements URIResolver
+	{
+		private final String xsltBase;
+
+		ResourceResolver(final String xsltBase) {
+			this.xsltBase = xsltBase.substring(0,xsltBase.lastIndexOf("/"));
+		}
+
+		public Source resolve(final String ref, final String base)
+		{
+			final ClassLoader cL = getClass().getClassLoader();
+			final InputStream is = cL.getResourceAsStream(
+					this.xsltBase+"/"+ref);
+			return new StreamSource(is, this.xsltBase+"/"+ref);
+		}
+	}
+
 	/**
 	 * Create a new XSL Output Transformer
 	 *
@@ -118,10 +135,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		xsltSource.setSystemId(stylesheetJarPath);
 
 		if (jarImportPath != null) {
-			transFact.setURIResolver((ref, base) -> {
-				final InputStream s = cL.getResourceAsStream(jarImportPath + "/" + ref);
-				return new StreamSource(s);
-			});
+			transFact.setURIResolver(new ResourceResolver(stylesheetJarPath));
 		}
 
 		this.cachedXSLT = transFact.newTemplates(xsltSource);
