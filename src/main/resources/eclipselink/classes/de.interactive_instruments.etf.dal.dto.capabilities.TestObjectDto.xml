@@ -5,8 +5,17 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:50:12.274+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.841+02:00</last-refresh-timestamp>
    <attributes>
+      <class-attribute>
+         <name>properties</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.properties.Properties</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>resources</name>
          <modifier>2</modifier>
@@ -69,6 +78,51 @@
          </method-parameters>
       </method>
       <method>
+         <name>ensureValid</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getProperties</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.properties.Properties</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getResourceByName</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.net.URI</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>getResourceCollection</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.Collection</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getResourceNames</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -82,7 +136,7 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.Collection</type-name>
+               <type-name>java.util.Map</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -94,6 +148,24 @@
                <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>setProperties</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.properties.Properties</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setResources</name>

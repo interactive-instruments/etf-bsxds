@@ -7,9 +7,12 @@
       <classpath-entries>
          <entry>../../../../../etf-core/build/libs/etf-core-1.0.0-SNAPSHOT.jar</entry>
          <entry>../../../../build/libs/etf-bsxds-2.0.0-SNAPSHOT.jar</entry>
+         <entry>../../../../../ii-commons-util/build/libs/ii-commons-util-2.0.0-SNAPSHOT.jar</entry>
       </classpath-entries>
       <user-type-names>
          <name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</name>
+         <name>de.interactive_instruments.etf.dal.dto.Arguments</name>
+         <name>de.interactive_instruments.etf.dal.dto.Arguments$Argument</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.CredentialDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</name>
@@ -45,10 +48,16 @@
          <name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</name>
          <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto</name>
          <name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</name>
+         <name>de.interactive_instruments.etf.model.ParameterSet</name>
+         <name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</name>
+         <name>de.interactive_instruments.properties.Properties</name>
+         <name>de.interactive_instruments.properties.Properties$Property</name>
       </user-type-names>
    </class-repository>
    <descriptor-names>
       <descriptor-name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.Arguments</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.Arguments$Argument</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.CredentialDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto</descriptor-name>
@@ -74,6 +83,10 @@
       <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto$Argument</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.model.ParameterSet</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</descriptor-name>
+      <descriptor-name>de.interactive_instruments.properties.Properties</descriptor-name>
+      <descriptor-name>de.interactive_instruments.properties.Properties$Property</descriptor-name>
    </descriptor-names>
    <defaults-policy type="o-x">
       <use-method-accessing>false</use-method-accessing>

@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:53:51.042+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.847+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>vendor</name>
@@ -31,6 +31,20 @@
          <name>ComponentDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>ComponentDto</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.component.ComponentInfo</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>getVendor</name>

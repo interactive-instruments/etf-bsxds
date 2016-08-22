@@ -28,9 +28,15 @@
             <descriptor-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</descriptor-name>
          </reference-descriptor-handle>
          <xpath>attachments/Attachment</xpath>
-         <container-policy type="list">
+         <container-policy type="map">
+            <key-method-handle>
+               <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</method-declaring-type-name>
+               <method-signature>getId()</method-signature>
+            </key-method-handle>
             <container-class>
-               <uses-default-container-class>true</uses-default-container-class>
+               <container-class-handle>
+                  <type-name>de.interactive_instruments.etf.model.DefaultEidMap</type-name>
+               </container-class-handle>
             </container-class>
          </container-policy>
       </mapping>

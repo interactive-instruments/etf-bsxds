@@ -124,6 +124,18 @@
          </attribute-handle>
          <xml-field>lastUpdateDate/text()</xml-field>
       </mapping>
+      <mapping type="composite-object">
+         <name>parameters</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</attribute-declaring-type-name>
+            <attribute-name>parameters</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.model.ParameterSet</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>ParameterList</xpath>
+      </mapping>
       <mapping type="xml-direct">
          <name>reference</name>
          <inherited>true</inherited>
@@ -204,7 +216,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>etf:testDriver/@ref</source-xml-field>
+               <source-xml-field>testDriver/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>

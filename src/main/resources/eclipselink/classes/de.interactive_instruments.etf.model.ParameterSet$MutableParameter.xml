@@ -1,230 +1,315 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
-   <name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</name>
+   <name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</name>
    <modifier>1</modifier>
+   <declaring-type-handle>
+      <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+   </declaring-type-handle>
    <superclass-handle>
-      <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
+      <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.836+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.842+02:00</last-refresh-timestamp>
+   <interface-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
+      </class-handle>
+   </interface-handles>
    <attributes>
       <class-attribute>
-         <name>arguments</name>
+         <name>allowedValues</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.Arguments</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>executableTestSuite</name>
+         <name>defaultValue</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>resultStyle</name>
+         <name>description</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ResultStyleDto</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>testObject</name>
+         <name>excludingParameter</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
+               <type-name>java.util.Set</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>testTaskResult</name>
+         <name>name</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</type-name>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>required</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>type</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
    </attributes>
    <methods>
       <method>
-         <name>TestTaskDto</name>
-         <constructor>true</constructor>
-         <modifier>1</modifier>
-      </method>
-      <method>
-         <name>TestTaskDto</name>
+         <name>ParameterSet$MutableParameter</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</type-name>
+                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>ensureValid</name>
+         <name>ParameterSet$MutableParameter</name>
+         <constructor>true</constructor>
          <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getArguments</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.Arguments</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getExecutableTestSuite</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getResultStyle</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ResultStyleDto</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getTestObject</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getTestTaskResult</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>setArguments</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.Arguments</type-name>
+                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>setExecutableTestSuite</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>setResultStyle</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ResultStyleDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>setTestObject</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>setTestTaskResult</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>toString</name>
+         <name>getAllowedValues</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>getDefaultValue</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getDescription</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getExcludingParameter</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.Set</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getName</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getType</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>isRequired</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>setAllowedValues</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setDefaultValue</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setDescription</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setExcludingParameter</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.util.Set</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setName</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setRequired</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>boolean</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setType</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
    </methods>
 </class>

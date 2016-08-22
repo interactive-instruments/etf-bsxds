@@ -5,14 +5,14 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:50:12.257+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.847+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>attachments</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>de.interactive_instruments.etf.model.EidMap</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -69,11 +69,29 @@
          </method-parameters>
       </method>
       <method>
+         <name>getAttachmentById</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.model.EID</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
          <name>getAttachments</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>java.util.Collection</type-name>
             </type-handle>
          </return-type-declaration>
       </method>

@@ -3,6 +3,112 @@
    <name>etf-ds</name>
    <class-mapping-descriptors>
       <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.dal.dto.Arguments</class>
+         <alias>Arguments</alias>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>applicableParamTypeName</attribute-name>
+               <field name="arguments/@parameterList" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>values</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.Arguments$Argument</reference-class>
+               <field name="arguments/argument" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>java.util.HashMap</collection-type>
+                  <map-key-method>getName</map-key-method>
+               </container>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:ArgumentList</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.dal.dto.Arguments$Argument</class>
+         <alias>Arguments$Argument</alias>
+         <primary-key>
+            <field name="@name" xsi:type="node"/>
+         </primary-key>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>name</attribute-name>
+               <field name="@name" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>value</attribute-name>
+               <field name="text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:ArgumentList/etf:arguments/etf:argument</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
          <class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</class>
          <alias>AttachmentDto</alias>
          <primary-key>
@@ -616,12 +722,12 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
-                     <source-field name="etf:testDriver/@ref" xsi:type="node"/>
+                     <source-field name="testDriver/@ref" xsi:type="node"/>
                      <target-field name="@id" xsi:type="node"/>
                   </field-reference>
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
-                  <field name="etf:testDriver/@ref" xsi:type="node"/>
+                  <field name="testDriver/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
@@ -636,6 +742,11 @@
                <source-to-target-key-fields>
                   <field name="translationTemplateBundle/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>parameters</attribute-name>
+               <reference-class>de.interactive_instruments.etf.model.ParameterSet</reference-class>
+               <field name="ParameterList" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>supportedTestObjectTypes</attribute-name>
@@ -765,6 +876,242 @@
          <schema xsi:type="schema-file-reference">
             <resource>../schema/model/resultSet.xsd</resource>
             <schema-context>/etf:LangTranslationTemplateCollection</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.model.ParameterSet</class>
+         <alias>ParameterSet</alias>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>typeName</attribute-name>
+               <field name="@name" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>parameters</attribute-name>
+               <reference-class>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</reference-class>
+               <field name="parameter" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>java.util.HashMap</collection-type>
+                  <map-key-method>getName</map-key-method>
+               </container>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:ParameterList</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</class>
+         <alias>ParameterSet$MutableParameter</alias>
+         <primary-key>
+            <field name="@name" xsi:type="node"/>
+         </primary-key>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>excludingParameter</attribute-name>
+               <field name="@excludesParameter" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>name</attribute-name>
+               <field name="@name" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>required</attribute-name>
+               <field name="@required" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>defaultValue</attribute-name>
+               <field name="defaultValue/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>allowedValues</attribute-name>
+               <field name="allowedValues/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>type</attribute-name>
+               <field name="type/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:ParameterList/etf:parameter</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.properties.Properties</class>
+         <alias>Properties</alias>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties$Property</reference-class>
+               <field name="property" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>java.util.HashMap</collection-type>
+                  <map-key-method>getName</map-key-method>
+               </container>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:Properties</schema-context>
+            <node-type>element</node-type>
+         </schema>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
+         <class>de.interactive_instruments.properties.Properties$Property</class>
+         <alias>Properties$Property</alias>
+         <primary-key>
+            <field name="@name" xsi:type="node"/>
+         </primary-key>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>name</attribute-name>
+               <field name="@name" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>value</attribute-name>
+               <field name="text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>aggregate</descriptor-type>
+         <caching>
+            <cache-size>-1</cache-size>
+         </caching>
+         <remote-caching>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <namespace-resolver>
+            <namespaces>
+               <namespace>
+                  <prefix>etf</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/2.0</namespace-uri>
+               </namespace>
+               <namespace>
+                  <prefix>etfAppinfo</prefix>
+                  <namespace-uri>http://www.interactive-instruments.de/etf/appinfo/1.0</namespace-uri>
+               </namespace>
+            </namespaces>
+            <default-namespace-uri>http://www.interactive-instruments.de/etf/2.0</default-namespace-uri>
+         </namespace-resolver>
+         <schema xsi:type="schema-file-reference">
+            <resource>../schema/model/resultSet.xsd</resource>
+            <schema-context>/etf:Properties/etf:property</schema-context>
             <node-type>element</node-type>
          </schema>
       </class-mapping-descriptor>
@@ -1808,6 +2155,11 @@
                   <map-key-method>getName</map-key-method>
                </container>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="Properties" xsi:type="node"/>
+            </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
          <caching>
@@ -2011,6 +2363,14 @@
                <container xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>
                </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>logPath</attribute-name>
+               <field name="logPath/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -2346,6 +2706,11 @@
                   <field name="testObject/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>arguments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.Arguments</reference-class>
+               <field name="ArgumentList" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testTaskResult</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</reference-class>
@@ -2480,8 +2845,9 @@
                <attribute-name>attachments</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
                <field name="attachments/Attachment" xsi:type="node"/>
-               <container xsi:type="list-container-policy">
-                  <collection-type>java.util.Vector</collection-type>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
                </container>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">

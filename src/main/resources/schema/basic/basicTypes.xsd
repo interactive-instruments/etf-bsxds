@@ -20,20 +20,31 @@
     <!-- =============================================================== -->
 
     <!-- =============================================================== -->
-    <!--xs:element name="Properties">
+    <xs:element name="Properties">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="value" type="xs:string"/>
-                        </xs:sequence>
-                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation> Property value
+                                    </xs:documentation>
+                                </xs:annotation>
+                                <xs:attribute name="name" type="xs:string"
+                                    use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>Property
+                                            name</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
-    </xs:element-->
+    </xs:element>
 
     <!-- =============================================================== -->
     <xs:element name="ArgumentList">
@@ -66,7 +77,7 @@
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="parameterList" type="xs:string" use="required">
+                        <xs:attribute name="parameterList" type="xs:string" use="optional">
                             <xs:annotation>
                                 <xs:documentation>Target parameter list name</xs:documentation>
                             </xs:annotation>
@@ -113,7 +124,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
         </xs:complexType>
     </xs:element>
 

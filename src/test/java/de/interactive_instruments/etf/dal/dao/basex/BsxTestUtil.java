@@ -44,6 +44,7 @@ import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBun
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.ParameterSet;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
@@ -155,8 +156,13 @@ class BsxTestUtil {
 		TESTSTEP_TYPE_2 = new TestItemTypeDto();
 		setBasicProperties(TESTSTEP_TYPE_2, 2);
 
+		final ParameterSet parameterSet = new ParameterSet();
+		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.1.key","Parameter.1.value"));
+		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.2.key","Parameter.2.value"));
+
 		ETS_DTO_1 = new ExecutableTestSuiteDto();
 		ETS_DTO_1.setTranslationTemplateBundle(TTB_DTO_1);
+		ETS_DTO_1.setParameters(parameterSet);
 		createEtsStructure(ETS_DTO_1, 1);
 
 		TTR_DTO_1 = new TestTaskResultDto();
@@ -170,6 +176,7 @@ class BsxTestUtil {
 
 		ETS_DTO_2 = new ExecutableTestSuiteDto();
 		ETS_DTO_2.setTranslationTemplateBundle(TTB_DTO_1);
+		ETS_DTO_2.setParameters(parameterSet);
 		createEtsStructure(ETS_DTO_2, 2);
 
 		TTR_DTO_2 = new TestTaskResultDto();
@@ -186,6 +193,7 @@ class BsxTestUtil {
 		TR_DTO_1.setLabel("Tag." + toStrWithTrailingZeros(1) + ".label");
 		TR_DTO_1.setStartTimestamp(new Date(0));
 		TR_DTO_1.setDefaultLang(Locale.ENGLISH.toLanguageTag());
+		TR_DTO_1.setLogPath("/tr.log");
 		TR_DTO_1.setTestTasks(new ArrayList<TestTaskDto>() {
 			{
 				add(TASK_DTO_1);

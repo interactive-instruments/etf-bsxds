@@ -5,8 +5,11 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:50:12.282+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.838+02:00</last-refresh-timestamp>
    <interface-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
+      </class-handle>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
       </class-handle>
@@ -40,7 +43,7 @@
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>parameterSet</name>
+         <name>parameters</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
@@ -110,6 +113,42 @@
          </method-parameters>
       </method>
       <method>
+         <name>addDependency</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>addDependency</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto$ExecutableTestSuiteDependencyDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
          <name>addTestModule</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -126,6 +165,15 @@
                </type-declaration>
             </method-parameter>
          </method-parameters>
+      </method>
+      <method>
+         <name>ensureValid</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>getChildren</name>
@@ -159,6 +207,15 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
+               <type-name>java.util.Collection</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getEtsDependencies</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
                <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
@@ -173,7 +230,7 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>getParameterSet</name>
+         <name>getParameters</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -254,7 +311,7 @@
          </method-parameters>
       </method>
       <method>
-         <name>setDependencies</name>
+         <name>setEtsDependencies</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -290,7 +347,7 @@
          </method-parameters>
       </method>
       <method>
-         <name>setParameterSet</name>
+         <name>setParameters</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>

@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
-   <name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</name>
-   <modifier>17</modifier>
+   <name>de.interactive_instruments.etf.model.ParameterSet</name>
+   <modifier>1</modifier>
    <superclass-handle>
-      <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
+      <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.855+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.852+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
-         <type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDtoHolder</type-name>
+         <type-name>de.interactive_instruments.etf.model.Parameterizable</type-name>
       </class-handle>
    </interface-handles>
    <attributes>
       <class-attribute>
-         <name>attachments</name>
+         <name>parameters</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>java.util.Map</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>typeName</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
    </attributes>
    <methods>
       <method>
-         <name>TestStepResultDto</name>
+         <name>ParameterSet</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
       </method>
       <method>
-         <name>addAttachment</name>
+         <name>addParameter</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -40,14 +49,14 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</type-name>
+                     <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>addTestAssertionResult</name>
+         <name>addParameter</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -58,65 +67,77 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</type-name>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>getAttachments</name>
+         <name>asNameDefaultValuePairs</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>java.util.Collection</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
       <method>
-         <name>getTestAssertionResults</name>
+         <name>getParameter</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>setAttachments</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
+               <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
             </type-handle>
          </return-type-declaration>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.util.List</type-name>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>setTestAssertionResults</name>
+         <name>getParameters</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>void</type-name>
+               <type-name>java.util.Collection</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.util.List</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
+      </method>
+      <method>
+         <name>getParamTypeName</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>isEmpty</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
    </methods>
+   <type-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</type-name>
+      </class-handle>
+   </type-handles>
 </class>

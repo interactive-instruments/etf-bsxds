@@ -56,6 +56,14 @@
          <xml-field>label/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
+         <name>logPath</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</attribute-declaring-type-name>
+            <attribute-name>logPath</attribute-name>
+         </attribute-handle>
+         <xml-field>logPath/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
          <name>startedBy</name>
          <attribute-handle>
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</attribute-declaring-type-name>

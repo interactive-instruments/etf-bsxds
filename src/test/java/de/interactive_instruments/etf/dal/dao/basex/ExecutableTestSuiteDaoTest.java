@@ -16,9 +16,15 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
@@ -69,7 +75,23 @@ public class ExecutableTestSuiteDaoTest {
 
 	@Test
 	public void test_2_0_add_and_get() throws StoreException, ObjectWithIdNotFoundException {
-		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.ETS_DTO_1);
+		assertFalse(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
+		writeDao.add(BsxTestUtil.ETS_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
+
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(BsxTestUtil.ETS_DTO_1.getId());
+		// Check internal ID
+		assertEquals(BsxTestUtil.ETS_DTO_1.getId(), preparedDto.getDtoId());
+		final ExecutableTestSuiteDto dto = preparedDto.getDto();
+		assertNotNull(dto);
+		assertEquals(BsxTestUtil.ETS_DTO_1.getId(), dto.getId());
+		assertEquals(BsxTestUtil.ETS_DTO_1.toString(), dto.toString());
+		assertNotNull(dto.getParameters());
+		assertEquals("Parameter.1.key",dto.getParameters().getParameter("Parameter.1.key").getName());
+		assertEquals("Parameter.1.value",dto.getParameters().getParameter("Parameter.1.key").getDefaultValue());
+
+		assertEquals("Parameter.2.key",dto.getParameters().getParameter("Parameter.2.key").getName());
+		assertEquals("Parameter.2.value",dto.getParameters().getParameter("Parameter.2.key").getDefaultValue());
 	}
 
 }

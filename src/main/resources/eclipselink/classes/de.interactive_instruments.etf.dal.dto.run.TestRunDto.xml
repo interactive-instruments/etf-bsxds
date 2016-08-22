@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-17T02:50:12.266+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-22T02:03:52.86+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>defaultLang</name>
@@ -18,6 +18,15 @@
       </class-attribute>
       <class-attribute>
          <name>label</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>logPath</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
@@ -87,6 +96,15 @@
          </method-parameters>
       </method>
       <method>
+         <name>ensureValid</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getDefaultLang</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -96,7 +114,34 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getDescriptiveLabel</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getExecutableTestSuites</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getLabel</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getLogPath</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -123,11 +168,29 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getTestObjects</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getTestResultStatus</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.etf.dal.dto.result.TestResultStatus</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getTestTaskResults</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -160,6 +223,24 @@
       </method>
       <method>
          <name>setLabel</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setLogPath</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
