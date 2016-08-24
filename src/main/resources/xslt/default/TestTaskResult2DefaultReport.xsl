@@ -303,6 +303,28 @@
 		<div id="rprtTestobject" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView"><xsl:variable name="TestObject" select="."/><h3><xsl:value-of select="$lang/x:e[@key = 'TestObject']"/>: <xsl:value-of select="$TestObject/etf:label"/></h3><xsl:if test="$TestObject/etf:description and normalize-space($TestObject/etf:description/text()) ne ''"><xsl:value-of select="$TestObject/etf:description/text()" disable-output-escaping="yes"/></xsl:if><br/><br/><xsl:value-of select="$lang/x:e[@key = 'TestObjectTypes']"/>:
 			   <ul><xsl:for-each select="$TestObject/etf:testObjectTypes/etf:testObjectType"><xsl:variable name="TestObjectType" select="key('testObjectTypeKey', ./@ref)"/><li><xsl:value-of select="$TestObjectType/etf:label/text()"/><xsl:if test="$TestObjectType/etf:description and normalize-space($TestObjectType/etf:description/text()) ne ''"><br/><xsl:value-of select="$TestObjectType/etf:description/text()" disable-output-escaping="yes"/></xsl:if></li></xsl:for-each></ul></div>
 	</xsl:template>
+	<!-- StatisticalReport -->
+	<!-- ########################################################################################## -->
+	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']">
+		<xsl:variable name="stat" select="document(./etf:referencedData/@href)/etf:StatisticalReportTable[etf:type/@ref='EID8bb8f162-1082-434f-bd06-23d6507634b8']"/>
+		<xsl:if test="$stat">
+			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView"><xsl:variable name="StatisticalReport" select="."/>
+				<h3><xsl:value-of select="./etf:label"/></h3>
+				<table>
+					<tr>
+						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureType']"/></th>
+						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureCount']"/></th>
+					</tr>
+					<xsl:for-each select="$stat/etf:entries/etf:entry">
+						<tr>
+							<td><xsl:value-of select="normalize-space(substring-before(text(),';'))"/></td>
+							<td><xsl:value-of select="normalize-space(substring-after(text(),';'))"/></td>
+						</tr>
+					</xsl:for-each>
+				</table>
+			</div>
+		</xsl:if>
+	</xsl:template>
 	<!-- Test suite result information -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:TestTaskResult">
