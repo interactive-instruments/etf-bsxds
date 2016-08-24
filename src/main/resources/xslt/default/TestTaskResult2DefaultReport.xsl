@@ -869,7 +869,7 @@
 					</textarea>
 				</div>
 			</xsl:if>
-			<xsl:if test="$TestAssertion/etf:expectedResult and normalize-space($TestAssertion/etf:expectedResult) ne ''">
+			<xsl:if test="$TestAssertion/etf:expectedResult and normalize-space($TestAssertion/etf:expectedResult) != ('','NOT_APPLICABLE')">
 				<div class="ReportDetail ExpectedResult">
 					<label for="{$id}.expectedResult"><xsl:value-of select="$lang/x:e[@key = 'ExpectedResult']"/>:</label>
 					<textarea id="{$id}.expectedResult" class="ExpectedResult" data-mini="true">
