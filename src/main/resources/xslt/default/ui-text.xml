@@ -72,6 +72,9 @@
 		<x:e key="All">All</x:e>
 		<x:e key="OnlyFailed">Only failed</x:e>
 		<x:e key="OnlyManual">Only manual</x:e>
+		<x:e key="FeatureType">Feature Type</x:e>
+		<x:e key="FeatureCount">Feature Count</x:e>
+		<x:e key="LogFile">Log file</x:e>
 	</x:lang>
 	<x:lang xml:lang="de">
 		<x:e key="Title">ETF Testbericht</x:e>
@@ -145,5 +148,8 @@
 		<x:e key="All">Alle Tests</x:e>
 		<x:e key="OnlyFailed">Nur Fehler</x:e>
 		<x:e key="OnlyManual">Nur manuelle</x:e>
+		<x:e key="FeatureType">Objektart</x:e>
+		<x:e key="FeatureCount">Anzahl Objekte</x:e>
+		<x:e key="LogFile">Logdatei</x:e>
 	</x:lang>
 </x:ui-text-elements>

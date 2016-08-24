@@ -39,6 +39,7 @@
 	<xsl:variable name="etsId" select="key('testSuiteKey', $testTask/etf:resultedFrom[1]/@ref)"/>
 	<xsl:variable name="testObject" select="key('testObjectKey', $testTask/etf:testObject[1]/@ref)"/>
 	<xsl:variable name="statisticAttachment" select="$testTaskResult/etf:attachments[1]/etf:Attachment[@type = 'StatisticalReport']"/>
+	<xsl:variable name="logAttachment" select="$testTaskResult/etf:attachments[1]/etf:Attachment[@type = 'LogFile']"/>
 	<!-- Test Report -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="/etf:DsResultSet">
@@ -73,6 +74,8 @@
 					<xsl:apply-templates select="$testObject"/>
 					<!-- Additional statistics provided by the test project -->
 					<xsl:apply-templates select="$statisticAttachment"/>
+					<!-- Logging provided by the test project -->
+					<xsl:apply-templates select="$logAttachment"/>
 					<!-- Test Suite Results -->
 					<xsl:apply-templates select="$testTaskResult"/>
 				</div>
@@ -308,7 +311,7 @@
 	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']">
 		<xsl:variable name="stat" select="document(./etf:referencedData/@href)/etf:StatisticalReportTable[etf:type/@ref='EID8bb8f162-1082-434f-bd06-23d6507634b8']"/>
 		<xsl:if test="$stat">
-			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView"><xsl:variable name="StatisticalReport" select="."/>
+			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
 				<h3><xsl:value-of select="./etf:label"/></h3>
 				<table>
 					<tr>
@@ -322,6 +325,17 @@
 						</tr>
 					</xsl:for-each>
 				</table>
+			</div>
+		</xsl:if>
+	</xsl:template>
+	<!-- LogFile -->
+	<!-- ########################################################################################## -->
+	<xsl:template match="etf:Attachment[@type = 'LogFile']">
+	   <xsl:variable name="log" select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
+		<xsl:if test="$log">
+			<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
+				<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/></h3>
+				<pre><xsl:value-of select="$log" disable-output-escaping="yes"/></pre>
 			</div>
 		</xsl:if>
 	</xsl:template>
