@@ -95,20 +95,18 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
 	}
 
-	private static class ResourceResolver implements URIResolver
-	{
+	private static class ResourceResolver implements URIResolver {
 		private final String xsltBase;
 
 		ResourceResolver(final String xsltBase) {
-			this.xsltBase = xsltBase.substring(0,xsltBase.lastIndexOf("/"));
+			this.xsltBase = xsltBase.substring(0, xsltBase.lastIndexOf("/"));
 		}
 
-		public Source resolve(final String ref, final String base)
-		{
+		public Source resolve(final String ref, final String base) {
 			final ClassLoader cL = getClass().getClassLoader();
 			final InputStream is = cL.getResourceAsStream(
-					this.xsltBase+"/"+ref);
-			return new StreamSource(is, this.xsltBase+"/"+ref);
+					this.xsltBase + "/" + ref);
+			return new StreamSource(is, this.xsltBase + "/" + ref);
 		}
 	}
 
@@ -200,7 +198,8 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 				configProperties.forEach(c -> transformer.setParameter(c.getKey(), c.getValue()));
 
 				// Basic properties
-				transformer.setParameter("stylePath", configProperties.getProperty("etf.webapp.base.url"));
+				transformer.setParameter("stylePath", configProperties.getProperty("etf.webapp.base.url") + "/resources/ii");
+				transformer.setParameter("baseUrl", configProperties.getProperty("etf.webapp.base.url"));
 				transformer.setParameter("serviceUrl", configProperties.getProperty("etf.api.base.url"));
 			}
 

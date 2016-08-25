@@ -55,6 +55,7 @@ import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.EtfConstants;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.DataStorage;
+import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
@@ -70,7 +71,7 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.exceptions.config.MissingPropertyException;
 import de.interactive_instruments.properties.ConfigProperties;
@@ -138,7 +139,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 
 		@Override
 		public void beforeUnmarshal(final Object target, final Object parent) {
-			logger.debug("Before: \n\ttarget: {} \n\tparent: {} ", asString(target), asString(parent));
+			logger.trace("Before: \n\ttarget: {} \n\tparent: {} ", asString(target), asString(parent));
 		}
 	}
 
@@ -207,11 +208,11 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * will be removed in version 2.1.0
 	 */
 	@Deprecated
-	public void addFile(final IFile file) {
+	public void addFile(final IFile file) throws StoreException {
 		try {
 			new Add(file.getName(), file.getAbsolutePath()).execute(ctx);
 		} catch (BaseXException e) {
-			throw new IllegalArgumentException(e);
+			throw new StoreException(e);
 		}
 	}
 
@@ -226,7 +227,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				initLazyDtoProxies();
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
-			} catch (TransformerConfigurationException | JAXBException | IOException | StoreException e) {
+			} catch (TransformerConfigurationException | JAXBException | IOException | StorageException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -281,7 +282,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	private void initDaosAndMoxyDtoMapping() throws StoreException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException, InvalidStateTransitionException, InitializationException {
+	private void initDaosAndMoxyDtoMapping() throws StorageException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException, InvalidStateTransitionException, InitializationException {
 		final Map<Class<? extends Dto>, Dao<? extends Dto>> tmpDaoMapping = new HashMap<>();
 		tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
 		tmpDaoMapping.put(TestObjectTypeDto.class, new TestObjectTypeDao(this));
@@ -330,17 +331,24 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		new Set("UPDINDEX", "true").execute(ctx);
 
 		final RepoManager repoManger = new RepoManager(ctx);
+		IFile installFile = null;
 		try {
 			// Install basic XQuery script
 			final InputStream basicXQueryStream = getClass().getClassLoader().getResourceAsStream("xquery/" + etfxdbFileName);
 			Objects.requireNonNull(basicXQueryStream,
 					"Internal error reading the basic data storage XQuery function library");
 			// Copy file to repo
-			final IFile installFile = new IFile(ctx.repo.path().file()).expandPath(etfxqmPath);
+			installFile = new IFile(ctx.repo.path().file()).expandPath(etfxqmPath);
 			installFile.writeContent(basicXQueryStream);
 			repoManger.install(installFile.getAbsolutePath());
 		} catch (QueryException e) {
 			throw new InitializationException("XQuery script installation failed: ", e);
+		} catch (IOException e) {
+			if (installFile != null && installFile.exists()) {
+				logger.warn("Failed to update database file, will try to use the installed one");
+			} else {
+				throw new InitializationException("XQuery script installation failed: ", e);
+			}
 		}
 
 		try {
@@ -424,16 +432,16 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	/**
 	 * Reset the data storage
 	 *
-	 * @throws StoreException if internal error occurs
+	 * @throws StorageException if internal error occurs
 	 */
 	@Override
-	public synchronized void reset() throws StoreException {
+	public synchronized void reset() throws StorageException {
 		this.initialized.set(false);
 		long start = System.currentTimeMillis();
 		logger.warn("Preparing data storage reset");
 		try {
-			// Sleep 3 seconds
-			wait(3000);
+			// Sleep 0,5 seconds
+			wait(500);
 		} catch (final InterruptedException e) {
 			ExcUtils.suppress(e);
 		}
@@ -475,7 +483,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			} catch (Exception c) {
 				ExcUtils.suppress(c);
 			}
-			throw new StoreException(e.getMessage());
+			throw new StorageException(e.getMessage());
 		}
 		logger.info("Recreated data storage in: " + TimeUtils.currentDurationAsMinsSeconds(start));
 		this.initialized.set(true);
@@ -485,15 +493,15 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Create a data storage backup and returns the backup name
 	 *
 	 * @return the backup name
-	 * @throws StoreException
+	 * @throws StorageException
 	 */
 	@Override
-	public String createBackup() throws StoreException {
+	public String createBackup() throws StorageException {
 		final String bakName = "ETFDS-" + TimeUtils.dateToIsoString(new Date());
 		try {
 			new CreateBackup(bakName).execute(getBsxCtx());
 		} catch (BaseXException e) {
-			new StoreException(e.getMessage());
+			new StorageException(e.getMessage());
 		}
 		return bakName;
 	}
@@ -513,14 +521,14 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Restore a data storage backup by its backup name
 	 *
 	 * @param backupName name of the backup
-	 * @throws StoreException
+	 * @throws StorageException
 	 */
 	@Override
-	public void restoreBackup(final String backupName) throws StoreException {
+	public void restoreBackup(final String backupName) throws StorageException {
 		try {
 			new Restore(backupName).execute(getBsxCtx());
 		} catch (BaseXException e) {
-			new StoreException(e.getMessage());
+			new StorageException(e.getMessage());
 		}
 	}
 
@@ -666,7 +674,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * @return LazyLoadProxyDto
 	 * @throws ObjectWithIdNotFoundException invalid EID
 	 */
-	public Dto createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException {
+	public Dto createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException {
 		final Dao dao = daoMapping.get(type);
 		if (dao == null) {
 			final Class<? extends Dto> cacheAccessProxy = dtoCacheAccessProxies.get(type);
@@ -680,9 +688,11 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 					throw new IllegalArgumentException("Could not initiate cache access proxy: " + e);
 				}
 			}
-			throw new IllegalArgumentException("No Data Access Object available for type " + type);
+			throw new StorageException("No Data Access Object available for type " + type);
+
+			// FIXME handle ETS dependencies
 		} else if (!dao.exists(
-				Objects.requireNonNull(eid, "ID is null"))) {
+				Objects.requireNonNull(eid, "ID is null")) && type != ExecutableTestSuiteDto.class) {
 			throw new ObjectWithIdNotFoundException(eid.getId(), type.getSimpleName());
 		}
 

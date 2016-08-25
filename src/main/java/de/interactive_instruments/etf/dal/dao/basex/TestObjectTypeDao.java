@@ -23,7 +23,7 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Test Object Type Data Access Object
@@ -34,7 +34,7 @@ final class TestObjectTypeDao extends BsxWriteDao<TestObjectTypeDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	public TestObjectTypeDao(final BsxDsCtx ctx) throws StoreException {
+	public TestObjectTypeDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:TestObjectType", "TestObjectType", ctx,
 				(dsResultSet) -> dsResultSet.getTestObjectTypes());
 	}

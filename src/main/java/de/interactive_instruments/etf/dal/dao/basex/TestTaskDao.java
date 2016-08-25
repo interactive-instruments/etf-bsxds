@@ -24,14 +24,14 @@ import org.basex.core.BaseXException;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public class TestTaskDao extends BsxWriteDao<TestTaskDto> {
 
-	protected TestTaskDao(final BsxDsCtx ctx) throws StoreException, IOException, TransformerConfigurationException {
+	protected TestTaskDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
 		super("/etf:TestRun", "TestRun", ctx,
 				null);
 		// TODO get test run result

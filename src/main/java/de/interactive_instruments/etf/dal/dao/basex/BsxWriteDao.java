@@ -33,13 +33,14 @@ import de.interactive_instruments.IFile;
 import de.interactive_instruments.Version;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDaoListener;
+import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.ModelItemDto;
 import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * BaseX based Data Access Object for read and write operations
@@ -51,26 +52,26 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	private final List<WriteDaoListener> listeners = new ArrayList<>(2);
 
 	protected BsxWriteDao(final String queryPath, final String typeName,
-			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StoreException {
+			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		super(queryPath, typeName, ctx, getDtoResultCmd);
 	}
 
 	@Override
-	public final void add(final T t) throws StoreException {
+	public final void add(final T t) throws StorageException {
 		ensureType(t);
 		doMarshallAndAdd(t);
 		fireEvent(WriteDaoListener.EventType.ADD, t);
 	}
 
-	protected void doMarshallAndAdd(final T t) throws StoreException {
+	protected void doMarshallAndAdd(final T t) throws StorageException {
 		final IFile item = getFile(t.getId());
 		try {
 			if (!item.createNewFile()) {
-				throw new StoreException("Item " + t.getDescriptiveLabel() + " already exists!");
+				throw new StorageException("Item " + t.getDescriptiveLabel() + " already exists!");
 			}
 		} catch (IOException e) {
 			item.delete();
-			throw new StoreException(e);
+			throw new StorageException(e);
 		}
 		try {
 			FileUtils.touch(item);
@@ -88,12 +89,12 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			}
 			throw new IllegalArgumentException(e);
 		} catch (IOException e) {
-			throw new StoreException(e);
+			throw new StorageException(e);
 		}
 	}
 
 	@Override
-	public final void addAll(final Collection<T> collection) throws StoreException {
+	public final void addAll(final Collection<T> collection) throws StorageException {
 		// OPTIMIZE could be tuned
 		final List<IFile> files = getFiles(collection);
 		final Dto[] colArr = collection.toArray(new Dto[collection.size()]);
@@ -117,7 +118,8 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 					// File may contain invalid content
 					files.get(i).delete();
 				}
-				throw new IllegalArgumentException(e);
+
+				throw new StoreException(e);
 			} catch (IOException e) {
 				throw new StoreException(e);
 			}
@@ -128,12 +130,12 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			}
 			new Flush().execute(ctx.getBsxCtx());
 		} catch (BaseXException e) {
-			throw new IllegalArgumentException(e);
+			throw new StoreException(e);
 		}
 		fireEvent(WriteDaoListener.EventType.ADD, colArr);
 	}
 
-	private byte[] createHash(final String str) {
+	protected byte[] createHash(final String str) {
 		int hash = 31;
 		for (int i = 0; i < str.length(); i++) {
 			hash = hash * 71 + str.charAt(i);
@@ -141,21 +143,29 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 		return ByteBuffer.allocate(4).putInt(hash).array();
 	}
 
+	protected byte[] createHash(final byte[] bytes) {
+		int hash = 31;
+		for (int i = 0; i < bytes.length; i++) {
+			hash = hash * 71 + bytes[i];
+		}
+		return ByteBuffer.allocate(4).putInt(hash).array();
+	}
+
 	@Override
-	public final T update(final T t) throws StoreException, ObjectWithIdNotFoundException {
+	public final T update(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doUpdate(t);
 		fireEvent(WriteDaoListener.EventType.UPDATE, t);
 		return t;
 	}
 
-	protected T doUpdate(final T t) throws StoreException, ObjectWithIdNotFoundException {
+	protected T doUpdate(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		if (t instanceof RepositoryItemDto) {
 			// get old dto from db and set "replacedBy" property to the new dto
 			final RepositoryItemDto oldDtoInDb = ((RepositoryItemDto) getById(t.getId()).getDto());
 			final ModelItemDto replacedBy = oldDtoInDb.getReplacedBy();
 			if (replacedBy != null) {
-				throw new IllegalArgumentException(
+				throw new StoreException(
 						"Item " + oldDtoInDb.getDescriptiveLabel()
 								+ " cannot be updated as it is replaced by the newer item "
 								+ replacedBy.getDescriptiveLabel());
@@ -188,14 +198,14 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 		return t;
 	}
 
-	protected void doDeleteAndAdd(final T t) throws StoreException, ObjectWithIdNotFoundException {
+	protected void doDeleteAndAdd(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
 		doDelete(t.getId(), false);
 		doMarshallAndAdd(t);
 	}
 
 	@Override
-	public final Collection<T> updateAll(final Collection<T> collection) throws StoreException, ObjectWithIdNotFoundException {
+	public final Collection<T> updateAll(final Collection<T> collection) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
 		final List<T> updatedDtos = new ArrayList<T>(collection.size());
 		for (final T dto : collection) {
@@ -206,12 +216,12 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	}
 
 	@Override
-	public final void delete(final EID eid) throws StoreException, ObjectWithIdNotFoundException {
+	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
 		doDelete(eid, true);
 		fireEvent(WriteDaoListener.EventType.DELETE, eid);
 	}
 
-	protected void doDelete(final EID eid, boolean clean) throws StoreException, ObjectWithIdNotFoundException {
+	protected void doDelete(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
 		final IFile oldItem = getFile(eid);
 		if (!oldItem.exists()) {
 			throw new ObjectWithIdNotFoundException(this, eid.toString());
@@ -225,7 +235,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 				doCleanAfterDelete(eid);
 			}
 		} catch (BaseXException e) {
-			throw new StoreException(e.getMessage());
+			throw new StorageException(e.getMessage());
 		}
 
 		if (!oldItem.delete()) {
@@ -236,7 +246,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	protected abstract void doCleanAfterDelete(final EID eid) throws BaseXException;
 
 	@Override
-	public final void deleteAll(final Collection<EID> collection) throws StoreException, ObjectWithIdNotFoundException {
+	public final void deleteAll(final Collection<EID> collection) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
 		for (final EID eid : collection) {
 			doDelete(eid, true);

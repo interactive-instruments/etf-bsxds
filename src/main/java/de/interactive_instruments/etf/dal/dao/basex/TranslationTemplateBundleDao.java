@@ -23,16 +23,16 @@ import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBun
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Translation Template Bundle Data Access Object
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TranslationTemplateBundleDao extends BsxWriteDao<TranslationTemplateBundleDto> {
+final class TranslationTemplateBundleDao extends AbstractStreamWriteDao<TranslationTemplateBundleDto> {
 
-	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StoreException {
+	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
 				(dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
 	}

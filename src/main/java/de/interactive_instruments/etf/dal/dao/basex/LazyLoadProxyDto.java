@@ -26,7 +26,7 @@ import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Lazy Load proxy for Dtos
@@ -54,7 +54,7 @@ public final class LazyLoadProxyDto {
 			}
 			try {
 				cached = dao.getById(eid).getDto();
-			} catch (StoreException | ObjectWithIdNotFoundException e) {
+			} catch (StorageException | ObjectWithIdNotFoundException e) {
 				throw new IllegalStateException("Unable to load proxied Dto " + eid, e);
 			}
 		}

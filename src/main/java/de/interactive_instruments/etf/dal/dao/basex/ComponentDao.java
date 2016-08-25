@@ -24,14 +24,14 @@ import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public class ComponentDao extends BsxWriteDao<ComponentDto> {
 
-	protected ComponentDao(final BsxDsCtx ctx) throws StoreException {
+	protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:Component", "Component", ctx,
 				(dsResultSet) -> dsResultSet.getComponents());
 	}

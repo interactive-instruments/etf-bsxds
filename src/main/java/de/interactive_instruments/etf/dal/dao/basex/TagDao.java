@@ -24,7 +24,7 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Tag Data Access Object
@@ -35,7 +35,7 @@ final class TagDao extends BsxWriteDao<TagDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	public TagDao(final BsxDsCtx ctx) throws StoreException {
+	public TagDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:Tag", "Tag", ctx,
 				(dsResultSet) -> dsResultSet.getTags());
 	}

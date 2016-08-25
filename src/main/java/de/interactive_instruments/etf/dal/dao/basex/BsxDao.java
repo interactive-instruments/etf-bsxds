@@ -17,10 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.xml.transform.TransformerConfigurationException;
@@ -34,6 +31,7 @@ import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
+import de.interactive_instruments.etf.dal.dao.exceptions.RetrieveException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
@@ -42,7 +40,7 @@ import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
 import de.interactive_instruments.properties.ConfigPropertyHolder;
@@ -68,9 +66,13 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 			throw new IllegalArgumentException(
 					"Item " + t.getDescriptiveLabel() + " is not of type " + this.getDtoType().getSimpleName());
 		}
+		if (t.getId() == null) {
+			throw new IllegalArgumentException(
+					"Item " + t.getClass().getName() + t.hashCode() + " has no ID");
+		}
 	}
 
-	protected BsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StoreException {
+	protected BsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		this.queryPath = queryPath;
 		this.ctx = ctx;
 		this.typeName = typeName;
@@ -79,7 +81,7 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 			xqueryStatement = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(
 					"xquery/" + typeName + "-xdb.xquery"), "UTF-8");
 		} catch (IOException e) {
-			throw new StoreException("Could not load XQuery resource for " + typeName, e);
+			throw new StorageException("Could not load XQuery resource for " + typeName, e);
 		}
 	}
 
@@ -139,18 +141,18 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {}
 
 	@Override
-	public final PreparedDtoCollection<T> getAll(final Filter filter) throws StoreException {
+	public final PreparedDtoCollection<T> getAll(final Filter filter) throws StorageException {
 		try {
 			final BsXQuery bsXQuery = createPagedQuery(filter);
 			return new BsxPreparedDtoCollection(bsXQuery, getDtoResultCmd);
 		} catch (BaseXException e) {
 			ctx.getLogger().error(e.getMessage());
-			throw new StoreException(e);
+			throw new RetrieveException(e);
 		}
 	}
 
 	@Override
-	public PreparedDto<T> getById(final EID eid, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
+	public PreparedDto<T> getById(final EID eid, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
 		if (!exists(eid)) {
 			throw new ObjectWithIdNotFoundException(this, eid.getId());
 		}
@@ -164,8 +166,8 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 	}
 
 	@Override
-	public PreparedDtoCollection<T> getByIds(final Set<EID> set, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
-		throw new StoreException("Not implemented yet");
+	public PreparedDtoCollection<T> getByIds(final Set<EID> set, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
+		throw new StorageException("Not implemented yet");
 	}
 
 	private BsXQuery createPagedQuery(final Filter filter) throws BaseXException {

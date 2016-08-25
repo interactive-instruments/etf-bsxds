@@ -31,7 +31,7 @@ import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Basex data storage context
@@ -52,6 +52,6 @@ interface BsxDsCtx {
 
 	Dto getFromCache(final EID eid);
 
-	Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException;
+	Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException;
 
 }
