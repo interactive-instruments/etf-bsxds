@@ -64,8 +64,8 @@ dependencies {
 
 	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
 
-    testCompile group: 'xml-apis', name: 'xml-apis', version: etf_xmlApisVersion
-    testCompile group: 'xerces', name: 'xercesImpl', version: etf_xercesVersion
+    compile group: 'xml-apis', name: 'xml-apis', version: etf_xmlApisVersion
+    compile group: 'xerces', name: 'xercesImpl', version: etf_xercesVersion
 }
 
 test {
