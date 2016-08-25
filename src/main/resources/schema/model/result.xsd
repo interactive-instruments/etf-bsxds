@@ -155,7 +155,7 @@
             <xs:sequence>
                 <xs:group ref="ResultModelItemGroup"/>
                 <xs:element ref="ArgumentList" minOccurs="0"/>
-                <xs:element name="messages">
+                <xs:element name="messages" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element name="message" type="TranslationTemplateArgumentType"/>

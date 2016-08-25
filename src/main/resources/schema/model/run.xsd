@@ -15,7 +15,6 @@
     <xs:include schemaLocation="../basic/basicTypes.xsd"/>
     <xs:include schemaLocation="result.xsd"/>
     <xs:include schemaLocation="test.xsd"/>
-    <xs:include schemaLocation="capabilities.xsd"/>
     <!-- =============================================================== -->
 
     <!-- =============================================================== -->
@@ -70,7 +69,7 @@
             </xs:annotation>
             <xs:sequence>
                 <xs:group ref="TestTaskConfigurationGroup"/>
-                <xs:element name="testTaskResult" type="RefType"/>
+                <xs:element name="testTaskResult" type="RefType" minOccurs="0"/>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
         </xs:complexType>

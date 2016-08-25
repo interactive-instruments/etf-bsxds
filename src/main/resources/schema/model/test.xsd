@@ -35,7 +35,7 @@
                 <xs:element name="dependencies" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element name="executableTestSuite" type="DependencyType"/>
+                            <xs:element name="executableTestSuite" type="RefType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -59,7 +59,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="testModules">
+                <xs:element name="testModules" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element ref="TestModule"/>
@@ -96,7 +96,7 @@
                 <xs:element name="dependencies" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element name="testCase" type="DependencyType"/>
+                            <xs:element name="testCase" type="RefType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
