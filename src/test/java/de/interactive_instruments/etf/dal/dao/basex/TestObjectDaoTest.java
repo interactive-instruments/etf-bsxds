@@ -45,6 +45,7 @@ import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
@@ -68,7 +69,7 @@ public class TestObjectDaoTest {
 	private static WriteDao<TestObjectDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestObjectDto.class));
 
@@ -84,7 +85,7 @@ public class TestObjectDaoTest {
 	}
 
 	@AfterClass
-	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException {
 		BsxTestUtil.forceDelete(writeDao, EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
 
 		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TAG_DTO_1.getId());
@@ -97,18 +98,18 @@ public class TestObjectDaoTest {
 	}
 
 	@Before
-	public void clean() throws StoreException {
+	public void clean() throws StorageException {
 		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TO_DTO_1.getId());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void test_1_0_type_check() throws StoreException {
+	public void test_1_0_type_check() throws StorageException {
 		final WriteDao dao = writeDao;
 		dao.add(BsxTestUtil.TOT_DTO_1);
 	}
 
 	@Test
-	public void test_1_1_failOnInvalidDto() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_1_failOnInvalidDto() throws StorageException, ObjectWithIdNotFoundException {
 		final TestObjectDto invalidDto = new TestObjectDto();
 		BsxTestUtil.setBasicProperties(invalidDto, 666);
 		BsxTestUtil.forceDelete(writeDao, invalidDto.getId());
@@ -127,7 +128,7 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_1_2_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_2_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		assertTrue(writeDao.isInitialized());
 		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.TO_DTO_1);
@@ -149,7 +150,7 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_2_0_getById() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
 		final PreparedDto<TestObjectDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TO_DTO_1);
 
 		// Check references
@@ -168,13 +169,13 @@ public class TestObjectDaoTest {
 	}
 
 	@Test(expected = ObjectWithIdNotFoundException.class)
-	public void test_2_1_get_non_existing_id() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_1_get_non_existing_id() throws StorageException, ObjectWithIdNotFoundException {
 		final EID nonExistingId = EidFactory.getDefault().createAndPreserveStr("FOO");
 		assertFalse(writeDao.exists(nonExistingId));
 		writeDao.getById(nonExistingId);
 	}
 
-	private void cleanGeneratedItems() throws StoreException {
+	private void cleanGeneratedItems() throws StorageException {
 		// Clean
 		for (int i = 0; i <= maxDtos; i++) {
 			final String iStr = BsxTestUtil.toStrWithTrailingZeros(i);
@@ -183,12 +184,12 @@ public class TestObjectDaoTest {
 	}
 
 	@Test(timeout = 30000L)
-	public void test_3_0_pagination() throws StoreException {
+	public void test_3_0_pagination() throws StorageException {
 
 		// Clean
 		try {
 			writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
-		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 
 		cleanGeneratedItems();
 
@@ -298,7 +299,7 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		assertFalse(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.TO_DTO_1);
 		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
@@ -319,12 +320,12 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_5_0_update() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_5_0_update() throws StorageException, ObjectWithIdNotFoundException {
 
 		// Clean
 		try {
 			writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
-		} catch (ObjectWithIdNotFoundException | StoreException e) {
+		} catch (ObjectWithIdNotFoundException | StorageException e) {
 			ExcUtils.suppress(e);
 		}
 
@@ -373,8 +374,8 @@ public class TestObjectDaoTest {
 		assertEquals(newDto.toString(), preparedNewDto.getDto().toString());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void test_5_1_fail_on_update_replaced_item() throws StoreException, ObjectWithIdNotFoundException {
+	@Test(expected = StoreException.class)
+	public void test_5_1_fail_on_update_replaced_item() throws StorageException, ObjectWithIdNotFoundException {
 		test_5_0_update();
 		assertTrue(writeDao.exists(BsxTestUtil.TO_DTO_1.getId()));
 		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
@@ -382,7 +383,7 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_5_2_reset_after_update() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_5_2_reset_after_update() throws StorageException, ObjectWithIdNotFoundException {
 		test_5_0_update();
 		DATA_STORAGE.reset();
 		// Updated item still exists after reset
@@ -392,7 +393,7 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_6_0_pagination_history_items_filter() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_6_0_pagination_history_items_filter() throws StorageException, ObjectWithIdNotFoundException {
 		cleanGeneratedItems();
 
 		test_5_0_update();

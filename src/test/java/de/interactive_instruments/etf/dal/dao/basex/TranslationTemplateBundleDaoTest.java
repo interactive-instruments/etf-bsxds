@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -32,13 +34,21 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
+import de.interactive_instruments.etf.dal.dto.Dto;
+import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -50,7 +60,7 @@ public class TranslationTemplateBundleDaoTest {
 	private static WriteDao<TranslationTemplateBundleDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
 	}
@@ -59,11 +69,11 @@ public class TranslationTemplateBundleDaoTest {
 	public void clean() {
 		try {
 			writeDao.delete(BsxTestUtil.TTB_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		assertNotNull(writeDao);
 		assertTrue(writeDao.isInitialized());
 		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
@@ -74,7 +84,7 @@ public class TranslationTemplateBundleDaoTest {
 	}
 
 	@Test
-	public void test_2_getById() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_getById() throws StorageException, ObjectWithIdNotFoundException {
 		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.TTB_DTO_1);
 		assertTrue(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
@@ -108,4 +118,23 @@ public class TranslationTemplateBundleDaoTest {
 		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
 	}
 
+	@Test
+	public void test_7_0_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
+				"database/translationtemplatebundle.xml").getPath());
+		final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
+
+		final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
+		translationTemplateBundle.ensureBasicValidity();
+
+		assertEquals(id.getId(), translationTemplateBundle.getId().getId());
+
+	}
+
+	@Test(expected = StoreException.class)
+	public void test_7_1_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
+				"database/invalidtranslationtemplatebundle.xml").getPath());
+		((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
+	}
 }

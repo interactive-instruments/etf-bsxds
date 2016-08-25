@@ -92,6 +92,7 @@ class BsxTestUtil {
 		setBasicProperties(COMP_DTO_1, 1);
 		COMP_DTO_1.setVendor("ii");
 		COMP_DTO_1.setVersion("1.1.0");
+		COMP_DTO_1.setId(EidFactory.getDefault().createAndPreserveStr("4dddc9e2-1b21-40b7-af70-6a2d156ad130"));
 
 		TAG_DTO_1 = new TagDto();
 		setBasicProperties(TAG_DTO_1, 1);
@@ -113,6 +114,7 @@ class BsxTestUtil {
 
 		TOT_DTO_3 = new TestObjectTypeDto();
 		setBasicProperties(TOT_DTO_3, 3);
+		TOT_DTO_3.setId(EidFactory.getDefault().createAndPreserveStr("e1d4a306-7a78-4a3b-ae2d-cf5f0810853e"));
 
 		TO_DTO_1.addTestObjectType(TOT_DTO_1);
 		final ResourceDto resourceDto = new ResourceDto();
@@ -127,6 +129,7 @@ class BsxTestUtil {
 
 		TTB_DTO_1 = new TranslationTemplateBundleDto();
 		setBasicProperties(TTB_DTO_1, 1);
+		TTB_DTO_1.setId(EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52"));
 
 		final List<TranslationTemplateDto> translationTemplateDtos = new ArrayList<TranslationTemplateDto>() {
 			{
@@ -157,8 +160,8 @@ class BsxTestUtil {
 		setBasicProperties(TESTSTEP_TYPE_2, 2);
 
 		final ParameterSet parameterSet = new ParameterSet();
-		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.1.key","Parameter.1.value"));
-		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.2.key","Parameter.2.value"));
+		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.1.key", "Parameter.1.value"));
+		parameterSet.addParameter(new ParameterSet.MutableParameter("Parameter.2.key", "Parameter.2.value"));
 
 		ETS_DTO_1 = new ExecutableTestSuiteDto();
 		ETS_DTO_1.setTranslationTemplateBundle(TTB_DTO_1);
@@ -221,6 +224,8 @@ class BsxTestUtil {
 		if (dto instanceof RepositoryItemDto) {
 			final RepositoryItemDto rDto = ((RepositoryItemDto) dto);
 			rDto.setAuthor(name + ".author");
+			rDto.setLocalPath("/");
+			rDto.setRemoteResource(URI.create("http://notset"));
 			rDto.setCreationDate(new Date(0));
 			rDto.setVersionFromStr("1.0.0");
 			rDto.setItemHash(name.getBytes());
@@ -373,7 +378,7 @@ class BsxTestUtil {
 		etsDto.setTestModules(testModuleDtos);
 	}
 
-	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
+	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
 		if (!DATA_STORAGE.isInitialized()) {
 
 			if (System.getenv("ETF_DS_DIR") != null) {
@@ -398,7 +403,7 @@ class BsxTestUtil {
 		}
 	}
 
-	static void forceDelete(final Dao dao, final EID eid) throws StoreException {
+	static void forceDelete(final Dao dao, final EID eid) throws StorageException {
 		try {
 			((WriteDao) dao).delete(eid);
 		} catch (ObjectWithIdNotFoundException e) {
@@ -415,18 +420,18 @@ class BsxTestUtil {
 		return (WriteDao) dao;
 	}
 
-	static void forceDeleteAndAdd(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
+	static void forceDeleteAndAdd(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
 		forceDeleteAndAdd(dto, true);
 	}
 
-	static void forceDeleteAndAdd(final Dto dto, boolean check) throws StoreException, ObjectWithIdNotFoundException {
+	static void forceDeleteAndAdd(final Dto dto, boolean check) throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
 		forceDelete(dao, dto.getId());
 		assertFalse(dao.exists(dto.getId()));
 		try {
 			((WriteDao) dao).add(dto);
-		} catch (StoreException e) {
+		} catch (StorageException e) {
 			ExcUtils.suppress(e);
 		}
 		assertTrue(dao.exists(dto.getId()));
@@ -435,7 +440,7 @@ class BsxTestUtil {
 		}
 	}
 
-	static void existsAndAddAndDeleteTest(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
+	static void existsAndAddAndDeleteTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
 		assertFalse(dao.exists(dto.getId()));
@@ -445,18 +450,18 @@ class BsxTestUtil {
 		assertFalse(dao.exists(dto.getId()));
 	}
 
-	static void addTest(final Dto dto) throws StoreException, ObjectWithIdNotFoundException {
+	static void addTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 		assertFalse(dao.exists(dto.getId()));
 		dao.add(dto);
 		assertTrue(dao.exists(dto.getId()));
 	}
 
-	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {
 		return getByIdTest(dto, null);
 	}
 
-	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
 		final PreparedDto<T> preparedDto = dao.getById(dto.getId(), filter);
@@ -477,11 +482,11 @@ class BsxTestUtil {
 		return preparedDto;
 	}
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StoreException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {
 		return addAndGetByIdTest(dto, null);
 	}
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter) throws StoreException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
 		addTest(dto);
 		return getByIdTest(dto, filter);
 	}

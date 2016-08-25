@@ -22,9 +22,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 
 import junit.framework.TestCase;
@@ -35,15 +33,19 @@ import org.junit.runners.MethodSorters;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
+import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
+import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -55,7 +57,7 @@ public class TestTaskResultDaoTest {
 	private static WriteDao<TestTaskResultDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
 
@@ -68,7 +70,7 @@ public class TestTaskResultDaoTest {
 	}
 
 	@AfterClass
-	public static void tearDown() throws InvalidStateTransitionException, StoreException, InitializationException, ConfigurationException {
+	public static void tearDown() throws InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
 		ExecutableTestSuiteDaoTest.tearDown();
 	}
 
@@ -78,16 +80,16 @@ public class TestTaskResultDaoTest {
 			BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TTR_DTO_1.getId());
 			BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TTR_DTO_2.getId());
 			BsxTestUtil.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), BsxTestUtil.TR_DTO_1.getId());
-		} catch (StoreException e) {}
+		} catch (StorageException e) {}
 	}
 
 	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TTR_DTO_1);
 	}
 
 	@Test
-	public void test_2_0_add_and_get() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
@@ -107,7 +109,7 @@ public class TestTaskResultDaoTest {
 	}
 
 	@Test
-	public void test_4_0_streaming() throws StoreException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
@@ -135,6 +137,13 @@ public class TestTaskResultDaoTest {
 		assertTrue(cmpResult.exists());
 
 		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()), trimAllWhitespace(tmpFile.readContent().toString()));
+	}
+
+	@Test(expected = StoreException.class)
+	public void test_7_1_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+		final IFile taskTestResultFile = new IFile(getClass().getClassLoader().getResource(
+				"database/testtaskresult.xml").getPath());
+		((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));
 	}
 
 }

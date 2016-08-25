@@ -15,25 +15,36 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
+import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
+import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
+import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.model.DefaultEidMap;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -45,23 +56,81 @@ public class ExecutableTestSuiteDaoTest {
 	private static WriteDao<ExecutableTestSuiteDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(ExecutableTestSuiteDto.class));
 
 		TestObjectDaoTest.setUp();
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TTB_DTO_1);
+		BsxTestUtil.forceDeleteAndAdd(TTB_DTO_1);
+
+		BsxTestUtil.forceDeleteAndAdd(TOT_DTO_3);
 
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.COMP_DTO_1);
 
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ASSERTION_TYPE_1);
 
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TESTSTEP_TYPE_2);
+
+		final EidMap<TestItemTypeDto> testItemTypes = new DefaultEidMap<TestItemTypeDto>() {
+			{
+				{
+					final TestItemTypeDto testItemTypeDto = new TestItemTypeDto();
+					testItemTypeDto.setLabel("TestStep.Type.1");
+					testItemTypeDto.setId(EidFactory.getDefault().createAndPreserveStr("f483e8e8-06b9-4900-ab36-adad0d7f22f0"));
+					testItemTypeDto.setDescription("TODO description");
+					testItemTypeDto.setReference("https://github.com/interactive-instruments/etf-bsxtd/wiki/Test-Step-Types#teststeptype1");
+					put(testItemTypeDto.getId(), testItemTypeDto);
+				}
+				{
+					final TestItemTypeDto testItemTypeDto = new TestItemTypeDto();
+					testItemTypeDto.setLabel("TestAssertion.Type.1");
+					testItemTypeDto.setId(EidFactory.getDefault().createAndPreserveStr("f0edc596-49d2-48d6-a1a1-1ac581dcde0a"));
+					testItemTypeDto.setDescription("TODO description");
+					testItemTypeDto.setReference("https://github.com/interactive-instruments/etf-bsxtd/wiki/Test-Assertion-Types#test-assertion-type-1");
+					put(testItemTypeDto.getId(), testItemTypeDto);
+				}
+				{
+					final TestItemTypeDto testItemTypeDto = new TestItemTypeDto();
+					testItemTypeDto.setLabel("TestAssertion.Type.2");
+					testItemTypeDto.setId(EidFactory.getDefault().createAndPreserveStr("b48eeaa3-6a74-414a-879c-1dc708017e11"));
+					testItemTypeDto.setDescription("TODO description");
+					testItemTypeDto.setReference("https://github.com/interactive-instruments/etf-bsxtd/wiki/Test-Assertion-Types#test-assertion-type-2");
+					put(testItemTypeDto.getId(), testItemTypeDto);
+				}
+				{
+					final TestItemTypeDto testItemTypeDto = new TestItemTypeDto();
+					testItemTypeDto.setLabel("TestAssertion.Type.3");
+					testItemTypeDto.setId(EidFactory.getDefault().createAndPreserveStr("f0edc596-49d2-48d6-a1a1-1ac581dcde0a"));
+					testItemTypeDto.setDescription("TODO description");
+					testItemTypeDto.setReference("https://github.com/interactive-instruments/etf-bsxtd/wiki/Test-Assertion-Types#test-assertion-type-3");
+					put(testItemTypeDto.getId(), testItemTypeDto);
+				}
+				{
+					final TestItemTypeDto testItemTypeDto = new TestItemTypeDto();
+					testItemTypeDto.setLabel("TestAssertion.Type.4");
+					testItemTypeDto.setId(EidFactory.getDefault().createAndPreserveStr("92f22a19-2ec2-43f0-8971-c2da3eaafcd2"));
+					testItemTypeDto.setDescription("TODO description");
+					testItemTypeDto.setReference("https://github.com/interactive-instruments/etf-bsxtd/wiki/Test-Assertion-Types#test-assertion-type-4");
+					put(testItemTypeDto.getId(), testItemTypeDto);
+				}
+
+			}
+		};
+		testItemTypes.values().forEach(type -> {
+			try {
+				BsxTestUtil.forceDeleteAndAdd(type);
+			} catch (StorageException e) {
+				e.printStackTrace();
+			} catch (ObjectWithIdNotFoundException e) {
+				e.printStackTrace();
+			}
+		});
+
 	}
 
 	@AfterClass
-	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException {
+	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException {
 		TestObjectDaoTest.tearDown();
 	}
 
@@ -70,11 +139,11 @@ public class ExecutableTestSuiteDaoTest {
 		try {
 			writeDao.delete(BsxTestUtil.ETS_DTO_1.getId());
 			writeDao.delete(BsxTestUtil.ETS_DTO_2.getId());
-		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
-	public void test_2_0_add_and_get() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
 		assertFalse(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.ETS_DTO_1);
 		assertTrue(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
@@ -87,11 +156,24 @@ public class ExecutableTestSuiteDaoTest {
 		assertEquals(BsxTestUtil.ETS_DTO_1.getId(), dto.getId());
 		assertEquals(BsxTestUtil.ETS_DTO_1.toString(), dto.toString());
 		assertNotNull(dto.getParameters());
-		assertEquals("Parameter.1.key",dto.getParameters().getParameter("Parameter.1.key").getName());
-		assertEquals("Parameter.1.value",dto.getParameters().getParameter("Parameter.1.key").getDefaultValue());
+		assertEquals("Parameter.1.key", dto.getParameters().getParameter("Parameter.1.key").getName());
+		assertEquals("Parameter.1.value", dto.getParameters().getParameter("Parameter.1.key").getDefaultValue());
 
-		assertEquals("Parameter.2.key",dto.getParameters().getParameter("Parameter.2.key").getName());
-		assertEquals("Parameter.2.value",dto.getParameters().getParameter("Parameter.2.key").getDefaultValue());
+		assertEquals("Parameter.2.key", dto.getParameters().getParameter("Parameter.2.key").getName());
+		assertEquals("Parameter.2.value", dto.getParameters().getParameter("Parameter.2.key").getDefaultValue());
 	}
 
+	@Test
+	public void test_7_0_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+		final EID id = EidFactory.getDefault().createAndPreserveStr("61070ae8-13cb-4303-a340-72c8b877b00a");
+		forceDelete(writeDao, id);
+		final IFile etsFile = new IFile(getClass().getClassLoader().getResource(
+				"database/ets.xml").getPath());
+
+		final ExecutableTestSuiteDto etsId = ((StreamWriteDao<ExecutableTestSuiteDto>) writeDao).add(new FileInputStream(etsFile));
+		etsId.ensureBasicValidity();
+
+		assertEquals(id.getId(), etsId.getId().getId());
+
+	}
 }

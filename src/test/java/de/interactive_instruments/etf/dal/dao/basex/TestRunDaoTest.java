@@ -33,7 +33,7 @@ import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -45,7 +45,7 @@ public class TestRunDaoTest {
 	private static WriteDao<TestRunDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestRunDto.class));
 
@@ -56,7 +56,7 @@ public class TestRunDaoTest {
 	}
 
 	@AfterClass
-	public static void tearDown() throws StoreException, ConfigurationException, InitializationException, InvalidStateTransitionException, ObjectWithIdNotFoundException {
+	public static void tearDown() throws StorageException, ConfigurationException, InitializationException, InvalidStateTransitionException, ObjectWithIdNotFoundException {
 		TestTaskResultDaoTest.tearDown();
 		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TR_DTO_1.getId());
 	}
@@ -65,16 +65,16 @@ public class TestRunDaoTest {
 	public void clean() {
 		try {
 			writeDao.delete(BsxTestUtil.TR_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TR_DTO_1);
 	}
 
 	@Test
-	public void test_2_0_add_and_get() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtil.addTest(BsxTestUtil.TR_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TTR_DTO_1);
 		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TTR_DTO_2);

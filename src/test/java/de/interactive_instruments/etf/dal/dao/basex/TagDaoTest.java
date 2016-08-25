@@ -31,7 +31,7 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -42,7 +42,7 @@ public class TagDaoTest {
 	private static WriteDao<TagDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
 		BsxTestUtil.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TagDto.class));
 	}
@@ -51,16 +51,16 @@ public class TagDaoTest {
 	public void clean() {
 		try {
 			writeDao.delete(BsxTestUtil.TAG_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StoreException e) {}
+		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TAG_DTO_1);
 	}
 
 	@Test
-	public void test_2_0_getById() throws StoreException, ObjectWithIdNotFoundException {
+	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
 		assertFalse(writeDao.exists(BsxTestUtil.TAG_DTO_1.getId()));
 		writeDao.add(BsxTestUtil.TAG_DTO_1);
 		assertTrue(writeDao.exists(BsxTestUtil.TAG_DTO_1.getId()));

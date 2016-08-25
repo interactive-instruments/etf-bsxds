@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
-import de.interactive_instruments.exceptions.StoreException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
@@ -42,7 +42,7 @@ public class BsxDataStorageTest {
 	 * @throws SAXException
 	 */
 	@Test
-	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException, InitializationException, StoreException, IOException {
+	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
 		BsxTestUtil.ensureInitialization();
 		assertTrue(DATA_STORAGE.isInitialized());
 		assertNotNull(DATA_STORAGE.getSchema());
