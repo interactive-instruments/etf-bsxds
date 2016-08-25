@@ -131,7 +131,7 @@
 						<xsl:value-of select="$lang/x:e[@key = 'PublicationLocation']"/>
 					</td>
 					<td>
-						<a href="{$serviceUrl}/reports/{@id}?lang={$language}"
+						<a href="{$baseUrl}/reports/{substring-after ($testRun/@id, 'EID')}?lang={$language}"
 							data-ajax="false">
 							<xsl:value-of select="$lang/x:e[@key = 'PublicationLocationLink']"/>
 						</a>
@@ -178,12 +178,12 @@
 				</tr>
 				<tr class="ReportDetail">
 					<td>
-						<xsl:value-of select="$lang/x:e[@key = 'LogLink']"/>
+						<xsl:value-of select="$lang/x:e[@key = 'Log']"/>
 					</td>
 					<td>
-						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}/log"
+						<a href="{$serviceUrl}/TestRuns/{substring-after ($testRun/@id, 'EID')}/log"
 						   data-ajax="false">
-						<xsl:value-of select="$lang/x:e[@key = 'Log']"/>
+						<xsl:value-of select="$lang/x:e[@key = 'LogLink']"/>
 						</a>
 					</td>
 				</tr>
