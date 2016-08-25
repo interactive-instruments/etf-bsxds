@@ -328,6 +328,22 @@
                </null-policy>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>remoteResource</attribute-name>
+               <field name="remoteResource/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>localPath</attribute-name>
+               <field name="localPath/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -620,6 +636,22 @@
                </null-policy>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>remoteResource</attribute-name>
+               <field name="remoteResource/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>localPath</attribute-name>
+               <field name="localPath/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>label</attribute-name>
                <field name="label/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
@@ -759,6 +791,23 @@
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
                   <field name="supportedTestObjectTypes/testObjectType/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
+               <containerpolicy xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </containerpolicy>
+               <uses-single-node>false</uses-single-node>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-collection-reference-mapping">
+               <attribute-name>dependencies</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="dependencies/executableTestSuite/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="dependencies/executableTestSuite/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
                <containerpolicy xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>
@@ -912,6 +961,8 @@
          </remote-caching>
          <instantiation/>
          <copying xsi:type="instantiation-copy-policy"/>
+         <default-root-element>etf:ParameterList</default-root-element>
+         <default-root-element-field name="etf:ParameterList"/>
          <namespace-resolver>
             <namespaces>
                <namespace>
@@ -967,6 +1018,14 @@
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>defaultValue</attribute-name>
                <field name="defaultValue/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>description</attribute-name>
+               <field name="description/@ref" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -1042,6 +1101,8 @@
          </remote-caching>
          <instantiation/>
          <copying xsi:type="instantiation-copy-policy"/>
+         <default-root-element>etf:Properties</default-root-element>
+         <default-root-element-field name="etf:Properties"/>
          <namespace-resolver>
             <namespaces>
                <namespace>
@@ -1570,6 +1631,23 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-collection-reference-mapping">
+               <attribute-name>dependencies</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="dependencies/testCase/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="dependencies/testCase/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
+               <containerpolicy xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </containerpolicy>
+               <uses-single-node>false</uses-single-node>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>children</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
@@ -2026,6 +2104,22 @@
                <field name="itemHash/text()" xsi:type="node">
                   <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
                </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>remoteResource</attribute-name>
+               <field name="remoteResource/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>localPath</attribute-name>
+               <field name="localPath/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>

@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.852+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.889+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Parameterizable</type-name>
@@ -36,6 +36,20 @@
          <name>ParameterSet</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>ParameterSet</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>addParameter</name>

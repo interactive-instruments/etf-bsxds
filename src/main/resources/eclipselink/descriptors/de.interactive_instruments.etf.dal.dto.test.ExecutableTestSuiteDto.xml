@@ -57,6 +57,27 @@
          </attribute-handle>
          <xml-field>creationDate/text()</xml-field>
       </mapping>
+      <mapping type="xml-collection-reference">
+         <name>dependencies</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</attribute-declaring-type-name>
+            <attribute-name>dependencies</attribute-name>
+         </attribute-handle>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xml-field-pairs>
+            <field-pair>
+               <source-xml-field>dependencies/executableTestSuite/@ref</source-xml-field>
+               <target-xml-field>@id</target-xml-field>
+            </field-pair>
+         </xml-field-pairs>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
       <mapping type="xml-direct">
          <name>description</name>
          <inherited>true</inherited>
@@ -124,6 +145,15 @@
          </attribute-handle>
          <xml-field>lastUpdateDate/text()</xml-field>
       </mapping>
+      <mapping type="xml-direct">
+         <name>localPath</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>localPath</attribute-name>
+         </attribute-handle>
+         <xml-field>localPath/text()</xml-field>
+      </mapping>
       <mapping type="composite-object">
          <name>parameters</name>
          <attribute-handle>
@@ -144,6 +174,15 @@
             <attribute-name>reference</attribute-name>
          </attribute-handle>
          <xml-field>reference/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>remoteResource</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>remoteResource</attribute-name>
+         </attribute-handle>
+         <xml-field>remoteResource/text()</xml-field>
       </mapping>
       <mapping type="xml-object-reference">
          <name>replacedBy</name>
@@ -284,6 +323,10 @@
          <attribute-name>description</attribute-name>
       </attribute-handle>
       <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>descriptionTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>
          <attribute-name>id</attribute-name>
       </attribute-handle>
@@ -296,12 +339,20 @@
          <attribute-name>label</attribute-name>
       </attribute-handle>
       <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>labelTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
          <attribute-name>lastEditor</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
          <attribute-name>lastUpdateDate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>localPath</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</attribute-declaring-type-name>
@@ -313,7 +364,15 @@
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>remoteResource</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
          <attribute-name>replacedBy</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>replacementReason</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>

@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.836+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.858+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>arguments</name>
@@ -74,13 +74,18 @@
          </method-parameters>
       </method>
       <method>
-         <name>ensureValid</name>
+         <name>ensureBasicValidity</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
+         <exception-type-handles>
+            <class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
+            </class-handle>
+         </exception-type-handles>
       </method>
       <method>
          <name>getArguments</name>

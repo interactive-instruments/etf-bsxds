@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.851+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.893+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
@@ -27,6 +27,24 @@
          <name>TestCaseDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>addDependency</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>addTestStep</name>
@@ -51,7 +69,7 @@
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>java.util.List</type-name>
+               <type-name>java.util.Collection</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -101,9 +119,4 @@
          </method-parameters>
       </method>
    </methods>
-   <type-handles>
-      <class-handle>
-         <type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto$TestCaseDependencyDto</type-name>
-      </class-handle>
-   </type-handles>
 </class>

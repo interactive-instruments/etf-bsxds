@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
    <name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</name>
-   <modifier>1</modifier>
+   <modifier>9</modifier>
    <declaring-type-handle>
       <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
    </declaring-type-handle>
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.842+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.85+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
@@ -84,25 +84,16 @@
          <name>ParameterSet$MutableParameter</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>ParameterSet$MutableParameter</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
+                     <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
@@ -116,7 +107,14 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

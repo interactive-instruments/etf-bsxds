@@ -142,12 +142,20 @@
          <attribute-name>description</attribute-name>
       </attribute-handle>
       <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>descriptionTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>
          <attribute-name>id</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
          <attribute-name>label</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>labelTranslationTemplate</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</attribute-declaring-type-name>

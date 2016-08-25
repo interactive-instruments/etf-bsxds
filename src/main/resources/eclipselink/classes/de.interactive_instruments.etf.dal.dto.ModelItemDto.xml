@@ -5,14 +5,14 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-06T23:13:33.925+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.903+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>parent</name>
          <modifier>4</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -24,11 +24,33 @@
          <modifier>1</modifier>
       </method>
       <method>
+         <name>ModelItemDto</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
          <name>getParent</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
+               <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getParentTypeName</name>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -40,15 +62,15 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>toString</name>

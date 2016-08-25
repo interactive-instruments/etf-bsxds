@@ -41,6 +41,27 @@
             </container-class>
          </container-policy>
       </mapping>
+      <mapping type="xml-collection-reference">
+         <name>dependencies</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</attribute-declaring-type-name>
+            <attribute-name>dependencies</attribute-name>
+         </attribute-handle>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xml-field-pairs>
+            <field-pair>
+               <source-xml-field>dependencies/testCase/@ref</source-xml-field>
+               <target-xml-field>@id</target-xml-field>
+            </field-pair>
+         </xml-field-pairs>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
       <mapping type="xml-direct">
          <name>description</name>
          <inherited>true</inherited>
@@ -118,12 +139,20 @@
          <attribute-name>description</attribute-name>
       </attribute-handle>
       <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>descriptionTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>
          <attribute-name>id</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
          <attribute-name>label</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
+         <attribute-name>labelTranslationTemplate</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</attribute-declaring-type-name>

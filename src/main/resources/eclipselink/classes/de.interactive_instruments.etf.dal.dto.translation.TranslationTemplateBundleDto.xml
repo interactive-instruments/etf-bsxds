@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.84+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.902+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>langTranslationTemplates</name>

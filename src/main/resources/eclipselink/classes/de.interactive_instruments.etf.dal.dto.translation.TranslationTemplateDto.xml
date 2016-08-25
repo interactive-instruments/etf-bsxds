@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.855+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.861+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>IDENTIFIER_PREFIX</name>

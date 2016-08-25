@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-07-05T18:32:33.808+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.854+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>author</name>
@@ -54,11 +54,38 @@
          </type-declaration>
       </class-attribute>
       <class-attribute>
+         <name>localPath</name>
+         <modifier>4</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>remoteResource</name>
+         <modifier>4</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
          <name>replacedBy</name>
          <modifier>4</modifier>
          <type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>replacementReason</name>
+         <modifier>4</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -88,6 +115,20 @@
          <modifier>1</modifier>
       </method>
       <method>
+         <name>ensureBasicValidity</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <exception-type-handles>
+            <class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
+            </class-handle>
+         </exception-type-handles>
+      </method>
+      <method>
          <name>getAuthor</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -102,6 +143,15 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.util.Date</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getDescriptiveLabel</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -134,6 +184,24 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getLocalPath</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getRemoteResource</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.net.URI</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getReplacedBy</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -143,7 +211,16 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>getTagDtos</name>
+         <name>getReplacementReason</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getTags</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -153,6 +230,15 @@
       </method>
       <method>
          <name>getVersion</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.Version</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getVersionAsStr</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -168,7 +254,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -176,7 +262,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>setCreationDate</name>
@@ -186,7 +272,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -194,7 +280,16 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setCreationDateNow</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>setItemHash</name>
@@ -204,7 +299,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -213,7 +308,7 @@
                   <dimensionality>1</dimensionality>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>setLastEditor</name>
@@ -223,7 +318,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -231,7 +326,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>setLastUpdateDate</name>
@@ -241,7 +336,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -249,7 +344,43 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setLocalPath</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setRemoteResource</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.net.URI</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setReplacedBy</name>
@@ -259,7 +390,7 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -267,17 +398,35 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
-         <name>setTagDtos</name>
+         <name>setReplacementReason</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setTags</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -285,7 +434,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>setVersion</name>
@@ -295,7 +444,25 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-         <method-parameterSet>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.Version</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setVersionFromStr</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
@@ -303,7 +470,7 @@
                   </type-handle>
                </type-declaration>
             </method-parameter>
-         </method-parameterSet>
+         </method-parameters>
       </method>
       <method>
          <name>toString</name>

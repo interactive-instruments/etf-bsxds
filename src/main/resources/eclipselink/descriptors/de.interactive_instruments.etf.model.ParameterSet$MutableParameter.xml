@@ -34,6 +34,14 @@
          <xml-field>defaultValue/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
+         <name>description</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</attribute-declaring-type-name>
+            <attribute-name>description</attribute-name>
+         </attribute-handle>
+         <xml-field>description/@ref</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
          <name>excludingParameter</name>
          <attribute-handle>
             <attribute-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</attribute-declaring-type-name>

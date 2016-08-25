@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.841+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.904+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>properties</name>
@@ -78,22 +78,18 @@
          </method-parameters>
       </method>
       <method>
-         <name>ensureValid</name>
+         <name>ensureBasicValidity</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
-      </method>
-      <method>
-         <name>getProperties</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.properties.Properties</type-name>
-            </type-handle>
-         </return-type-declaration>
+         <exception-type-handles>
+            <class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
+            </class-handle>
+         </exception-type-handles>
       </method>
       <method>
          <name>getResourceByName</name>
@@ -150,7 +146,16 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>setProperties</name>
+         <name>properties</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.properties.Properties</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>properties</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>

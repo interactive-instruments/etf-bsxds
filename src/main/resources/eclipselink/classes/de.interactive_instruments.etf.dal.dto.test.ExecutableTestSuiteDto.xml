@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-22T02:03:52.838+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-08-24T10:57:51.913+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
@@ -131,24 +131,6 @@
          </method-parameters>
       </method>
       <method>
-         <name>addDependency</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>void</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto$ExecutableTestSuiteDependencyDto</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
          <name>addTestModule</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -167,13 +149,18 @@
          </method-parameters>
       </method>
       <method>
-         <name>ensureValid</name>
+         <name>ensureBasicValidity</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
+         <exception-type-handles>
+            <class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
+            </class-handle>
+         </exception-type-handles>
       </method>
       <method>
          <name>getChildren</name>
@@ -208,15 +195,6 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.util.Collection</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getEtsDependencies</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -311,7 +289,7 @@
          </method-parameters>
       </method>
       <method>
-         <name>setEtsDependencies</name>
+         <name>setDependencies</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -437,9 +415,4 @@
          </method-parameters>
       </method>
    </methods>
-   <type-handles>
-      <class-handle>
-         <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto$ExecutableTestSuiteDependencyDto</type-name>
-      </class-handle>
-   </type-handles>
 </class>

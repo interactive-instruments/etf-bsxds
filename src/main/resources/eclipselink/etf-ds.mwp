@@ -37,8 +37,10 @@
          <name>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.DependencyDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto$ExecutableTestSuiteDependencyDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.TestAssertionDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto$TestCaseDependencyDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</name>
          <name>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</name>
@@ -64,6 +66,9 @@
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</descriptor-name>

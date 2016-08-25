@@ -55,5 +55,5 @@
          <qname component-type="element" namespace-uri="http://www.interactive-instruments.de/etf/2.0" local-name="ParameterList"/>
       </qname-path>
    </default-root-element-handle>
-   <root-descriptor>false</root-descriptor>
+   <root-descriptor>true</root-descriptor>
 </descriptor>
