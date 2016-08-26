@@ -83,6 +83,7 @@
 			<xsl:value-of select="$mm"/>
 			<xsl:value-of select="':'"/>
 			<xsl:value-of select="$ss"/>
+			<xsl:value-of select="' GMT'"/>
 		</xsl:if>
 	</xsl:template>
 	<!-- XSLT Cookbook, 2nd Edition -->

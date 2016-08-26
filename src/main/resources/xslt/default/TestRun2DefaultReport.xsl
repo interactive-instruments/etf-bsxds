@@ -28,41 +28,41 @@
 	</xsl:template>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
-		match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
+		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
 	<xsl:key name="testModuleKey"
-		match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule"
+		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule"
 		use="@id"/>
 	<xsl:key name="testCaseKey"
-		match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase"
+		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase"
 		use="@id"/>
 	<xsl:key name="testStepKey"
-		match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep"
+		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep"
 		use="@id"/>
 	<xsl:key name="testAssertionKey"
-		match="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep/etf:testAssertions[1]/etf:TestAssertion"
+		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep/etf:testAssertions[1]/etf:TestAssertion"
 		use="@id"/>
-	<xsl:key name="testItemTypeKey" match="/etf:DsResultSet/etf:testItemTypes[1]/etf:TestItemType"
+	<xsl:key name="testItemTypeKey" match="//etf:testItemTypes[1]/etf:TestItemType"
 		use="@id"/>
-	<xsl:key name="testObjectKey" match="/etf:DsResultSet/etf:testObjects[1]/etf:TestObject"
+	<xsl:key name="testObjectKey" match="//etf:testObjects[1]/etf:TestObject"
 		use="@id"/>
 	<xsl:key name="testObjectTypeKey"
-		match="/etf:DsResultSet/etf:testObjectTypes[1]/etf:TestObjectType" use="@id"/>
+		match="//etf:testObjectTypes[1]/etf:TestObjectType" use="@id"/>
 	<xsl:key name="translationKey"
-		match="/etf:DsResultSet/etf:translationTemplateBundles[1]/etf:TranslationTemplateBundle/etf:translationTemplateCollections[1]/etf:LangTranslationTemplateCollection/etf:translationTemplates[1]/etf:TranslationTemplate[@language = $language]"
+		match="//etf:translationTemplateBundles[1]/etf:TranslationTemplateBundle/etf:translationTemplateCollections[1]/etf:LangTranslationTemplateCollection/etf:translationTemplates[1]/etf:TranslationTemplate[@language = $language]"
 		use="@name"/>
 	<xsl:key name="testTaskKey"
-		match="/etf:DsResultSet/etf:testRuns[1]/etf:TestRun/etf:testTasks[1]/etf:TestTask" use="@id"/>
+		match="//etf:testRuns[1]/etf:TestRun/etf:testTasks[1]/etf:TestTask" use="@id"/>
 	<xsl:key name="testTaskResultKey"
-		match="/etf:DsResultSet/etf:testTaskResults[1]/etf:TestTaskResult" use="@id"/>
+		match="//etf:testTaskResults[1]/etf:TestTaskResult" use="@id"/>
 	<xsl:key name="attachmentsKey"
-		match="/etf:DsResultSet/etf:testTaskResults[1]/etf:TestTaskResult/etf:attachments[1]/etf:Attachment"
+		match="//etf:testTaskResults[1]/etf:TestTaskResult/etf:attachments[1]/etf:Attachment"
 		use="@id"/>
 
-	<xsl:variable name="testRun" select="/etf:DsResultSet/etf:testRuns[1]/etf:TestRun[1]"/>
+	<xsl:variable name="testRun" select="//etf:testRuns[1]/etf:TestRun[1]"/>
 	<xsl:variable name="testTaskResults"
-		select="/etf:DsResultSet/etf:testTaskResults[1]/etf:TestTaskResult"/>
+		select="//etf:testTaskResults[1]/etf:TestTaskResult"/>
 	<xsl:variable name="executableTestSuites"
-		select="/etf:DsResultSet/etf:executableTestSuites[1]/etf:ExecutableTestSuite"/>
+		select="//etf:executableTestSuites[1]/etf:ExecutableTestSuite"/>
 	<xsl:variable name="testTasks" select="key('testTaskKey', $testTaskResults/etf:parent[1]/@ref)"/>
 	<xsl:variable name="etsIds" select="key('testSuiteKey', $testTasks/etf:resultedFrom[1]/@ref)"/>
 	<xsl:variable name="testObjects"
@@ -73,7 +73,7 @@
 	
 	<!-- Test Report -->
 	<!-- ########################################################################################## -->
-	<xsl:template match="/etf:DsResultSet">
+	<xsl:template match="/*[self::etf:DsResultSet or self::etf:EtfItemCollection]">
 		<html>
 			<head>
 				<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
@@ -87,10 +87,6 @@
 				<div data-role="header">
 					<h1>
 						<xsl:value-of select="./etf:testRuns[1]/etf:TestRun[1]/etf:label/text()"/>
-						<br/>
-						<xsl:value-of
-							select="./etf:executableTestSuites[1]/etf:ExecutableTestSuite[1]/etf:label/text()"
-						/>
 					</h1>
 					<a href="{$baseUrl}/reports" data-ajax="false" data-icon="back"
 						data-iconpos="notext"/>
@@ -107,7 +103,7 @@
 							<xsl:call-template name="controls"/>
 						</div>
 					</div>
-					<xsl:apply-templates select="$testTasks/etf:ArgumentList[1]"/>
+					<xsl:apply-templates select="$testTasks[1]/etf:ArgumentList[1]"/>
 					<!-- Test object -->
 					<xsl:apply-templates select="$testObjects"/>
 					<!-- Additional statistics provided by the test project -->
@@ -421,8 +417,9 @@
 	<xsl:template match="etf:Attachment[@type = 'LogFile']">
 		<xsl:variable name="log" select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
 		<xsl:if test="$log">
+			<xsl:variable name="TestSuite" select="key('testSuiteKey', ../../etf:resultedFrom/@ref)"/>
 			<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
-				<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/></h3>
+				<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
 				<pre><xsl:value-of select="$log" disable-output-escaping="yes"/></pre>
 			</div>
 		</xsl:if>
@@ -1061,7 +1058,7 @@
 			<br/>
 			<!-- TODO TOKEN REPLACEMENT -->
 			<xsl:if
-				test="$TestAssertion/etf:expression and normalize-space($TestAssertion/etf:expression) != ('', '''PASSED''')">
+				test="$TestAssertion/etf:expression and not(normalize-space($TestAssertion/etf:expression) = ('','NOT_APPLICABLE', '''PASSED'''))">
 				<div class="ReportDetail Expression">
 					<label for="{$id}.expression"><xsl:value-of
 							select="$lang/x:e[@key = 'Expression']"/>:</label>
@@ -1070,7 +1067,7 @@
 					</textarea>
 				</div>
 			</xsl:if>
-			<xsl:if test="$TestAssertion/etf:expectedResult and normalize-space($TestAssertion/etf:expectedResult) != ('','NOT_APPLICABLE')">
+			<xsl:if test="$TestAssertion/etf:expectedResult and not(normalize-space($TestAssertion/etf:expectedResult) = ('','NOT_APPLICABLE'))">
 				<div class="ReportDetail ExpectedResult">
 					<label for="{$id}.expectedResult"><xsl:value-of
 							select="$lang/x:e[@key = 'ExpectedResult']"/>:</label>
