@@ -40,108 +40,154 @@
 				<legend>
 					<xsl:value-of select="$lang/x:e[@key='Show']"/>
 				</legend>
-				<input type="radio" name="radio-Show" id="cntrlShowAll" value="cntrlShowAll" checked="checked"/>
+				
 				<label for="cntrlShowAll">
 					<xsl:value-of select="$lang/x:e[@key='All']"/>
 				</label>
-				<input type="radio" name="radio-Show" id="cntrlShowOnlyFailed" value="cntrlShowOnlyFailed"/>
+				<input type="radio" name="cntrlShowAll" id="cntrlShowAll" value="cntrlShowAll" checked="checked"/>
+				
 				<label for="cntrlShowOnlyFailed">
 					<xsl:value-of select="$lang/x:e[@key='OnlyFailed']"/>
 				</label>
-				<input type="radio" name="radio-Show" id="cntrlShowOnlyManual" value="cntrlShowOnlyManual"/>
+				<input type="radio" name="cntrlShowOnlyFailed" id="cntrlShowOnlyFailed" value="cntrlShowOnlyFailed"/>
+				
 				<label for="cntrlShowOnlyManual">
 					<xsl:value-of select="$lang/x:e[@key='OnlyManual']"/>
 				</label>
+				<input type="radio" name="cntrlShowOnlyManual" id="cntrlShowOnlyManual" value="cntrlShowOnlyManual"/>
+				
 			</fieldset>
 		</div>
 	</xsl:template>
 	<!-- Script tags in the footer-->
 	<!-- ########################################################################################## -->
 	<xsl:template name="footerScripts">
-		<script><!-- Controls for switching the level of detail -->
-			$( "input[name=radio-Show]" ).on( "click",
-			function() {
+		
+		<div class="ui-field-contain" id="lodFadinMenu" style="display: none; width: 200px; position: fixed; top: 10px; right: 5px;" data-role="controlgroup">
+			<label for="select-native-2"> <xsl:value-of select="$lang/x:e[@key='LevelOfDetail']"/> </label>	
+			<select name="select-Show" id="lodFadinMenuSelect" data-mini="true">
+				<option value="cntrlAllDetails"><xsl:value-of select="$lang/x:e[@key='AllDetails']"/></option>
+				<option value="cntrlLessInformation"><xsl:value-of select="$lang/x:e[@key='LessInformation']"/></option>
+				<option value="cntrlSimplified" selected="selected"><xsl:value-of select="$lang/x:e[@key='Simplified']"/></option>
+			</select>
+		</div>
+		
+		<script>
+		
+			<!-- Controls for switching the level of detail -->
+			$("#controlgroupShow input").on( "click", function() {
+				var cntrl = $( "#controlgroupShow input:checked" ).val();
+				$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
+				updateLod(cntrl);
+			});
+			
+			$("#lodFadinMenuSelect").on( "change", function() {
+				var cntrl = $( "#lodFadinMenuSelect option:selected").val()
+				$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
+				// $("#"+cntrl).click();
+				updateLod(cntrl);
+			});	
+			
+			function updateLod(cntrl) {
+				if(cntrl=="cntrlSimplified")
+				{
+					$( ".ReportDetail" ).hide("slow");
+					$('.DoNotShowInSimpleView').hide('slow');
+					
+					<!-- Cut text -->
+					var assertionFailureMessage = 
+					'Expected text value \'AssertionFailures:\' but was \'AssertionFailures:\'';
+					$('.XQueryContainsAssertion').hide('slow');
+				}
+				else if(cntrl=="cntrlLessInformation")
+				{
+					$('.ReportDetail').hide('slow');
+					$('.DoNotShowInSimpleView').show('slow');
+				}
+				else if(cntrl=="cntrlAllDetails")
+				{
+					$('.ReportDetail').show('slow');
+					$('.DoNotShowInSimpleView').show('slow');
+				}
+			}
+			
+			
+			<!-- Controls for filtering -->
+			$( "input[name=radio-Show]" ).on( "click", function() {
+			
 			var cntrl = $( "input[name=radio-Show]:checked" ).val();
 			if(cntrl=="cntrlShowOnlyFailed")
 			{
-			$('.TestSuite').collapsible('expand');
-			$('.TestModule').collapsible('expand');
-			$('.SuccessfulTestCase').hide('slow');
-			$('.ManualTestCase').hide('slow');
-			$('.FailedTestCase').collapsible('expand');
-			$('.FailedTestCase').show('fast');
-			$('.SuccessfulTestStep').collapsible('collapse');
-			$('.ManualTestStep').collapsible('collapse');
-			$('.FailedTestStep').collapsible('expand');
-			$('.FailedTestStep').show('fast');
-			$('.SuccessfulTestStep').hide('slow');
-			$('.ManualTestStep').hide('slow');
-			$('.FailedAssertion').collapsible('expand');
-			$('.FailedAssertion').show('fast');
-			$('.SuccessfulAssertion').hide('slow');
-			$('.ManualAssertion').hide('slow');
+				$('.TestSuite').collapsible('expand');
+				$('.TestModule').collapsible('expand');
+				$('.SuccessfulTestCase').hide('slow');
+				$('.ManualTestCase').hide('slow');
+				$('.FailedTestCase').collapsible('expand');
+				$('.FailedTestCase').show('fast');
+				$('.SuccessfulTestStep').collapsible('collapse');
+				$('.ManualTestStep').collapsible('collapse');
+				$('.FailedTestStep').collapsible('expand');
+				$('.FailedTestStep').show('fast');
+				$('.SuccessfulTestStep').hide('slow');
+				$('.ManualTestStep').hide('slow');
+				$('.FailedAssertion').collapsible('expand');
+				$('.FailedAssertion').show('fast');
+				$('.SuccessfulAssertion').hide('slow');
+				$('.ManualAssertion').hide('slow');
 			}
 			else if(cntrl=="cntrlShowOnlyManual")
 			{
-			$('.TestSuite').collapsible('expand');
-			$('.TestModule').collapsible('expand');
-			$('.SuccessfulTestCase').hide('slow');
-			$('.FailedTestCase').hide('slow');
-			$('.ManualTestCase').collapsible('expand');
-			$('.ManualTestCase').show('fast');
-			$('.SuccessfulTestStep').collapsible('collapse');
-			$('.FailedTestStep').collapsible('collapse');
-			$('.ManualTestStep').collapsible('expand');
-			$('.ManualTestStep').show('fast');
-			$('.SuccessfulTestStep').hide('slow');
-			$('.FailedTestStep').hide('slow');
-			$('.ManualAssertion').collapsible('expand');
-			$('.ManualAssertion').show('fast');
-			$('.SuccessfulAssertion').hide('slow');
-			$('.FailedAssertion').hide('slow');
+				$('.TestSuite').collapsible('expand');
+				$('.TestModule').collapsible('expand');
+				$('.SuccessfulTestCase').hide('slow');
+				$('.FailedTestCase').hide('slow');
+				$('.ManualTestCase').collapsible('expand');
+				$('.ManualTestCase').show('fast');
+				$('.SuccessfulTestStep').collapsible('collapse');
+				$('.FailedTestStep').collapsible('collapse');
+				$('.ManualTestStep').collapsible('expand');
+				$('.ManualTestStep').show('fast');
+				$('.SuccessfulTestStep').hide('slow');
+				$('.FailedTestStep').hide('slow');
+				$('.ManualAssertion').collapsible('expand');
+				$('.ManualAssertion').show('fast');
+				$('.SuccessfulAssertion').hide('slow');
+				$('.FailedAssertion').hide('slow');
 			}
 			else if(cntrl=="cntrlShowAll")
 			{
-			$('.SuccessfulTestCase').show('fast');
-			$('.SuccessfulTestStep').show('fast');
-			$('.SuccessfulAssertion').show('fast');
-			$('.ManualTestCase').show('fast');
-			$('.ManualTestStep').show('fast');
-			$('.ManualAssertion').show('fast');
-			$('.FailedTestCase').show('fast');
-			$('.FailedTestStep').show('fast');
-			$('.FailedAssertion').show('fast');
+				$('.SuccessfulTestCase').show('fast');
+				$('.SuccessfulTestStep').show('fast');
+				$('.SuccessfulAssertion').show('fast');
+				$('.ManualTestCase').show('fast');
+				$('.ManualTestStep').show('fast');
+				$('.ManualAssertion').show('fast');
+				$('.FailedTestCase').show('fast');
+				$('.FailedTestStep').show('fast');
+				$('.FailedAssertion').show('fast');
 			}
 			});
-			$( "input[name=radio-LOD]" ).on( "click",
-			function() {
-			var cntrl = $( "input[name=radio-LOD]:checked" ).val();
-			if(cntrl=="cntrlSimplified")
-			{
-			$( ".ReportDetail" ).hide("slow");
-			$('.DoNotShowInSimpleView').hide('slow');
 			
-			<!-- Cut text -->
-			var assertionFailureMessage = 
-			'Expected text value \'AssertionFailures:\' but was \'AssertionFailures:\'';
-			$('.XQueryContainsAssertion').hide('slow');
-			}
-			else if(cntrl=="cntrlLessInformation")
-			{
-			$('.ReportDetail').hide('slow');
-			$('.DoNotShowInSimpleView').show('slow');
-			}
-			else if(cntrl=="cntrlAllDetails")
-			{
-			$('.ReportDetail').show('slow');
-			$('.DoNotShowInSimpleView').show('slow');
-			}
-			});
 			
 			$( document ).ready(function() {
-			$('.ReportDetail').hide();
-			$('.DoNotShowInSimpleView').hide();
+				$('.ReportDetail').hide();
+				$('.DoNotShowInSimpleView').hide();
+				
+				if ( $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
+					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio("refresh");
+				}
+				console.log( "Manuals: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
+				
+				$(document).scroll(function () {
+					var y = $(this).scrollTop();
+					if (y > 370) {
+						$('#lodFadinMenu').fadeIn();
+					} else {
+						$('#lodFadinMenu').fadeOut();
+					}
+				});
 			});
+			
 			
 		</script>
 	</xsl:template>
