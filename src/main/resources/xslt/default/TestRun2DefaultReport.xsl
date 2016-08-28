@@ -177,7 +177,7 @@
 						<xsl:value-of select="$lang/x:e[@key = 'Log']"/>
 					</td>
 					<td>
-						<a href="{$serviceUrl}/TestRuns/{substring-after ($testRun/@id, 'EID')}/log"
+						<a href="{$serviceUrl}/TestResults/{substring-after ($testRun/@id, 'EID')}/log"
 						   data-ajax="false">
 						<xsl:value-of select="$lang/x:e[@key = 'LogLink']"/>
 						</a>
@@ -375,18 +375,27 @@
 		<div id="rprtTestobject" data-role="collapsible" data-collapsed-icon="info"
 			class="DoNotShowInSimpleView"><xsl:variable name="TestObject" select="."
 					/><h3><xsl:value-of select="$lang/x:e[@key = 'TestObject']"/>: <xsl:value-of
-					select="$TestObject/etf:label"/></h3><xsl:if
-				test="$TestObject/etf:description and normalize-space($TestObject/etf:description/text()) ne ''"
-					><xsl:value-of select="$TestObject/etf:description/text()"
-					disable-output-escaping="yes"/></xsl:if><br/><br/><xsl:value-of
-				select="$lang/x:e[@key = 'TestObjectTypes']"/>: <ul><xsl:for-each
-					select="$TestObject/etf:testObjectTypes/etf:testObjectType"><xsl:variable
+					select="$TestObject/etf:label"/></h3>
+			<xsl:if
+				test="$TestObject/etf:description and normalize-space($TestObject/etf:description/text()) ne ''"><xsl:value-of select="$TestObject/etf:description/text()"
+					disable-output-escaping="yes"/></xsl:if>
+			
+			<xsl:if test="$TestObject/etf:Properties/etf:property[@name= 'files']">
+				<p><xsl:value-of select="$lang/x:e[@key = 'files']"/>: <xsl:value-of select="$TestObject/etf:Properties/etf:property[@name= 'files']"/></p>
+			</xsl:if>
+			<xsl:if test="$TestObject/etf:Properties/etf:property[@name= 'sizeHR']">
+				<p><xsl:value-of select="$lang/x:e[@key = 'sizeHR']"/>: <xsl:value-of select="$TestObject/etf:Properties/etf:property[@name= 'sizeHR']"/></p>
+			</xsl:if>
+			
+			<p><xsl:value-of select="$lang/x:e[@key = 'TestObjectTypes']"/>: </p>
+			<ul><xsl:for-each select="$TestObject/etf:testObjectTypes/etf:testObjectType"><xsl:variable
 						name="TestObjectType" select="key('testObjectTypeKey', ./@ref)"
 							/><li><xsl:value-of select="$TestObjectType/etf:label/text()"/><xsl:if
 							test="$TestObjectType/etf:description and normalize-space($TestObjectType/etf:description/text()) ne ''"
 								><br/><xsl:value-of select="$TestObjectType/etf:description/text()"
 								disable-output-escaping="yes"
-			/></xsl:if></li></xsl:for-each></ul></div>
+			/></xsl:if></li></xsl:for-each></ul>
+		</div>
 	</xsl:template>
 	
 	<!-- StatisticalReport -->
@@ -415,14 +424,25 @@
 	<!-- ETS LogFile -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:Attachment[@type = 'LogFile']">
-		<xsl:variable name="log" select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
-		<xsl:if test="$log">
-			<xsl:variable name="TestSuite" select="key('testSuiteKey', ../../etf:resultedFrom/@ref)"/>
-			<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
-				<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
-				<pre><xsl:value-of select="$log" disable-output-escaping="yes"/></pre>
-			</div>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="unparsed-text-available(./etf:referencedData/@href, 'UTF-8')">
+				<xsl:variable name="log" select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>	
+				<xsl:if test="$log">
+					<xsl:variable name="TestSuite" select="key('testSuiteKey', ../../etf:resultedFrom/@ref)"/>
+					<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
+						<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
+						<pre><xsl:value-of select="$log" disable-output-escaping="yes"/></pre>
+					</div>
+				</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="TestSuite" select="key('testSuiteKey', ../../etf:resultedFrom/@ref)"/>
+				<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
+					<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
+					<pre>Log file not available</pre>
+				</div>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<!-- Test suite result information -->
@@ -499,7 +519,7 @@
 				</div>
 			</h2>
 			<xsl:if
-				test="$TestSuite/etf:description and normalize-space($TestSuite/etf:description/text()) ne ''">
+				test="$TestSuite/etf:description and normalize-space($TestSuite/etf:description/text()[1]) ne ''">
 				<xsl:value-of select="$TestSuite/etf:description/text()"
 					disable-output-escaping="yes"/>
 			</xsl:if>
@@ -947,7 +967,7 @@
 			<label for="{$id}">
 				<xsl:value-of select="$lang/x:e[@key = 'ExecutionStatement']"/>
 			</label>
-			<textarea id="{$id}.executionStatement" data-mini="true">
+			<textarea id="{$id}.executionStatement" data-mini="true" readonly="readonly">
 				<xsl:value-of select="text()"/>
 			</textarea>
 		</div>
@@ -1021,7 +1041,7 @@
 				<xsl:value-of select="$TestAssertion/etf:label"/>
 			</h5>
 			<xsl:if
-				test="$TestAssertion/etf:description and normalize-space($TestAssertion/etf:description/text()) ne ''">
+				test="$TestAssertion/etf:description and normalize-space($TestAssertion/etf:description/text()[1]) ne ''">
 				<xsl:value-of select="$TestAssertion/etf:description/text()"
 					disable-output-escaping="yes"/>
 			</xsl:if>
@@ -1062,7 +1082,7 @@
 				<div class="ReportDetail Expression">
 					<label for="{$id}.expression"><xsl:value-of
 							select="$lang/x:e[@key = 'Expression']"/>:</label>
-					<textarea id="{$id}.expression" class="Expression" data-mini="true">
+					<textarea id="{$id}.expression" class="Expression" data-mini="true" readonly="readonly">
 						<xsl:value-of select="$TestAssertion/etf:expression"/>
 					</textarea>
 				</div>
@@ -1071,7 +1091,7 @@
 				<div class="ReportDetail ExpectedResult">
 					<label for="{$id}.expectedResult"><xsl:value-of
 							select="$lang/x:e[@key = 'ExpectedResult']"/>:</label>
-					<textarea id="{$id}.expectedResult" class="ExpectedResult" data-mini="true">
+					<textarea id="{$id}.expectedResult" class="ExpectedResult" data-mini="true" readonly="readonly">
 						<xsl:value-of select="$TestAssertion/etf:expectedResult"/>
 					</textarea>
 				</div>
@@ -1184,7 +1204,7 @@
 				<label for="{$id}">
 					<xsl:value-of select="$lang/x:e[@key = 'Messages']"/>
 				</label>
-				<textarea id="{$id}.failureMessages" data-mini="true">
+				<textarea id="{$id}.failureMessages" data-mini="true" readonly="readonly">
 					<xsl:for-each select="./etf:message">
 						<xsl:call-template name="translateMessage">
 							<xsl:with-param name="templateId" select="./@ref"/>
