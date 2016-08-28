@@ -46,7 +46,7 @@ declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, 
                 not(exists($item/etf:replacedBy[1]))
             else
                 true()
-        order by $item/etf:label ascending
+        order by $item/etf:label/text() descending
         return
             $item )[position() > $offset and position() <= $offset + $limit]
 };
@@ -54,7 +54,7 @@ declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, 
 declare function etfxdb:get-all($items as node()*, $offset as xs:integer, $limit as xs:integer) {
     (
         for $item in $items
-        order by $item/etf:label ascending
+        order by $item/etf:label/text() descending
         return
             $item )[position() > $offset and position() <= $offset + $limit]
 };
