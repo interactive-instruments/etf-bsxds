@@ -16,12 +16,21 @@
 			<xsl:value-of select="' min '"/>
 		</xsl:if>
 		<xsl:if test="$hours eq 0">
-			<xsl:value-of select="$seconds"/>
-			<xsl:if test="$hours eq 0 and $minutes eq 0 and $seconds le 2 and $milliseconds gt 0">
-				<xsl:value-of select="'.'"/>
-				<xsl:value-of select="format-number($milliseconds,'000')"/>
-			</xsl:if>
-			<xsl:value-of select="' s'"/>
+			<xsl:choose>
+				<xsl:when test="$minutes eq 0 and $seconds eq 0 and $milliseconds eq 0">
+					<!--xsl:value-of select="'few nanoseconds'"/-->
+					<xsl:value-of select="'0.001 s'"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$seconds"/>
+					<xsl:if
+						test="$minutes eq 0 and $seconds le 2 and $milliseconds gt 0">
+						<xsl:value-of select="'.'"/>
+						<xsl:value-of select="format-number($milliseconds, '000')"/>
+					</xsl:if>
+					<xsl:value-of select="' s'"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:if>
 	</xsl:template>
 	<!-- converts a date string from 2014-01-15T16:21:47.099+01:00 or 15.1.2014T16:21:47.099+01:00to 15/01/2014 16:21:47 -->
@@ -111,10 +120,10 @@
 		<xsl:param name="with"/>
 		<xsl:choose>
 			<xsl:when test="contains($text, $replace)">
-				<xsl:value-of select="substring-before($text,$replace)"/>
+				<xsl:value-of select="substring-before($text, $replace)"/>
 				<xsl:value-of select="$with"/>
 				<xsl:call-template name="string-replace">
-					<xsl:with-param name="text" select="substring-after($text,$replace)"/>
+					<xsl:with-param name="text" select="substring-after($text, $replace)"/>
 					<xsl:with-param name="replace" select="$replace"/>
 					<xsl:with-param name="with" select="$with"/>
 				</xsl:call-template>
