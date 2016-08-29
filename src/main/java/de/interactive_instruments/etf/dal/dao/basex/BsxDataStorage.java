@@ -236,10 +236,15 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		throw new InvalidStateTransitionException("Data storage already initialized");
 	}
 
-	private static String getXercesVersion() {
+	private String getXercesVersion() {
 		String versionNumber = "unknown";
 		try {
 			final Class versionClass = Class.forName("org.apache.xerces.impl.Version");
+			try{
+				logger.trace("Xerces path: {}", versionClass.getProtectionDomain().getCodeSource().getLocation());
+			}catch (Exception e) {
+				ExcUtils.suppress(e);
+			}
 			final Method method = versionClass.getMethod("getVersion", (Class[]) null);
 			final String version = (String) method.invoke(null, (Object[]) null);
 			versionNumber = version.substring("Xerces-J ".length(), version.lastIndexOf("."));
@@ -254,7 +259,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			final String validatorVersion = getXercesVersion();
 			if (!("2.11.0-xml-schema-1.1-beta".equals(validatorVersion) ||
 					"2.11.0-xml-schema-1".equals(validatorVersion))) {
-				throw new RuntimeException("Validator version \"" + validatorVersion + "\" nosupported");
+				throw new RuntimeException("Validator version \"" + validatorVersion + "\" not supported");
 			}
 
 			final InputStream storageSchema = getClass().getClassLoader().getResourceAsStream("schema/model/resultSet.xsd");
