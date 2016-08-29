@@ -35,7 +35,6 @@ import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.etf.model.Parameterizable;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
@@ -60,10 +59,12 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	 */
 	private Templates cachedXSLT;
 
-	private ConfigProperties configProperties = new ConfigProperties("etf.webapp.base.url", "etf.api.base.url");
+	private ConfigProperties configProperties = new ConfigProperties(
+			"etf.webapp.base.url", "etf.api.base.url");
 	private IFile stylesheetFile;
 	private long stylesheetLastModified = 0;
-	private final TransformerFactory transFact = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
+	private final TransformerFactory transFact = TransformerFactory.newInstance(
+			"net.sf.saxon.TransformerFactoryImpl", null);
 	private final Logger logger = LoggerFactory.getLogger(XsltOutputTransformer.class);
 	private boolean initialized = false;
 	private final String mimeTypeStr;
@@ -90,12 +91,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		}
 	};
 
-	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath)
-			throws IOException, TransformerConfigurationException {
-		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
-	}
-
-	private static class ResourceResolver implements URIResolver {
+	private final static class ResourceResolver implements URIResolver {
 		private final String xsltBase;
 
 		ResourceResolver(final String xsltBase) {
@@ -110,8 +106,13 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		}
 	}
 
+	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath)
+			throws IOException, TransformerConfigurationException {
+		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
+	}
+
 	/**
-	 * Create a new XSL Output Transformer
+	 * Create a new XSL Output Transformer and load stylesheet files from the jar
 	 *
 	 * @param label
 	 * @param stylesheetJarPath
@@ -126,21 +127,17 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		this.label = label;
 		this.mimeTypeStr = mimeTypeStr;
 		this.stylesheetFile = null;
-
 		final ClassLoader cL = getClass().getClassLoader();
-
-		final Source xsltSource = new StreamSource(cL.getResourceAsStream(stylesheetJarPath));
-		xsltSource.setSystemId(stylesheetJarPath);
-
+		// important to set systemId!
+		final Source xsltSource = new StreamSource(cL.getResourceAsStream(stylesheetJarPath), stylesheetJarPath);
 		if (jarImportPath != null) {
 			transFact.setURIResolver(new ResourceResolver(stylesheetJarPath));
 		}
-
 		this.cachedXSLT = transFact.newTemplates(xsltSource);
 	}
 
 	/**
-	 * Create a new XSL Output Transformer
+	 * Create a new XSL Output Transformer and load stylesheet files from a file
 	 *
 	 * @param label
 	 * @param stylesheetFile XSL stylesheet file
@@ -155,11 +152,10 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		this.label = label;
 		this.stylesheetFile = stylesheetFile;
 		stylesheetFile.expectFileIsReadable();
-
-		recacheChangedStylesheet();
+		checkForChangedStylesheet();
 	}
 
-	private void recacheChangedStylesheet() throws TransformerConfigurationException {
+	private void checkForChangedStylesheet() throws TransformerConfigurationException {
 		if (stylesheetFile != null && stylesheetFile.lastModified() != stylesheetLastModified) {
 			synchronized (this) {
 				logger.info(this.label + " : caching stylesheet " + stylesheetFile.getAbsolutePath());
@@ -188,7 +184,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	@Override
 	public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream) throws IOException {
 		try {
-			recacheChangedStylesheet();
+			checkForChangedStylesheet();
 
 			final Transformer transformer = cachedXSLT.newTransformer();
 			if (arguments != null) {
