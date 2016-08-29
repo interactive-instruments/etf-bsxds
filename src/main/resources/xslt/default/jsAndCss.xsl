@@ -174,7 +174,9 @@
 				$('.DoNotShowInSimpleView').hide();
 				
 				if ( $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
-					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio("refresh");
+					$('#cntrlShowOnlyManual').checkboxradio();
+					$('#cntrlShowOnlyManual').checkboxradio('refresh');
+					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
 				console.log( "Manuals: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
 				
