@@ -23,18 +23,21 @@
 				<legend>
 					<xsl:value-of select="$lang/x:e[@key='LevelOfDetail']"/>
 				</legend>
-				<input type="radio" name="radio-LOD" id="cntrlAllDetails" value="cntrlAllDetails"/>
+				
 				<label for="cntrlAllDetails">
 					<xsl:value-of select="$lang/x:e[@key='AllDetails']"/>
 				</label>
-				<input type="radio" name="radio-LOD" id="cntrlLessInformation" value="cntrlLessInformation"/>
+				<input type="radio" name="radio-lod" id="cntrlAllDetails" value="cntrlAllDetails"/>
+				
 				<label for="cntrlLessInformation">
 					<xsl:value-of select="$lang/x:e[@key='LessInformation']"/>
 				</label>
-				<input type="radio" name="radio-LOD" id="cntrlSimplified" value="cntrlSimplified" checked="checked"/>
+				<input type="radio" name="radio-lod" id="cntrlLessInformation" value="cntrlLessInformation"/>
+				
 				<label for="cntrlSimplified">
 					<xsl:value-of select="$lang/x:e[@key='Simplified']"/>
 				</label>
+				<input type="radio" name="radio-lod" id="cntrlSimplified" value="cntrlSimplified" checked="checked"/>
 			</fieldset>
 			<fieldset id="controlgroupShow" data-role="controlgroup" data-mini="true">
 				<legend>
@@ -44,17 +47,17 @@
 				<label for="cntrlShowAll">
 					<xsl:value-of select="$lang/x:e[@key='All']"/>
 				</label>
-				<input type="radio" name="cntrlShowAll" id="cntrlShowAll" value="cntrlShowAll" checked="checked"/>
+				<input type="radio" name="radio-filter" id="cntrlShowAll" value="cntrlShowAll" checked="checked"/>
 				
 				<label for="cntrlShowOnlyFailed">
 					<xsl:value-of select="$lang/x:e[@key='OnlyFailed']"/>
 				</label>
-				<input type="radio" name="cntrlShowOnlyFailed" id="cntrlShowOnlyFailed" value="cntrlShowOnlyFailed"/>
+				<input type="radio" name="radio-filter" id="cntrlShowOnlyFailed" value="cntrlShowOnlyFailed"/>
 				
 				<label for="cntrlShowOnlyManual">
 					<xsl:value-of select="$lang/x:e[@key='OnlyManual']"/>
 				</label>
-				<input type="radio" name="cntrlShowOnlyManual" id="cntrlShowOnlyManual" value="cntrlShowOnlyManual"/>
+				<input type="radio" name="radio-filter" id="cntrlShowOnlyManual" value="cntrlShowOnlyManual"/>
 				
 			</fieldset>
 		</div>
@@ -99,9 +102,9 @@
 			
 			
 			<!-- Controls for filtering -->
-			$( "input[name=radio-Show]" ).on( "click", function() {
+			$( "input[name=radio-filter]" ).on( "click", function() {
 			
-			var cntrl = $( "input[name=radio-Show]:checked" ).val();
+			var cntrl = $( "input[name=radio-filter]:checked" ).val();
 			if(cntrl=="cntrlShowOnlyFailed")
 			{
 				$('.TestSuite').collapsible('expand');
@@ -167,19 +170,22 @@
 				console.log( "Manuals: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
 				
 				<!-- Controls for switching the level of detail -->
+			
 				$("#controlgroupLOD input").on( "click", function() {
 					var cntrl = $( "#controlgroupLOD input:checked" ).val();
 					$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
 					updateLod(cntrl);
 				});
 				
-				$('#cntrlShowOnlyManual').checkboxradio('refresh');
 				$("#lodFadinMenuSelect").on( "change", function() {
 					var cntrl = $( "#lodFadinMenuSelect option:selected").val()
+					$("#cntrlAllDetails").prop('checked', false).checkboxradio("refresh");
+					$("#cntrlLessInformation").prop('checked', false).checkboxradio("refresh");
+					$("#cntrlSimplified").prop('checked', false).checkboxradio("refresh");
 					$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
-					$("#lodFadinMenuSelect option[value!="+cntrl+"]").prop('checked', false);
 					updateLod(cntrl);
 				});	
+				
 				
 				$(document).scroll(function () {
 					var y = $(this).scrollTop();
