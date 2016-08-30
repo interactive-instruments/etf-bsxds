@@ -64,7 +64,7 @@
 	<xsl:template name="footerScripts">
 		
 		<div class="ui-field-contain" id="lodFadinMenu" style="display: none; width: 200px; position: fixed; top: 10px; right: 5px;" data-role="controlgroup">
-			<label for="select-native-2"> <xsl:value-of select="$lang/x:e[@key='LevelOfDetail']"/> </label>	
+			<label for="select-Show"> <xsl:value-of select="$lang/x:e[@key='LevelOfDetail']"/> </label>	
 			<select name="select-Show" id="lodFadinMenuSelect" data-mini="true">
 				<option value="cntrlAllDetails"><xsl:value-of select="$lang/x:e[@key='AllDetails']"/></option>
 				<option value="cntrlLessInformation"><xsl:value-of select="$lang/x:e[@key='LessInformation']"/></option>
@@ -73,20 +73,6 @@
 		</div>
 		
 		<script>
-		
-			<!-- Controls for switching the level of detail -->
-			$("#controlgroupShow input").on( "click", function() {
-				var cntrl = $( "#controlgroupShow input:checked" ).val();
-				$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
-				updateLod(cntrl);
-			});
-			
-			$("#lodFadinMenuSelect").on( "change", function() {
-				var cntrl = $( "#lodFadinMenuSelect option:selected").val()
-				$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
-				// $("#"+cntrl).click();
-				updateLod(cntrl);
-			});	
 			
 			function updateLod(cntrl) {
 				if(cntrl=="cntrlSimplified")
@@ -179,6 +165,21 @@
 					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
 				console.log( "Manuals: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
+				
+				<!-- Controls for switching the level of detail -->
+				$("#controlgroupLOD input").on( "click", function() {
+					var cntrl = $( "#controlgroupLOD input:checked" ).val();
+					$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
+					updateLod(cntrl);
+				});
+				
+				$('#cntrlShowOnlyManual').checkboxradio('refresh');
+				$("#lodFadinMenuSelect").on( "change", function() {
+					var cntrl = $( "#lodFadinMenuSelect option:selected").val()
+					$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
+					$("#lodFadinMenuSelect option[value!="+cntrl+"]").prop('checked', false);
+					updateLod(cntrl);
+				});	
 				
 				$(document).scroll(function () {
 					var y = $(this).scrollTop();
