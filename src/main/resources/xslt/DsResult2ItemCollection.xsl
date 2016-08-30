@@ -21,8 +21,7 @@
 
     <xsl:attribute-set name="CollectionAttributes">
         <xsl:attribute name="version">2.0</xsl:attribute>
-        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0
-            http://services.interactive-instruments.de/etf/schema/service/service.xsd</xsl:attribute>
+        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 http://services.interactive-instruments.de/etf/schema/service/service.xsd</xsl:attribute>
     </xsl:attribute-set>
 
     <!-- =============================================================== -->
