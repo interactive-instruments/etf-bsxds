@@ -155,7 +155,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 		if (mappedDtos == null) {
 			enusreDtosQueried();
 			if (cachedDtos != null) {
-				mappedDtos = new HashMap<>();
+				mappedDtos = new HashMap<>((int) (cachedDtos.size() * 0.5));
 				for (int i = 0; i < cachedDtos.size(); i++) {
 					mappedDtos.put(cachedDtos.get(i).getId(), cachedDtos.get(i));
 				}

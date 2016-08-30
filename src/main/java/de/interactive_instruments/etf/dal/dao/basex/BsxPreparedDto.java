@@ -52,8 +52,7 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 	public T getDto() {
 		if (cachedDto == null) {
 
-			// TODO reactivate
-			// cachedDto = (T) ctx.getFromCache(id);
+			// cachedDto = (T) bsXquery.getCtx().getFromCache(id);
 
 			if (cachedDto == null) {
 				try {

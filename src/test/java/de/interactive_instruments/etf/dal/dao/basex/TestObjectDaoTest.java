@@ -362,7 +362,7 @@ public class TestObjectDaoTest {
 		// Check for identical ID, same label and referencedBy property
 		assertEquals(BsxTestUtil.TO_DTO_1.getId(), preparedOldDto.getDto().getId());
 		assertEquals(originalLabel, preparedOldDto.getDto().getLabel());
-		assertFalse("NEW LABEL".equals(preparedOldDto.getDto().getLabel()));
+		assertNotEquals("NEW LABEL", preparedOldDto.getDto().getLabel());
 		assertNotNull(preparedOldDto.getDto().getReplacedBy());
 		assertEquals(newDto.getId(), preparedOldDto.getDto().getReplacedBy().getId());
 

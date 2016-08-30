@@ -47,7 +47,9 @@ public final class LazyLoadProxyDto {
 
 	@RuntimeType
 	public Object intercept(@Origin Method method, @AllArguments Object[] args) {
-		logger.trace("Intercepted {} method call", method.getName());
+		if(logger.isTraceEnabled()) {
+			logger.trace("({}) Intercepted {} method call", eid, method.getName());
+		}
 		if (cached == null) {
 			if (eid == null) {
 				throw new IllegalStateException("Eid not set");
@@ -59,7 +61,13 @@ public final class LazyLoadProxyDto {
 			}
 		}
 		try {
-			return method.invoke(cached, args);
+			if(!logger.isTraceEnabled()) {
+				return method.invoke(cached, args);
+			}else{
+				final Object ret = method.invoke(cached, args);
+				logger.trace("Return value: {}", ret);
+				return ret;
+			}
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new IllegalStateException("Unable to proxy Dto " + eid + " method call", e);
 		}

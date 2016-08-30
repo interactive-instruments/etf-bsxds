@@ -256,13 +256,13 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 
 	protected final void fireEvent(WriteDaoListener.EventType eventType, Dto... dtos) {
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, dtos);
+			//TODO listeners.get(i).writeOperationPerformed(eventType, dtos);
 		}
 	}
 
 	protected final void fireEvent(WriteDaoListener.EventType eventType, EID... ids) {
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, ids);
+			//TODO listeners.get(i).writeOperationPerformed(eventType, ids);
 		}
 	}
 

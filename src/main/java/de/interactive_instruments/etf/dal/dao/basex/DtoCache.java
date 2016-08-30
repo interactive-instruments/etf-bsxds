@@ -46,7 +46,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-class DtoCache implements WriteDaoListener {
+class DtoCache /*implements WriteDaoListener*/ {
 
 	private final Logger logger = LoggerFactory.getLogger(DtoCache.class);
 
@@ -168,6 +168,9 @@ class DtoCache implements WriteDaoListener {
 		return new ContextIdResolver(dtoCache, bsxDsCtx, logger);
 	}
 
+	/*
+	TODO
+
 	@Override
 	public void writeOperationPerformed(final EventType event, final EID... ids) {
 		if (event == EventType.DELETE || event == EventType.UPDATE) {
@@ -185,6 +188,7 @@ class DtoCache implements WriteDaoListener {
 			}
 		}
 	}
+	*/
 
 	/**
 	 * Used by BsxPreparedDto
