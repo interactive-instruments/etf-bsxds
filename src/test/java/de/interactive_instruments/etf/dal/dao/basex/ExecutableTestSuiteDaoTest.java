@@ -29,11 +29,10 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
-import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
@@ -175,5 +174,51 @@ public class ExecutableTestSuiteDaoTest {
 
 		assertEquals(id.getId(), etsId.getId().getId());
 
+	}
+
+	@Test
+	public void test_8_0_caching_references() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+		BsxTestUtil.forceDeleteAndAdd(ETS_DTO_1, true);
+		BsxTestUtil.forceDeleteAndAdd(ETS_DTO_2, true);
+
+		getAndCheckCollection();
+		getAndCheckCollection();
+
+		// force cache invalidation
+		BsxTestUtil.forceDeleteAndAdd(TAG_DTO_1, false);
+		BsxTestUtil.forceDeleteAndAdd(TAG_DTO_2, false);
+
+		getAndCheckCollection();
+		getAndCheckCollection();
+
+	}
+
+	private void getAndCheckCollection() throws StorageException {
+		final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getAll(new Filter() {
+			@Override
+			public int offset() {
+				return 0;
+			}
+
+			@Override
+			public int limit() {
+				return 3;
+			}
+		});
+		assertNotNull(etsCollection);
+
+		assertEquals(2, etsCollection.size());
+
+		assertNotNull(etsCollection.get(ETS_DTO_1.getId()));
+		assertNotNull(etsCollection.get(ETS_DTO_1.getId()).getTags());
+		assertEquals(2, etsCollection.get(ETS_DTO_1.getId()).getTags().size());
+		assertEquals(TAG_DTO_1.getId(), etsCollection.get(ETS_DTO_1.getId()).getTags().get(0).getId());
+		assertEquals(TAG_DTO_2.getId(), etsCollection.get(ETS_DTO_1.getId()).getTags().get(1).getId());
+
+		assertNotNull(etsCollection.get(ETS_DTO_2.getId()));
+		assertNotNull(etsCollection.get(ETS_DTO_2.getId()).getTags());
+		assertEquals(2, etsCollection.get(ETS_DTO_2.getId()).getTags().size());
+		assertEquals(TAG_DTO_2.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(0).getId());
+		assertEquals(TAG_DTO_3.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(1).getId());
 	}
 }

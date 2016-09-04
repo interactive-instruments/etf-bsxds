@@ -15,11 +15,9 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
@@ -46,7 +44,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-class DtoCache /*implements WriteDaoListener*/ {
+class DtoCache implements WriteDaoListener {
 
 	private final Logger logger = LoggerFactory.getLogger(DtoCache.class);
 
@@ -168,27 +166,42 @@ class DtoCache /*implements WriteDaoListener*/ {
 		return new ContextIdResolver(dtoCache, bsxDsCtx, logger);
 	}
 
-	/*
-	TODO
-
 	@Override
-	public void writeOperationPerformed(final EventType event, final EID... ids) {
+	public void writeOperationPerformed(WriteDaoListener.EventType event, EID id) {
 		if (event == EventType.DELETE || event == EventType.UPDATE) {
-			dtoCache.invalidateAll((Iterable<?>) Arrays.stream(ids).map(EID::getId).iterator());
+			dtoCache.invalidate(id);
 		}
 	}
 
 	@Override
-	public void writeOperationPerformed(final EventType event, final Dto... dtos) {
+	public void writeOperationPerformed(final EventType event, final Set<EID> ids) {
+		if (event == EventType.DELETE || event == EventType.UPDATE) {
+			dtoCache.invalidateAll(ids);
+		}
+	}
+
+	@Override
+	public void writeOperationPerformed(WriteDaoListener.EventType event, Dto dto) {
+		if (event == EventType.DELETE || event == EventType.UPDATE) {
+			dtoCache.invalidate(dto.getId().getId());
+		}
+	}
+
+	@Override
+	public void writeOperationPerformed(final EventType event, final Collection<? extends Dto> dtos) {
 		if (event == EventType.DELETE) {
-			dtoCache.invalidateAll((Iterable<?>) Arrays.stream(dtos).map(d -> d.getId().getId()).iterator());
+			final List<String> ids = dtos.stream().map(dto -> dto.getId().getId()).collect(Collectors.toList());
+			dtoCache.invalidateAll(ids);
 		} else if (event == EventType.UPDATE) {
+			/*
 			for (final Dto dto : dtos) {
 				dtoCache.put(dto.getId().getId(), dto);
 			}
+			*/
+			final List<String> ids = dtos.stream().map(dto -> dto.getId().getId()).collect(Collectors.toList());
+			dtoCache.invalidateAll(ids);
 		}
 	}
-	*/
 
 	/**
 	 * Used by BsxPreparedDto

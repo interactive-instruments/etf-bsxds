@@ -166,6 +166,12 @@ class BsxTestUtil {
 		ETS_DTO_1 = new ExecutableTestSuiteDto();
 		ETS_DTO_1.setTranslationTemplateBundle(TTB_DTO_1);
 		ETS_DTO_1.setParameters(parameterSet);
+		ETS_DTO_1.setTags(new ArrayList<TagDto>() {
+			{
+				add(TAG_DTO_1);
+				add(TAG_DTO_2);
+			}
+		});
 		createEtsStructure(ETS_DTO_1, 1);
 
 		TTR_DTO_1 = new TestTaskResultDto();
@@ -180,6 +186,12 @@ class BsxTestUtil {
 		ETS_DTO_2 = new ExecutableTestSuiteDto();
 		ETS_DTO_2.setTranslationTemplateBundle(TTB_DTO_1);
 		ETS_DTO_2.setParameters(parameterSet);
+		ETS_DTO_2.setTags(new ArrayList<TagDto>() {
+			{
+				add(TAG_DTO_2);
+				add(TAG_DTO_3);
+			}
+		});
 		createEtsStructure(ETS_DTO_2, 2);
 
 		TTR_DTO_2 = new TestTaskResultDto();
@@ -430,7 +442,7 @@ class BsxTestUtil {
 		forceDelete(dao, dto.getId());
 		assertFalse(dao.exists(dto.getId()));
 		try {
-			((WriteDao) dao).add(dto);
+			dao.add(dto);
 		} catch (StorageException e) {
 			ExcUtils.suppress(e);
 		}

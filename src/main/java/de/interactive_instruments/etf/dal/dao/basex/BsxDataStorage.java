@@ -16,8 +16,11 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static net.bytebuddy.matcher.ElementMatchers.any;
+import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
+import static net.bytebuddy.matcher.ElementMatchers.not;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.List;
@@ -32,7 +35,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.FieldAccessor;
 import net.bytebuddy.implementation.MethodDelegation;
 
 import org.basex.BaseX;
@@ -55,6 +60,7 @@ import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.EtfConstants;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.DataStorage;
+import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
@@ -227,7 +233,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				initLazyDtoProxies();
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
-			} catch (TransformerConfigurationException | JAXBException | IOException | StorageException e) {
+			} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | TransformerConfigurationException | JAXBException | IOException | StorageException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -240,9 +246,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		String versionNumber = "unknown";
 		try {
 			final Class versionClass = Class.forName("org.apache.xerces.impl.Version");
-			try{
+			try {
 				logger.trace("Xerces path: {}", versionClass.getProtectionDomain().getCodeSource().getLocation());
-			}catch (Exception e) {
+			} catch (Exception e) {
 				ExcUtils.suppress(e);
 			}
 			final Method method = versionClass.getMethod("getVersion", (Class[]) null);
@@ -288,7 +294,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	}
 
 	private void initDaosAndMoxyDtoMapping() throws StorageException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException, InvalidStateTransitionException, InitializationException {
-		final Map<Class<? extends Dto>, Dao<? extends Dto>> tmpDaoMapping = new HashMap<>();
+		final Map<Class<? extends Dto>, WriteDao<? extends Dto>> tmpDaoMapping = new HashMap<>();
 		tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
 		tmpDaoMapping.put(TestObjectTypeDto.class, new TestObjectTypeDao(this));
 		tmpDaoMapping.put(TestRunDto.class, new TestRunDao(this));
@@ -301,8 +307,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		tmpDaoMapping.put(TestTaskDto.class, new TestTaskDao(this));
 
 		// Configure and init
-		for (final Dao<? extends Dto> dao : tmpDaoMapping.values()) {
+		for (final WriteDao<? extends Dto> dao : tmpDaoMapping.values()) {
 			dao.getConfigurationProperties().setPropertiesFrom(configProperties, true);
+			dao.registerListener(dtoCache);
 			dao.init();
 		}
 
@@ -634,7 +641,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Note: the member variables of these proxy classes are never accessed, so avoid access
 	 * via reflection!
 	 */
-	private final void initLazyDtoProxies() {
+	private final void initLazyDtoProxies() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		for (final Map.Entry<Class<? extends Dto>, Dao<? extends Dto>> classDaoEntry : daoMapping.entrySet()) {
 			final Class<? extends Dto> classType = classDaoEntry.getKey();
 			if (!dtoLazyLoadProxies.containsKey(classType)) {
@@ -642,7 +649,10 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				final Class<? extends Dto> proxy = new ByteBuddy()
 						.subclass(classType)
 						.name(classType.getName() + "Proxy")
-						.method(any()).intercept(MethodDelegation.to(new LazyLoadProxyDto(classDaoEntry.getValue(), logger)))
+						.defineField("cached", Dto.class, Visibility.PRIVATE)
+						.defineField("proxiedId", EID.class, Visibility.PRIVATE)
+						.implement(ProxyAccessor.class).intercept(FieldAccessor.ofBeanProperty())
+						.method(any().and(not(isDeclaredBy(ProxyAccessor.class)))).intercept(MethodDelegation.to(new LazyLoadProxyDto(classDaoEntry.getValue(), logger)))
 						.make()
 						.load(classType.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
 						.getLoaded();
@@ -661,7 +671,10 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				final Class<? extends Dto> proxy = new ByteBuddy()
 						.subclass(classType)
 						.name(classType.getName() + "CacheAccess")
-						.method(any()).intercept(MethodDelegation.to(new CacheAccessProxyDto(this, logger)))
+						.defineField("cached", Dto.class, Visibility.PRIVATE)
+						.defineField("proxiedId", EID.class, Visibility.PRIVATE)
+						.implement(ProxyAccessor.class).intercept(FieldAccessor.ofBeanProperty())
+						.method(any().and(not(isDeclaredBy(ProxyAccessor.class)))).intercept(MethodDelegation.to(new CacheAccessProxyDto(this, logger)))
 						.make()
 						.load(classType.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
 						.getLoaded();
@@ -685,9 +698,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			final Class<? extends Dto> cacheAccessProxy = dtoCacheAccessProxies.get(type);
 			if (cacheAccessProxy != null) {
 				try {
-					final Dto dto;
-					dto = dtoCacheAccessProxies.get(type).newInstance();
-					dto.setId(eid);
+					final Dto dto = cacheAccessProxy.newInstance();
+					((ProxyAccessor) dto).setProxiedId(eid);
 					return dto;
 				} catch (InstantiationException | IllegalAccessException e) {
 					throw new IllegalArgumentException("Could not initiate cache access proxy: " + e);
@@ -702,9 +714,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 
 		try {
-			final Dto dto;
-			dto = dtoLazyLoadProxies.get(type).newInstance();
-			dto.setId(eid);
+			final Dto dto = dtoLazyLoadProxies.get(type).newInstance();
+			((ProxyAccessor) dto).setProxiedId(eid);
 			return dto;
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalArgumentException("Could not initiate Dto proxy: " + e);

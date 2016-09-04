@@ -18,18 +18,11 @@ package de.interactive_instruments.etf.dal.dao.basex;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.bytebuddy.implementation.bind.annotation.AllArguments;
-import net.bytebuddy.implementation.bind.annotation.Argument;
-import net.bytebuddy.implementation.bind.annotation.Origin;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.*;
 
 import org.slf4j.Logger;
 
-import de.interactive_instruments.etf.dal.dao.Dao;
-import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Cache access proxy for Dtos
@@ -40,8 +33,6 @@ public final class CacheAccessProxyDto {
 
 	private final BsxDsCtx ctx;
 	private final Logger logger;
-	private Dto cached;
-	private EID eid;
 
 	CacheAccessProxyDto(final BsxDsCtx ctx, final Logger logger) {
 		this.ctx = ctx;
@@ -49,49 +40,44 @@ public final class CacheAccessProxyDto {
 	}
 
 	@RuntimeType
-	public Object intercept(@Origin Method method, @AllArguments Object[] args) {
+	public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
 		logger.trace("Intercepted {} method call", method.getName());
-		if (cached == null) {
-			if (eid == null) {
+		if (proxy.getCached() == null) {
+			if (proxy.getProxiedId() == null) {
 				throw new IllegalStateException("Eid not set");
 			}
-			cached = ctx.getFromCache(eid);
-			if (cached == null) {
-				throw new IllegalStateException("Unable to load cached Dto " + eid + " ! "
+			proxy.setCached(ctx.getFromCache(proxy.getProxiedId()));
+			if (proxy.getCached() == null) {
+				throw new IllegalStateException("Unable to load cached Dto " + proxy.getProxiedId() + " ! "
 						+ "This may happen if the root object of this reference is not loaded!");
 			}
 		}
 		try {
-			return method.invoke(cached, args);
+			return method.invoke(proxy.getCached(), args);
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new IllegalStateException("Unable to proxy Dto " + eid + " method call", e);
+			throw new IllegalStateException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
 		}
 	}
 
 	@RuntimeType
-	public void setId(@Argument(0) EID eid) {
-		this.eid = eid;
-		if (cached != null) {
-			cached.setId(eid);
+	public EID getId(@This ProxyAccessor proxy) {
+		if (proxy.getCached() != null) {
+			return proxy.getCached().getId();
 		}
+		return proxy.getProxiedId();
 	}
 
 	@RuntimeType
-	public EID getId() {
-		return this.eid;
+	public String getDescriptiveLabel(@This ProxyAccessor proxy) {
+		return "\'CACHEACCESS." + proxy.getProxiedId() + "\'";
 	}
 
 	@RuntimeType
-	public String getDescriptiveLabel() {
-		return "\'CACHEACCESS." + eid + "\'";
-	}
-
-	@RuntimeType
-	public String toString() {
-		final StringBuffer sb = new StringBuffer("CacheAccessProxy{");
-		sb.append("id=").append(eid).append(", proxies=");
-		if (cached != null) {
-			sb.append(cached.toString());
+	public String toString(@This ProxyAccessor proxy) {
+		final StringBuilder sb = new StringBuilder("CacheAccessProxy{");
+		sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
+		if (proxy.getCached() != null) {
+			sb.append(proxy.getCached().toString());
 		} else {
 			sb.append("UNRESOLVED");
 		}

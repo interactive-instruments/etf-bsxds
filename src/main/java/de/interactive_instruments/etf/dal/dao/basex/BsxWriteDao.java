@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -132,7 +133,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 		} catch (BaseXException e) {
 			throw new StoreException(e);
 		}
-		fireEvent(WriteDaoListener.EventType.ADD, colArr);
+		fireEvent(WriteDaoListener.EventType.ADD, collection);
 	}
 
 	protected byte[] createHash(final String str) {
@@ -211,7 +212,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 		for (final T dto : collection) {
 			updatedDtos.add(doUpdate(dto));
 		}
-		fireEvent(WriteDaoListener.EventType.UPDATE, updatedDtos.toArray(new Dto[updatedDtos.size()]));
+		fireEvent(WriteDaoListener.EventType.UPDATE, updatedDtos);
 		return updatedDtos;
 	}
 
@@ -246,23 +247,35 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	protected abstract void doCleanAfterDelete(final EID eid) throws BaseXException;
 
 	@Override
-	public final void deleteAll(final Collection<EID> collection) throws StorageException, ObjectWithIdNotFoundException {
+	public final void deleteAll(final Set<EID> collection) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
 		for (final EID eid : collection) {
 			doDelete(eid, true);
 		}
-		fireEvent(WriteDaoListener.EventType.DELETE, collection.toArray(new EID[collection.size()]));
+		fireEvent(WriteDaoListener.EventType.DELETE, collection);
 	}
 
-	protected final void fireEvent(WriteDaoListener.EventType eventType, Dto... dtos) {
+	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Dto dto) {
 		for (int i = 0; i < listeners.size(); i++) {
-			//TODO listeners.get(i).writeOperationPerformed(eventType, dtos);
+			listeners.get(i).writeOperationPerformed(eventType, dto);
 		}
 	}
 
-	protected final void fireEvent(WriteDaoListener.EventType eventType, EID... ids) {
+	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Collection<? extends Dto> dtos) {
 		for (int i = 0; i < listeners.size(); i++) {
-			//TODO listeners.get(i).writeOperationPerformed(eventType, ids);
+			listeners.get(i).writeOperationPerformed(eventType, dtos);
+		}
+	}
+
+	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Set<EID> ids) {
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).writeOperationPerformed(eventType, ids);
+		}
+	}
+
+	protected final void fireEvent(final WriteDaoListener.EventType eventType, final EID id) {
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).writeOperationPerformed(eventType, id);
 		}
 	}
 

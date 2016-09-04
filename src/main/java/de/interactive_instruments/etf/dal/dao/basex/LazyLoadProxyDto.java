@@ -23,7 +23,6 @@ import net.bytebuddy.implementation.bind.annotation.*;
 import org.slf4j.Logger;
 
 import de.interactive_instruments.etf.dal.dao.Dao;
-import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
@@ -37,8 +36,6 @@ public final class LazyLoadProxyDto {
 
 	private final Dao dao;
 	private final Logger logger;
-	private Dto cached;
-	private EID eid;
 
 	LazyLoadProxyDto(final Dao dao, final Logger logger) {
 		this.dao = dao;
@@ -46,57 +43,52 @@ public final class LazyLoadProxyDto {
 	}
 
 	@RuntimeType
-	public Object intercept(@Origin Method method, @AllArguments Object[] args) {
-		if(logger.isTraceEnabled()) {
-			logger.trace("({}) Intercepted {} method call", eid, method.getName());
+	public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
+		if (logger.isTraceEnabled()) {
+			logger.trace("({}) Intercepted {} method call", proxy.getProxiedId(), method.getName());
 		}
-		if (cached == null) {
-			if (eid == null) {
+		if (proxy.getCached() == null) {
+			if (proxy.getProxiedId() == null) {
 				throw new IllegalStateException("Eid not set");
 			}
 			try {
-				cached = dao.getById(eid).getDto();
+				proxy.setCached(dao.getById(proxy.getProxiedId()).getDto());
 			} catch (StorageException | ObjectWithIdNotFoundException e) {
-				throw new IllegalStateException("Unable to load proxied Dto " + eid, e);
+				throw new IllegalStateException("Unable to load proxied Dto " + proxy.getProxiedId(), e);
 			}
 		}
 		try {
-			if(!logger.isTraceEnabled()) {
-				return method.invoke(cached, args);
-			}else{
-				final Object ret = method.invoke(cached, args);
+			if (!logger.isTraceEnabled()) {
+				return method.invoke(proxy.getCached(), args);
+			} else {
+				final Object ret = method.invoke(proxy.getCached(), args);
 				logger.trace("Return value: {}", ret);
 				return ret;
 			}
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new IllegalStateException("Unable to proxy Dto " + eid + " method call", e);
+			throw new IllegalStateException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
 		}
 	}
 
 	@RuntimeType
-	public void setId(@Argument(0) EID eid) {
-		this.eid = eid;
-		if (cached != null) {
-			cached.setId(eid);
+	public EID getId(@This ProxyAccessor proxy) {
+		if (proxy.getCached() != null) {
+			return proxy.getCached().getId();
 		}
+		return proxy.getProxiedId();
 	}
 
 	@RuntimeType
-	public EID getId() {
-		return this.eid;
+	public String getDescriptiveLabel(@This ProxyAccessor proxy) {
+		return "\'LAZY." + proxy.getProxiedId() + "\'";
 	}
 
 	@RuntimeType
-	public String getDescriptiveLabel() {
-		return "\'LAZY." + eid + "\'";
-	}
-
-	@RuntimeType
-	public String toString() {
-		final StringBuffer sb = new StringBuffer("LazyDtoProxy{");
-		sb.append("id=").append(eid).append(", proxies=");
-		if (cached != null) {
-			sb.append(cached.toString());
+	public String toString(@This ProxyAccessor proxy) {
+		final StringBuilder sb = new StringBuilder("LazyDtoProxy{");
+		sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
+		if (proxy.getCached() != null) {
+			sb.append(proxy.getCached().toString());
 		} else {
 			sb.append("UNRESOLVED");
 		}
