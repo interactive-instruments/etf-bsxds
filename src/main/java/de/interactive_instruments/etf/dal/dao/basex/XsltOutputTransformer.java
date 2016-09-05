@@ -15,9 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -25,6 +23,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import de.interactive_instruments.SUtils;
+import de.interactive_instruments.exceptions.ExcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,10 +99,23 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		}
 
 		public Source resolve(final String ref, final String base) {
-			final ClassLoader cL = getClass().getClassLoader();
-			final InputStream is = cL.getResourceAsStream(
-					this.xsltBase + "/" + ref);
-			return new StreamSource(is, this.xsltBase + "/" + ref);
+			if(SUtils.isNullOrEmpty(base)) {
+				final IFile file = new IFile(ref);
+				if(file.isAbsolute()) {
+					try {
+						return new StreamSource(new FileInputStream(file), file.getPath());
+					} catch (FileNotFoundException e) {
+						ExcUtils.suppress(e);
+					}
+				}
+				// can not be resolved without base or failed to create file stream
+				return null;
+			}else {
+				final ClassLoader cL = getClass().getClassLoader();
+				final InputStream is = cL.getResourceAsStream(
+						this.xsltBase + "/" + ref);
+				return new StreamSource(is, this.xsltBase + "/" + ref);
+			}
 		}
 	}
 
