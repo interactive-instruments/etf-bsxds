@@ -1301,6 +1301,14 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>priority</attribute-name>
+               <field name="etf:priority/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
          <caching>

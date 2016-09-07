@@ -75,6 +75,14 @@
          </xml-field-pairs>
       </mapping>
       <mapping type="xml-direct">
+         <name>priority</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</attribute-declaring-type-name>
+            <attribute-name>priority</attribute-name>
+         </attribute-handle>
+         <xml-field>etf:priority/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
          <name>reference</name>
          <inherited>true</inherited>
          <attribute-handle>

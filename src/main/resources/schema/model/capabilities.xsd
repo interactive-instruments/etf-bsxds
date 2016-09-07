@@ -4,8 +4,7 @@
     targetNamespace="http://www.interactive-instruments.de/etf/2.0"
     xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
     xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0"
-    elementFormDefault="qualified"
-    version="1.0">
+    elementFormDefault="qualified" version="1.0">
 
     <xs:annotation>
         <!-- Author: Jon Herrmann (interactive instruments) -->
@@ -177,6 +176,12 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:group ref="MetaDataItemGroup"/>
+                <xs:element name="priority" type="xs:nonNegativeInteger	" default="64">
+                    <xs:annotation>
+                        <xs:documentation>Multiple Tags are ordered by their priority property and
+                            thereupon by their label</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
         </xs:complexType>

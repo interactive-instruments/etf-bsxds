@@ -2933,6 +2933,15 @@
                                  </particle>
                               </particles>
                            </particle>
+                           <particle type="element">
+                              <name>priority</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="simple-type-ref">
+                                 <name>nonNegativeInteger</name>
+                                 <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                              </type>
+                              <default-value>64</default-value>
+                           </particle>
                         </particles>
                      </particle>
                   </content>
