@@ -103,7 +103,7 @@
 							<xsl:call-template name="controls"/>
 						</div>
 					</div>
-					<xsl:apply-templates select="$testTasks[1]/etf:ArgumentList[1]"/>
+					<xsl:apply-templates select="$testTasks[1]//etf:ArgumentList[1]"/>
 					<!-- Test object -->
 					<xsl:apply-templates select="$testObjects"/>
 					<!-- Additional statistics provided by the test project -->
@@ -1226,17 +1226,16 @@
 					select="$templateId"/> not found</xsl:message>
 		</xsl:if>
 		<xsl:value-of
-			select="concat(etf:replace-multi-tokens($str, $translationArguments[1]/etf:argument/@token, $translationArguments[1]/etf:argument/text()), '&#13;&#10;')"
+			select="concat(etf:replace-multi-tokens($str, $translationArguments[1]/etf:argument), '&#13;&#10;')"
 		/>
 	</xsl:template>
 	<xsl:function name="etf:replace-multi-tokens" as="xs:string?">
 		<xsl:param name="arg" as="xs:string?"/>
-		<xsl:param name="changeFrom" as="xs:string*"/>
-		<xsl:param name="changeTo" as="xs:string*"/>
+		<xsl:param name="arguments" as="element()*"/>
 		<xsl:sequence
 			select="
-				if (count($changeFrom) &gt; 0) then
-					etf:replace-multi-tokens(replace($arg, concat('\{', $changeFrom[1], '\}'), etf:if-absent($changeTo[1], '')), $changeFrom[position() &gt; 1], $changeTo[position() &gt; 1])
+				if (count($arguments) &gt; 0) then
+					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), etf:if-absent($arguments[1]/text(), '')), $arguments[position() &gt; 1])
 				else
 					$arg"
 		/>
