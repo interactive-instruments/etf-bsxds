@@ -75,7 +75,7 @@
 		<x:e key="FeatureType">Feature Type</x:e>
 		<x:e key="FeatureCount">Feature Count</x:e>
 		<x:e key="LogFile">Log file</x:e>
-		<x:e key="Log">Test run log URI</x:e>
+		<x:e key="Log">Log URI</x:e>
 		<x:e key="LogLink">Link</x:e>
 	</x:lang>
 	<x:lang xml:lang="de">
@@ -153,7 +153,7 @@
 		<x:e key="FeatureType">Objektart</x:e>
 		<x:e key="FeatureCount">Anzahl Objekte</x:e>
 		<x:e key="LogFile">Logdatei</x:e>
-		<x:e key="Log">Testlauf Protokoll-URI</x:e>
+		<x:e key="Log">Protokoll-URI</x:e>
 		<x:e key="LogLink">Link</x:e>
 	</x:lang>
 </x:ui-text-elements>
