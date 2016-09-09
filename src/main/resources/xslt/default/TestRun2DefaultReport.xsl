@@ -168,7 +168,7 @@
 					<td>
 						<xsl:call-template name="formatDuration">
 							<xsl:with-param name="ms"
-								select="$testTaskResults/etf:duration[1]/text()"/>
+								select="sum($testTaskResults/etf:duration)"/>
 						</xsl:call-template>
 					</td>
 				</tr>
