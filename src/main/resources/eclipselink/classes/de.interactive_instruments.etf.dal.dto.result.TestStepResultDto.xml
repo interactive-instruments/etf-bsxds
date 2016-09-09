@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.91+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-09-08T09:42:46.096+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDtoHolder</type-name>
@@ -27,6 +27,20 @@
          <name>TestStepResultDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>TestStepResultDto</name>
+         <constructor>true</constructor>
+         <modifier>2</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>addAttachment</name>
@@ -63,6 +77,15 @@
                </type-declaration>
             </method-parameter>
          </method-parameters>
+      </method>
+      <method>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>getAttachments</name>

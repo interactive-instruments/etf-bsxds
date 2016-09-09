@@ -1303,7 +1303,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>priority</attribute-name>
-               <field name="etf:priority/text()" xsi:type="node"/>
+               <field name="priority/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -1492,6 +1492,14 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>messages</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</reference-class>
+               <field name="messages/message" xsi:type="node"/>
+               <container xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </container>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
@@ -1505,13 +1513,18 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>resultStatus</attribute-name>
-               <field name="status/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>resultedFrom</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestAssertionDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="resultedFrom/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>startTimestamp</attribute-name>
@@ -1531,26 +1544,13 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>resultedFrom</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestAssertionDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="resultedFrom/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>messages</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</reference-class>
-               <field name="messages/message" xsi:type="node"/>
-               <container xsi:type="list-container-policy">
-                  <collection-type>java.util.Vector</collection-type>
-               </container>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>resultStatus</attribute-name>
+               <field name="status/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -1715,6 +1715,15 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>children</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</reference-class>
+               <field name="testStepResults/TestStepResult" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</reference-class>
@@ -1728,13 +1737,18 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>resultStatus</attribute-name>
-               <field name="status/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>resultedFrom</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="resultedFrom/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>startTimestamp</attribute-name>
@@ -1754,27 +1768,13 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>resultedFrom</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="resultedFrom/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>children</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</reference-class>
-               <field name="testStepResults/TestStepResult" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>resultStatus</attribute-name>
+               <field name="status/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -1996,6 +1996,15 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>children</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</reference-class>
+               <field name="testCaseResults/TestCaseResult" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</reference-class>
@@ -2009,13 +2018,18 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>resultStatus</attribute-name>
-               <field name="status/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>resultedFrom</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="resultedFrom/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>startTimestamp</attribute-name>
@@ -2035,27 +2049,13 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>resultedFrom</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="resultedFrom/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>children</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</reference-class>
-               <field name="testCaseResults/TestCaseResult" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>resultStatus</attribute-name>
+               <field name="status/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -2641,6 +2641,32 @@
                   </field-transformation>
                </field-transformations>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>children</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</reference-class>
+               <field name="testAssertionResults/TestAssertionResult" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-collection-reference-mapping">
+               <attribute-name>attachments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="attachment/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="attachment/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
+               <containerpolicy xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </containerpolicy>
+               <uses-single-node>false</uses-single-node>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</reference-class>
@@ -2654,13 +2680,18 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>resultStatus</attribute-name>
-               <field name="status/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>resultedFrom</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="resultedFrom/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>startTimestamp</attribute-name>
@@ -2680,44 +2711,13 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>resultedFrom</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.TestStepDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="resultedFrom/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-collection-reference-mapping">
-               <attribute-name>attachments</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="attachment/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="attachment/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-               <containerpolicy xsi:type="list-container-policy">
-                  <collection-type>java.util.Vector</collection-type>
-               </containerpolicy>
-               <uses-single-node>false</uses-single-node>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>children</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</reference-class>
-               <field name="testAssertionResults/TestAssertionResult" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>resultStatus</attribute-name>
+               <field name="status/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -2877,6 +2877,37 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>testObject</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="testObject/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="testObject/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>children</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</reference-class>
+               <field name="testModuleResults/TestModuleResult" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>attachments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
+               <field name="attachments/Attachment" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.run.TestTaskDto</reference-class>
                <source-to-target-key-field-association>
@@ -2889,15 +2920,18 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>resultStatus</attribute-name>
-               <field name="status/text()" xsi:type="node">
-                  <typed-text-field>true</typed-text-field>
-               </field>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>resultedFrom</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="resultedFrom/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>startTimestamp</attribute-name>
@@ -2917,49 +2951,15 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>resultedFrom</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="resultedFrom/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="resultedFrom/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-object-reference-mapping">
-               <attribute-name>testObject</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</reference-class>
-               <source-to-target-key-field-association>
-                  <field-reference>
-                     <source-field name="testObject/@ref" xsi:type="node"/>
-                     <target-field name="@id" xsi:type="node"/>
-                  </field-reference>
-               </source-to-target-key-field-association>
-               <source-to-target-key-fields>
-                  <field name="testObject/@ref" xsi:type="node"/>
-               </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>attachments</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
-               <field name="attachments/Attachment" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>children</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</reference-class>
-               <field name="testModuleResults/TestModuleResult" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>resultStatus</attribute-name>
+               <field name="status/text()" xsi:type="node">
+                  <typed-text-field>true</typed-text-field>
+               </field>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>

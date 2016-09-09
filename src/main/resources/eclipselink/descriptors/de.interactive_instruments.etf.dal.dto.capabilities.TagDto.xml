@@ -80,7 +80,7 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</attribute-declaring-type-name>
             <attribute-name>priority</attribute-name>
          </attribute-handle>
-         <xml-field>etf:priority/text()</xml-field>
+         <xml-field>priority/text()</xml-field>
       </mapping>
       <mapping type="xml-direct">
          <name>reference</name>

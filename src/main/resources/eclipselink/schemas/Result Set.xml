@@ -3114,55 +3114,6 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle compositor="sequence" type="model-group">
-                                    <particles>
-                                       <particle type="element">
-                                          <name>parent</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          <type type="complex-type-ref">
-                                             <name>RefType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </type>
-                                          <min-occurs>0</min-occurs>
-                                       </particle>
-                                    </particles>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>status</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>TestResultStatusType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>startTimestamp</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>dateTime</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>duration</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>unsignedLong</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>resultedFrom</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                              </particles>
-                           </particle>
                            <particle type="element-ref">
                               <name>ArgumentList</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -3197,6 +3148,55 @@
                                  </content>
                               </type>
                               <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                         </particles>
                      </particle>
@@ -3371,55 +3371,6 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle compositor="sequence" type="model-group">
-                                    <particles>
-                                       <particle type="element">
-                                          <name>parent</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          <type type="complex-type-ref">
-                                             <name>RefType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </type>
-                                          <min-occurs>0</min-occurs>
-                                       </particle>
-                                    </particles>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>status</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>TestResultStatusType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>startTimestamp</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>dateTime</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>duration</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>unsignedLong</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>resultedFrom</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                              </particles>
-                           </particle>
                            <particle type="element-ref">
                               <name>ArgumentList</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -3449,6 +3400,55 @@
                                     </particle>
                                  </content>
                               </type>
+                           </particle>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                         </particles>
                      </particle>
@@ -3682,55 +3682,6 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle compositor="sequence" type="model-group">
-                                    <particles>
-                                       <particle type="element">
-                                          <name>parent</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          <type type="complex-type-ref">
-                                             <name>RefType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </type>
-                                          <min-occurs>0</min-occurs>
-                                       </particle>
-                                    </particles>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>status</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>TestResultStatusType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>startTimestamp</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>dateTime</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>duration</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>unsignedLong</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>resultedFrom</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                              </particles>
-                           </particle>
                            <particle type="element">
                               <name>testCaseResults</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -3755,6 +3706,55 @@
                                     </particle>
                                  </content>
                               </type>
+                           </particle>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                         </particles>
                      </particle>
@@ -4716,63 +4716,30 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle compositor="sequence" type="model-group">
-                                    <particles>
-                                       <particle type="element">
-                                          <name>parent</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          <type type="complex-type-ref">
-                                             <name>RefType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </type>
-                                          <min-occurs>0</min-occurs>
-                                       </particle>
-                                    </particles>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>status</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>TestResultStatusType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>startTimestamp</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>dateTime</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>duration</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>unsignedLong</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>resultedFrom</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                              </particles>
-                           </particle>
                            <particle type="element">
-                              <name>attachment</name>
+                              <name>testAssertionResults</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <type type="complex-type-ref">
-                                 <name>RefType</name>
+                              <type type="complex-type">
                                  <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <max-occurs>2147483640</max-occurs>
+                                       <particles>
+                                          <particle type="element-ref">
+                                             <name>TestAssertionResult</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
                               </type>
-                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>messages</name>
@@ -4805,29 +4772,62 @@
                               <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
-                              <name>testAssertionResults</name>
+                              <name>attachment</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <type type="complex-type">
+                              <type type="complex-type-ref">
+                                 <name>RefType</name>
                                  <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                 <abstract>false</abstract>
-                                 <derivation-method>restriction</derivation-method>
-                                 <base-type type="complex-type-ref">
-                                    <name>anyType</name>
-                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                 </base-type>
-                                 <content type="complex">
-                                    <mixed-flag>false</mixed-flag>
-                                    <particle compositor="sequence" type="model-group">
-                                       <max-occurs>2147483640</max-occurs>
-                                       <particles>
-                                          <particle type="element-ref">
-                                             <name>TestAssertionResult</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </particle>
-                                       </particles>
-                                    </particle>
-                                 </content>
                               </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                         </particles>
                      </particle>
@@ -4945,61 +4945,37 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle compositor="sequence" type="model-group">
-                              <particles>
-                                 <particle compositor="sequence" type="model-group">
-                                    <particles>
-                                       <particle type="element">
-                                          <name>parent</name>
-                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          <type type="complex-type-ref">
-                                             <name>RefType</name>
-                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </type>
-                                          <min-occurs>0</min-occurs>
-                                       </particle>
-                                    </particles>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>status</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>TestResultStatusType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>startTimestamp</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>dateTime</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>duration</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="simple-type-ref">
-                                       <name>unsignedLong</name>
-                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                    </type>
-                                 </particle>
-                                 <particle type="element">
-                                    <name>resultedFrom</name>
-                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    <type type="complex-type-ref">
-                                       <name>RefType</name>
-                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                    </type>
-                                 </particle>
-                              </particles>
-                           </particle>
                            <particle type="element">
                               <name>testObject</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                               <type type="complex-type-ref">
                                  <name>RefType</name>
                                  <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              </type>
+                           </particle>
+                           <particle type="element">
+                              <name>testModuleResults</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <max-occurs>2147483640</max-occurs>
+                                       <particles>
+                                          <particle type="element-ref">
+                                             <name>TestModuleResult</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
                               </type>
                            </particle>
                            <particle type="element">
@@ -5027,30 +5003,54 @@
                                  </content>
                               </type>
                            </particle>
-                           <particle type="element">
-                              <name>testModuleResults</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <type type="complex-type">
-                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                 <abstract>false</abstract>
-                                 <derivation-method>restriction</derivation-method>
-                                 <base-type type="complex-type-ref">
-                                    <name>anyType</name>
-                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                 </base-type>
-                                 <content type="complex">
-                                    <mixed-flag>false</mixed-flag>
-                                    <particle compositor="sequence" type="model-group">
-                                       <max-occurs>2147483640</max-occurs>
-                                       <particles>
-                                          <particle type="element-ref">
-                                             <name>TestModuleResult</name>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </particle>
-                                       </particles>
-                                    </particle>
-                                 </content>
-                              </type>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                         </particles>
                      </particle>
@@ -6395,10 +6395,10 @@
                         </particles>
                      </particle>
                      <particle type="element">
-                        <name>status</name>
+                        <name>resultedFrom</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                        <type type="simple-type-ref">
-                           <name>TestResultStatusType</name>
+                        <type type="complex-type-ref">
+                           <name>RefType</name>
                            <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                         </type>
                      </particle>
@@ -6419,10 +6419,10 @@
                         </type>
                      </particle>
                      <particle type="element">
-                        <name>resultedFrom</name>
+                        <name>status</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                        <type type="complex-type-ref">
-                           <name>RefType</name>
+                        <type type="simple-type-ref">
+                           <name>TestResultStatusType</name>
                            <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                         </type>
                      </particle>
