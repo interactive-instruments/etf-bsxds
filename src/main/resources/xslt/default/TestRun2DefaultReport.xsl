@@ -782,6 +782,7 @@
 						</td>
 						<td>
 							<xsl:value-of select="$lang/x:e[@key = 'TestCase']"/>
+							<xsl:text> </xsl:text>
 							<a href="#{$DepTestCase/@id}">
 								<xsl:value-of select="$DepTestCase/etf:label/text()"/>
 							</a>
