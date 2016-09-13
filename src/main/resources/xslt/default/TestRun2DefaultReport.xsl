@@ -1236,7 +1236,7 @@
 		<xsl:sequence
 			select="
 				if (count($arguments) &gt; 0) then
-					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), etf:if-absent($arguments[1]/text(), '')), $arguments[position() &gt; 1])
+					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), replace(etf:if-absent($arguments[1]/text(), '')), '([$])', '\\$1'), $arguments[position() &gt; 1])
 				else
 					$arg"
 		/>
