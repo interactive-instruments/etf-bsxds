@@ -68,7 +68,7 @@
 	<xsl:variable name="testObjects"
 		select="key('testObjectKey', $testTasks/etf:testObject[1]/@ref)"/>
 	<xsl:variable name="statisticAttachments"
-		select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'StatisticalReport']"/>
+		select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'StatisticalReport'][1]"/>
 	<xsl:variable name="logAttachment" select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'LogFile']"/>
 	
 	<!-- Test Report -->
@@ -1236,7 +1236,7 @@
 		<xsl:sequence
 			select="
 				if (count($arguments) &gt; 0) then
-					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), replace(etf:if-absent($arguments[1]/text(), '')), '([$])', '\\$1'), $arguments[position() &gt; 1])
+					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), replace(etf:if-absent($arguments[1]/text(), ''), '([$])', '\\$1')), $arguments[position() &gt; 1])
 				else
 					$arg"
 		/>
