@@ -176,7 +176,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:group ref="MetaDataItemGroup"/>
-                <xs:element name="priority" type="xs:nonNegativeInteger	" default="64">
+                <xs:element name="priority" type="xs:nonNegativeInteger" minOccurs="0" default="64">
                     <xs:annotation>
                         <xs:documentation>Multiple Tags are ordered by their priority property and
                             thereupon by their label</xs:documentation>
