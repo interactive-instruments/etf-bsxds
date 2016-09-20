@@ -30,7 +30,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TranslationTemplateBundleDao extends AbstractStreamWriteDao<TranslationTemplateBundleDto> {
+final class TranslationTemplateBundleDao extends AbstractBsxStreamWriteDao<TranslationTemplateBundleDto> {
 
 	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,

@@ -34,6 +34,9 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import de.interactive_instruments.etf.testdriver.TestResultCollector;
+import de.interactive_instruments.etf.testdriver.TestResultCollectorFactory;
+import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
@@ -112,6 +115,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	private IFile storeDir;
 
 	private IFile backupDir;
+
+	private IFile attachmentDir;
 
 	private Context ctx = new Context();
 
@@ -334,6 +339,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		// TODO get and set backup dir
 		// this.backupDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_BACKUP_DIR);
 		this.storeDir.ensureDir();
+		this.attachmentDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_DATASOURCE_DIR).expandPath("attachments");
 
 		new Set("AUTOFLUSH", "false").execute(ctx);
 		new Set("TEXTINDEX", "true").execute(ctx);
@@ -398,6 +404,10 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		logger.info("Installed packages\n" + new RepoList().execute(ctx));
 		this.initialized.set(true);
 		notifyAll();
+	}
+
+	IFile getAttachmentDir() {
+		return attachmentDir;
 	}
 
 	@Override

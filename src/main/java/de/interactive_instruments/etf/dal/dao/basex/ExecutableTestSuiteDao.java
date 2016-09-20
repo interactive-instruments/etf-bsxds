@@ -56,7 +56,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class ExecutableTestSuiteDao extends AbstractStreamWriteDao<ExecutableTestSuiteDto> {
+public class ExecutableTestSuiteDao extends AbstractBsxStreamWriteDao<ExecutableTestSuiteDto> {
 
 	private final Schema schema;
 

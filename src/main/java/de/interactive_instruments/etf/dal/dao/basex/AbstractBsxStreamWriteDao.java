@@ -23,9 +23,7 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.ValidatorHandler;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -51,18 +49,17 @@ import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.ExcUtils;
-import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-abstract class AbstractStreamWriteDao<T extends Dto> extends BsxWriteDao<T> implements StreamWriteDao<T> {
+abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> implements StreamWriteDao<T> {
 
 	private final Schema schema;
 
-	protected AbstractStreamWriteDao(final String queryPath, final String typeName,
+	protected AbstractBsxStreamWriteDao(final String queryPath, final String typeName,
 			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		super(queryPath, typeName, ctx, getDtoResultCmd);
 		/*
@@ -109,16 +106,21 @@ abstract class AbstractStreamWriteDao<T extends Dto> extends BsxWriteDao<T> impl
 		}
 	}
 
-	@Override
-	public final T add(final InputStream inputStream, final ChangeBeforeStoreHook<T> hook) throws StorageException {
-		IFile itemFile = null;
+	EID addAndValidate(final InputStream inputStream) throws StorageException {
 		try {
 			// Create copy of stream in memory
-
 			final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			IOUtils.copy(inputStream, byteArrayOutputStream);
 			final byte[] buffer = byteArrayOutputStream.toByteArray();
+			return addAndValidate(buffer);
+		}catch (IOException e) {
+			throw new StorageException(e);
+		}
+	}
 
+	private EID addAndValidate(final byte[] buffer) throws StorageException {
+		IFile itemFile = null;
+		try {
 			// Parse ID
 			final XPath xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new NamespaceContext() {
@@ -173,20 +175,8 @@ abstract class AbstractStreamWriteDao<T extends Dto> extends BsxWriteDao<T> impl
 			if (!exists(id)) {
 				throw new StorageException("Unable to query streamed Dto by ID");
 			}
-			T dto = getById(id).getDto();
-			if (dto instanceof RepositoryItemDto) {
-				final byte[] hash = createHash(buffer);
-				((RepositoryItemDto) dto).setItemHash(hash);
-			}
-			if (hook != null) {
-				dto = hook.doChangeBeforeStore(dto);
-				Objects.requireNonNull(dto, "Implementation error doChangeBeforeStreamUpdate returned null").ensureBasicValidity();
-			}
-			// do not update as Id would change
-			delete(dto.getId());
-			add(dto);
-			return dto;
-		} catch (IncompleteDtoException | ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
+			return id;
+		}catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
 			if (itemFile != null) {
 				try {
 					if (ctx.getLogger().isDebugEnabled()) {
@@ -200,6 +190,35 @@ abstract class AbstractStreamWriteDao<T extends Dto> extends BsxWriteDao<T> impl
 					ExcUtils.suppress(e2);
 				}
 			}
+			throw new StoreException(e);
+		}
+
+	}
+
+
+	@Override
+	public final T add(final InputStream inputStream, final ChangeBeforeStoreHook<T> hook) throws StorageException {
+		try {
+			// Create copy of stream in memory
+			final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			IOUtils.copy(inputStream, byteArrayOutputStream);
+			final byte[] buffer = byteArrayOutputStream.toByteArray();
+
+			final EID id = addAndValidate(buffer);
+			T dto = getById(id).getDto();
+			if (dto instanceof RepositoryItemDto) {
+				final byte[] hash = createHash(buffer);
+				((RepositoryItemDto) dto).setItemHash(hash);
+			}
+			if (hook != null) {
+				dto = hook.doChangeBeforeStore(dto);
+				Objects.requireNonNull(dto, "Implementation error doChangeBeforeStreamUpdate returned null").ensureBasicValidity();
+			}
+			// do not update as Id would change
+			delete(dto.getId());
+			add(dto);
+			return dto;
+		} catch (IncompleteDtoException | ObjectWithIdNotFoundException | IOException e) {
 			throw new StoreException(e);
 		}
 	}
