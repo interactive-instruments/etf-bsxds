@@ -2941,6 +2941,7 @@
                                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                               </type>
                               <default-value>64</default-value>
+                              <min-occurs>0</min-occurs>
                            </particle>
                         </particles>
                      </particle>
