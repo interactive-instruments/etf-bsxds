@@ -29,7 +29,7 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class TestTaskDao extends BsxWriteDao<TestTaskDto> {
+final class TestTaskDao extends BsxWriteDao<TestTaskDto> {
 
 	protected TestTaskDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
 		super("/etf:TestRun", "TestRun", ctx,

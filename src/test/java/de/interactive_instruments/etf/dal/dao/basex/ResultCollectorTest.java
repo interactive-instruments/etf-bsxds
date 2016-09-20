@@ -18,9 +18,6 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Dao;
-import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dao.WriteDao;
-import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.testdriver.TestResultCollector;
@@ -48,8 +45,8 @@ public class ResultCollectorTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
-		BsxTestUtil.ensureInitialization();
-		dao = BsxTestUtil.DATA_STORAGE.getDao(TestTaskResultDto.class);
+		BsxTestUtils.ensureInitialization();
+		dao = BsxTestUtils.DATA_STORAGE.getDao(TestTaskResultDto.class);
 		attachmentDir = IFile.createTempDir("etf-bsxds-test");
 	}
 
@@ -62,30 +59,30 @@ public class ResultCollectorTest {
 
 	@Test
 	public void testCollector() throws IOException, ObjectWithIdNotFoundException, StorageException {
-		final TestResultCollector testResultCollector = new BsxDsResultCollector(BsxTestUtil.DATA_STORAGE,
-				new TestTestRunLogger(),attachmentDir.expandPath("Result.xml"), attachmentDir, BsxTestUtil.TASK_DTO_1);
-		final String id = testResultCollector.start(BsxTestUtil.ETS_DTO_1.getId().getId());
+		final TestResultCollector testResultCollector = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
+				new TestTestRunLogger(),attachmentDir.expandPath("Result.xml"), attachmentDir, BsxTestUtils.TASK_DTO_1);
+		final String id = testResultCollector.start(BsxTestUtils.ETS_DTO_1.getId().getId());
 
-		testResultCollector.start(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getId().getId());
+		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getId().getId());
 
-		testResultCollector.start(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
+		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
 
-		testResultCollector.start(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
+		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
 
-		testResultCollector.start(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
+		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
 
 		testResultCollector.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		testResultCollector.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
 
-		testResultCollector.end(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
 
-		testResultCollector.end(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
 
-		testResultCollector.end(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId(), 2);
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId(), 2);
 
-		testResultCollector.end(BsxTestUtil.ETS_DTO_1.getTestModules().get(0).getId().getId(), 2);
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getId().getId(), 2);
 
-		testResultCollector.end(BsxTestUtil.ETS_DTO_1.getId().getId(), 2);
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getId().getId(), 2);
 
 		// Get TestTaskResult
 		final TestTaskResultDto result = dao.getById(EidFactory.getDefault().createUUID(id)).getDto();

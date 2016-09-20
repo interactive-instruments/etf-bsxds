@@ -21,6 +21,8 @@ import de.interactive_instruments.etf.model.EID;
 /**
  * Proxy accessor interface for byte buddy generated proxies
  *
+ * Must be public!
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public interface ProxyAccessor {

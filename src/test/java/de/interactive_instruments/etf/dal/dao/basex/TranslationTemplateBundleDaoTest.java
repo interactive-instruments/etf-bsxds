@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -39,10 +39,8 @@ import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
-import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.InitializationException;
@@ -61,14 +59,14 @@ public class TranslationTemplateBundleDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
 	}
 
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtil.TTB_DTO_1.getId());
+			writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
@@ -76,25 +74,25 @@ public class TranslationTemplateBundleDaoTest {
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		assertNotNull(writeDao);
 		assertTrue(writeDao.isInitialized());
-		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
-		writeDao.add(BsxTestUtil.TTB_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
-		writeDao.delete(BsxTestUtil.TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
+		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		writeDao.add(BsxTestUtils.TTB_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
 	}
 
 	@Test
 	public void test_2_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
-		writeDao.add(BsxTestUtil.TTB_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
-		final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(BsxTestUtil.TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		writeDao.add(BsxTestUtils.TTB_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(BsxTestUtils.TTB_DTO_1.getId());
 
 		// Check internal ID
-		assertEquals(BsxTestUtil.TTB_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(BsxTestUtils.TTB_DTO_1.getId(), preparedDto.getDtoId());
 		final TranslationTemplateBundleDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtil.TTB_DTO_1.getId(), dto.getId());
+		assertEquals(BsxTestUtils.TTB_DTO_1.getId(), dto.getId());
 
 		assertNotNull(dto.getTranslationTemplateCollection("TR.Template.1"));
 		assertArrayEquals(new String[]{"de", "en"},
@@ -114,8 +112,8 @@ public class TranslationTemplateBundleDaoTest {
 		assertEquals("TR.Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}",
 				dto.getTranslationTemplate("TR.Template.2", "de").getStrWithTokens());
 
-		writeDao.delete(BsxTestUtil.TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestUtil.TTB_DTO_1.getId()));
+		writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
 	}
 
 	@Test

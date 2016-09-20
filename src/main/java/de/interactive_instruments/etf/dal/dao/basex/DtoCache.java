@@ -44,7 +44,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-class DtoCache implements WriteDaoListener {
+final class DtoCache implements WriteDaoListener {
 
 	private final Logger logger = LoggerFactory.getLogger(DtoCache.class);
 

@@ -55,7 +55,7 @@ import de.interactive_instruments.properties.ConfigProperties;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDto> {
+final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDto> {
 
 	private final Schema schema;
 

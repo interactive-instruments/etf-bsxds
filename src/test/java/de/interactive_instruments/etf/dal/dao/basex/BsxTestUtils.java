@@ -20,7 +20,6 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -51,7 +50,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-class BsxTestUtil {
+class BsxTestUtils {
 
 	final static BsxDataStorage DATA_STORAGE;
 
@@ -411,7 +410,7 @@ class BsxTestUtil {
 			DATA_STORAGE.getConfigurationProperties().setProperty("etf.webapp.base.url", styleDir.getAbsolutePath());
 			DATA_STORAGE.getConfigurationProperties().setProperty("etf.api.base.url", "http://localhost/etf-webapp/v2");
 			DATA_STORAGE.init();
-			BsxTestUtil.DATA_STORAGE.reset();
+			DATA_STORAGE.reset();
 		}
 	}
 

@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -43,7 +43,7 @@ public class BsxDataStorageTest {
 	 */
 	@Test
 	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		assertTrue(DATA_STORAGE.isInitialized());
 		assertNotNull(DATA_STORAGE.getSchema());
 		assertNotNull(DATA_STORAGE.getSchema().newValidator());

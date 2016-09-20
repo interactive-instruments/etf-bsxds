@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.*;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -31,11 +31,8 @@ import org.junit.runners.MethodSorters;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
-import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
@@ -56,20 +53,20 @@ public class ExecutableTestSuiteDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(ExecutableTestSuiteDto.class));
 
 		TestObjectDaoTest.setUp();
 
-		BsxTestUtil.forceDeleteAndAdd(TTB_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(TTB_DTO_1);
 
-		BsxTestUtil.forceDeleteAndAdd(TOT_DTO_3);
+		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_3);
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.COMP_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.COMP_DTO_1);
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ASSERTION_TYPE_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ASSERTION_TYPE_1);
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TESTSTEP_TYPE_2);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TESTSTEP_TYPE_2);
 
 		final EidMap<TestItemTypeDto> testItemTypes = new DefaultEidMap<TestItemTypeDto>() {
 			{
@@ -118,7 +115,7 @@ public class ExecutableTestSuiteDaoTest {
 		};
 		testItemTypes.values().forEach(type -> {
 			try {
-				BsxTestUtil.forceDeleteAndAdd(type);
+				BsxTestUtils.forceDeleteAndAdd(type);
 			} catch (StorageException e) {
 				e.printStackTrace();
 			} catch (ObjectWithIdNotFoundException e) {
@@ -136,24 +133,24 @@ public class ExecutableTestSuiteDaoTest {
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtil.ETS_DTO_1.getId());
-			writeDao.delete(BsxTestUtil.ETS_DTO_2.getId());
+			writeDao.delete(BsxTestUtils.ETS_DTO_1.getId());
+			writeDao.delete(BsxTestUtils.ETS_DTO_2.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
-		writeDao.add(BsxTestUtil.ETS_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtil.ETS_DTO_1.getId()));
+		assertFalse(writeDao.exists(BsxTestUtils.ETS_DTO_1.getId()));
+		writeDao.add(BsxTestUtils.ETS_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtils.ETS_DTO_1.getId()));
 
-		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(BsxTestUtil.ETS_DTO_1.getId());
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(BsxTestUtils.ETS_DTO_1.getId());
 		// Check internal ID
-		assertEquals(BsxTestUtil.ETS_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(BsxTestUtils.ETS_DTO_1.getId(), preparedDto.getDtoId());
 		final ExecutableTestSuiteDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtil.ETS_DTO_1.getId(), dto.getId());
-		assertEquals(BsxTestUtil.ETS_DTO_1.toString(), dto.toString());
+		assertEquals(BsxTestUtils.ETS_DTO_1.getId(), dto.getId());
+		assertEquals(BsxTestUtils.ETS_DTO_1.toString(), dto.toString());
 		assertNotNull(dto.getParameters());
 		assertEquals("Parameter.1.key", dto.getParameters().getParameter("Parameter.1.key").getName());
 		assertEquals("Parameter.1.value", dto.getParameters().getParameter("Parameter.1.key").getDefaultValue());
@@ -178,15 +175,15 @@ public class ExecutableTestSuiteDaoTest {
 
 	@Test
 	public void test_8_0_caching_references() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
-		BsxTestUtil.forceDeleteAndAdd(ETS_DTO_1, true);
-		BsxTestUtil.forceDeleteAndAdd(ETS_DTO_2, true);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1, true);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2, true);
 
 		getAndCheckCollection();
 		getAndCheckCollection();
 
 		// force cache invalidation
-		BsxTestUtil.forceDeleteAndAdd(TAG_DTO_1, false);
-		BsxTestUtil.forceDeleteAndAdd(TAG_DTO_2, false);
+		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_1, false);
+		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_2, false);
 
 		getAndCheckCollection();
 		getAndCheckCollection();

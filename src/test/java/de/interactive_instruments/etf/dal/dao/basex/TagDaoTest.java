@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
 
@@ -43,35 +43,35 @@ public class TagDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TagDto.class));
 	}
 
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtil.TAG_DTO_1.getId());
+			writeDao.delete(BsxTestUtils.TAG_DTO_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TAG_DTO_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.TAG_DTO_1);
 	}
 
 	@Test
 	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtil.TAG_DTO_1.getId()));
-		writeDao.add(BsxTestUtil.TAG_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtil.TAG_DTO_1.getId()));
+		assertFalse(writeDao.exists(BsxTestUtils.TAG_DTO_1.getId()));
+		writeDao.add(BsxTestUtils.TAG_DTO_1);
+		assertTrue(writeDao.exists(BsxTestUtils.TAG_DTO_1.getId()));
 
-		final PreparedDto<TagDto> preparedDto = writeDao.getById(BsxTestUtil.TAG_DTO_1.getId());
+		final PreparedDto<TagDto> preparedDto = writeDao.getById(BsxTestUtils.TAG_DTO_1.getId());
 		// Check internal ID
-		assertEquals(BsxTestUtil.TAG_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(BsxTestUtils.TAG_DTO_1.getId(), preparedDto.getDtoId());
 		final TagDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtil.TAG_DTO_1.getId(), dto.getId());
-		assertEquals(BsxTestUtil.TAG_DTO_1.toString(), dto.toString());
+		assertEquals(BsxTestUtils.TAG_DTO_1.getId(), dto.getId());
+		assertEquals(BsxTestUtils.TAG_DTO_1.toString(), dto.toString());
 	}
 
 }

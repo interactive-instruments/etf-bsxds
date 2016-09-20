@@ -29,7 +29,7 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public class ComponentDao extends BsxWriteDao<ComponentDto> {
+final  class ComponentDao extends BsxWriteDao<ComponentDto> {
 
 	protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:Component", "Component", ctx,

@@ -30,6 +30,8 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * Lazy Load proxy for Dtos
  *
+ * Must be public!
+ *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
 public final class LazyLoadProxyDto {

@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
@@ -46,48 +46,48 @@ public class TestRunDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestRunDto.class));
 
 		TestTaskResultDaoTest.setUp();
 
 		final WriteDao<TestTaskResultDto> tagDao = (WriteDao<TestTaskResultDto>) DATA_STORAGE.getDao(TestTaskResultDto.class);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
 	}
 
 	@AfterClass
 	public static void tearDown() throws StorageException, ConfigurationException, InitializationException, InvalidStateTransitionException, ObjectWithIdNotFoundException {
 		TestTaskResultDaoTest.tearDown();
-		BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TR_DTO_1.getId());
+		BsxTestUtils.forceDelete(writeDao, BsxTestUtils.TR_DTO_1.getId());
 	}
 
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtil.TR_DTO_1.getId());
+			writeDao.delete(BsxTestUtils.TR_DTO_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TR_DTO_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.TR_DTO_1);
 	}
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.addTest(BsxTestUtil.TR_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TTR_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TTR_DTO_2);
+		BsxTestUtils.addTest(BsxTestUtils.TR_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TTR_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TTR_DTO_2);
 
-		final PreparedDto<TestRunDto> preparedDto = BsxTestUtil.getByIdTest(BsxTestUtil.TR_DTO_1);
+		final PreparedDto<TestRunDto> preparedDto = BsxTestUtils.getByIdTest(BsxTestUtils.TR_DTO_1);
 
 		assertNotNull(preparedDto.getDto().getTestTasks());
 		assertEquals(2, preparedDto.getDto().getTestTasks().size());
 
 		assertEquals("FAILED", preparedDto.getDto().getTestTasks().get(0).getTestTaskResult().getResultStatus().toString());
 
-		writeDao.delete(BsxTestUtil.TR_DTO_1.getId());
-		TestCase.assertFalse(writeDao.exists(BsxTestUtil.TR_DTO_1.getId()));
+		writeDao.delete(BsxTestUtils.TR_DTO_1.getId());
+		TestCase.assertFalse(writeDao.exists(BsxTestUtils.TR_DTO_1.getId()));
 	}
 
 }

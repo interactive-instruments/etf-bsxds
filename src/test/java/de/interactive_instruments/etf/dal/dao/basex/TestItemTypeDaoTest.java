@@ -15,7 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 
 import java.io.IOException;
 
@@ -43,28 +43,28 @@ public class TestItemTypeDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestItemTypeDto.class));
 	}
 
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtil.ASSERTION_TYPE_1.getId());
+			writeDao.delete(BsxTestUtils.ASSERTION_TYPE_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.ASSERTION_TYPE_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.ASSERTION_TYPE_1);
 	}
 
 	@Test
 	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
-		final PreparedDto<TestItemTypeDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.ASSERTION_TYPE_1);
+		final PreparedDto<TestItemTypeDto> preparedDto = BsxTestUtils.addAndGetByIdTest(BsxTestUtils.ASSERTION_TYPE_1);
 
-		writeDao.delete(BsxTestUtil.ASSERTION_TYPE_1.getId());
-		TestCase.assertFalse(writeDao.exists(BsxTestUtil.ASSERTION_TYPE_1.getId()));
+		writeDao.delete(BsxTestUtils.ASSERTION_TYPE_1.getId());
+		TestCase.assertFalse(writeDao.exists(BsxTestUtils.ASSERTION_TYPE_1.getId()));
 	}
 
 }

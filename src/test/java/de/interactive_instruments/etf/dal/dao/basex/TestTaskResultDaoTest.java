@@ -15,8 +15,8 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.DATA_STORAGE;
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtil.trimAllWhitespace;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.trimAllWhitespace;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -31,16 +31,12 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
-import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
@@ -58,15 +54,15 @@ public class TestTaskResultDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
-		BsxTestUtil.ensureInitialization();
+		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
 
 		ExecutableTestSuiteDaoTest.setUp();
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
 
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
 	}
 
 	@AfterClass
@@ -77,46 +73,46 @@ public class TestTaskResultDaoTest {
 	@Before
 	public void clean() {
 		try {
-			BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TTR_DTO_1.getId());
-			BsxTestUtil.forceDelete(writeDao, BsxTestUtil.TTR_DTO_2.getId());
-			BsxTestUtil.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), BsxTestUtil.TR_DTO_1.getId());
+			BsxTestUtils.forceDelete(writeDao, BsxTestUtils.TTR_DTO_1.getId());
+			BsxTestUtils.forceDelete(writeDao, BsxTestUtils.TTR_DTO_2.getId());
+			BsxTestUtils.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), BsxTestUtils.TR_DTO_1.getId());
 		} catch (StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.existsAndAddAndDeleteTest(BsxTestUtil.TTR_DTO_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.TTR_DTO_1);
 	}
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
 		// TestTask required for parent reference
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TR_DTO_1, false);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TTR_DTO_1);
+		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(BsxTestUtils.TTR_DTO_1);
 
 		assertNotNull(preparedDto.getDto().getAttachments());
 		assertEquals(1, preparedDto.getDto().getAttachments().size());
 		assertNotNull(preparedDto.getDto().getTestObject());
-		assertEquals(BsxTestUtil.TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
+		assertEquals(BsxTestUtils.TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
 		assertNotNull(preparedDto.getDto().getTestModuleResults());
 
-		writeDao.delete(BsxTestUtil.TTR_DTO_1.getId());
-		TestCase.assertFalse(writeDao.exists(BsxTestUtil.TTR_DTO_1.getId()));
+		writeDao.delete(BsxTestUtils.TTR_DTO_1.getId());
+		TestCase.assertFalse(writeDao.exists(BsxTestUtils.TTR_DTO_1.getId()));
 	}
 
 	@Test
 	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TO_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_1);
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
 		// TestTask required for parent reference
-		BsxTestUtil.forceDeleteAndAdd(BsxTestUtil.TR_DTO_1, false);
+		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtil.addAndGetByIdTest(BsxTestUtil.TTR_DTO_1);
+		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(BsxTestUtils.TTR_DTO_1);
 
 		final IFile tmpFile = IFile.createTempFile("etf", ".html");
 		tmpFile.deleteOnExit();
