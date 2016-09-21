@@ -34,7 +34,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public final class LazyLoadProxyDto {
+public class LazyLoadProxyDto {
 
 	private final Dao dao;
 	private final Logger logger;

@@ -31,7 +31,7 @@ import de.interactive_instruments.etf.model.EID;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-public final class CacheAccessProxyDto {
+public class CacheAccessProxyDto {
 
 	private final BsxDsCtx ctx;
 	private final Logger logger;
