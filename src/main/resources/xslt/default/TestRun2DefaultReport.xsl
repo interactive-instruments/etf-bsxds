@@ -63,8 +63,7 @@
 		select="//etf:testTaskResults[1]/etf:TestTaskResult"/>
 	<xsl:variable name="executableTestSuites"
 		select="//etf:executableTestSuites[1]/etf:ExecutableTestSuite"/>
-	<xsl:variable name="testTasks" select="key('testTaskKey', $testTaskResults/etf:parent[1]/@ref)"/>
-	<xsl:variable name="etsIds" select="key('testSuiteKey', $testTasks/etf:resultedFrom[1]/@ref)"/>
+	<xsl:variable name="testTasks" select="//etf:testTasks[1]/etf:TestTask"/>
 	<xsl:variable name="testObjects"
 		select="key('testObjectKey', $testTasks/etf:testObject[1]/@ref)"/>
 	<xsl:variable name="statisticAttachments"
@@ -107,7 +106,7 @@
 					<!-- Test object -->
 					<xsl:apply-templates select="$testObjects"/>
 					<!-- Additional statistics provided by the test project -->
-					<xsl:apply-templates select="$statisticAttachments"/>
+					<xsl:apply-templates select="$statisticAttachments[1]"/>
 					<!-- Logging provided by the test project -->
 					<xsl:apply-templates select="$logAttachment"/>
 					<!-- Test Suite Results -->
