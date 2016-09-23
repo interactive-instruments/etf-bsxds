@@ -70,11 +70,15 @@ public class ResultCollectorTest {
 		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
 
 		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
-
 		testResultCollector.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		testResultCollector.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-
 		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
+
+		testResultCollector.start(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId());
+		testResultCollector.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
+		testResultCollector.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
+		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId(), 2);
+
 
 		testResultCollector.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
 

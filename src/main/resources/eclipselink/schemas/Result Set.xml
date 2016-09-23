@@ -4686,6 +4686,7 @@
                                     </particle>
                                  </content>
                               </type>
+                              <min-occurs>0</min-occurs>
                            </particle>
                         </particles>
                      </particle>

@@ -161,7 +161,7 @@
                         <xs:documentation>Test step type</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="testAssertions">
+                <xs:element name="testAssertions" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:choice>

@@ -33,7 +33,9 @@ public class BsxDsResultCollectorFactory implements TestResultCollectorFactory {
 			(BsxDataStorage) DataStorageRegistry.instance().get(BsxDataStorage.class.getName());
 
 	@Override public TestResultCollector createTestResultCollector(final TestRunLogger testRunLogger, final TestTaskDto testTaskDto) {
+		// ATTACHMENT_DIR / TESTRUN_ID / TESTTASK_ID
 		final IFile testTaskAttachmentDir = dataStorage.getAttachmentDir().
+				secureExpandPathDown(testTaskDto.getParent().getId().getId()).
 				secureExpandPathDown(testTaskDto.getId().getId());
 		return new BsxDsResultCollector(dataStorage,
 				testRunLogger,
