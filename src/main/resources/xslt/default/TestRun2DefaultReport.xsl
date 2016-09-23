@@ -400,7 +400,7 @@
 	<!-- StatisticalReport -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']">
-		<xsl:variable name="stat" select="document(./etf:referencedData/@href)/etf:StatisticalReportTable[etf:type/@ref='EID8bb8f162-1082-434f-bd06-23d6507634b8']"/>
+		<xsl:variable name="stat" select="document(./etf:referencedData/@href)/etf:StatisticalReportTable"/>
 		<xsl:if test="$stat">
 			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
 				<h3><xsl:value-of select="./etf:label"/></h3>
