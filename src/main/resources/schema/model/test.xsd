@@ -73,6 +73,13 @@
 
     <!-- =============================================================== -->
     <xs:element name="TestModule">
+        <xs:annotation>
+            <xs:documentation>
+                Test Cases are ordered into a Test Module. 
+                There are different terms for this concept in multiple Tools, 
+                TestNG for example uses the term "groups", SoapUI uses "Test Suites".
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="unbounded">
                 <xs:group ref="MetaDataItemGroup"/>

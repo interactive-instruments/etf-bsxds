@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.interactive_instruments.etf.dal.dao.basex;
+package de.interactive_instruments.etf.dal.dao.basex.resultcollector;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MimeTypeUtils;
@@ -22,10 +22,13 @@ import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.dal.dao.DataStorage;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
+import de.interactive_instruments.etf.dal.dao.basex.AbstractBsxStreamWriteDao;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
+import de.interactive_instruments.etf.testdriver.AbstractCalledTestCaseResultCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestResultCollector;
+import de.interactive_instruments.etf.testdriver.TestResultCollector;
 import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.MimeTypeUtilsException;
@@ -43,10 +46,10 @@ import java.util.*;
  */
 final class BsxDsResultCollector extends AbstractTestResultCollector {
 
-	private static final String ETF_NS = "http://www.interactive-instruments.de/etf/2.0";
-	private static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
-	private static final String ETF_NS_PREFIX = "etf";
-	private static final String ID_PREFIX = "EID";
+	static final String ETF_NS = "http://www.interactive-instruments.de/etf/2.0";
+	static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
+	static final String ETF_NS_PREFIX = "etf";
+	static final String ID_PREFIX = "EID";
 
 	private final TestRunLogger logger;
 	private final IFile tmpDir;
@@ -281,6 +284,14 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
 	}
 
+	@Override protected AbstractCalledTestCaseResultCollector createCalledTestCaseResultCollector(final String s, final long l) {
+		return null;
+	}
+
+	@Override protected TestResultCollector mergeTestCaseResultSubCollector() {
+		return null;
+	}
+
 	// Finish  results
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -309,7 +320,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 			((AbstractBsxStreamWriteDao) dataStorage.getDao(
 					TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
 		}catch (StorageException e) {
-			errorLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
+			logger.error("Failed to stream result file into store: {}", resultFile.getPath());
 			throw e;
 		}
 		return id;
@@ -416,10 +427,10 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override public void internalError(final String translationTemplateId, final Map<String, String> tokenValuePairs, final Throwable e) {
-		throw new IllegalStateException("Unimplemented");
+		throw new IllegalStateException("Not implemented");
 	}
 
 	@Override public void internalError(final Throwable e) {
-		throw new IllegalStateException("Unimplemented");
+		throw new IllegalStateException("Not implemented");
 	}
 }
