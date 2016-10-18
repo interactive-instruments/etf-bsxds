@@ -134,10 +134,9 @@
             <xs:sequence>
                 <xs:element name="invokedTests" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation> A Test Step may invoke other Test Steps and/or Test Cases at
-                            test runtime. The control flow depends on the Test Object, is not
-                            predictable and can not be reflected in the Executable Test Suite
-                            structure. </xs:documentation>
+                        <xs:documentation> A Test Step may invoke other Test Steps and Test Cases at
+                            test runtime. The control flow depends on the Test Object and can not be
+                            reflected in the Executable Test Suite structure. </xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:choice>
@@ -164,7 +163,13 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="attachment" type="RefType" minOccurs="0"/>
+                <xs:element name="attachments" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="attachment" type="RefType" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:group ref="ResultModelItemGroup"/>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
