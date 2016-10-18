@@ -2642,6 +2642,22 @@
                </field-transformations>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>invokedTestCases</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</reference-class>
+               <field name="etf:invokedTests/etf:TestCaseResult" xsi:type="node"/>
+               <container xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>invokedTestSteps</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</reference-class>
+               <field name="etf:invokedTests/etf:TestStepResult" xsi:type="node"/>
+               <container xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>children</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestAssertionResultDto</reference-class>
                <field name="testAssertionResults/TestAssertionResult" xsi:type="node"/>

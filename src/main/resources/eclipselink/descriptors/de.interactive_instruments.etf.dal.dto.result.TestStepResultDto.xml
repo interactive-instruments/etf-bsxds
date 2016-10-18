@@ -93,6 +93,40 @@
          </field-transformer-associations>
          <mutable>true</mutable>
       </mapping>
+      <mapping type="composite-collection">
+         <name>invokedTestCases</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</attribute-declaring-type-name>
+            <attribute-name>invokedTestCases</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>etf:invokedTests/etf:TestCaseResult</xpath>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
+      <mapping type="composite-collection">
+         <name>invokedTestSteps</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</attribute-declaring-type-name>
+            <attribute-name>invokedTestSteps</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>etf:invokedTests/etf:TestStepResult</xpath>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
       <mapping type="xml-object-reference">
          <name>parent</name>
          <inherited>true</inherited>

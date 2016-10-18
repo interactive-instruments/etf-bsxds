@@ -3372,11 +3372,6 @@
                      <mixed-flag>false</mixed-flag>
                      <particle compositor="sequence" type="model-group">
                         <particles>
-                           <particle type="element-ref">
-                              <name>ArgumentList</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <min-occurs>0</min-occurs>
-                           </particle>
                            <particle type="element">
                               <name>testStepResults</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -4719,6 +4714,47 @@
                      <particle compositor="sequence" type="model-group">
                         <particles>
                            <particle type="element">
+                              <name>invokedTests</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="choice" type="model-group">
+                                       <particles>
+                                          <particle compositor="sequence" type="model-group">
+                                             <particles>
+                                                <particle type="element-ref">
+                                                   <name>TestCaseResult</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                                   <max-occurs>2147483640</max-occurs>
+                                                </particle>
+                                                <particle type="element-ref">
+                                                   <name>TestStepResult</name>
+                                                   <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                                   <min-occurs>0</min-occurs>
+                                                   <max-occurs>2147483640</max-occurs>
+                                                </particle>
+                                             </particles>
+                                          </particle>
+                                          <particle type="element-ref">
+                                             <name>TestStepResult</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             <max-occurs>2147483640</max-occurs>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
                               <name>testAssertionResults</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                               <type type="complex-type">
@@ -4742,6 +4778,7 @@
                                     </particle>
                                  </content>
                               </type>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>messages</name>
