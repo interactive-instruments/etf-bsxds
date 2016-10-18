@@ -132,7 +132,25 @@
     <xs:element name="TestStepResult">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="testAssertionResults">
+                <xs:element name="invokedTests" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation> A Test Step may invoke other Test Steps and/or Test Cases at
+                            test runtime. The control flow depends on the Test Object, is not
+                            predictable and can not be reflected in the Executable Test Suite
+                            structure. </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:sequence>
+                                <xs:element ref="TestCaseResult" maxOccurs="unbounded"/>
+                                <xs:element ref="TestStepResult" minOccurs="0" maxOccurs="unbounded"
+                                />
+                            </xs:sequence>
+                            <xs:element ref="TestStepResult" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="testAssertionResults" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element ref="TestAssertionResult"/>
