@@ -53,8 +53,8 @@
                         <xs:documentation>Contains at least one log file</xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
-                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element ref="Attachment"/>
+                        <xs:sequence>
+                            <xs:element ref="Attachment" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -81,7 +81,7 @@
                             <xs:attribute name="href" type="ExternalUriType"/>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="embeddedData" type="xs:base64Binary"> </xs:element>
+                    <xs:element name="embeddedData" type="xs:base64Binary"/>
                 </xs:choice>
             </xs:sequence>
             <xs:attribute name="type" type="xs:string" use="optional">
@@ -117,7 +117,7 @@
                 <xs:element ref="ArgumentList" minOccurs="0"/>
                 <xs:element name="testStepResults">
                     <xs:complexType>
-                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
                             <xs:element ref="TestStepResult"/>
                         </xs:sequence>
                     </xs:complexType>
