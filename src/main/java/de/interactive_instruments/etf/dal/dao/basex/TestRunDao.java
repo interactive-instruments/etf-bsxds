@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.xml.transform.TransformerConfigurationException;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.properties.PropertyUtils;
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
@@ -47,12 +49,8 @@ final class TestRunDao extends BsxWriteDao<TestRunDto> {
 
 	@Override
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
-		final XsltOutputTransformer reportTransformer;
 		try {
-			reportTransformer = new XsltOutputTransformer(
-					this, "html", "text/html", "xslt/default/TestRun2DefaultReport.xsl", "xslt/default/");
-			reportTransformer.getConfigurationProperties().setPropertiesFrom(this.configProperties, true);
-			reportTransformer.init();
+			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
 			outputFormats.put(reportTransformer.getId(), reportTransformer);
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);

@@ -15,7 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
+import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.exceptions.InitializationException;
+import de.interactive_instruments.exceptions.InvalidStateTransitionException;
+import de.interactive_instruments.exceptions.config.ConfigurationException;
+import de.interactive_instruments.properties.PropertyUtils;
+
+import javax.xml.transform.TransformerConfigurationException;
+import java.io.IOException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -34,5 +43,23 @@ final class DsUtils {
 			}
 		}
 		return defaultVal;
+	}
+
+	static XsltOutputTransformer loadReportTransformer(final Dao dao) throws
+			IOException, ConfigurationException, InvalidStateTransitionException, InitializationException, TransformerConfigurationException {
+		final XsltOutputTransformer reportTransformer;
+		final String resultStylePath = PropertyUtils.getenvOrProperty("etf.result.style.file", null);
+		if(resultStylePath==null) {
+			reportTransformer = new XsltOutputTransformer(
+					dao, "html", "text/html", "xslt/default/TestRun2DefaultReport.xsl", "xslt/default/");
+		}else{
+			final IFile resultStyleFile = new IFile(resultStylePath, "Report Stylesheet File");
+			resultStyleFile.expectFileIsReadable();
+			reportTransformer = new XsltOutputTransformer(
+					dao, "html", "text/html", resultStyleFile);
+		}
+		reportTransformer.getConfigurationProperties().setPropertiesFrom(dao.getConfigurationProperties(), true);
+		reportTransformer.init();
+		return reportTransformer;
 	}
 }

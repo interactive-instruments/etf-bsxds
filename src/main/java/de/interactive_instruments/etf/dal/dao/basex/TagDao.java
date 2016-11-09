@@ -31,7 +31,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TagDao extends BsxWriteDao<TagDto> {
+final class TagDao extends AbstractBsxStreamWriteDao<TagDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 

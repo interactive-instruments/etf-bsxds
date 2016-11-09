@@ -34,6 +34,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import de.interactive_instruments.properties.PropertyUtils;
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.Add;
@@ -96,12 +97,8 @@ final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDt
 
 	@Override
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
-		final XsltOutputTransformer reportTransformer;
 		try {
-			reportTransformer = new XsltOutputTransformer(
-					this, "html", "text/html", "xslt/default/TestRun2DefaultReport.xsl", "xslt/default/");
-			reportTransformer.getConfigurationProperties().setPropertiesFrom(this.configProperties, true);
-			reportTransformer.init();
+			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
 			outputFormats.put(reportTransformer.getId(), reportTransformer);
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);

@@ -23,18 +23,18 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import de.interactive_instruments.SUtils;
-import de.interactive_instruments.exceptions.ExcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.interactive_instruments.Configurable;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MediaType;
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.OutputFormat;
+import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
@@ -99,9 +99,9 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		}
 
 		public Source resolve(final String ref, final String base) {
-			if(SUtils.isNullOrEmpty(base)) {
+			if (SUtils.isNullOrEmpty(base)) {
 				final IFile file = new IFile(ref);
-				if(file.isAbsolute()) {
+				if (file.isAbsolute()) {
 					try {
 						return new StreamSource(new FileInputStream(file), file.getPath());
 					} catch (FileNotFoundException e) {
@@ -110,7 +110,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 				}
 				// can not be resolved without base or failed to create file stream
 				return null;
-			}else {
+			} else {
 				final ClassLoader cL = getClass().getClassLoader();
 				final InputStream is = cL.getResourceAsStream(
 						this.xsltBase + "/" + ref);

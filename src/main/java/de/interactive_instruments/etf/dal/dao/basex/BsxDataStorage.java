@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.*;
@@ -34,9 +35,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import de.interactive_instruments.etf.testdriver.TestResultCollector;
-import de.interactive_instruments.etf.testdriver.TestResultCollectorFactory;
-import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
@@ -76,6 +74,9 @@ import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.testdriver.TestResultCollector;
+import de.interactive_instruments.etf.testdriver.TestResultCollectorFactory;
+import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
@@ -357,7 +358,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 					"Internal error reading the basic data storage XQuery function library");
 			// Copy file to repo
 			installFile = new IFile(ctx.repo.path().file()).expandPath(etfxqmPath);
-			installFile.writeContent(basicXQueryStream);
+			installFile.write(basicXQueryStream);
 			repoManger.install(installFile.getAbsolutePath());
 		} catch (QueryException e) {
 			throw new InitializationException("XQuery script installation failed: ", e);

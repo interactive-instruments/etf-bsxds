@@ -18,6 +18,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 import java.io.*;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
@@ -30,6 +31,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import de.interactive_instruments.etf.XmlUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
@@ -113,7 +115,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 			IOUtils.copy(inputStream, byteArrayOutputStream);
 			final byte[] buffer = byteArrayOutputStream.toByteArray();
 			return addAndValidate(buffer);
-		}catch (IOException e) {
+		} catch (IOException e) {
 			throw new StorageException(e);
 		}
 	}
@@ -122,26 +124,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 		IFile itemFile = null;
 		try {
 			// Parse ID
-			final XPath xpath = XPathFactory.newInstance().newXPath();
-			xpath.setNamespaceContext(new NamespaceContext() {
-				public String getNamespaceURI(String prefix) {
-					if (prefix == null)
-						throw new NullPointerException("Null prefix");
-					else if ("etf".equals(prefix))
-						return "http://www.interactive-instruments.de/etf/2.0";
-					else if ("etfAppinfo".equals(prefix))
-						return "http://www.interactive-instruments.de/etf/appinfo/1.0";
-					return XMLConstants.NULL_NS_URI;
-				}
-
-				public String getPrefix(String uri) {
-					throw new UnsupportedOperationException();
-				}
-
-				public Iterator getPrefixes(String uri) {
-					throw new UnsupportedOperationException();
-				}
-			});
+			final XPath xpath = XmlUtils.newXPath();
 			final String xpathExpression = this.queryPath + "[1]/@id";
 			final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)), XPathConstants.STRING);
 			if (SUtils.isNullOrEmpty((String) oid)) {
@@ -158,7 +141,18 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 			final ValidationErrorHandler eh = new ValidationErrorHandler(ctx.getLogger());
 			vh.setErrorHandler(eh);
 			reader.setContentHandler(vh);
-			reader.parse(new InputSource(new ByteArrayInputStream(buffer)));
+
+			try {
+				reader.parse(new InputSource(new ByteArrayInputStream(buffer)));
+			} catch (IOException | SAXException e) {
+				// Validation failed. Check if the intermediate file should be kept
+				if(ctx.getLogger().isDebugEnabled()) {
+					// Write the buffer to a temp file
+					itemFile = IFile.createTempFile("etf_stream", UUID.randomUUID().toString());
+					FileUtils.writeByteArrayToFile(itemFile, buffer);
+				}
+				throw e;
+			}
 
 			if (exists(id)) {
 				delete(id);
@@ -176,12 +170,13 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 				throw new StorageException("Unable to query streamed Dto by ID");
 			}
 			return id;
-		}catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
+		} catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
 			if (itemFile != null) {
 				try {
 					if (ctx.getLogger().isDebugEnabled()) {
-						ctx.getLogger().debug("Failed to add streamed Dto {}", itemFile);
+						ctx.getLogger().debug("Failed to add streamed Dto. Intermediate file has been kept: {}", itemFile);
 					} else {
+						ctx.getLogger().error("Failed to add streamed Dto. Intermediate file has been deleted as Log level is not set to debug.");
 						itemFile.delete();
 						new Delete(itemFile.getName()).execute(ctx.getBsxCtx());
 						new Flush().execute(ctx.getBsxCtx());
@@ -194,7 +189,6 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 		}
 
 	}
-
 
 	@Override
 	public final T add(final InputStream inputStream, final ChangeBeforeStoreHook<T> hook) throws StorageException {

@@ -30,7 +30,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestObjectTypeDao extends BsxWriteDao<TestObjectTypeDto> {
+final class TestObjectTypeDao extends AbstractBsxStreamWriteDao<TestObjectTypeDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
