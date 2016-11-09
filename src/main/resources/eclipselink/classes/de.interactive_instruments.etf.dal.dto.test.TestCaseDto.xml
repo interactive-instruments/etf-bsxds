@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.893+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-11-07T14:40:49.693+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
@@ -27,6 +27,20 @@
          <name>TestCaseDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>TestCaseDto</name>
+         <constructor>true</constructor>
+         <modifier>2</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>addDependency</name>
@@ -63,6 +77,15 @@
                </type-declaration>
             </method-parameter>
          </method-parameters>
+      </method>
+      <method>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>getDependencies</name>

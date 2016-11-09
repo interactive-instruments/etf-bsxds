@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.854+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-11-07T14:40:49.665+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>author</name>
@@ -113,6 +113,20 @@
          <name>RepositoryItemDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>RepositoryItemDto</name>
+         <constructor>true</constructor>
+         <modifier>4</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>ensureBasicValidity</name>

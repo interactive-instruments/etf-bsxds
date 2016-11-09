@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.913+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-11-07T14:40:49.676+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
@@ -15,6 +15,15 @@
       </class-handle>
    </interface-handles>
    <attributes>
+      <class-attribute>
+         <name>assertions</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>long</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>consumableResultTestObjectTypes</name>
          <modifier>2</modifier>
@@ -95,6 +104,20 @@
          <modifier>1</modifier>
       </method>
       <method>
+         <name>ExecutableTestSuiteDto</name>
+         <constructor>true</constructor>
+         <modifier>2</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
          <name>addChild</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -131,6 +154,24 @@
          </method-parameters>
       </method>
       <method>
+         <name>addSupportedTestObjectType</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
          <name>addTestModule</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -149,6 +190,15 @@
          </method-parameters>
       </method>
       <method>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>ensureBasicValidity</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -161,6 +211,15 @@
                <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
             </class-handle>
          </exception-type-handles>
+      </method>
+      <method>
+         <name>getAssertionsSize</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>long</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>getChildren</name>

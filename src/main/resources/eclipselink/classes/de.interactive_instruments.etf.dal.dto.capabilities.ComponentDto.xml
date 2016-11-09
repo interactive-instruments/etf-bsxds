@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.895+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-11-07T14:40:49.668+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>vendor</name>
@@ -45,6 +45,29 @@
                </type-declaration>
             </method-parameter>
          </method-parameters>
+      </method>
+      <method>
+         <name>ComponentDto</name>
+         <constructor>true</constructor>
+         <modifier>2</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>getVendor</name>

@@ -2644,7 +2644,7 @@
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>invokedTestCases</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</reference-class>
-               <field name="etf:invokedTests/etf:TestCaseResult" xsi:type="node"/>
+               <field name="invokedTests/TestCaseResult" xsi:type="node"/>
                <container xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>
                </container>
@@ -2652,7 +2652,7 @@
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>invokedTestSteps</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</reference-class>
-               <field name="etf:invokedTests/etf:TestStepResult" xsi:type="node"/>
+               <field name="invokedTests/TestStepResult" xsi:type="node"/>
                <container xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>
                </container>
@@ -2671,12 +2671,12 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
                <source-to-target-key-field-association>
                   <field-reference>
-                     <source-field name="attachment/@ref" xsi:type="node"/>
+                     <source-field name="attachments/attachment/@ref" xsi:type="node"/>
                      <target-field name="@id" xsi:type="node"/>
                   </field-reference>
                </source-to-target-key-field-association>
                <source-to-target-key-fields>
-                  <field name="attachment/@ref" xsi:type="node"/>
+                  <field name="attachments/attachment/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
                <containerpolicy xsi:type="list-container-policy">
                   <collection-type>java.util.Vector</collection-type>

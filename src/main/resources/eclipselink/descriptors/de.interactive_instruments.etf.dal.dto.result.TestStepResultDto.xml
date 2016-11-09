@@ -28,7 +28,7 @@
          </reference-descriptor-handle>
          <xml-field-pairs>
             <field-pair>
-               <source-xml-field>attachment/@ref</source-xml-field>
+               <source-xml-field>attachments/attachment/@ref</source-xml-field>
                <target-xml-field>@id</target-xml-field>
             </field-pair>
          </xml-field-pairs>
@@ -103,7 +103,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestCaseResultDto</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>etf:invokedTests/etf:TestCaseResult</xpath>
+         <xpath>invokedTests/TestCaseResult</xpath>
          <container-policy type="list">
             <container-class>
                <uses-default-container-class>true</uses-default-container-class>
@@ -120,7 +120,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>etf:invokedTests/etf:TestStepResult</xpath>
+         <xpath>invokedTests/TestStepResult</xpath>
          <container-policy type="list">
             <container-class>
                <uses-default-container-class>true</uses-default-container-class>

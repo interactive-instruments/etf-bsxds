@@ -28,14 +28,11 @@
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
                                 <xs:annotation>
-                                    <xs:documentation> Property value
-                                    </xs:documentation>
+                                    <xs:documentation> Property value </xs:documentation>
                                 </xs:annotation>
-                                <xs:attribute name="name" type="xs:string"
-                                    use="required">
+                                <xs:attribute name="name" type="xs:string" use="required">
                                     <xs:annotation>
-                                        <xs:documentation>Property
-                                            name</xs:documentation>
+                                        <xs:documentation>Property name</xs:documentation>
                                     </xs:annotation>
                                 </xs:attribute>
                             </xs:extension>
@@ -321,7 +318,7 @@
                 schema type.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:anyURI">
-            <xs:pattern value="(file|https?|urn|git|svn|ssh|sftp|ftp)(://).+"/>
+            <xs:pattern value="(path|https?|urn|git|svn|ssh|sftp|ftp|file)(://).+"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -534,8 +531,8 @@
             <xs:enumeration value="NOT_APPLICABLE">
                 <xs:annotation>
                     <xs:documentation>NOT_APPLICABLE if at least one status value is NOT_APPLICABLE,
-                        in the case the test object does not provide the capabilities for executing
-                        the test </xs:documentation>
+                        in the case the test is skipped for instance because the test object does
+                        not provide the capabilities for executing the test </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="INFO">

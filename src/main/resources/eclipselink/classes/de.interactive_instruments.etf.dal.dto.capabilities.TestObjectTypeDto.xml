@@ -5,11 +5,20 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-08-24T10:57:51.857+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2016-11-07T14:40:49.688+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
+         <name>namingConvention</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.NamingConvention</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
          <name>subTypes</name>
-         <modifier>4</modifier>
+         <modifier>2</modifier>
          <type-declaration>
             <type-handle>
                <type-name>java.util.List</type-name>
@@ -22,6 +31,20 @@
          <name>TestObjectTypeDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
+      </method>
+      <method>
+         <name>TestObjectTypeDto</name>
+         <constructor>true</constructor>
+         <modifier>2</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>addSubType</name>
@@ -42,6 +65,24 @@
          </method-parameters>
       </method>
       <method>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getNamingConvention</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.capabilities.NamingConvention</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getSubTypes</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -49,6 +90,24 @@
                <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>setNamingConvention</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.NamingConvention</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setSubTypes</name>
