@@ -5,6 +5,8 @@
 		<x:e key="TestReport">test report</x:e>
 		<x:e key="PublicationLocation">Report URI</x:e>
 		<x:e key="PublicationLocationLink">Link</x:e>
+		<x:e key="AssertionLocation">Assertion URI</x:e>
+		<x:e key="AssertionLocationLink">Link</x:e>
 		<x:e key="Created">Created</x:e>
 		<x:e key="TestMachine">Test machine</x:e>
 		<x:e key="Account">Account</x:e>
@@ -74,7 +76,7 @@
 		<x:e key="OnlyManual">Only manual</x:e>
 		<x:e key="FeatureType">Feature Type</x:e>
 		<x:e key="FeatureCount">Feature Count</x:e>
-		<x:e key="LogFile">Log file</x:e>
+		<x:e key="LogFile">Log path</x:e>
 		<x:e key="Log">Log URI</x:e>
 		<x:e key="LogLink">Link</x:e>
 	</x:lang>
@@ -83,6 +85,8 @@
 		<x:e key="TestReport">Testbericht</x:e>
 		<x:e key="PublicationLocation">Berichts-URI</x:e>
 		<x:e key="PublicationLocationLink">Link</x:e>
+		<x:e key="AssertionLocation">Test URI</x:e>
+		<x:e key="AssertionLocationLink">Link</x:e>
 		<x:e key="Created">Erzeugt</x:e>
 		<x:e key="TestMachine">Testmaschine</x:e>
 		<x:e key="Account">Tester</x:e>

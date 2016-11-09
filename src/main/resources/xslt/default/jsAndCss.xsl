@@ -100,7 +100,6 @@
 				}
 			}
 			
-			
 			<!-- Controls for filtering -->
 			$( "input[name=radio-filter]" ).on( "click", function() {
 			
@@ -154,20 +153,59 @@
 				$('.FailedTestCase').show('fast');
 				$('.FailedTestStep').show('fast');
 				$('.FailedAssertion').show('fast');
+			}});
+			
+			$.fn.exists = function(){ return this.length > 0; }
+			
+			$.fn.getParentWithClass = function(className) {
+				var p = this.parent();
+				if(p.exists()) {
+					return p.hasClass(className) ? p : p.getParentWithClass(className);
+				}
+				console.warn('Parent class '+className+' not found');
+				return null;
 			}
-			});
 			
-			
-			$( document ).ready(function() {
-				$('.ReportDetail').hide();
-				$('.DoNotShowInSimpleView').hide();
+			$(document).ready(function() {
+				var url = decodeURIComponent(window.location.href);
+				var anchorIdx = url.indexOf("#");
+				var anchorId = anchorIdx != -1 ? url.substring(anchorIdx+1) : "";
+				var anchorElement = $('#'+anchorId);
+				console.log(anchorElement);
+				if(anchorId!="" &amp;&amp; anchorElement.length !==0) {
+					console.log("Scrolling to anchor: "+anchorId);
+					$('.ReportDetail').hide();
+					$('.DoNotShowInSimpleView').show();
+					// Expand parent model items
+
+					anchorElement.collapsible('expand').getParentWithClass("TestSuite").collapsible('expand');
+					var testModulePar = anchorElement.collapsible('expand').getParentWithClass("TestModule")
+					if(testModulePar) {
+						testModulePar.collapsible('expand');
+					}
+					anchorElement.collapsible('expand').getParentWithClass("TestCase").collapsible('expand');
+					var testStepPar = anchorElement.collapsible('expand').getParentWithClass("TestStep");
+					if(testStepPar) {
+						testStepPar.collapsible('expand');
+					}
+					anchorElement.live("expand", function(e) {
+						var top = $(e.target).offset().top;
+						if ($(window).scrollTop() > top) {
+							$(window).scrollTop(top);
+						}
+					});
+				}else{
+					$('.ReportDetail').hide();
+					$('.DoNotShowInSimpleView').hide();
+				}
+				
 				
 				if ( $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
 					$('#cntrlShowOnlyManual').checkboxradio();
 					$('#cntrlShowOnlyManual').checkboxradio('refresh');
 					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
-				console.log( "Manuals: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
+				console.log("Number of manual test steps: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
 				
 				<!-- Controls for switching the level of detail -->
 			
@@ -186,7 +224,6 @@
 					updateLod(cntrl);
 				});	
 				
-				
 				$(document).scroll(function () {
 					var y = $(this).scrollTop();
 					if (y > 370) {
@@ -195,6 +232,8 @@
 						$('#lodFadinMenu').fadeOut();
 					}
 				});
+				
+				
 			});
 			
 			

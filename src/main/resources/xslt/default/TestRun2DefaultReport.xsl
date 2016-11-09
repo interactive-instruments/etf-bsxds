@@ -438,7 +438,7 @@
 				<xsl:variable name="TestSuite" select="key('testSuiteKey', ../../etf:resultedFrom/@ref)"/>
 				<div id="rprtLogFile" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
 					<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
-					<pre>Log file not available</pre>
+					<pre>Log path not available</pre>
 				</div>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -655,7 +655,7 @@
 	<xsl:template match="etf:TestCaseResult">
 		<xsl:variable name="TestCase" select="key('testCaseKey', ./etf:resultedFrom/@ref)"/>
 		<xsl:variable name="resultItem" select="."/>
-		<div data-role="collapsible" data-inset="false" data-mini="true">
+		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true">
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
@@ -977,7 +977,10 @@
 	<xsl:template match="etf:TestAssertionResult">
 		<xsl:variable name="resultItem" select="."/>
 		<xsl:variable name="TestAssertion" select="key('testAssertionKey', ./etf:resultedFrom/@ref)"/>
-		<div data-role="collapsible" data-mini="true">
+		
+		
+		<div id="{$TestAssertion/@id}" data-role="collapsible" data-mini="true">
+			
 			<!-- Assertion Styling: Set attributes do indicate the status -->
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
@@ -1074,9 +1077,17 @@
 						<xsl:value-of select="$TestAssertion/@id"/>
 					</td>
 				</tr>
+				<tr class="DoNotShowInSimpleView">
+					<td><xsl:value-of select="$lang/x:e[@key = 'AssertionLocation']"/></td>
+					<td>
+						<a href="{$baseUrl}/reports/{substring-after ($testRun/@id, 'EID')}?lang={$language}#{$TestAssertion/@id}"
+							data-ajax="false">
+							<xsl:value-of select="$lang/x:e[@key = 'AssertionLocationLink']"/>
+						</a>
+					</td>
+				</tr>
 			</table>
 			<br/>
-			<!-- TODO TOKEN REPLACEMENT -->
 			<xsl:if
 				test="$TestAssertion/etf:expression and not(normalize-space($TestAssertion/etf:expression) = ('','NOT_APPLICABLE', '''PASSED'''))">
 				<div class="ReportDetail Expression">
