@@ -1,11 +1,11 @@
-/*
- * Copyright ${year} interactive instruments GmbH
+/**
+ * Copyright 2010-2016 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,26 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.TimeUtils;
-import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.util.*;
+
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.Releasable;
+import de.interactive_instruments.TimeUtils;
+import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
+import de.interactive_instruments.exceptions.ExcUtils;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestResultWriter {
+final class XmlTestResultWriter implements Releasable {
 
-	static final String ETF_NS = "http://www.interactive-instruments.de/etf/2.0";
-	static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
-	static final String ETF_NS_PREFIX = "etf";
-	static final String ID_PREFIX = "EID";
+	public static final String ETF_NS = "http://www.interactive-instruments.de/etf/2.0";
+	public static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
+	public static final String ETF_NS_PREFIX = "etf";
+	public static final String ID_PREFIX = "EID";
 
 	private final Deque<ResultModelItem> results = new LinkedList<>();
 	private final Map<String, Attachment> attachments = new HashMap<>();
@@ -40,6 +44,10 @@ final class TestResultWriter {
 	private final Random random = new Random();
 
 	private final XMLStreamWriter writer;
+
+	XmlTestResultWriter(final XMLStreamWriter writer) throws XMLStreamException {
+		this.writer = writer;
+	}
 
 	private final class ResultModelItem {
 		private final String id;
@@ -53,14 +61,14 @@ final class TestResultWriter {
 		}
 
 		void write(final int status, final long stopTimestamp) throws XMLStreamException {
-			if(!results.isEmpty()) {
+			if (!results.isEmpty()) {
 				writer.writeStartElement("parent");
-				writer.writeAttribute("ref", ID_PREFIX+results.getLast().id);
+				writer.writeAttribute("ref", ID_PREFIX + results.getLast().id);
 				writer.writeEndElement();
 			}
 
 			writer.writeStartElement("resultedFrom");
-			writer.writeAttribute("ref", ID_PREFIX+resultedFrom);
+			writer.writeAttribute("ref", ID_PREFIX + resultedFrom);
 			writer.writeEndElement();
 
 			writer.writeStartElement("startTimestamp");
@@ -68,7 +76,7 @@ final class TestResultWriter {
 			writer.writeEndElement();
 
 			writer.writeStartElement("duration");
-			writer.writeCharacters(String.valueOf(stopTimestamp-startTimestamp));
+			writer.writeCharacters(String.valueOf(stopTimestamp - startTimestamp));
 			writer.writeEndElement();
 
 			writer.writeStartElement("status");
@@ -83,6 +91,7 @@ final class TestResultWriter {
 
 	private final class Attachment {
 		private final IFile attachmentFile;
+		private final byte[] base64EncodedContent;
 		private final String id;
 		private final String label;
 		private final String encoding;
@@ -92,6 +101,17 @@ final class TestResultWriter {
 		public Attachment(final String id, final IFile attachmentFile, final String label, final String encoding, final String mimeType, final String type) {
 			this.id = id;
 			this.attachmentFile = attachmentFile;
+			this.base64EncodedContent = null;
+			this.label = label;
+			this.encoding = encoding;
+			this.mimeType = mimeType;
+			this.type = type;
+		}
+
+		public Attachment(final String id, final byte[] base64EncodedContent, final String label, final String encoding, final String mimeType, final String type) {
+			this.id = id;
+			this.attachmentFile = null;
+			this.base64EncodedContent = base64EncodedContent;
 			this.label = label;
 			this.encoding = encoding;
 			this.mimeType = mimeType;
@@ -100,10 +120,10 @@ final class TestResultWriter {
 
 		void write() throws XMLStreamException {
 			writer.writeStartElement("Attachment");
-			if(type!=null) {
+			if (type != null) {
 				writer.writeAttribute("type", type);
 			}
-			writer.writeAttribute("id", ID_PREFIX+id);
+			writer.writeAttribute("id", ID_PREFIX + id);
 
 			writer.writeStartElement("label");
 			writer.writeCharacters(label);
@@ -116,10 +136,19 @@ final class TestResultWriter {
 			writer.writeStartElement("mimeType");
 			writer.writeCharacters(mimeType);
 			writer.writeEndElement();
-
-			writer.writeStartElement("referencedData");
-			writer.writeAttribute("href", "file://"+attachmentFile.getAbsolutePath());
-			writer.writeEndElement();
+			if(attachmentFile!=null) {
+				writer.writeStartElement("referencedData");
+				writer.writeAttribute("href", "file://" + attachmentFile.getAbsolutePath());
+				writer.writeEndElement();
+			}else{
+				writer.writeStartElement("embeddedData");
+				final char[] convertedChars = new char[base64EncodedContent.length];
+				for(int i=0;i < base64EncodedContent.length;i++){
+					convertedChars[i]=(char)base64EncodedContent[i];
+				}
+				writer.writeCharacters(convertedChars, 0, convertedChars.length);
+				writer.writeEndElement();
+			}
 
 			writer.writeEndElement();
 		}
@@ -135,14 +164,14 @@ final class TestResultWriter {
 		}
 
 		public Message(final String translationTemplateId, final String[] arguments) {
-			if(arguments.length%2!=0) {
+			if (arguments.length % 2 != 0) {
 				throw new IllegalStateException("There is at least one invalid token value pair");
 			}
 			this.translationTemplateId = translationTemplateId;
 			this.arguments = Arrays.asList(arguments);
 		}
 
-		public Message(final String translationTemplateId, final Map<String,String> arguments) {
+		public Message(final String translationTemplateId, final Map<String, String> arguments) {
 			this.translationTemplateId = translationTemplateId;
 			this.arguments = new ArrayList<>();
 			for (final Map.Entry<String, String> entry : arguments.entrySet()) {
@@ -154,12 +183,12 @@ final class TestResultWriter {
 		void write() throws XMLStreamException {
 			writer.writeStartElement("message");
 			writer.writeAttribute("ref", translationTemplateId);
-			if(arguments!=null) {
+			if (arguments != null) {
 				writer.writeStartElement("translationArguments");
-				for (int i = 0; i < arguments.size(); i+=2) {
+				for (int i = 0; i < arguments.size(); i += 2) {
 					writer.writeStartElement("argument");
 					writer.writeAttribute("token", arguments.get(i));
-					writer.writeCharacters(arguments.get(i+1));
+					writer.writeCharacters(arguments.get(i + 1));
 					writer.writeEndElement();
 
 				}
@@ -169,23 +198,194 @@ final class TestResultWriter {
 		}
 	}
 
-	String writeEidAndMarkResultModelItem(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	private String writeEidAndMarkResultModelItem(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
 		long time = startTimestamp << 32;
 		time |= ((startTimestamp & 0xFFFF00000000L) >> 16);
 		time |= 0x1000 | ((startTimestamp >> 48) & 0x0FFF);
 		final String genId = new UUID(time, random.nextLong()).toString();
-		writer.writeAttribute("id", ID_PREFIX+genId);
+		writer.writeAttribute("id", ID_PREFIX + genId);
 		results.addLast(new ResultModelItem(genId, startTimestamp, resultedFrom));
 		return genId;
 	}
 
+	// Start writing results
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public String writeStartTestTaskResult(final String resultedFrom, final long startTimestamp, final String testObjectRef) throws XMLStreamException {
+		writer.writeStartDocument("UTF-8", "1.0");
+		writer.writeStartElement(ETF_NS_PREFIX, "TestTaskResult", ETF_NS);
+		writer.setPrefix(ETF_NS_PREFIX, ETF_NS);
+		writer.writeNamespace(ETF_NS_PREFIX, ETF_NS);
+		writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		writer.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
+				ETF_NS + " " + ETF_RESULT_XSD);
+		writer.writeAttribute("xmlns", ETF_NS);
+		final String id = UUID.randomUUID().toString();
+		writeId(id);
+		addResult(id, startTimestamp, resultedFrom);
+		writer.writeStartElement("testObject");
+		writeRef(testObjectRef);
+		writer.writeEndElement(); // testObject
+		writer.writeStartElement("testModuleResults");
+		return id;
+	}
 
+	public String writeStartTestModuleResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+		writer.writeStartElement("TestModuleResult");
+		final String id = writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
+		writer.writeStartElement("testCaseResults");
+		return id;
+	}
 
+	public String writeStartTestCaseResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+		writer.writeStartElement("TestCaseResult");
+		final String id = writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
+		writer.writeStartElement("testStepResults");
+		return id;
+	}
 
-	void close() {
+	public String writeStartTestStepResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+		writer.writeStartElement("TestStepResult");
+		final String id = writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
+		return id;
+	}
+
+	public void writeStartInvokedTests() throws XMLStreamException {
+		writer.writeStartElement("invokedTests");
+		// Must be called to provoke closing the tag of the invokedTests element
+		writer.writeComment("SUB_RESULTS");
+	}
+
+	public void writeStartTestAssertionResults() throws XMLStreamException {
+		writer.writeStartElement("testAssertionResults");
+	}
+
+	public String writeStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+		writer.writeStartElement("TestAssertionResult");
+		return writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
+	}
+
+	// Finish  results
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private String writeResultModelItem(final int status, final long stopTimestamp) throws XMLStreamException {
+		final ResultModelItem resultModelItem = results.removeLast();
+		resultModelItem.write(status, stopTimestamp);
+		writer.writeEndElement();
+		return resultModelItem.getResultedFromId();
+	}
+
+	public String writeEndTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException, FileNotFoundException, StorageException {
+		writer.writeEndElement();
+		if (!attachments.isEmpty()) {
+			writer.writeStartElement("attachments");
+			for (final Attachment attachment : attachments.values()) {
+				attachment.write();
+			}
+			attachments.clear();
+			writer.writeEndElement();
+		}
+		final String id = writeResultModelItem(status, stopTimestamp);
+		return id;
+	}
+
+	public String writeEndTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+		writer.writeEndElement();
+		return writeResultModelItem(status, stopTimestamp);
+	}
+
+	public String writeEndTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+		writer.writeEndElement();
+		return writeResultModelItem(status, stopTimestamp);
+	}
+
+	public String writeEndTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+		return writeResultModelItem(status, stopTimestamp);
+	}
+
+	public void writeEndTestAssertionResults() throws XMLStreamException {
+		writer.writeEndElement();
+	}
+
+	public void writeEndInvokedTests() throws XMLStreamException {
+		writer.writeEndElement();
+	}
+
+	public String writeEndTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+		if (!messages.isEmpty()) {
+			writer.writeStartElement("messages");
+			for (final Message message : this.messages) {
+				message.write();
+			}
+			writer.writeEndElement();
+			messages.clear();
+		}
+		return writeResultModelItem(status, stopTimestamp);
+	}
+
+	public void flush() throws XMLStreamException {
+		writer.flush();
+	}
+
+	public void close() throws XMLStreamException {
+		writer.writeEndDocument();
 		writer.flush();
 		writer.close();
+	}
+
+	public String currentResultItemId() {
+		return results!=null ? results.getLast().id : null;
+	}
+
+	@Override
+	public void release() {
+		try {
+			close();
+		} catch (XMLStreamException e) {
+			ExcUtils.suppress(e);
+		}
+	}
+
+	void addMessage(final String translationTemplateId) {
+		messages.add(new Message(translationTemplateId));
+	}
+
+	void addMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
+		messages.add(new Message(translationTemplateId, tokenValuePairs));
+	}
+
+	void addMessage(final String translationTemplateId, final String... tokensAndValues) {
+		messages.add(new Message(translationTemplateId, tokensAndValues));
+	}
+
+	private void writeId(final String id) throws XMLStreamException {
+		writer.writeAttribute("id", ID_PREFIX + id);
+	}
+
+	private void writeRef(final String ref) throws XMLStreamException {
+		writer.writeAttribute("ref", ID_PREFIX + ref);
+	}
+
+	private void addResult(final String id, final long startTimestamp, final String resultedFrom) {
+		results.addLast(new ResultModelItem(id, startTimestamp, resultedFrom));
+	}
+
+	void addAttachment(final String eid, final IFile attachmentFile, final String label, final String encoding, final String mimeType, final String type) {
+		attachments.put(eid, new Attachment(eid, attachmentFile, label, encoding, mimeType, type));
+	}
+
+	void addAttachment(final String eid, final byte[] base64EncodedContent, final String label, final String encoding, final String mimeType, final String type) {
+		attachments.put(eid, new Attachment(eid, base64EncodedContent, label, encoding, mimeType, type));
+	}
+
+	public void addAttachmentRefs(final List<String> testStepAttachmentIds) throws XMLStreamException {
+		writer.writeStartElement("attachments");
+		for (int i = 0, testStepAttachmentIdsSize = testStepAttachmentIds.size(); i < testStepAttachmentIdsSize; i++) {
+			writer.writeStartElement("attachment");
+			writeRef(testStepAttachmentIds.get(i));
+			writer.writeEndElement();
+		}
+		writer.writeEndElement();
 	}
 
 }
