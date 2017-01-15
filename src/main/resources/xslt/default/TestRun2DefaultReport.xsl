@@ -11,7 +11,6 @@
 	<xsl:param name="baseUrl" select="'https://localhost/etf'"/>
 	<xsl:param name="serviceUrl" select="'https://localhost/etf/v2'"/>
 	<xsl:output method="html" doctype-system="about:legacy-compat" indent="yes" encoding="UTF-8"/>
-	<!-- Translation TODO -->
 	<xsl:key name="translation" match="x:lang/x:e" use="@key"/>
 	<xsl:variable name="lang" select="document('ui-text.xml')/*/x:lang[@xml:lang = $language]"/>
 	<xsl:template match="x:lang">
@@ -26,6 +25,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	<!-- VERSION (todo: integrate into build process) -->
+	<xsl:variable name="reportVersion">2.0.0-b170115</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -87,7 +88,7 @@
 					<h1>
 						<xsl:value-of select="./etf:testRuns[1]/etf:TestRun[1]/etf:label/text()"/>
 					</h1>
-					<a href="{$baseUrl}/reports" data-ajax="false" data-icon="back"
+					<a href="{$baseUrl}/#test-reports" data-ajax="false" data-icon="back"
 						data-iconpos="notext"/>
 				</div>
 				<div data-role="content">
@@ -126,7 +127,7 @@
 						<xsl:value-of select="$lang/x:e[@key = 'PublicationLocation']"/>
 					</td>
 					<td>
-						<a href="{$baseUrl}/reports/{substring-after ($testRun/@id, 'EID')}?lang={$language}"
+						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}"
 							data-ajax="false">
 							<xsl:value-of select="$lang/x:e[@key = 'PublicationLocationLink']"/>
 						</a>
@@ -173,10 +174,18 @@
 				</tr>
 				<tr class="ReportDetail">
 					<td>
+						<xsl:value-of select="$lang/x:e[@key = 'ReportVersion']"/>
+					</td>
+					<td>
+						<xsl:value-of select="$reportVersion"/>
+					</td>
+				</tr>
+				<tr class="ReportDetail">
+					<td>
 						<xsl:value-of select="$lang/x:e[@key = 'Log']"/>
 					</td>
 					<td>
-						<a href="{$serviceUrl}/TestResults/{substring-after ($testRun/@id, 'EID')}/log"
+						<a href="{$serviceUrl}/TestRuns/{substring-after ($testRun/@id, 'EID')}/log"
 						   data-ajax="false">
 						<xsl:value-of select="$lang/x:e[@key = 'LogLink']"/>
 						</a>
@@ -682,22 +691,14 @@
 			</xsl:attribute>
 			<xsl:attribute name="class">
 				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">TestCase
-						SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">TestCase
-						ManualTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">TestCase
-						FailedTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">TestCase
-						SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">TestCase
-						SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">TestCase
-						FailedTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">TestCase
-						SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">TestCase
-						SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'">TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">TestCase ManualTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'">TestCase FailedTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'">TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">TestCase FailedTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
 			<h3>
@@ -781,8 +782,10 @@
 						</td>
 						<td>
 							<xsl:value-of select="$lang/x:e[@key = 'TestCase']"/>
-							<xsl:text> </xsl:text>
-							<a href="#{$DepTestCase/@id}">
+							<xsl:variable name="depTestCaseId" select="$DepTestCase/@id"/>
+							<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$depTestCaseId}"
+								data-ajax="false"
+								onclick="event.preventDefault(); jumpToAnchor('{$depTestCaseId}'); return false;">
 								<xsl:value-of select="$DepTestCase/etf:label/text()"/>
 							</a>
 						</td>
@@ -1020,22 +1023,14 @@
 			</xsl:attribute>
 			<xsl:attribute name="class">
 				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">Assertion
-						SuccessfulAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">Assertion
-						ManualAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">Assertion
-						FailedAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">Assertion
-						SuccessfulAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">Assertion
-						SuccessfulAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">Assertion
-						FailedAssertion</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">Assertion
-						SuccessfulAssertion DoNotShowInSimpleView</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">Assertion
-						SuccessfulAssertion DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'">Assertion SuccessfulAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">Assertion ManualAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'">Assertion FailedAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'">Assertion SuccessfulAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">Assertion SuccessfulAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">Assertion FailedAssertion</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">Assertion SuccessfulAssertion DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">Assertion SuccessfulAssertion DoNotShowInSimpleView</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
 			<xsl:variable name="id" select="./@id"/>
@@ -1079,9 +1074,11 @@
 				</tr>
 				<tr class="DoNotShowInSimpleView">
 					<td><xsl:value-of select="$lang/x:e[@key = 'AssertionLocation']"/></td>
+					<xsl:variable name="testAssertionId" select="$TestAssertion/@id"/>
 					<td>
-						<a href="{$baseUrl}/reports/{substring-after ($testRun/@id, 'EID')}?lang={$language}#{$TestAssertion/@id}"
-							data-ajax="false">
+						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$testAssertionId}"
+							data-ajax="false"
+							onclick="event.preventDefault(); jumpToAnchor('{$testAssertionId}'); return false;">
 							<xsl:value-of select="$lang/x:e[@key = 'AssertionLocationLink']"/>
 						</a>
 					</td>

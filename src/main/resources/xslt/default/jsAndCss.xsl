@@ -102,58 +102,58 @@
 			
 			<!-- Controls for filtering -->
 			$( "input[name=radio-filter]" ).on( "click", function() {
-			
 			var cntrl = $( "input[name=radio-filter]:checked" ).val();
-			if(cntrl=="cntrlShowOnlyFailed")
-			{
-				$('.TestSuite').collapsible('expand');
-				$('.TestModule').collapsible('expand');
-				$('.SuccessfulTestCase').hide('slow');
-				$('.ManualTestCase').hide('slow');
-				$('.FailedTestCase').collapsible('expand');
-				$('.FailedTestCase').show('fast');
-				$('.SuccessfulTestStep').collapsible('collapse');
-				$('.ManualTestStep').collapsible('collapse');
-				$('.FailedTestStep').collapsible('expand');
-				$('.FailedTestStep').show('fast');
-				$('.SuccessfulTestStep').hide('slow');
-				$('.ManualTestStep').hide('slow');
-				$('.FailedAssertion').collapsible('expand');
-				$('.FailedAssertion').show('fast');
-				$('.SuccessfulAssertion').hide('slow');
-				$('.ManualAssertion').hide('slow');
-			}
-			else if(cntrl=="cntrlShowOnlyManual")
-			{
-				$('.TestSuite').collapsible('expand');
-				$('.TestModule').collapsible('expand');
-				$('.SuccessfulTestCase').hide('slow');
-				$('.FailedTestCase').hide('slow');
-				$('.ManualTestCase').collapsible('expand');
-				$('.ManualTestCase').show('fast');
-				$('.SuccessfulTestStep').collapsible('collapse');
-				$('.FailedTestStep').collapsible('collapse');
-				$('.ManualTestStep').collapsible('expand');
-				$('.ManualTestStep').show('fast');
-				$('.SuccessfulTestStep').hide('slow');
-				$('.FailedTestStep').hide('slow');
-				$('.ManualAssertion').collapsible('expand');
-				$('.ManualAssertion').show('fast');
-				$('.SuccessfulAssertion').hide('slow');
-				$('.FailedAssertion').hide('slow');
-			}
-			else if(cntrl=="cntrlShowAll")
-			{
-				$('.SuccessfulTestCase').show('fast');
-				$('.SuccessfulTestStep').show('fast');
-				$('.SuccessfulAssertion').show('fast');
-				$('.ManualTestCase').show('fast');
-				$('.ManualTestStep').show('fast');
-				$('.ManualAssertion').show('fast');
-				$('.FailedTestCase').show('fast');
-				$('.FailedTestStep').show('fast');
-				$('.FailedAssertion').show('fast');
-			}});
+				if(cntrl=="cntrlShowOnlyFailed")
+				{
+					$('.TestSuite').collapsible('expand');
+					$('.TestModule').collapsible('expand');
+					$('.SuccessfulTestCase').hide('slow');
+					$('.ManualTestCase').hide('slow');
+					$('.FailedTestCase').collapsible('expand');
+					$('.FailedTestCase').show('fast');
+					$('.SuccessfulTestStep').collapsible('collapse');
+					$('.ManualTestStep').collapsible('collapse');
+					$('.FailedTestStep').collapsible('expand');
+					$('.FailedTestStep').show('fast');
+					$('.SuccessfulTestStep').hide('slow');
+					$('.ManualTestStep').hide('slow');
+					$('.FailedAssertion').collapsible('expand');
+					$('.FailedAssertion').show('fast');
+					$('.SuccessfulAssertion').hide('slow');
+					$('.ManualAssertion').hide('slow');
+				}
+				else if(cntrl=="cntrlShowOnlyManual")
+				{
+					$('.TestSuite').collapsible('expand');
+					$('.TestModule').collapsible('expand');
+					$('.SuccessfulTestCase').hide('slow');
+					$('.FailedTestCase').hide('slow');
+					$('.ManualTestCase').collapsible('expand');
+					$('.ManualTestCase').show('fast');
+					$('.SuccessfulTestStep').collapsible('collapse');
+					$('.FailedTestStep').collapsible('collapse');
+					$('.ManualTestStep').collapsible('expand');
+					$('.ManualTestStep').show('fast');
+					$('.SuccessfulTestStep').hide('slow');
+					$('.FailedTestStep').hide('slow');
+					$('.ManualAssertion').collapsible('expand');
+					$('.ManualAssertion').show('fast');
+					$('.SuccessfulAssertion').hide('slow');
+					$('.FailedAssertion').hide('slow');
+				}
+				else if(cntrl=="cntrlShowAll")
+				{
+					$('.SuccessfulTestCase').show('fast');
+					$('.SuccessfulTestStep').show('fast');
+					$('.SuccessfulAssertion').show('fast');
+					$('.ManualTestCase').show('fast');
+					$('.ManualTestStep').show('fast');
+					$('.ManualAssertion').show('fast');
+					$('.FailedTestCase').show('fast');
+					$('.FailedTestStep').show('fast');
+					$('.FailedAssertion').show('fast');
+				}
+			});
 			
 			$.fn.exists = function(){ return this.length > 0; }
 			
@@ -166,16 +166,11 @@
 				return null;
 			}
 			
-			$(document).ready(function() {
-				var url = decodeURIComponent(window.location.href);
-				var anchorIdx = url.indexOf("#");
-				var anchorId = anchorIdx != -1 ? url.substring(anchorIdx+1) : "";
+			<!-- Jump to element with ID -->
+			function jumpToAnchor(anchorId) {
 				var anchorElement = $('#'+anchorId);
-				console.log(anchorElement);
-				if(anchorId!="" &amp;&amp; anchorElement.length !==0) {
+				if(anchorId!="" &amp;&amp; anchorElement.exists()) {
 					console.log("Scrolling to anchor: "+anchorId);
-					$('.ReportDetail').hide();
-					$('.DoNotShowInSimpleView').show();
 					// Expand parent model items
 
 					anchorElement.collapsible('expand').getParentWithClass("TestSuite").collapsible('expand');
@@ -188,54 +183,65 @@
 					if(testStepPar) {
 						testStepPar.collapsible('expand');
 					}
-					anchorElement.live("expand", function(e) {
-						var top = $(e.target).offset().top;
-						if ($(window).scrollTop() > top) {
-							$(window).scrollTop(top);
-						}
-					});
+					var position = $(anchorElement).offset().top;
+					$("html, body").stop().animate({ scrollTop: position });
+					window.history.pushState(null,"", "#"+anchorId);
+				}
+			}			
+			<!-- Controls for switching the level of detail -->
+			$("#controlgroupLOD input").on( "click", function() {
+				var cntrl = $( "#controlgroupLOD input:checked" ).val();
+				$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
+				updateLod(cntrl);
+			});
+			$("#lodFadinMenuSelect").on( "change", function() {
+				var cntrl = $( "#lodFadinMenuSelect option:selected").val()
+				$("#cntrlAllDetails").prop('checked', false).checkboxradio("refresh");
+				$("#cntrlLessInformation").prop('checked', false).checkboxradio("refresh");
+				$("#cntrlSimplified").prop('checked', false).checkboxradio("refresh");
+				$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
+				updateLod(cntrl);
+			});	
+			$(document).scroll(function () {
+				var y = $(this).scrollTop();
+				if (y > 370) {
+					$('#lodFadinMenu').fadeIn();
+				} else {
+					$('#lodFadinMenu').fadeOut();
+				}
+			});
+			
+			<!-- Init page -->
+			$(document).one('pagebeforeshow', function() {
+				$('.ReportDetail').hide();
+				
+				<!-- Jump to element with ID on page initialization -->
+				var url = decodeURIComponent(window.location.href);
+				var anchorIdx = url.indexOf("#");
+				var anchorId = anchorIdx != -1 ? url.substring(anchorIdx+1) : "";
+				var anchorElement = $('#'+anchorId);
+				if(anchorId!="" &amp;&amp; anchorElement.exists()) {
+					$('.DoNotShowInSimpleView').show();
+					jumpToAnchor(anchorId);
+					$("body").one("pagecontainershow", function () {
+						var position = $(anchorElement).offset().top;
+						// ... but it works...
+						setTimeout( function() {
+							$("html, body").stop().animate({ scrollTop: position });
+							},150);
+						});
 				}else{
-					$('.ReportDetail').hide();
 					$('.DoNotShowInSimpleView').hide();
 				}
 				
 				
+				<!-- Hide checkbox if there are no manual assertions -->
 				if ( $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
 					$('#cntrlShowOnlyManual').checkboxradio();
 					$('#cntrlShowOnlyManual').checkboxradio('refresh');
 					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
-				console.log("Number of manual test steps: " + $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length );
-				
-				<!-- Controls for switching the level of detail -->
-			
-				$("#controlgroupLOD input").on( "click", function() {
-					var cntrl = $( "#controlgroupLOD input:checked" ).val();
-					$('#lodFadinMenuSelect').val(cntrl).selectmenu('refresh');
-					updateLod(cntrl);
-				});
-				
-				$("#lodFadinMenuSelect").on( "change", function() {
-					var cntrl = $( "#lodFadinMenuSelect option:selected").val()
-					$("#cntrlAllDetails").prop('checked', false).checkboxradio("refresh");
-					$("#cntrlLessInformation").prop('checked', false).checkboxradio("refresh");
-					$("#cntrlSimplified").prop('checked', false).checkboxradio("refresh");
-					$("#"+cntrl).prop('checked', true).checkboxradio("refresh");
-					updateLod(cntrl);
-				});	
-				
-				$(document).scroll(function () {
-					var y = $(this).scrollTop();
-					if (y > 370) {
-						$('#lodFadinMenu').fadeIn();
-					} else {
-						$('#lodFadinMenu').fadeOut();
-					}
-				});
-				
-				
 			});
-			
 			
 		</script>
 	</xsl:template>

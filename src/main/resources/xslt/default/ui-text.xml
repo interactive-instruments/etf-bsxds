@@ -91,7 +91,7 @@
 		<x:e key="TestMachine">Testmaschine</x:e>
 		<x:e key="Account">Tester</x:e>
 		<x:e key="ReportCompleted">Abgeschlossen</x:e>
-		<x:e key="ReportVersion">Version Testbericht</x:e>
+		<x:e key="ReportVersion">Testbericht Version</x:e>
 		<!-- Translation of etf:Properties -->
 		<x:e key="Description">Beschreibung</x:e>
 		<x:e key="ShortDescription">Kurzbeschreibung</x:e>
