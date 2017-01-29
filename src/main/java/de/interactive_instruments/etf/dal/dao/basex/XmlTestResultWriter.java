@@ -136,15 +136,15 @@ final class XmlTestResultWriter implements Releasable {
 			writer.writeStartElement("mimeType");
 			writer.writeCharacters(mimeType);
 			writer.writeEndElement();
-			if(attachmentFile!=null) {
+			if (attachmentFile != null) {
 				writer.writeStartElement("referencedData");
 				writer.writeAttribute("href", "file://" + attachmentFile.getAbsolutePath());
 				writer.writeEndElement();
-			}else{
+			} else {
 				writer.writeStartElement("embeddedData");
 				final char[] convertedChars = new char[base64EncodedContent.length];
-				for(int i=0;i < base64EncodedContent.length;i++){
-					convertedChars[i]=(char)base64EncodedContent[i];
+				for (int i = 0; i < base64EncodedContent.length; i++) {
+					convertedChars[i] = (char) base64EncodedContent[i];
 				}
 				writer.writeCharacters(convertedChars, 0, convertedChars.length);
 				writer.writeEndElement();
@@ -160,7 +160,13 @@ final class XmlTestResultWriter implements Releasable {
 
 		public Message(final String translationTemplateId) {
 			this.translationTemplateId = translationTemplateId;
-			this.arguments = null;
+			// FIXME
+			this.arguments = new ArrayList<String>() {
+				{
+					add("dummyToken");
+					add("dummyValue");
+				}
+			};
 		}
 
 		public Message(final String translationTemplateId, final String[] arguments) {
@@ -334,7 +340,7 @@ final class XmlTestResultWriter implements Releasable {
 	}
 
 	public String currentResultItemId() {
-		return results!=null ? results.getLast().id : null;
+		return results != null ? results.getLast().id : null;
 	}
 
 	@Override

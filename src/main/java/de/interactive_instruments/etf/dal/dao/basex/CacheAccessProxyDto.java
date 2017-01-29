@@ -27,7 +27,7 @@ import de.interactive_instruments.etf.model.EID;
 /**
  * Cache access proxy for Dtos
  *
- * Must be public!
+ * Must be public and non-final!
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */

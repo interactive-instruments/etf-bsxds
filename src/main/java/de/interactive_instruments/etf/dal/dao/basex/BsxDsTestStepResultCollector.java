@@ -42,7 +42,7 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 	 * @param parentCollector
 	 */
 	BsxDsTestStepResultCollector(final AbstractTestCollector parentCollector, final List<String> testStepAttachmentIds, final String testStepId, final long startTimestamp) {
-		super(parentCollector,testStepId);
+		super(parentCollector, testStepId);
 		this.testStepAttachmentIds = testStepAttachmentIds;
 		bos = new ByteArrayOutputStream(512);
 		testCaseResultFile = null;
@@ -75,7 +75,7 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 
 	@Override
 	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws Exception {
-		if(!testStepAttachmentIds.isEmpty()) {
+		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
 		}
@@ -87,7 +87,8 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
 
-	@Override protected void startInvokedTests() {
+	@Override
+	protected void startInvokedTests() {
 		try {
 			writer.writeStartInvokedTests();
 		} catch (XMLStreamException e) {
@@ -95,7 +96,8 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		}
 	}
 
-	@Override protected void endInvokedTests() {
+	@Override
+	protected void endInvokedTests() {
 		try {
 			writer.writeEndInvokedTests();
 		} catch (XMLStreamException e) {
@@ -103,7 +105,8 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		}
 	}
 
-	@Override protected void startTestAssertionResults() {
+	@Override
+	protected void startTestAssertionResults() {
 		try {
 			writer.writeStartTestAssertionResults();
 		} catch (XMLStreamException e) {
@@ -111,7 +114,8 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		}
 	}
 
-	@Override protected void endTestAssertionResults() {
+	@Override
+	protected void endTestAssertionResults() {
 		try {
 			writer.writeEndTestAssertionResults();
 		} catch (XMLStreamException e) {
@@ -150,7 +154,8 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		return writer.currentResultItemId();
 	}
 
-	@Override public void release() {
+	@Override
+	public void release() {
 
 	}
 }

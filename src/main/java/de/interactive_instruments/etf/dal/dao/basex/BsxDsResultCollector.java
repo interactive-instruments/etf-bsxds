@@ -25,6 +25,7 @@ import org.apache.commons.io.IOUtils;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MimeTypeUtils;
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.DataStorage;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
@@ -136,7 +137,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
-		if(!testStepAttachmentIds.isEmpty()) {
+		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
 		}
@@ -147,7 +148,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
 
-	@Override protected void startInvokedTests() {
+	@Override
+	protected void startInvokedTests() {
 		try {
 			writer.writeStartInvokedTests();
 		} catch (XMLStreamException e) {
@@ -155,7 +157,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		}
 	}
 
-	@Override protected void endInvokedTests() {
+	@Override
+	protected void endInvokedTests() {
 		try {
 			writer.writeEndInvokedTests();
 		} catch (XMLStreamException e) {
@@ -163,7 +166,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		}
 	}
 
-	@Override protected void startTestAssertionResults() {
+	@Override
+	protected void startTestAssertionResults() {
 		try {
 			writer.writeStartTestAssertionResults();
 		} catch (XMLStreamException e) {
@@ -171,7 +175,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		}
 	}
 
-	@Override protected void endTestAssertionResults() {
+	@Override
+	protected void endTestAssertionResults() {
 		try {
 			writer.writeEndTestAssertionResults();
 		} catch (XMLStreamException e) {
@@ -251,20 +256,30 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public String markAttachment(final String fileName, final String label, final String encoding, final String mimeType, final String type) throws IOException {
+	public String markAttachment(final String fileName, final String label, final String encoding, String mimeType, final String type) throws IOException {
 		final IFile attachmentFile = tmpDir.secureExpandPathDown(fileName);
 		attachmentFile.expectFileIsReadable();
-		final String eid = "EID"+UUID.randomUUID().toString();
+		final String eid = UUID.randomUUID().toString();
+		if (mimeType == null) {
+			try {
+				mimeType = MimeTypeUtils.detectMimeType(attachmentFile);
+			} catch (final MimeTypeUtilsException ign) {
+				ExcUtils.suppress(ign);
+			}
+			if (SUtils.isNullOrEmpty(mimeType)) {
+				mimeType = "text/plain";
+			}
+		}
 		writer.addAttachment(eid, attachmentFile, label, encoding, mimeType, type);
-		if(currentModelType()==4) {
+		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
-		return eid;
+		return "EID" + eid;
 	}
 
 	@Override
 	public String saveAttachment(final InputStream inputStream, final String label, final String mimeType, final String type) throws IOException {
-		final String eid = "EID"+UUID.randomUUID().toString();
+		final String eid = UUID.randomUUID().toString();
 		String extension = ".txt";
 		if (mimeType != null) {
 			try {
@@ -276,15 +291,15 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final IFile attachmentFile = attachmentDir.secureExpandPathDown(eid + extension);
 		attachmentFile.writeContent(inputStream, "UTF-8");
 		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
-		if(currentModelType()==4) {
+		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
-		return eid;
+		return "EID" + eid;
 	}
 
 	@Override
 	public String saveAttachment(final Reader reader, final String label, final String mimeType, final String type) throws IOException {
-		final String eid = "EID"+UUID.randomUUID().toString();
+		final String eid = UUID.randomUUID().toString();
 		String extension = ".txt";
 		if (mimeType != null) {
 			try {
@@ -296,21 +311,31 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final IFile attachmentFile = attachmentDir.secureExpandPathDown(eid + extension);
 		IOUtils.copy(reader, new FileOutputStream(attachmentFile), "UTF-8");
 		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
-		if(currentModelType()==4) {
+		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
-		return eid;
+		return "EID" + eid;
 	}
 
-	@Override public String saveAttachment(final String content, final String label, final String mimeType, final String type) throws IOException {
-		final String eid = "EID"+UUID.randomUUID().toString();
+	@Override
+	public String saveAttachment(final String content, final String label, String mimeType, final String type) throws IOException {
+		final String eid = UUID.randomUUID().toString();
+		if (mimeType == null) {
+			try {
+				mimeType = MimeTypeUtils.detectMimeType(content);
+			} catch (final MimeTypeUtilsException ign) {
+				ExcUtils.suppress(ign);
+			}
+			if (SUtils.isNullOrEmpty(mimeType)) {
+				mimeType = "text/plain";
+			}
+		}
 		writer.addAttachment(eid, Base64.getEncoder().encode(content.getBytes()), label, "UTF-8", mimeType, type);
-		if(currentModelType()==4) {
+		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
-		return eid;
+		return "EID" + eid;
 	}
-
 
 	@Override
 	public void internalError(final String translationTemplateId, final Map<String, String> tokenValuePairs, final Throwable e) {
@@ -322,7 +347,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		throw new IllegalStateException("Not implemented");
 	}
 
-	@Override public void release() {
+	@Override
+	public void release() {
 
 	}
 }
