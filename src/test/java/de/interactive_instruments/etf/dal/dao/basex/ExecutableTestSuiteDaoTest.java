@@ -16,6 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
+import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -23,7 +24,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.junit.*;
 import org.junit.runners.MethodSorters;
@@ -31,12 +34,10 @@ import org.junit.runners.MethodSorters;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
-import de.interactive_instruments.etf.model.DefaultEidMap;
-import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidFactory;
-import de.interactive_instruments.etf.model.EidMap;
+import de.interactive_instruments.etf.model.*;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
@@ -62,11 +63,11 @@ public class ExecutableTestSuiteDaoTest {
 
 		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_3);
 
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.COMP_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(COMP_DTO_1);
 
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ASSERTION_TYPE_1);
+		BsxTestUtils.forceDeleteAndAdd(ASSERTION_TYPE_1);
 
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TESTSTEP_TYPE_2);
+		BsxTestUtils.forceDeleteAndAdd(TESTSTEP_TYPE_2);
 
 		final EidMap<TestItemTypeDto> testItemTypes = new DefaultEidMap<TestItemTypeDto>() {
 			{
@@ -133,30 +134,40 @@ public class ExecutableTestSuiteDaoTest {
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtils.ETS_DTO_1.getId());
-			writeDao.delete(BsxTestUtils.ETS_DTO_2.getId());
+			writeDao.delete(ETS_DTO_1.getId());
+			writeDao.delete(ETS_DTO_2.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtils.ETS_DTO_1.getId()));
-		writeDao.add(BsxTestUtils.ETS_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtils.ETS_DTO_1.getId()));
+		assertFalse(writeDao.exists(ETS_DTO_1.getId()));
+		writeDao.add(ETS_DTO_1);
+		assertTrue(writeDao.exists(ETS_DTO_1.getId()));
 
-		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(BsxTestUtils.ETS_DTO_1.getId());
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(ETS_DTO_1.getId());
 		// Check internal ID
-		assertEquals(BsxTestUtils.ETS_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(ETS_DTO_1.getId(), preparedDto.getDtoId());
 		final ExecutableTestSuiteDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtils.ETS_DTO_1.getId(), dto.getId());
-		assertEquals(BsxTestUtils.ETS_DTO_1.toString(), dto.toString());
+		assertEquals(ETS_DTO_1.getId(), dto.getId());
+		assertEquals(ETS_DTO_1.toString(), dto.toString());
 		assertNotNull(dto.getParameters());
 		assertEquals("Parameter.1.key", dto.getParameters().getParameter("Parameter.1.key").getName());
 		assertEquals("Parameter.1.value", dto.getParameters().getParameter("Parameter.1.key").getDefaultValue());
 
 		assertEquals("Parameter.2.key", dto.getParameters().getParameter("Parameter.2.key").getName());
 		assertEquals("Parameter.2.value", dto.getParameters().getParameter("Parameter.2.key").getDefaultValue());
+	}
+
+	@Test
+	public void test_4_1_streaming_xml() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.xml", "DsResult2Xml");
+	}
+
+	@Test
+	public void test_4_2_streaming_json() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.json", "DsResult2Json");
 	}
 
 	@Test

@@ -16,6 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
+import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
 
@@ -50,28 +51,28 @@ public class TagDaoTest {
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtils.TAG_DTO_1.getId());
+			writeDao.delete(TAG_DTO_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.TAG_DTO_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(TAG_DTO_1);
 	}
 
 	@Test
 	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtils.TAG_DTO_1.getId()));
-		writeDao.add(BsxTestUtils.TAG_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtils.TAG_DTO_1.getId()));
+		assertFalse(writeDao.exists(TAG_DTO_1.getId()));
+		writeDao.add(TAG_DTO_1);
+		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
 
-		final PreparedDto<TagDto> preparedDto = writeDao.getById(BsxTestUtils.TAG_DTO_1.getId());
+		final PreparedDto<TagDto> preparedDto = writeDao.getById(TAG_DTO_1.getId());
 		// Check internal ID
-		assertEquals(BsxTestUtils.TAG_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(TAG_DTO_1.getId(), preparedDto.getDtoId());
 		final TagDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtils.TAG_DTO_1.getId(), dto.getId());
-		assertEquals(BsxTestUtils.TAG_DTO_1.toString(), dto.toString());
+		assertEquals(TAG_DTO_1.getId(), dto.getId());
+		assertEquals(TAG_DTO_1.toString(), dto.toString());
 	}
 
 }

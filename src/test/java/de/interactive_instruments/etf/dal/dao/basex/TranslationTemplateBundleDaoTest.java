@@ -16,6 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
+import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -66,7 +67,7 @@ public class TranslationTemplateBundleDaoTest {
 	@Before
 	public void clean() {
 		try {
-			writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
+			writeDao.delete(TTB_DTO_1.getId());
 		} catch (ObjectWithIdNotFoundException | StorageException e) {}
 	}
 
@@ -74,25 +75,25 @@ public class TranslationTemplateBundleDaoTest {
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		assertNotNull(writeDao);
 		assertTrue(writeDao.isInitialized());
-		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
-		writeDao.add(BsxTestUtils.TTB_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
-		writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+		writeDao.add(TTB_DTO_1);
+		assertTrue(writeDao.exists(TTB_DTO_1.getId()));
+		writeDao.delete(TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
 	}
 
 	@Test
 	public void test_2_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
-		writeDao.add(BsxTestUtils.TTB_DTO_1);
-		assertTrue(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
-		final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(BsxTestUtils.TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+		writeDao.add(TTB_DTO_1);
+		assertTrue(writeDao.exists(TTB_DTO_1.getId()));
+		final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(TTB_DTO_1.getId());
 
 		// Check internal ID
-		assertEquals(BsxTestUtils.TTB_DTO_1.getId(), preparedDto.getDtoId());
+		assertEquals(TTB_DTO_1.getId(), preparedDto.getDtoId());
 		final TranslationTemplateBundleDto dto = preparedDto.getDto();
 		assertNotNull(dto);
-		assertEquals(BsxTestUtils.TTB_DTO_1.getId(), dto.getId());
+		assertEquals(TTB_DTO_1.getId(), dto.getId());
 
 		assertNotNull(dto.getTranslationTemplateCollection("TR.Template.1"));
 		assertArrayEquals(new String[]{"de", "en"},
@@ -112,8 +113,8 @@ public class TranslationTemplateBundleDaoTest {
 		assertEquals("TR.Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}",
 				dto.getTranslationTemplate("TR.Template.2", "de").getStrWithTokens());
 
-		writeDao.delete(BsxTestUtils.TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(BsxTestUtils.TTB_DTO_1.getId()));
+		writeDao.delete(TTB_DTO_1.getId());
+		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
 	}
 
 	@Test

@@ -15,27 +15,28 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import static de.interactive_instruments.etf.test.TestDtos.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.testdriver.TestResultCollector;
+import de.interactive_instruments.etf.testdriver.TestRunLogger;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
-import org.mockito.Mockito;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
@@ -64,94 +65,90 @@ public class ResultCollectorTest {
 	@Test
 	public void testCollectorStates() throws IOException, ObjectWithIdNotFoundException, StorageException {
 		final TestResultCollector c = new BsxDsResultCollector(Mockito.mock(BsxDataStorage.class),
-				loggerMock, attachmentDir.expandPath("Result1.xml"), attachmentDir, BsxTestUtils.TASK_DTO_1);
-
-
+				loggerMock, attachmentDir.expandPath("Result1.xml"), attachmentDir, TASK_DTO_1);
 
 	}
-
-
 
 	@Test
 	public void testCollectorWithPersistance() throws IOException, ObjectWithIdNotFoundException, StorageException {
 		final TestResultCollector c = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
-				loggerMock, attachmentDir.expandPath("Result2.xml"), attachmentDir, BsxTestUtils.TASK_DTO_1);
+				loggerMock, attachmentDir.expandPath("Result2.xml"), attachmentDir, TASK_DTO_1);
 
 		// Start Test Task
-		final String id = c.startTestTask(BsxTestUtils.ETS_DTO_1.getId().getId());
+		final String id = c.startTestTask(ETS_DTO_1.getId().getId());
 		assertEquals(1, c.currentModelType());
 
 		// Start Test Module
-		c.startTestModule(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getId().getId());
+		c.startTestModule(ETS_DTO_1.getTestModules().get(0).getId().getId());
 		assertEquals(2, c.currentModelType());
 
 		// Start Test Case
-		c.startTestCase(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
+		c.startTestCase(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
 		assertEquals(3, c.currentModelType());
 
 		// Start Test Step (1)
-		c.startTestStep(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
+		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
 
 		// Still in Test Step context
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId(), 1);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId(), 1);
 
 		// End Test Step, back in Test Case context
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
 		assertEquals(3, c.currentModelType());
 
 		// Test calling another Test Step
 
 		// Start Test Step (2)
-		c.startTestStep(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId());
+		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId());
 		assertEquals(4, c.currentModelType());
 
 		// Call a Test Step (3)
-		c.startTestStep(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId());
+		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId());
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId(), 2);
 
 		// In Test Step (3) context
 		assertEquals(4, c.currentModelType());
 
 		// End Test Step call (3)
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId(), 2);
 		assertEquals(4, c.currentModelType());
 
 		// End Test Step (2), back in Test Case context
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId(), 2);
 		assertEquals(3, c.currentModelType());
 
 		// End Test Case
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId(), 2);
 		assertEquals(2, c.currentModelType());
 
 		// End Test Module
-		c.end(BsxTestUtils.ETS_DTO_1.getTestModules().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getId().getId(), 2);
 		assertEquals(1, c.currentModelType());
 
 		// End Test Task
-		c.end(BsxTestUtils.ETS_DTO_1.getId().getId(), 2);
+		c.end(ETS_DTO_1.getId().getId(), 2);
 		assertEquals(-1, c.currentModelType());
 
 		// Get TestTaskResult

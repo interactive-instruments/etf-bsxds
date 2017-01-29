@@ -17,7 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.trimAllWhitespace;
-import static junit.framework.TestCase.assertFalse;
+import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -59,10 +59,10 @@ public class TestTaskResultDaoTest {
 
 		ExecutableTestSuiteDaoTest.setUp();
 
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
 
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
 	}
 
 	@AfterClass
@@ -73,46 +73,46 @@ public class TestTaskResultDaoTest {
 	@Before
 	public void clean() {
 		try {
-			BsxTestUtils.forceDelete(writeDao, BsxTestUtils.TTR_DTO_1.getId());
-			BsxTestUtils.forceDelete(writeDao, BsxTestUtils.TTR_DTO_2.getId());
-			BsxTestUtils.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), BsxTestUtils.TR_DTO_1.getId());
+			BsxTestUtils.forceDelete(writeDao, TTR_DTO_1.getId());
+			BsxTestUtils.forceDelete(writeDao, TTR_DTO_2.getId());
+			BsxTestUtils.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), TR_DTO_1.getId());
 		} catch (StorageException e) {}
 	}
 
 	@Test
 	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(BsxTestUtils.TTR_DTO_1);
+		BsxTestUtils.existsAndAddAndDeleteTest(TTR_DTO_1);
 	}
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
 		// TestTask required for parent reference
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TR_DTO_1, false);
+		BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(BsxTestUtils.TTR_DTO_1);
+		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
 
 		assertNotNull(preparedDto.getDto().getAttachments());
 		assertEquals(1, preparedDto.getDto().getAttachments().size());
 		assertNotNull(preparedDto.getDto().getTestObject());
-		assertEquals(BsxTestUtils.TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
+		assertEquals(TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
 		assertNotNull(preparedDto.getDto().getTestModuleResults());
 
-		writeDao.delete(BsxTestUtils.TTR_DTO_1.getId());
-		TestCase.assertFalse(writeDao.exists(BsxTestUtils.TTR_DTO_1.getId()));
+		writeDao.delete(TTR_DTO_1.getId());
+		TestCase.assertFalse(writeDao.exists(TTR_DTO_1.getId()));
 	}
 
 	@Test
 	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TO_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.ETS_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
 		// TestTask required for parent reference
-		BsxTestUtils.forceDeleteAndAdd(BsxTestUtils.TR_DTO_1, false);
+		BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(BsxTestUtils.TTR_DTO_1);
+		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
 
 		final IFile tmpFile = IFile.createTempFile("etf", ".html");
 		tmpFile.deleteOnExit();
