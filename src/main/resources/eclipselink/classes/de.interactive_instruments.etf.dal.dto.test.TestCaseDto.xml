@@ -8,7 +8,7 @@
    <last-refresh-timestamp>2016-11-07T14:40:49.693+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
-         <type-name>de.interactive_instruments.etf.model.DependencyHolder</type-name>
+         <type-name>de.interactive_instruments.etf.model.NestedDependencyHolder</type-name>
       </class-handle>
    </interface-handles>
    <attributes>

@@ -17,7 +17,7 @@ declare function local:get-testobjects($offset as xs:integer, $limit as xs:integ
     xmlns="http://www.interactive-instruments.de/etf/2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-    xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
         <testObjects>
             {etfxdb:get-all(db:open('etf-ds')/etf:TestObject, $levelOfDetail, $offset, $limit)}
         </testObjects>
@@ -35,7 +35,7 @@ declare function local:get-testobject($ids as xs:string*) {
         xmlns="http://www.interactive-instruments.de/etf/2.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-        xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
+        xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
             <testObjects>
                 {$testObject}{etfxdb:get-replacedByRec($testObjectDb, $levelOfDetail, $testObject)}
             </testObjects>
