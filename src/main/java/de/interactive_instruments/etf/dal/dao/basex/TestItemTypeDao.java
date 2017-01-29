@@ -19,14 +19,12 @@ import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestItemTypeDao extends BsxWriteDao<TestItemTypeDto> {
+final class TestItemTypeDao extends AbstractBsxWriteDao<TestItemTypeDto> {
 
 	protected TestItemTypeDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:TestItemType", "TestItemType", ctx,

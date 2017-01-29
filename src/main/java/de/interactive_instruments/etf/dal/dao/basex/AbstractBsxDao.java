@@ -24,13 +24,10 @@ import javax.xml.transform.TransformerConfigurationException;
 
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
-import org.basex.core.cmd.XQuery;
 
+import de.interactive_instruments.Configurable;
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.Dao;
-import de.interactive_instruments.etf.dal.dao.Filter;
-import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
+import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dao.exceptions.RetrieveException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.DefaultEidMap;
@@ -50,16 +47,19 @@ import de.interactive_instruments.properties.ConfigPropertyHolder;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-abstract class BsxDao<T extends Dto> implements Dao<T> {
+abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 
 	protected final String queryPath;
 	protected final BsxDsCtx ctx;
 	protected final String typeName;
 	protected final String xqueryStatement;
-	protected final EidMap<OutputFormat> outputFormats = new DefaultEidMap<>();
+	protected final EidMap<OutputFormat> outputFormatIdMap = new DefaultEidMap<>();
+	protected final Map<String, OutputFormat> outputFormatLabelMap = new HashMap<>();
 	protected ConfigProperties configProperties;
 	protected boolean initialized = false;
 	private final GetDtoResultCmd getDtoResultCmd;
+	protected long lastModificationDate = System.currentTimeMillis();
+	protected final BsxFilterBuilder filterBuilder;
 
 	protected void ensureType(final T t) {
 		if (!this.getDtoType().isAssignableFrom(t.getClass())) {
@@ -72,7 +72,7 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 		}
 	}
 
-	protected BsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
+	protected AbstractBsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd, final BsxFilterBuilder filterBuilder) throws StorageException {
 		this.queryPath = queryPath;
 		this.ctx = ctx;
 		this.typeName = typeName;
@@ -83,6 +83,7 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 		} catch (IOException e) {
 			throw new StorageException("Could not load XQuery resource for " + typeName, e);
 		}
+		this.filterBuilder = filterBuilder;
 	}
 
 	@Override
@@ -127,15 +128,28 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 			configProperties.expectAllRequiredPropertiesSet();
 		}
 		try {
-			final XsltOutputTransformer xmlItemCollectionTransformer = new XsltOutputTransformer(this, "xml", "text/xml", "xslt/DsResult2ItemCollection.xsl");
-			xmlItemCollectionTransformer.getConfigurationProperties().setPropertiesFrom(configProperties, true);
-			xmlItemCollectionTransformer.init();
-			outputFormats.put(xmlItemCollectionTransformer.getId(), xmlItemCollectionTransformer);
+			// XML
+			final XsltOutputTransformer xmlItemCollectionTransformer = new XsltOutputTransformer(
+					this, "DsResult2Xml", "text/xml", "xslt/DsResult2Xml.xsl");
+			initAndAddTransformer(xmlItemCollectionTransformer);
+
+			// JSON
+			final XsltOutputTransformer jsonItemCollectionTransformer = new XsltOutputTransformer(
+					this, "DsResult2Json", "application/json", "xslt/DsResult2Json.xsl", "xslt");
+			initAndAddTransformer(jsonItemCollectionTransformer);
+
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);
 		}
 		doInit();
 		initialized = true;
+	}
+
+	private void initAndAddTransformer(final XsltOutputTransformer outputFormat) throws ConfigurationException, InvalidStateTransitionException, InitializationException {
+		outputFormat.getConfigurationProperties().setPropertiesFrom(configProperties, true);
+		outputFormat.init();
+		outputFormatIdMap.put(outputFormat.getId(), outputFormat);
+		outputFormatLabelMap.put(outputFormat.getLabel(), outputFormat);
 	}
 
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {}
@@ -190,6 +204,15 @@ abstract class BsxDao<T extends Dto> implements Dao<T> {
 
 	@Override
 	public EidMap<OutputFormat> getOutputFormats() {
-		return outputFormats;
+		return outputFormatIdMap;
+	}
+
+	public long getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	@Override
+	public FilterBuilder getFilterBuilder() {
+		return this.filterBuilder;
 	}
 }

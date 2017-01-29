@@ -16,12 +16,9 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.xml.XMLConstants;
-import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
@@ -29,9 +26,7 @@ import javax.xml.validation.ValidatorHandler;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
-import de.interactive_instruments.etf.XmlUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
@@ -43,6 +38,7 @@ import org.xml.sax.*;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
+import de.interactive_instruments.etf.XmlUtils;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -57,24 +53,13 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> implements StreamWriteDao<T> {
+abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWriteDao<T> implements StreamWriteDao<T> {
 
 	private final Schema schema;
 
 	protected AbstractBsxStreamWriteDao(final String queryPath, final String typeName,
 			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		super(queryPath, typeName, ctx, getDtoResultCmd);
-		/*
-		try {
-			final InputStream storageSchema = getClass().getClassLoader().getResourceAsStream("schema/td/testDriverResponse.xsd");
-			Objects.requireNonNull(storageSchema, "Internal error reading the ets schema");
-			final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			sf.setResourceResolver(new BsxSchemaResourceResolver());
-			schema = sf.newSchema(new StreamSource(storageSchema));
-		} catch (SAXException e) {
-			throw new StorageException("Could not load schema: ", e);
-		}
-		*/
 		schema = ((BsxDataStorage) ctx).getSchema();
 	}
 
@@ -146,7 +131,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 				reader.parse(new InputSource(new ByteArrayInputStream(buffer)));
 			} catch (IOException | SAXException e) {
 				// Validation failed. Check if the intermediate file should be kept
-				if(ctx.getLogger().isDebugEnabled()) {
+				if (ctx.getLogger().isDebugEnabled()) {
 					// Write the buffer to a temp file
 					itemFile = IFile.createTempFile("etf_stream", UUID.randomUUID().toString());
 					FileUtils.writeByteArrayToFile(itemFile, buffer);
@@ -206,7 +191,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends BsxWriteDao<T> i
 			}
 			if (hook != null) {
 				dto = hook.doChangeBeforeStore(dto);
-				Objects.requireNonNull(dto, "Implementation error doChangeBeforeStreamUpdate returned null").ensureBasicValidity();
+				Objects.requireNonNull(dto, "Implementation error: doChangeBeforeStreamUpdate() returned null").ensureBasicValidity();
 			}
 			// do not update as Id would change
 			delete(dto.getId());

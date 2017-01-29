@@ -16,18 +16,13 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.transform.TransformerConfigurationException;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.properties.PropertyUtils;
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.StorageException;
@@ -39,7 +34,7 @@ import de.interactive_instruments.properties.ConfigProperties;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestRunDao extends BsxWriteDao<TestRunDto> {
+final class TestRunDao extends AbstractBsxWriteDao<TestRunDto> {
 
 	protected TestRunDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:TestRun", "TestRun", ctx,
@@ -51,7 +46,7 @@ final class TestRunDao extends BsxWriteDao<TestRunDto> {
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
 		try {
 			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
-			outputFormats.put(reportTransformer.getId(), reportTransformer);
+			outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);
 		}

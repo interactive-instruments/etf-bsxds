@@ -16,35 +16,14 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.*;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.validation.Schema;
-import javax.xml.validation.ValidatorHandler;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
-import de.interactive_instruments.properties.PropertyUtils;
-import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
-import org.basex.core.cmd.Add;
-import org.basex.core.cmd.Delete;
-import org.basex.core.cmd.Flush;
 import org.slf4j.Logger;
 import org.xml.sax.*;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.*;
 import de.interactive_instruments.exceptions.*;
@@ -99,7 +78,7 @@ final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDt
 	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
 		try {
 			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
-			outputFormats.put(reportTransformer.getId(), reportTransformer);
+			outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);
 		}

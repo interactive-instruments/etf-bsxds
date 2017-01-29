@@ -16,18 +16,14 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.transform.TransformerConfigurationException;
 
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.DropDB;
 
-import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
@@ -35,7 +31,7 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestObjectDao extends BsxWriteDao<TestObjectDto> {
+final class TestObjectDao extends AbstractBsxWriteDao<TestObjectDto> {
 
 	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 

@@ -21,7 +21,6 @@ import javax.xml.transform.TransformerConfigurationException;
 
 import org.basex.core.BaseXException;
 
-import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StorageException;
@@ -29,7 +28,7 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class TestTaskDao extends BsxWriteDao<TestTaskDto> {
+final class TestTaskDao extends AbstractBsxWriteDao<TestTaskDto> {
 
 	protected TestTaskDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
 		super("/etf:TestRun", "TestRun", ctx,

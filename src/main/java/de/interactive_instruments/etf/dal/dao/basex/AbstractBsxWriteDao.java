@@ -48,13 +48,17 @@ import de.interactive_instruments.exceptions.StorageException;
  *
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<T> {
+abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> implements WriteDao<T> {
 
 	private final List<WriteDaoListener> listeners = new ArrayList<>(2);
 
-	protected BsxWriteDao(final String queryPath, final String typeName,
+	private void updateLasModificationDate() {
+		this.lastModificationDate = System.currentTimeMillis();
+	}
+
+	protected AbstractBsxWriteDao(final String queryPath, final String typeName,
 			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
-		super(queryPath, typeName, ctx, getDtoResultCmd);
+		super(queryPath, typeName, ctx, getDtoResultCmd, null);
 	}
 
 	@Override
@@ -62,6 +66,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 		ensureType(t);
 		doMarshallAndAdd(t);
 		fireEvent(WriteDaoListener.EventType.ADD, t);
+		updateLasModificationDate();
 	}
 
 	protected void doMarshallAndAdd(final T t) throws StorageException {
@@ -134,6 +139,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			throw new StoreException(e);
 		}
 		fireEvent(WriteDaoListener.EventType.ADD, collection);
+		updateLasModificationDate();
 	}
 
 	protected byte[] createHash(final String str) {
@@ -153,10 +159,19 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	}
 
 	@Override
+	public void updateWithoutEidChange(final T t) throws StorageException, ObjectWithIdNotFoundException {
+		ensureType(t);
+		doDeleteAndAdd(t);
+		fireEvent(WriteDaoListener.EventType.UPDATE, t);
+		updateLasModificationDate();
+	}
+
+	@Override
 	public final T update(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doUpdate(t);
 		fireEvent(WriteDaoListener.EventType.UPDATE, t);
+		updateLasModificationDate();
 		return t;
 	}
 
@@ -190,6 +205,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			oldDtoInDb.setReplacedBy((RepositoryItemDto) t);
 			doDeleteAndAdd((T) oldDtoInDb);
 			fireEvent(WriteDaoListener.EventType.UPDATE, oldDtoInDb);
+			updateLasModificationDate();
 
 			// Add new one
 			doMarshallAndAdd(t);
@@ -213,6 +229,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			updatedDtos.add(doUpdate(dto));
 		}
 		fireEvent(WriteDaoListener.EventType.UPDATE, updatedDtos);
+		updateLasModificationDate();
 		return updatedDtos;
 	}
 
@@ -220,6 +237,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
 		doDelete(eid, true);
 		fireEvent(WriteDaoListener.EventType.DELETE, eid);
+		updateLasModificationDate();
 	}
 
 	protected void doDelete(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
@@ -253,6 +271,7 @@ abstract class BsxWriteDao<T extends Dto> extends BsxDao<T> implements WriteDao<
 			doDelete(eid, true);
 		}
 		fireEvent(WriteDaoListener.EventType.DELETE, collection);
+		updateLasModificationDate();
 	}
 
 	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Dto dto) {

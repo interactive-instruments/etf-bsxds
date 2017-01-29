@@ -142,19 +142,19 @@ final class DtoCache implements WriteDaoListener {
 				final Dto dto = (Dto) obj;
 				logger.debug("Binding {}", dto.getDescriptiveLabel());
 				dtoCache.put(eid, dto);
-			} else if(logger.isWarnEnabled()) {
-				if(id==null || obj==null) {
-					if(id==null) {
+			} else if (logger.isWarnEnabled()) {
+				if (id == null || obj == null) {
+					if (id == null) {
 						logger.error("Cannot bind null ID");
-					}else{
+					} else {
 						logger.error("Cannot bind ID {} ", id);
 					}
-					if(obj==null){
+					if (obj == null) {
 						logger.error("Cannot bind null type");
-					}else{
-						logger.error("Cannot bind type {}",obj.getClass().getSimpleName());
+					} else {
+						logger.error("Cannot bind type {}", obj.getClass().getSimpleName());
 					}
-				}else {
+				} else {
 					logger.warn("Cannot bind {} which has type {}", id.toString(), obj.getClass().getSimpleName());
 				}
 			}

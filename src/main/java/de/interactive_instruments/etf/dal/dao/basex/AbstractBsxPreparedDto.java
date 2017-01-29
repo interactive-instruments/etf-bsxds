@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Objects;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.BaseXException;
@@ -90,8 +91,9 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 					}
 				}
 			}).start();
-			outputFormat.streamTo(properties, in, outputStream);
-			// xquery.execute(ctx.getBsxCtx(), outputStream);
+			Objects.requireNonNull(outputFormat, "Output Format is null").streamTo(properties, in, outputStream);
+			// statement for streaming the request without transformation - for debug purposes:
+			// bsXquery.execute(outputStream);
 		} catch (IOException e) {
 			logError(e);
 			throw new IllegalStateException(e);
