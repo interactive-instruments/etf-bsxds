@@ -27,8 +27,8 @@ apply from: 'build/gradle/ii-bda.gradle'
 group = 'de.interactive_instruments.etf'
 description = "ETF BaseX data source"
 
-ext.basexVersion = '8.5.3'
-ext.moxyVersion = '2.6.3'
+ext.basexVersion = '8.5.5-ii'
+ext.moxyVersion = '2.6.4'
 
 ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
         project.getProperty('etf.ds.dir') :
@@ -60,12 +60,18 @@ dependencies {
 
     compile group: 'net.sf.saxon', name: 'Saxon-HE', version: etf_saxonHe
 
-    testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
-
-	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
-
     compile group: 'xml-apis', name: 'xml-apis', version: etf_xmlApisVersion
     compile group: 'xerces', name: 'xercesImpl', version: etf_xercesVersion
+
+    // Testing
+
+    testCompile group: 'de.interactive_instruments.etf.test', name: 'etf-unittest', version:'1.0.0'+project.snapshotSuffix
+
+    testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
+
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
 }
 
 test {
