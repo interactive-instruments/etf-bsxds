@@ -15,21 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.List;
-
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
-import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
  */
-final class ComponentDao extends BsxWriteDao<ComponentDto> {
+final class ComponentDao extends AbstractBsxWriteDao<ComponentDto> {
 
 	protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
 		super("/etf:Component", "Component", ctx,
