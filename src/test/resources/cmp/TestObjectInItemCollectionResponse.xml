@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EtfItemCollection xmlns="http://www.interactive-instruments.de/etf/2.0"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
-                   xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 file:/Users/herrmann/Projects/etf-fbs/etf-bsxds/src/main/resources/schema/service/service.xsd"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+                   xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://services.interactive-instruments.de/etf/schema/service/service.xsd"
                    returnedItems="1">
     <etf:ref xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-             href="http://localhost/etf-webapp/v2/collection?offset=0&amp;limit=0"/>
+             href="http://localhost/etf-webapp/v2/TestObjects/65899225-31c4-37b3-bce9-31532d45be84"/>
     <testObjects xmlns:etf="http://www.interactive-instruments.de/etf/2.0">
         <etf:TestObject xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0"
                         id="EID65899225-31c4-37b3-bce9-31532d45be84">
-            <etf:remoteResource>http://notset</etf:remoteResource>
+            <remoteResource>http://notset</remoteResource>
             <label>TestObjectDto.00001.label</label>
             <description>TestObjectDto.00001.description</description>
             <version>1.0.0</version>
             <author>TestObjectDto.00001.author</author>
             <creationDate>1970-01-01T01:00:00+01:00</creationDate>
             <tags>
-                <tag xsi:type="ext" href="http://localhost/etf-webapp/v2/Tag/d037af85-a2f8-38d5-abf5-e306477ba95f"/>
+                <tag xsi:type="ext" href="http://localhost/etf-webapp/v2/Tags/d037af85-a2f8-38d5-abf5-e306477ba95f"/>
             </tags>
             <testObjectTypes>
                 <testObjectType xsi:type="loc" ref="EIDd700c137-5d0f-3444-bd74-4616f80c332a"/>
