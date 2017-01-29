@@ -66,6 +66,7 @@
 		<x:e key="TestObject">Test object</x:e>
 		<x:e key="TestObjectTypes">Associated test object types</x:e>
 		<x:e key="Dependency">Dependency</x:e>
+		<x:e key="DependsOn">Depends on</x:e>
 		<x:e key="LevelOfDetail">Level of detail</x:e>
 		<x:e key="AllDetails">All details</x:e>
 		<x:e key="LessInformation">Less information</x:e>
@@ -147,6 +148,7 @@
 		<x:e key="TestObjectTypes">Zugehörige Testobjektarten</x:e>
 		<x:e key="LevelOfDetail">Detaillierung</x:e>
 		<x:e key="Dependency">Abhängigkeit</x:e>
+		<x:e key="DependsOn">Hängt ab von</x:e>
 		<x:e key="AllDetails">Alle Details</x:e>
 		<x:e key="LessInformation">Reduziert</x:e>
 		<x:e key="Simplified">Wesentliches</x:e>

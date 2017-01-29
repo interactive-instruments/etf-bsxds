@@ -7,6 +7,7 @@
 	version="2.0">
 	<xsl:import href="jsAndCss.xsl"/>
 	<xsl:import href="UtilityTemplates.xsl"/>
+	<xsl:import href="encodeBase64.xsl"/>
 	<xsl:param name="language">en</xsl:param>
 	<xsl:param name="baseUrl" select="'https://localhost/etf'"/>
 	<xsl:param name="serviceUrl" select="'https://localhost/etf/v2'"/>
@@ -58,6 +59,10 @@
 	<xsl:key name="attachmentsKey"
 		match="//etf:testTaskResults[1]/etf:TestTaskResult/etf:attachments[1]/etf:Attachment"
 		use="@id"/>
+	<!-- get test case result by test case id -->
+	<xsl:key name="testCaseResultKey"		
+		match="//etf:testTaskResults[1]/etf:TestTaskResult/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult"
+		use="etf:resultedFrom/@ref"/>
 
 	<xsl:variable name="testRun" select="//etf:testRuns[1]/etf:TestRun[1]"/>
 	<xsl:variable name="testTaskResults"
@@ -385,8 +390,13 @@
 					/><h3><xsl:value-of select="$lang/x:e[@key = 'TestObject']"/>: <xsl:value-of
 					select="$TestObject/etf:label"/></h3>
 			<xsl:if
-				test="$TestObject/etf:description and normalize-space($TestObject/etf:description/text()) ne ''"><xsl:value-of select="$TestObject/etf:description/text()"
-					disable-output-escaping="yes"/></xsl:if>
+				test="$TestObject/etf:description and normalize-space($TestObject/etf:description/text()) ne ''">
+				<p><xsl:value-of select="$TestObject/etf:description/text()" disable-output-escaping="yes"/></p>
+			</xsl:if>
+			
+			<xsl:if test="not($TestObject/etf:remoteResource/text()='http://nowhere')">
+				<a target="_blank" href="{$TestObject/etf:remoteResource}"><xsl:value-of select="$TestObject/etf:remoteResource"/></a>
+			</xsl:if>
 			
 			<xsl:if test="$TestObject/etf:Properties/etf:property[@name= 'files']">
 				<p><xsl:value-of select="$lang/x:e[@key = 'files']"/>: <xsl:value-of select="$TestObject/etf:Properties/etf:property[@name= 'files']"/></p>
@@ -396,19 +406,18 @@
 			</xsl:if>
 			
 			<p><xsl:value-of select="$lang/x:e[@key = 'TestObjectTypes']"/>: </p>
-			<ul><xsl:for-each select="$TestObject/etf:testObjectTypes/etf:testObjectType"><xsl:variable
-						name="TestObjectType" select="key('testObjectTypeKey', ./@ref)"
-							/><li><xsl:value-of select="$TestObjectType/etf:label/text()"/><xsl:if
-							test="$TestObjectType/etf:description and normalize-space($TestObjectType/etf:description/text()) ne ''"
-								><br/><xsl:value-of select="$TestObjectType/etf:description/text()"
-								disable-output-escaping="yes"
-			/></xsl:if></li></xsl:for-each></ul>
+			<ul>
+				<xsl:for-each select="$TestObject/etf:testObjectTypes/etf:testObjectType">
+					<xsl:variable name="TestObjectType" select="key('testObjectTypeKey', ./@ref)" />
+					<li><xsl:value-of select="$TestObjectType/etf:label/text()"/>  (<xsl:value-of select="$TestObjectType/etf:description/text()" disable-output-escaping="yes"/>)</li>
+				</xsl:for-each>
+			</ul>
 		</div>
 	</xsl:template>
 	
-	<!-- StatisticalReport -->
+	<!-- StatisticalReport (Attachment) -->
 	<!-- ########################################################################################## -->
-	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']">
+	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']" priority="4">
 		<xsl:variable name="stat" select="document(./etf:referencedData/@href)/etf:StatisticalReportTable"/>
 		<xsl:if test="$stat">
 			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
@@ -429,9 +438,9 @@
 		</xsl:if>
 	</xsl:template>
 	
-	<!-- ETS LogFile -->
+	<!-- ETS LogFile (Attachment) -->
 	<!-- ########################################################################################## -->
-	<xsl:template match="etf:Attachment[@type = 'LogFile']">
+	<xsl:template match="etf:Attachment[@type = 'LogFile']" priority="4">
 		<xsl:choose>
 			<xsl:when test="unparsed-text-available(./etf:referencedData/@href, 'UTF-8')">
 				<xsl:variable name="log" select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>	
@@ -449,6 +458,31 @@
 					<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
 					<pre>Log path not available</pre>
 				</div>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<!-- Attachments -->
+	<!-- ########################################################################################## -->
+	<xsl:template match="etf:Attachment[@type = 'ServiceEndpoint' or @type = 'ServiceResponse' or @type = 'GetParameter']" priority="7">
+		<xsl:variable name="id" select="./@id"/>
+		<xsl:choose>
+			<xsl:when test="exists(./etf:referencedData/@href)">
+				<!--xsl:choose>
+					<xsl:when test="unparsed-text-available(./etf:referencedData/@href, 'UTF-8')">
+						<xsl:value-of select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<pre>Referenced data not available</pre>
+					</xsl:otherwise>
+				</xsl:choose-->
+					<xsl:variable name="testTaskResultId" select="../../@id"/>
+					<xsl:value-of select="concat($serviceUrl, '/TestTaskResults/', $testTaskResultId, '/Attachments/', $id)"/>
+			</xsl:when>
+			<xsl:otherwise>
+					<xsl:call-template name="convertBase64ToAscii">
+						<xsl:with-param name="base64String" select="./etf:embeddedData" />
+					</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -664,9 +698,12 @@
 	<xsl:template match="etf:TestCaseResult">
 		<xsl:variable name="TestCase" select="key('testCaseKey', ./etf:resultedFrom/@ref)"/>
 		<xsl:variable name="resultItem" select="."/>
-		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true">
+		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true" id="{$TestCase/@id}">
+			<xsl:variable name="failedOrSkipped" select="key('testCaseResultKey', $TestCase/etf:dependencies[1]/etf:testCase/@ref)[./etf:status[1]='FAILED' or ./etf:status[1]='SKIPPED'][1]"/>
+			
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
+					<xsl:when test="$failedOrSkipped">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
@@ -679,6 +716,7 @@
 			</xsl:attribute>
 			<xsl:attribute name="data-content-theme">
 				<xsl:choose>
+					<xsl:when test="$failedOrSkipped">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
@@ -691,6 +729,7 @@
 			</xsl:attribute>
 			<xsl:attribute name="class">
 				<xsl:choose>
+					<xsl:when test="$failedOrSkipped">TestCase FailedTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">TestCase SuccessfulTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">TestCase ManualTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">TestCase FailedTestCase</xsl:when>
@@ -747,6 +786,9 @@
 					<xsl:value-of select="$Count"/>
 				</div>
 			</h3>
+			<xsl:if test="$failedOrSkipped">
+				<h3>The test case was skipped because it depends on other test cases that failed or were skipped as well. Check the the cause of the problem by checking failed test cases which this test case depends on.</h3>
+			</xsl:if>
 			<xsl:if
 				test="$TestCase/etf:description and normalize-space($TestCase/etf:description/text()) ne ''">
 				<xsl:value-of select="$TestCase/etf:description/text()"
@@ -776,12 +818,14 @@
 				</tr>
 				<xsl:for-each select="$TestCase/etf:dependencies/etf:testCase/@ref">
 					<xsl:variable name="DepTestCase" select="key('testCaseKey', .)"/>
-					<tr class="DoNotShowInSimpleView">
+					<tr>
+						<xsl:attribute name="class">
+							<xsl:if test="not($failedOrSkipped)">DoNotShowInSimpleView</xsl:if>
+						</xsl:attribute>
 						<td>
 							<xsl:value-of select="$lang/x:e[@key = 'Dependency']"/>
 						</td>
 						<td>
-							<xsl:value-of select="$lang/x:e[@key = 'TestCase']"/>
 							<xsl:variable name="depTestCaseId" select="$DepTestCase/@id"/>
 							<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$depTestCaseId}"
 								data-ajax="false"
@@ -790,7 +834,7 @@
 							</a>
 						</td>
 					</tr>
-				</xsl:for-each>
+				</xsl:for-each>				
 				<tr class="ReportDetail">
 					<td><xsl:value-of select="$lang/x:e[@key = 'TestCase']"/> ID</td>
 					<td>
@@ -803,7 +847,9 @@
 			</table>
 			<br/>
 			<!--Add test step results and information about the teststeps -->
-			<xsl:apply-templates select="./etf:testStepResults[1]/etf:TestStepResult"/>
+				<xsl:if test="not($failedOrSkipped)">
+					<xsl:apply-templates select="./etf:testStepResults[1]/etf:TestStepResult"/>
+				</xsl:if>
 		</div>
 	</xsl:template>
 	<!-- Test Step Results -->
@@ -931,29 +977,69 @@
 						</tr>
 					</table>
 					<br/>
+					
+					<xsl:variable name="endpoint" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[@type='ServiceEndpoint']"/>
+					<xsl:if test="$endpoint">
+						<p><a target="_blank" data-ajax="false">
+							<xsl:attribute name="href">
+								<xsl:apply-templates select="$endpoint"/>
+							</xsl:attribute>
+							Endpoint
+						</a></p>
+					</xsl:if>
+					
+					<xsl:variable name="parameter" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[@type='GetParameter']"/>
+					<xsl:if test="$parameter">
+						<label for="attachment.{$parameter/@id}">Request</label>
+						<textarea id="attachment.{$parameter/@id}" data-mini="true" readonly="readonly">
+							<xsl:apply-templates select="$parameter"/>
+						</textarea>
+					</xsl:if>					
+					
+					<xsl:variable name="response" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[@type='ServiceResponse']"/>
+					<xsl:if test="$response">
+						<p><a target="_blank" data-ajax="false">
+							<xsl:attribute name="href">
+								<xsl:apply-templates select="$response"/>
+							</xsl:attribute>
+							Open saved response
+						</a></p>
+					</xsl:if>
+					
+					
+					
 					<!-- Execution Statement -->
-					<xsl:if test="$TestStep/etf:statementForExecution[1]">
+					<xsl:if test="$TestStep/etf:statementForExecution[1] and 
+						not($TestStep/etf:statementForExecution[1]='NOT_APPLICABLE')">
 						<div class="Request">
 							<xsl:if test="$FailedAssertionCount = 0">
-								<xsl:attribute name="DoNotShowInSimpleView"/>
+								<xsl:attribute name="class">DoNotShowInSimpleView</xsl:attribute>
 							</xsl:if>
 							<xsl:apply-templates select="$TestStep/etf:statementForExecution[1]"/>
 						</div>
 					</xsl:if>
-					<!-- Response -->
-					<div class="Response DoNotShowInSimpleView">
-						<!-- TODO -->
-						<xsl:apply-templates select="./etf:attachment[1]"/>
-					</div>
-					<!-- Test step failure messages-->
-					<xsl:if test="./etf:messages/*">
-						<!-- TODO -->
-						<xsl:apply-templates select="./etf:messages[1]"/>
+					
+					<xsl:variable name="attachments" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[
+						not(@type='ServiceEndpoint' or @type='ServiceResponse' or @type='GetParameter')]"/>
+					<xsl:if test="$attachments">
+						<div class="Attachments">
+							<h4>Attachments</h4>
+							<ul>
+								<xsl:for-each select="$attachments">
+									<li><a target="_blank" data-ajax="false">
+										<xsl:attribute name="href">
+											<xsl:apply-templates select="."/>
+										</xsl:attribute>
+										<xsl:value-of select="./etf:label"/></a></li>
+								</xsl:for-each>
+							</ul>
+						</div>
 					</xsl:if>
+					
 					<!-- Get Assertion results -->
 					<xsl:if test="./etf:testAssertionResults[1]/etf:TestAssertionResult">
 						<div class="AssertionsContainer">
-							<h4><xsl:value-of select="$lang/x:e[@key = 'TestAssertions']"/>:</h4>
+							<h4><xsl:value-of select="$lang/x:e[@key = 'TestAssertions']"/></h4>
 							<xsl:apply-templates
 								select="./etf:testAssertionResults[1]/etf:TestAssertionResult"/>
 						</div>
@@ -1086,7 +1172,7 @@
 			</table>
 			<br/>
 			<xsl:if
-				test="$TestAssertion/etf:expression and not(normalize-space($TestAssertion/etf:expression) = ('','NOT_APPLICABLE', '''PASSED'''))">
+				test="$TestAssertion/etf:expression and not($TestAssertion/etf:expression = ('','NOT_APPLICABLE', '''PASSED'''))">
 				<div class="ReportDetail Expression">
 					<label for="{$id}.expression"><xsl:value-of
 							select="$lang/x:e[@key = 'Expression']"/>:</label>
@@ -1259,37 +1345,30 @@
 	</xsl:function>
 	<!-- ChangeFailureMessage -->
 	<!-- ########################################################################################## -->
-	<xsl:template name="ChangeFailureMessage">
-		<xsl:param name="FailureMessageText"/>
+	<xsl:function name="etf:unwrapMessage">
 		<!--
    By default the whole expression of a XQuery will be written out in error messages.
    In this template function the error message will be "beautified".
    To use this functionality the xquery shall be in the following form:
-   <result>AssertionFailures:
+   <result>
    {
      XQUERY Functions
      if( xyz=FAILURE ) then return 'failure message foo bar... '
      else ''
    </result>
   -->
-		<xsl:variable name="AssertionFailuresText">AssertionFailures:</xsl:variable>
-		<xsl:variable name="BeautifiedMessage">
-			<xsl:call-template name="substring-after-last">
-				<xsl:with-param name="input" select="$FailureMessageText"/>
-				<xsl:with-param name="substr" select="$AssertionFailuresText"/>
-			</xsl:call-template>
-		</xsl:variable>
-		<xsl:variable name="BeautifiedXqueryOutput"
-			select="substring-before($BeautifiedMessage, '&lt;/result')"/>
+		<xsl:param name="message"/>
+		<xsl:variable name="unwrapped" select="substring-before(substring-after($message,'result&gt;'), '&lt;/result')" />
 		<xsl:choose>
-			<xsl:when test="normalize-space($BeautifiedXqueryOutput)">
-				<xsl:value-of select="$BeautifiedXqueryOutput"/>
+			<xsl:when test="normalize-space($unwrapped)">
+				<xsl:value-of select="$unwrapped"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="$FailureMessageText"/>
+				<xsl:value-of select="$message"/>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template>
+	</xsl:function>
+	
 	<!-- Footer -->
 	<!-- ########################################################################################## -->
 	<xsl:template name="footer">

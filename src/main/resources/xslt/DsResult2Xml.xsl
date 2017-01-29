@@ -12,6 +12,8 @@
     <xsl:param name="selection"/>
     <xsl:param name="offset" select="0"/>
     <xsl:param name="limit" select="-1"/>
+    <xsl:param name="includeRefType" select="true()"/>
+    <xsl:param name="hrefTypeEnding" select="'.xml'"/>
 
     <xsl:key name="ids" match="/etf:DsResultSet//*" use="@id"/>
 
@@ -21,7 +23,7 @@
 
     <xsl:attribute-set name="CollectionAttributes">
         <xsl:attribute name="version">2.0</xsl:attribute>
-        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 http://services.interactive-instruments.de/etf/schema/service/service.xsd</xsl:attribute>
+        <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/service/service.xsd</xsl:attribute>
     </xsl:attribute-set>
 
     <!-- =============================================================== -->
@@ -29,11 +31,9 @@
         <xsl:element name="EtfItemCollection" use-attribute-sets="CollectionAttributes">
 
             <xsl:variable name="subSet" select="*[./*[1]/local-name() = $selection]"/>
-            <xsl:attribute name="returnedItems" select="count($subSet/*)"/>
-            <xsl:if test="count($subSet/*) eq 0">
-                <xsl:message terminate="yes">ERROR: empty collection for selection "<xsl:value-of
-                        select="$selection"/>"</xsl:message>
-            </xsl:if>
+            <xsl:variable name="returnedItems" select="count($subSet/*)"/>
+            <xsl:attribute name="returnedItems" select="$returnedItems"/>
+
             <xsl:if test="number($limit) gt 0">
                 <xsl:attribute name="position" select="format-number($offset div $limit, '#')"/>
             </xsl:if>
@@ -41,37 +41,70 @@
                 <xsl:choose>
                     <xsl:when test="number($limit) gt 0">
                         <xsl:attribute name="href"
-                            select="concat($serviceUrl, '/', $selection, 's?offset=', $offset, '&amp;limit=', $limit)"
+                                       select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', $offset, '&amp;limit=', $limit)"
                         />
                     </xsl:when>
                     <xsl:otherwise>
+                        <!-- Set reference to the single included item -->
                         <xsl:attribute name="href"
-                            select="concat($serviceUrl, '/', $selection, 's')"
+                                       select="concat($serviceUrl, '/', $selection, 's/', substring-after($subSet/*[1]/@id, 'EID'), $hrefTypeEnding )"
                         />
                     </xsl:otherwise>
                 </xsl:choose>
-                
             </xsl:element>
             <xsl:if test="number($limit) gt 0">
-                <xsl:element name="etf:previous">
-                    <xsl:attribute name="href"
-                        select="concat($serviceUrl, '/', $selection, 's?offset=', ( $offset - $limit ), '&amp;limit=', $limit)"
-                    />
-                </xsl:element>
-                <xsl:element name="etf:next">
-                    <xsl:attribute name="href"
-                        select="concat($serviceUrl, '/', $selection, 's?offset=', ($offset + $limit), '&amp;limit=', $limit)"
-                    />
-                </xsl:element>
+                <xsl:if test="number($offset - $limit) ge 0">
+                    <xsl:element name="etf:previous">
+                        <xsl:attribute name="href"
+                                       select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', ($offset - $limit), '&amp;limit=', $limit)"
+                        />
+                    </xsl:element>
+                </xsl:if>
+                <xsl:if test="$returnedItems gt 0 and number($returnedItems) eq number($limit)">
+                    <xsl:element name="etf:next">
+                        <!-- Unknown if there are any items -->
+                        <xsl:attribute name="href"
+                                       select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', ($offset + $limit), '&amp;limit=', $limit)"
+                        />
+                    </xsl:element>
+                </xsl:if>
             </xsl:if>
 
-            <xsl:apply-templates select="$subSet"/>
+            <xsl:if test="$returnedItems gt 0">
+                <xsl:apply-templates select="$subSet"/>
 
-            <!-- additional referencedItems -->
-            <xsl:element name="referencedItems">
-                <xsl:apply-templates select="*[not(./*[1]/local-name() = $selection)]"/>
-            </xsl:element>
+                <!-- additional referencedItems -->
+                <xsl:element name="referencedItems">
+                    <xsl:apply-templates select="*[not(./*[1]/local-name() = $selection)]"/>
+                </xsl:element>
+            </xsl:if>
         </xsl:element>
+    </xsl:template>
+
+    <!-- =============================================================== -->
+    <xsl:template name="etf:createReference">
+        <xsl:param name="reference" as="xs:string"/>
+        <xsl:param name="type" as="xs:string"/>
+        <xsl:choose>
+            <xsl:when test="key('ids', $reference)">
+                <xsl:if test="$includeRefType">
+                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
+                </xsl:if>
+                <xsl:attribute name="ref">
+                    <xsl:value-of select="$reference"/>
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="$includeRefType">
+                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
+                </xsl:if>
+                <xsl:attribute name="href">
+                    <xsl:value-of
+                            select="concat($serviceUrl, '/', $type, 's/', substring-after($reference, 'EID'), $hrefTypeEnding)"
+                    />
+                </xsl:attribute>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- =============================================================== -->
@@ -86,27 +119,29 @@
 
     <!-- =============================================================== -->
     <xsl:template priority="7"
-        match="*/etf:translationTemplate | */etf:tag | */etf:testObject | */etf:testObjectType | */etf:testTaskResult | */etf:executableTestSuite | */etf:testObjectType | */etf:translationTemplateBundle">
+        match="*/etf:tag | */etf:testObject | */etf:testObjectType | */etf:testTaskResult | */etf:executableTestSuite | */etf:testObjectType | */etf:translationTemplateBundle">
         <xsl:element name="{name()}">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="type"
                 select="concat(upper-case(substring(local-name(), 1, 1)), substring(local-name(), 2))"/>
-            <xsl:choose>
-                <xsl:when test="key('ids', $reference)">
-                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="$reference"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                            select="concat($serviceUrl, '/', $type, 's/', substring-after($reference, 'EID'))"
-                        />
-                    </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="etf:createReference">
+                <xsl:with-param name="reference" select="$reference"/>
+                <xsl:with-param name="type" select="$type"/>
+            </xsl:call-template>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- =============================================================== -->
+    <xsl:template priority="8"
+                  match="*/etf:translationTemplate">
+        <xsl:element name="{name()}">
+            <xsl:variable name="local_reference" select="@ref"/>
+            <xsl:if test="$includeRefType">
+                <xsl:attribute name="xsi:type">loc</xsl:attribute>
+            </xsl:if>
+            <xsl:attribute name="ref">
+                <xsl:value-of select="$local_reference"/>
+            </xsl:attribute>
         </xsl:element>
     </xsl:template>
 
@@ -129,22 +164,10 @@
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
-            <xsl:choose>
-                <xsl:when test="key('translationNames', $reference)">
-                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="$reference"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                            select="concat($serviceUrl, '/Components/', substring-after($reference, 'EID'))"
-                        />
-                    </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="etf:createReference">
+                <xsl:with-param name="reference" select="$reference"/>
+                <xsl:with-param name="type" select="'Component'"/>
+            </xsl:call-template>
         </xsl:element>
     </xsl:template>
 
@@ -153,22 +176,10 @@
         <xsl:element name="{name()}"
             xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
             <xsl:variable name="reference" select="@ref"/>
-            <xsl:choose>
-                <xsl:when test="key('translationNames', $reference)">
-                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="$reference"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                            select="concat($serviceUrl, '/TestItemTypes/', substring-after($reference, 'EID'))"
-                        />
-                    </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="etf:createReference">
+                <xsl:with-param name="reference" select="$reference"/>
+                <xsl:with-param name="type" select="'TestItemType'"/>
+            </xsl:call-template>
         </xsl:element>
     </xsl:template>
 
@@ -193,22 +204,10 @@
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$parentMapping/*[@key = $parent]"/>
-            <xsl:choose>
-                <xsl:when test="key('ids', $reference)">
-                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="$reference"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                            select="concat($serviceUrl, '/', $type, 's/', substring-after($reference, 'EID'))"
-                        />
-                    </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="etf:createReference">
+                <xsl:with-param name="reference" select="$reference"/>
+                <xsl:with-param name="type" select="$type"/>
+            </xsl:call-template>
         </xsl:element>
     </xsl:template>
 
@@ -228,22 +227,10 @@
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="parent" select="../local-name()"/>
             <xsl:variable name="type" select="$resultedFromMapping/*[@key = $parent]"/>
-            <xsl:choose>
-                <xsl:when test="key('ids', $reference)">
-                    <xsl:attribute name="xsi:type">loc</xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="$reference"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="xsi:type">ext</xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                            select="concat($serviceUrl, '/', $type, 's/', substring-after($reference, 'EID'))"
-                        />
-                    </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="etf:createReference">
+                <xsl:with-param name="reference" select="$reference"/>
+                <xsl:with-param name="type" select="$type"/>
+            </xsl:call-template>
         </xsl:element>
     </xsl:template>
 

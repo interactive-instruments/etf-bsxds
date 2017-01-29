@@ -8,7 +8,6 @@
 	<!-- JQuery Mobile and Styling includes-->
 	<!-- ########################################################################################## -->
 	<xsl:template name="jsfdeclAndCss">
-		<meta charset="utf-8"/>
 		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
 		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
@@ -178,7 +177,10 @@
 					if(testModulePar) {
 						testModulePar.collapsible('expand');
 					}
-					anchorElement.collapsible('expand').getParentWithClass("TestCase").collapsible('expand');
+					var testCasePar = anchorElement.collapsible('expand').getParentWithClass("TestCase");
+					if(testCasePar) {
+						testCasePar.collapsible('expand');
+					}
 					var testStepPar = anchorElement.collapsible('expand').getParentWithClass("TestStep");
 					if(testStepPar) {
 						testStepPar.collapsible('expand');
