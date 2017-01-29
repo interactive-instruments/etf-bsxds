@@ -119,6 +119,16 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		}
 	}
 
+	/**
+	 * Create a new XSL Output Transformer and load stylesheet files from the jar
+	 *
+	 * Use the other Ctor for XSLTs which are using imports.
+	 *
+	 * @param label Transformer label
+	 * @param stylesheetJarPath path to XSLT in JAR
+	 * @throws IOException if stylesheet is not readable
+	 * @throws TransformerConfigurationException if stylesheet contains errors
+	 */
 	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath)
 			throws IOException, TransformerConfigurationException {
 		this(dao, label, mimeTypeStr, stylesheetJarPath, null);
@@ -127,12 +137,11 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	/**
 	 * Create a new XSL Output Transformer and load stylesheet files from the jar
 	 *
-	 * @param label
-	 * @param stylesheetJarPath
-	 * @param jarImportPath
+	 * @param label Transformer label
+	 * @param stylesheetJarPath path to XSLT in JAR
+	 * @param jarImportPath base path in JAR for imports
 	 * @throws IOException if stylesheet is not readable
-	 * @throws TransformerConfigurationException if stylesheet
-	 * contains errors
+	 * @throws TransformerConfigurationException if stylesheet contains errors
 	 */
 	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath, final String jarImportPath)
 			throws IOException, TransformerConfigurationException {
@@ -207,7 +216,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 				configProperties.forEach(c -> transformer.setParameter(c.getKey(), c.getValue()));
 
 				// Basic properties
-				transformer.setParameter("stylePath", configProperties.getProperty("etf.webapp.base.url") + "/resources/ii");
+				transformer.setParameter("stylePath", configProperties.getProperty("etf.webapp.base.url") + "/css");
 				transformer.setParameter("baseUrl", configProperties.getProperty("etf.webapp.base.url"));
 				transformer.setParameter("serviceUrl", configProperties.getProperty("etf.api.base.url"));
 			}
