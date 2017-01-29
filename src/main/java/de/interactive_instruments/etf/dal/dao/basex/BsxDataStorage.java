@@ -294,6 +294,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			}
 			sf.setResourceResolver(new BsxSchemaResourceResolver());
 			schema = sf.newSchema(new StreamSource(storageSchema));
+			IFile.closeQuietly(storageSchema);
 		} catch (SAXException e) {
 			throw new InitializationException("Could not load schema: ", e);
 		}
