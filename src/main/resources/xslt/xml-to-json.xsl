@@ -16,14 +16,6 @@
 
        * debug           -  Enable or disable the output of the temporary
                             XML tree used to generate JSON output.
-       * use-rabbitfish  -  Output basic JSON with a '@' to indicate XML
-                            attributes.
-       * use-badgerfish  -  Use the BadgerFish (http://badgerfish.ning.com/)
-                            convention to output JSON without XML namespaces.
-       * use-rayfish     -  Use the RayFish (http://onperl.org/blog/onperl/page/rayfish)
-                            convention to output JSON without XML namespaces.
-       * use-namespaces  -  Output XML namespaces according to the
-                            BadgerFish convention.
        * skip-root       -  Skip the root XML element.
        * jsonp           -  Enable JSONP; the JSON output will be prepended with
                             the value of the jsonp parameter and wrapped in parentheses.
@@ -43,11 +35,6 @@
         All rights reserved.
     -->
     <xsl:param name="debug" as="xs:boolean" select="false()"/>
-    <xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
-    <xsl:param name="use-badgerfish" as="xs:boolean" select="false()"/>
-    <xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
-    <xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
-    <xsl:param name="jsonp" as="xs:string" select="''"/>
     <xsl:param name="skip-root" as="xs:boolean" select="false()"/>
 
     <!--
@@ -59,7 +46,7 @@
 
         <xsl:variable name="json-tree">
             <json:object>
-                <xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
+                <xsl:copy-of select="json:create-node($input, false())"/>
             </json:object>
         </xsl:variable>
 
@@ -75,14 +62,7 @@
         </xsl:variable>
 
         <xsl:variable name="output">
-            <xsl:choose>
-                <xsl:when test="normalize-space($jsonp)">
-                    <xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-mtree" mode="json"/><xsl:text>)</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text/><xsl:apply-templates select="$json-mtree" mode="json"/><xsl:text/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:text/><xsl:apply-templates select="$json-mtree" mode="json"/><xsl:text/>
         </xsl:variable>
 
         <xsl:sequence select="$output"/>
@@ -92,12 +72,12 @@
       Template to match the root node so that the stylesheet can also
       be used on the command line.
     -->
-    <xsl:template match="/*">
+    <!--xsl:template match="/*">
         <xsl:choose>
             <xsl:when test="$debug">
                 <xsl:variable name="json-tree">
                     <json:object>
-                        <xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+                        <xsl:copy-of select="json:create-simple-node(.)"/>
                     </json:object>
                 </xsl:variable>
 
@@ -110,7 +90,7 @@
                 <xsl:value-of select="json:generate(.)"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
+    </xsl:template-->
 
     <!--
       All methods below are private methods and should not be used
@@ -119,7 +99,7 @@
     <xsl:template name="json:build-tree">
         <xsl:param name="input" as="node()"/>
         <json:object>
-            <xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input/child::node())"/>
+            <xsl:copy-of select="json:create-simple-node($input/child::node())"/>
         </json:object>
     </xsl:template>
 
@@ -196,9 +176,8 @@
         <xsl:choose>
             <xsl:when test="exists($node/child::text()) and count($node/child::node()) eq 1">
                 <xsl:choose>
-                    <xsl:when test="(count($node/namespace::*) gt 0 and $use-namespaces) or count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0">
+                    <xsl:when test="count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0">
                         <json:object>
-                            <xsl:copy-of select="json:create-namespaces($node)"/>
                             <xsl:copy-of select="json:create-attributes($node)"/>
                             <json:member>
                                 <json:name>$</json:name>
@@ -207,15 +186,14 @@
                         </json:object>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:copy-of select="json:create-text-value($node)"/>
+                        <xsl:value-of select="$node"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="exists($node/child::text())">
                 <xsl:choose>
-                    <xsl:when test="(count($node/namespace::*) gt 0 and $use-namespaces) or count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0">
+                    <xsl:when test="count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0">
                         <json:object>
-                            <xsl:copy-of select="json:create-namespaces($node)"/>
                             <xsl:copy-of select="json:create-attributes($node)"/>
                             <json:member>
                                 <json:name>$</json:name>
@@ -230,9 +208,8 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-            <xsl:when test="exists($node/child::node()) or ((count($node/namespace::*) gt 0 and $use-namespaces) or count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0)">
+            <xsl:when test="exists($node/child::node()) or (count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0)">
                 <json:object>
-                    <xsl:copy-of select="json:create-namespaces($node)"/>
                     <xsl:copy-of select="json:create-attributes($node)"/>
                     <xsl:for-each-group select="$node/child::node()" group-adjacent="local-name()">
                         <xsl:choose>
@@ -241,7 +218,7 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <json:member>
-                                    <json:name><xsl:value-of select="if($use-namespaces) then current-group()[1]/name() else current-group()[1]/local-name()"/></json:name>
+                                    <json:name><xsl:value-of select="current-group()[1]/local-name()"/></json:name>
                                     <json:value>
                                         <json:array>
                                             <xsl:for-each select="current-group()">
@@ -266,7 +243,7 @@
                     <json:value>
                         <xsl:choose>
                             <xsl:when test="self::text()">
-                                <xsl:copy-of select="json:create-text-value(.)"/>
+                                <xsl:value-of select="$node"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <json:object>
@@ -280,73 +257,19 @@
         </json:array>
     </xsl:function>
 
-    <xsl:function name="json:create-text-value" as="node()">
-        <xsl:param name="node" as="node()"/>
-        <xsl:choose>
-            <xsl:when test="$use-badgerfish">
-                <json:object>
-                    <json:member>
-                        <json:name>$</json:name>
-                        <json:value>
-                            <xsl:value-of select="$node"/>
-                        </json:value>
-                    </json:member>
-                </json:object>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$node"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
-
     <xsl:function name="json:create-string" as="node()">
         <xsl:param name="node" as="node()"/>
-        <xsl:choose>
-            <xsl:when test="$use-namespaces">
-                <json:name><xsl:value-of select="$node/name()"/></json:name>
-            </xsl:when>
-            <xsl:otherwise>
-                <json:name><xsl:value-of select="$node/local-name()"/></json:name>
-            </xsl:otherwise>
-        </xsl:choose>
+        <json:name><xsl:value-of select="$node/local-name()"/></json:name>
     </xsl:function>
 
     <xsl:function name="json:create-attributes" as="node()*">
         <xsl:param name="node" as="node()"/>
         <xsl:for-each select="$node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]">
             <json:member>
-                <json:name><xsl:if test="$use-badgerfish or $use-rabbitfish">@</xsl:if><xsl:value-of select="if($use-namespaces) then name() else local-name()"/></json:name>
+                <json:name><xsl:value-of select="local-name()"/></json:name>
                 <json:value><xsl:value-of select="."/></json:value>
             </json:member>
         </xsl:for-each>
-    </xsl:function>
-
-    <xsl:function name="json:create-namespaces" as="node()*">
-        <xsl:param name="node" as="node()"/>
-        <xsl:if test="$use-namespaces">
-            <xsl:if test="count($node/namespace::*) gt 0">
-                <json:member>
-                    <json:name><xsl:if test="$use-badgerfish or $use-rabbitfish">@</xsl:if>xmlns</json:name>
-                    <json:value>
-                        <json:object>
-                            <xsl:for-each select="$node/namespace::*">
-                                <json:member>
-                                    <xsl:choose>
-                                        <xsl:when test="local-name(.) eq ''">
-                                            <json:name>$</json:name>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <json:name><xsl:value-of select="local-name(.)"/></json:name>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <json:value><xsl:value-of select="."/></json:value>
-                                </json:member>
-                            </xsl:for-each>
-                        </json:object>
-                    </json:value>
-                </json:member>
-            </xsl:if>
-        </xsl:if>
     </xsl:function>
 
     <!--
@@ -370,31 +293,47 @@
     <xsl:template match="json:member" mode="json">
         <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
     </xsl:template>
-
+    
     <xsl:function name="json:encode-string" as="xs:string">
-        <xsl:param name="string" as="xs:string"/>
-        <xsl:sequence select="replace(
-          replace(
-          replace(
-          replace(
-          replace(
-          replace(
-          replace(
-          replace(
-          replace($string,
-            '\\','\\\\'),
-            '/', '\\/'),
-            '&quot;', '\\&quot;'),
-            '&#xA;','\\n'),
-            '&#xD;','\\r'),
-            '&#x9;','\\t'),
-            '\n','\\n'),
-            '\r','\\r'),
-            '\t','\\t')"/>
+        <xsl:param name="in" as="xs:string"/>
+        <xsl:value-of>
+            <xsl:for-each select="string-to-codepoints($in)">
+                <xsl:choose>
+                    <xsl:when test=". gt 65535">
+                        <xsl:value-of select="concat('\u', json:hex4((. - 65536) idiv 1024 + 55296))"/>
+                        <xsl:value-of select="concat('\u', json:hex4((. - 65536) mod 1024 + 56320))"/>
+                    </xsl:when>
+                    <xsl:when test=". = 34">\"</xsl:when>
+                    <xsl:when test=". = 92">\\</xsl:when>
+                    <xsl:when test=". = 08">\b</xsl:when>
+                    <xsl:when test=". = 09">\t</xsl:when>
+                    <xsl:when test=". = 10">\n</xsl:when>
+                    <xsl:when test=". = 12">\f</xsl:when>
+                    <xsl:when test=". = 13">\r</xsl:when>
+                    <xsl:when test=". lt 32 or (. ge 127 and . le 160)">
+                        <xsl:value-of select="concat('\u', json:hex4(.))"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="codepoints-to-string(.)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:value-of>
+    </xsl:function>
+    
+    <xsl:function name="json:hex4" as="xs:string">
+        <xsl:param name="ch" as="xs:integer"/>
+        <xsl:variable name="hex" select="'0123456789abcdef'"/>
+        <xsl:value-of>
+            <xsl:value-of select="substring($hex, $ch idiv 4096 + 1, 1)"/>
+            <xsl:value-of select="substring($hex, $ch idiv 256 mod 16 + 1, 1)"/>
+            <xsl:value-of select="substring($hex, $ch idiv 16 mod 16 + 1, 1)"/>
+            <xsl:value-of select="substring($hex, $ch mod 16 + 1, 1)"/>
+        </xsl:value-of>
     </xsl:function>
 
     <xsl:template match="json:name" mode="json">
-        <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>":<xsl:text/>
+        <xsl:text/>"<xsl:value-of select="."/>":<xsl:text/>
     </xsl:template>
 
     <xsl:template match="json:value" mode="json">
@@ -404,13 +343,7 @@
             </xsl:when>
             <xsl:when test="text()">
                 <xsl:choose>
-                    <!--
-                        A value is considered a string if the following conditions are met:
-                         * There is whitespace/formatting around the value of the node.
-                         * The value is not a valid JSON number (i.e. '01', '+1', '1.', and '.5' are not valid JSON numbers.)
-                         * The value does not equal the any of the following strings: 'false', 'true', 'null'.
-                    -->
-                    <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer  and not(starts-with(string(.),'+')) and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal  and not(starts-with(string(.),'+')) and not(starts-with(.,'-.')) and not(starts-with(.,'.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+                    <xsl:when test="translate(., '&quot;&#xA;&#xD;&#x9;', '') ne . or not((string(.) castable as xs:double or . = 'null' or . = 'false' or . = 'true'))">
                         <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
                     </xsl:when>
                     <xsl:otherwise>
