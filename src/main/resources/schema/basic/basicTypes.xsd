@@ -249,7 +249,7 @@
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,45}"/>
+                    <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,65}"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
