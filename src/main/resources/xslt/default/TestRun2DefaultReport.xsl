@@ -1300,17 +1300,36 @@
 				</label>
 				<textarea id="{$id}.failureMessages" data-mini="true" readonly="readonly">
 					<xsl:for-each select="./etf:message">
-						<xsl:call-template name="translateMessage">
-							<xsl:with-param name="templateId" select="./@ref"/>
-							<xsl:with-param name="translationArguments"
-								select="./etf:translationArguments"/>
-						</xsl:call-template>
+						<xsl:choose>
+							<xsl:when test="exists(./etf:translationArguments)">
+								<xsl:call-template name="translateMessageWithTokens">
+									<xsl:with-param name="templateId" select="./@ref"/>
+									<xsl:with-param name="translationArguments"
+										select="./etf:translationArguments"/>
+								</xsl:call-template>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="translateSimpleMessage">
+									<xsl:with-param name="templateId" select="./@ref"/>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</textarea>
 			</xsl:if>
 		</div>
 	</xsl:template>
-	<xsl:template name="translateMessage">
+	<xsl:template name="translateSimpleMessage">
+		<xsl:param name="templateId" as="xs:string"/>
+		<xsl:variable name="template" select="key('translationKey', $templateId)"/>
+		<xsl:variable name="str" select="$template[1]/text()"/>
+		<xsl:if test="not(normalize-space($str))">
+			<xsl:message terminate="yes">ERROR: Translation template for ID <xsl:value-of
+				select="$templateId"/> not found</xsl:message>
+		</xsl:if>
+		<xsl:value-of select="concat($str, '&#13;&#10;')" />
+	</xsl:template>
+	<xsl:template name="translateMessageWithTokens">
 		<xsl:param name="templateId" as="xs:string"/>
 		<xsl:param name="translationArguments" as="node()"/>
 		<xsl:variable name="template" select="key('translationKey', $templateId)"/>

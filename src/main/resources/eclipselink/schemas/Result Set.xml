@@ -5865,6 +5865,7 @@
                <content type="complex">
                   <mixed-flag>false</mixed-flag>
                   <particle compositor="sequence" type="model-group">
+                     <min-occurs>0</min-occurs>
                      <particles>
                         <particle type="element">
                            <name>translationArguments</name>
@@ -5910,7 +5911,6 @@
                                  </particle>
                               </content>
                            </type>
-                           <min-occurs>0</min-occurs>
                         </particle>
                      </particles>
                   </particle>

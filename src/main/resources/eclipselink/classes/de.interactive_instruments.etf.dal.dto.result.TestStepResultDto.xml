@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2016-11-07T14:40:49.65+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-01-31T09:30:38.622+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.result.AttachmentDtoHolder</type-name>

@@ -160,13 +160,7 @@ final class XmlTestResultWriter implements Releasable {
 
 		public Message(final String translationTemplateId) {
 			this.translationTemplateId = translationTemplateId;
-			// FIXME
-			this.arguments = new ArrayList<String>() {
-				{
-					add("dummyToken");
-					add("dummyValue");
-				}
-			};
+			this.arguments = null;
 		}
 
 		public Message(final String translationTemplateId, final String[] arguments) {
@@ -174,15 +168,23 @@ final class XmlTestResultWriter implements Releasable {
 				throw new IllegalStateException("There is at least one invalid token value pair");
 			}
 			this.translationTemplateId = translationTemplateId;
-			this.arguments = Arrays.asList(arguments);
+			if(arguments!=null && arguments.length>0) {
+				this.arguments = Arrays.asList(arguments);
+			}else{
+				this.arguments=null;
+			}
 		}
 
 		public Message(final String translationTemplateId, final Map<String, String> arguments) {
 			this.translationTemplateId = translationTemplateId;
-			this.arguments = new ArrayList<>();
-			for (final Map.Entry<String, String> entry : arguments.entrySet()) {
-				this.arguments.add(entry.getKey());
-				this.arguments.add(entry.getValue());
+			if(arguments!=null && !arguments.isEmpty()) {
+				this.arguments = new ArrayList<>();
+				for (final Map.Entry<String, String> entry : arguments.entrySet()) {
+					this.arguments.add(entry.getKey());
+					this.arguments.add(entry.getValue());
+				}
+			}else{
+				this.arguments=null;
 			}
 		}
 

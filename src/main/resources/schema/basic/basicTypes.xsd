@@ -215,8 +215,8 @@
             <xs:documentation> Collection of token/value pairs that are used to replace tokens in
                 TranslationTemplates </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="translationArguments" minOccurs="0">
+        <xs:sequence minOccurs="0">
+            <xs:element name="translationArguments">
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
                         <xs:element name="argument">
