@@ -359,6 +359,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 					"Internal error reading the basic data storage XQuery function library");
 			// Copy file to repo
 			installFile = new IFile(ctx.repo.path().file()).expandPath(etfxqmPath);
+			installFile.getParentFile().mkdirs();
 			installFile.write(basicXQueryStream);
 			repoManger.install(installFile.getAbsolutePath());
 		} catch (QueryException e) {
