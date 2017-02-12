@@ -190,6 +190,11 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
+                    <xs:unique name="UniqueNameAndLanguageInTranslationTemplate">
+                        <xs:selector xpath="etf:TranslationTemplate"/>
+                        <xs:field xpath="@language"/>
+                        <xs:field xpath="@name"/>
+                    </xs:unique>
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="name" type="TranslationIdType">
@@ -198,6 +203,15 @@
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>
+        <xs:key name="TrParentName">
+            <xs:selector xpath="."/>
+            <!-- Saxon warning can be ignored here! -->
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="RefParentNameFromChild" refer="TrParentName">
+            <xs:selector xpath="etf:translationTemplates/etf:TranslationTemplate"/>
+            <xs:field xpath="@name"/>
+        </xs:keyref>
     </xs:element>
 
     <!-- =============================================================== -->

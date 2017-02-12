@@ -14,8 +14,12 @@
     <!-- =============================================================== -->
     <!-- ================== includes and imports ======================= -->
     <!-- =============================================================== -->
-    <xs:include schemaLocation="../model/items.xsd"/>
     <xs:redefine schemaLocation="../basic/basicTypes.xsd">
+        <!-- 
+            Its important to redefine basic types first before importing other
+            types otherwise Saxon validator will complain about duplicate 
+            definitions.
+        -->
 
         <!-- =============================================================== -->
         <xs:group name="MetaDataItemGroup">
@@ -37,9 +41,8 @@
             <xs:sequence>
                 <xs:element name="remoteResource" type="httpUriType" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>The remote Http URI from where the item has been
-                            fetched and will be synchonized by the ETF, e.g. a git
-                            URL</xs:documentation>
+                        <xs:documentation>The remote Http URI from where the item has been fetched
+                            and will be synchonized by the ETF, e.g. a git URL</xs:documentation>
                     </xs:annotation>
                 </xs:element>
                 <xs:group ref="RepositoryItemGroup"/>
@@ -47,6 +50,7 @@
         </xs:group>
 
     </xs:redefine>
+    <xs:include schemaLocation="../model/items.xsd"/>
     <!-- =============================================================== -->
 
     <!-- =============================================================== -->
