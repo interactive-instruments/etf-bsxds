@@ -66,10 +66,10 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final String errorLimitStr = testTaskDto.getArguments().value("maximum_number_of_error_messages_per_test");
 		// default fallback
 		long errorLimitTmp = 100;
-		if(!SUtils.isNullOrEmpty(errorLimitStr)) {
+		if (!SUtils.isNullOrEmpty(errorLimitStr)) {
 			try {
-				errorLimitTmp =Long.valueOf(errorLimitStr);
-			}catch (final NumberFormatException e) {
+				errorLimitTmp = Long.valueOf(errorLimitStr);
+			} catch (final NumberFormatException e) {
 				logger.error("Invalid error limit ", e);
 			}
 		}
@@ -167,11 +167,11 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	private void finalizeMessages() {
-		if(isErrorLimitExceeded()) {
+		if (isErrorLimitExceeded()) {
 			// ... and {errorCount} more messages
-			writer.addMessage("TR.errorLimitExceeded", "errorCount", String.valueOf(errorCount-errorLimit));
+			writer.addMessage("TR.errorLimitExceeded", "errorCount", String.valueOf(errorCount - errorLimit));
 		}
-		errorCount=0;
+		errorCount = 0;
 	}
 
 	@Override
@@ -269,26 +269,26 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	public final boolean isErrorLimitExceeded() {
-		return errorCount>=errorLimit;
+		return errorCount >= errorLimit;
 	}
 
 	@Override
 	public void addMessage(final String translationTemplateId) {
-		if(errorCount++<errorLimit) {
+		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId);
 		}
 	}
 
 	@Override
 	public void addMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
-		if(errorCount++<errorLimit) {
+		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId, tokenValuePairs);
 		}
 	}
 
 	@Override
 	public void addMessage(final String translationTemplateId, final String... tokensAndValues) {
-		if(errorCount++<errorLimit) {
+		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId, tokensAndValues);
 		}
 	}
