@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,8 @@ final class DsUtils {
 		return defaultVal;
 	}
 
-	static XsltOutputTransformer loadReportTransformer(final Dao dao) throws IOException, ConfigurationException, InvalidStateTransitionException, InitializationException, TransformerConfigurationException {
+	static XsltOutputTransformer loadReportTransformer(final Dao dao) throws IOException, ConfigurationException,
+			InvalidStateTransitionException, InitializationException, TransformerConfigurationException {
 		final XsltOutputTransformer reportTransformer;
 		final String resultStylePath = PropertyUtils.getenvOrProperty("etf.result.style.file", null);
 		if (resultStylePath == null) {

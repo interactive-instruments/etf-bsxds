@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,8 @@ public class ResultCollectorTest {
 	private static TestRunLogger loggerMock = Mockito.mock(TestRunLogger.class);
 
 	@BeforeClass
-	public static void setUp() throws IOException, InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
+	public static void setUp() throws IOException, InvalidStateTransitionException, StorageException, InitializationException,
+			ConfigurationException {
 		BsxTestUtils.ensureInitialization();
 		dao = BsxTestUtils.DATA_STORAGE.getDao(TestTaskResultDto.class);
 		attachmentDir = IFile.createTempDir("etf-bsxds-test");
@@ -91,21 +92,25 @@ public class ResultCollectorTest {
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions()
+				.get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId()
+				.getId(), 2);
 
 		// Still in Test Step context
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions()
+				.get(1).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId().getId(), 1);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId()
+				.getId(), 1);
 
 		// End Test Step, back in Test Case context
 		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
@@ -122,11 +127,13 @@ public class ResultCollectorTest {
 		assertEquals(4, c.currentModelType());
 
 		// Start assertion
-		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId());
+		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions()
+				.get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId()
+				.getId(), 2);
 
 		// In Test Step (3) context
 		assertEquals(4, c.currentModelType());

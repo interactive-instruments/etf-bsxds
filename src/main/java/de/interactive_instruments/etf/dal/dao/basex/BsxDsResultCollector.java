@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	private final long errorLimit;
 	private long errorCount = 0;
 
-	public BsxDsResultCollector(final DataStorage dataStorage, final TestRunLogger testRunLogger, final IFile resultFile, final IFile attachmentDir, final TestTaskDto testTaskDto) {
+	public BsxDsResultCollector(final DataStorage dataStorage, final TestRunLogger testRunLogger, final IFile resultFile,
+			final IFile attachmentDir, final TestTaskDto testTaskDto) {
 		this.testRunLogger = testRunLogger;
 		this.tmpDir = attachmentDir.secureExpandPathDown("tmp");
 		this.tmpDir.mkdirs();
@@ -97,7 +98,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public boolean endWithSkippedIfTestCasesFailed(final String... strings) throws IllegalArgumentException, IllegalStateException {
+	public boolean endWithSkippedIfTestCasesFailed(final String... strings)
+			throws IllegalArgumentException, IllegalStateException {
 		return false;
 	}
 
@@ -128,7 +130,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	// Finish  results
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	protected String endTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException, FileNotFoundException, StorageException {
+	protected String endTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException, FileNotFoundException, StorageException {
 		finalizeMessages();
 		final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
 		writer.close();
@@ -142,17 +145,20 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return id;
 	}
 
-	protected String endTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	protected String endTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		finalizeMessages();
 		return writer.writeEndTestModuleResult(testModelItemId, status, stopTimestamp);
 	}
 
-	protected String endTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	protected String endTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		finalizeMessages();
 		return writer.writeEndTestCaseResult(testModelItemId, status, stopTimestamp);
 	}
 
-	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		finalizeMessages();
 		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
@@ -161,7 +167,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return writer.writeEndTestStepResult(testModelItemId, status, stopTimestamp);
 	}
 
-	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		finalizeMessages();
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
@@ -221,13 +228,16 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector, final String testModelItemId, final long startTimestamp) {
+	protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector,
+			final String testModelItemId, final long startTimestamp) {
 		final IFile testCaseResultFile = this.tmpDir.secureExpandPathDown("TestCaseResult-EID" + testModelItemId);
-		return new BsxDsTestCaseResultCollector(this, testStepAttachmentIds, testCaseResultFile, testModelItemId, startTimestamp);
+		return new BsxDsTestCaseResultCollector(this, testStepAttachmentIds, testCaseResultFile, testModelItemId,
+				startTimestamp);
 	}
 
 	@Override
-	protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector, final String testModelItemId, final long startTimestamp) {
+	protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector,
+			final String testModelItemId, final long startTimestamp) {
 		return new BsxDsTestStepResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
 	}
 
@@ -263,7 +273,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public boolean statusEqualsAny(final String testModelItemId, final String... testResultStatus) throws IllegalArgumentException {
+	public boolean statusEqualsAny(final String testModelItemId, final String... testResultStatus)
+			throws IllegalArgumentException {
 		throw new IllegalStateException("Unimplemented");
 	}
 
@@ -294,7 +305,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public String markAttachment(final String fileName, final String label, final String encoding, String mimeType, final String type) throws IOException {
+	public String markAttachment(final String fileName, final String label, final String encoding, String mimeType,
+			final String type) throws IOException {
 		final IFile attachmentFile = tmpDir.secureExpandPathDown(fileName);
 		attachmentFile.expectFileIsReadable();
 		final String eid = UUID.randomUUID().toString();
@@ -316,7 +328,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public String saveAttachment(final InputStream inputStream, final String label, final String mimeType, final String type) throws IOException {
+	public String saveAttachment(final InputStream inputStream, final String label, final String mimeType, final String type)
+			throws IOException {
 		final String eid = UUID.randomUUID().toString();
 		String extension = ".txt";
 		if (mimeType != null) {
@@ -336,7 +349,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public String saveAttachment(final Reader reader, final String label, final String mimeType, final String type) throws IOException {
+	public String saveAttachment(final Reader reader, final String label, final String mimeType, final String type)
+			throws IOException {
 		final String eid = UUID.randomUUID().toString();
 		String extension = ".txt";
 		if (mimeType != null) {
@@ -356,7 +370,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public String saveAttachment(final String content, final String label, String mimeType, final String type) throws IOException {
+	public String saveAttachment(final String content, final String label, String mimeType, final String type)
+			throws IOException {
 		final String eid = UUID.randomUUID().toString();
 		if (mimeType == null) {
 			try {
@@ -376,7 +391,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public void internalError(final String translationTemplateId, final Map<String, String> tokenValuePairs, final Throwable e) {
+	public void internalError(final String translationTemplateId, final Map<String, String> tokenValuePairs,
+			final Throwable e) {
 		throw new IllegalStateException("Not implemented");
 	}
 

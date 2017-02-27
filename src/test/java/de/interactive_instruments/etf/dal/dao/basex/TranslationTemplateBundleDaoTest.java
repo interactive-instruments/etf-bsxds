@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,8 @@ public class TranslationTemplateBundleDaoTest {
 	private static WriteDao<TranslationTemplateBundleDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+			StorageException, IOException {
 		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
 	}
@@ -118,12 +119,14 @@ public class TranslationTemplateBundleDaoTest {
 	}
 
 	@Test
-	public void test_7_0_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+	public void test_7_0_stream_file_to_store()
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
 				"database/translationtemplatebundle.xml").getPath());
 		final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
 
-		final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
+		final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao)
+				.add(new FileInputStream(testObjectXmlFile));
 		translationTemplateBundle.ensureBasicValidity();
 
 		assertEquals(id.getId(), translationTemplateBundle.getId().getId());
@@ -131,7 +134,8 @@ public class TranslationTemplateBundleDaoTest {
 	}
 
 	@Test(expected = StoreException.class)
-	public void test_7_1_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+	public void test_7_1_stream_file_to_store()
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
 				"database/invalidtranslationtemplatebundle.xml").getPath());
 		((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,15 @@ import de.interactive_instruments.etf.testdriver.TestRunLogger;
  */
 public class BsxDsResultCollectorFactory implements TestResultCollectorFactory {
 
-	private final BsxDataStorage dataStorage = (BsxDataStorage) DataStorageRegistry.instance().get(BsxDataStorage.class.getName());
+	private final BsxDataStorage dataStorage = (BsxDataStorage) DataStorageRegistry.instance()
+			.get(BsxDataStorage.class.getName());
 
 	@Override
 	public TestResultCollector createTestResultCollector(final TestRunLogger testRunLogger, final TestTaskDto testTaskDto) {
 		// ATTACHMENT_DIR / TESTRUN_ID / TESTTASK_ID
-		final IFile testTaskAttachmentDir = dataStorage.getAttachmentDir().secureExpandPathDown(testTaskDto.getParent().getId().getId()).secureExpandPathDown(testTaskDto.getId().getId());
+		final IFile testTaskAttachmentDir = dataStorage.getAttachmentDir()
+				.secureExpandPathDown(testTaskDto.getParent().getId().getId())
+				.secureExpandPathDown(testTaskDto.getId().getId());
 		return new BsxDsResultCollector(dataStorage,
 				testRunLogger,
 				testTaskAttachmentDir.secureExpandPathDown("TmpTestTaskResult-EID" + testTaskDto.getId().getId() + ".xml"),

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,8 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 		@Override
 		public void error(final SAXParseException exception) throws SAXException {
 			if (!exception.getMessage().startsWith("cvc-id")) {
-				logger.error("Validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(), exception.getMessage());
+				logger.error("Validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
+						exception.getMessage());
 				throw new SAXException(exception);
 			}
 		}
@@ -87,7 +88,8 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 		@Override
 		public void fatalError(final SAXParseException exception) throws SAXException {
 			if (!exception.getMessage().startsWith("cvc-id")) {
-				logger.error("Fatal validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(), exception.getMessage());
+				logger.error("Fatal validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
+						exception.getMessage());
 				throw new SAXException(exception);
 			}
 		}
@@ -111,7 +113,8 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 			// Parse ID
 			final XPath xpath = XmlUtils.newXPath();
 			final String xpathExpression = this.queryPath + "[1]/@id";
-			final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)), XPathConstants.STRING);
+			final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)),
+					XPathConstants.STRING);
 			if (SUtils.isNullOrEmpty((String) oid)) {
 				throw new StorageException("Could not query id (" + xpathExpression + ")");
 			}
@@ -155,13 +158,15 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 				throw new StorageException("Unable to query streamed Dto by ID");
 			}
 			return id;
-		} catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException | IOException | ParserConfigurationException | SAXException e) {
+		} catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException
+				| IOException | ParserConfigurationException | SAXException e) {
 			if (itemFile != null) {
 				try {
 					if (ctx.getLogger().isDebugEnabled()) {
 						ctx.getLogger().debug("Failed to add streamed Dto. Intermediate file has been kept: {}", itemFile);
 					} else {
-						ctx.getLogger().error("Failed to add streamed Dto. Intermediate file has been deleted as Log level is not set to debug.");
+						ctx.getLogger().error(
+								"Failed to add streamed Dto. Intermediate file has been deleted as Log level is not set to debug.");
 						itemFile.delete();
 						new Delete(itemFile.getName()).execute(ctx.getBsxCtx());
 						new Flush().execute(ctx.getBsxCtx());
@@ -191,7 +196,8 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 			}
 			if (hook != null) {
 				dto = hook.doChangeBeforeStore(dto);
-				Objects.requireNonNull(dto, "Implementation error: doChangeBeforeStreamUpdate() returned null").ensureBasicValidity();
+				Objects.requireNonNull(dto, "Implementation error: doChangeBeforeStreamUpdate() returned null")
+						.ensureBasicValidity();
 			}
 			// do not update as Id would change
 			delete(dto.getId());

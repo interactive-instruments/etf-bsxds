@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,8 @@ class BsxTestUtils {
 		return String.format("%05d", i);
 	}
 
-	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, IOException {
+	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+			StorageException, IOException {
 		if (!DATA_STORAGE.isInitialized()) {
 
 			if (System.getenv("ETF_DS_DIR") != null) {
@@ -85,7 +86,8 @@ class BsxTestUtils {
 			styleDir.expectDirIsReadable();
 
 			assertTrue(DATA_STORAGE_DIR != null && DATA_STORAGE_DIR.exists());
-			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR, DATA_STORAGE_DIR.getAbsolutePath());
+			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR,
+					DATA_STORAGE_DIR.getAbsolutePath());
 			DATA_STORAGE.getConfigurationProperties().setProperty("etf.webapp.base.url", styleDir.getAbsolutePath());
 			DATA_STORAGE.getConfigurationProperties().setProperty("etf.api.base.url", "http://localhost/etf-webapp/v2");
 			DATA_STORAGE.init();
@@ -151,7 +153,8 @@ class BsxTestUtils {
 		return getByIdTest(dto, null);
 	}
 
-	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter)
+			throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
 
 		final PreparedDto<T> preparedDto = dao.getById(dto.getId(), filter);
@@ -172,11 +175,13 @@ class BsxTestUtils {
 		return preparedDto;
 	}
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto)
+			throws StorageException, ObjectWithIdNotFoundException {
 		return addAndGetByIdTest(dto, null);
 	}
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
+	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter)
+			throws StorageException, ObjectWithIdNotFoundException {
 		addTest(dto);
 		return getByIdTest(dto, filter);
 	}
@@ -196,7 +201,8 @@ class BsxTestUtils {
 		return sb.toString();
 	}
 
-	public static void compareStreamingContent(final Dto dto, final String path, final String format) throws ObjectWithIdNotFoundException, StorageException, IOException, URISyntaxException {
+	public static void compareStreamingContent(final Dto dto, final String path, final String format)
+			throws ObjectWithIdNotFoundException, StorageException, IOException, URISyntaxException {
 		addTest(dto);
 		final WriteDao dao = getDao(dto);
 		final PreparedDto preparedDto = dao.getById(dto.getId());
@@ -212,7 +218,8 @@ class BsxTestUtils {
 		final IFile cmpResult = new IFile(dto.getClass().getClassLoader().getResource(path).toURI());
 		assertTrue(cmpResult.exists());
 
-		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()), trimAllWhitespace(tmpFile.readContent().toString()));
+		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
+				trimAllWhitespace(tmpFile.readContent().toString()));
 	}
 
 	private static boolean hasLength(CharSequence str) {

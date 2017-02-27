@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,7 +143,8 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	 * @throws IOException if stylesheet is not readable
 	 * @throws TransformerConfigurationException if stylesheet contains errors
 	 */
-	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath, final String jarImportPath)
+	public XsltOutputTransformer(final Dao dao, final String label, final String mimeTypeStr, final String stylesheetJarPath,
+			final String jarImportPath)
 			throws IOException, TransformerConfigurationException {
 		this.id = EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + label);
 		this.label = label;
@@ -204,7 +205,8 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	}
 
 	@Override
-	public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream) throws IOException {
+	public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream)
+			throws IOException {
 		try {
 			checkForChangedStylesheet();
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -222,7 +222,8 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	}
 
 	@Override
-	public final Collection<T> updateAll(final Collection<T> collection) throws StorageException, ObjectWithIdNotFoundException {
+	public final Collection<T> updateAll(final Collection<T> collection)
+			throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
 		final List<T> updatedDtos = new ArrayList<T>(collection.size());
 		for (final T dto : collection) {

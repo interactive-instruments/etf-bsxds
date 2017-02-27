@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,8 @@ public class TestTaskResultDaoTest {
 	private static WriteDao<TestTaskResultDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+			StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
 
@@ -66,7 +67,8 @@ public class TestTaskResultDaoTest {
 	}
 
 	@AfterClass
-	public static void tearDown() throws InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
+	public static void tearDown()
+			throws InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
 		ExecutableTestSuiteDaoTest.tearDown();
 	}
 
@@ -132,11 +134,13 @@ public class TestTaskResultDaoTest {
 		final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestTaskResult.html").toURI());
 		assertTrue(cmpResult.exists());
 
-		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()), trimAllWhitespace(tmpFile.readContent().toString()));
+		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
+				trimAllWhitespace(tmpFile.readContent().toString()));
 	}
 
 	@Test(expected = StoreException.class)
-	public void test_7_1_stream_file_to_store() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+	public void test_7_1_stream_file_to_store()
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
 		final IFile taskTestResultFile = new IFile(getClass().getClassLoader().getResource(
 				"database/testtaskresult.xml").getPath());
 		((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,8 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	 * @param parentCollector
 	 * @param testStepAttachmentIds
 	 */
-	BsxDsTestCaseResultCollector(final AbstractTestCollector parentCollector, final List<String> testStepAttachmentIds, final String testCaseId, final long startTimestamp) {
+	BsxDsTestCaseResultCollector(final AbstractTestCollector parentCollector, final List<String> testStepAttachmentIds,
+			final String testCaseId, final long startTimestamp) {
 		super(parentCollector, testCaseId);
 		this.testStepAttachmentIds = testStepAttachmentIds;
 		bos = new ByteArrayOutputStream(512);
@@ -83,12 +84,14 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	}
 
 	@Override
-	protected String endTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp) throws Exception {
+	protected String endTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws Exception {
 		return writer.writeEndTestCaseResult(testModelItemId, status, stopTimestamp);
 	}
 
 	@Override
-	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws Exception {
+	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws Exception {
 		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
@@ -97,7 +100,8 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	}
 
 	@Override
-	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp) throws Exception {
+	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws Exception {
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
 
@@ -141,12 +145,14 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	protected void notifyError() {}
 
 	@Override
-	protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector, final String testModelItemId, final long startTimestamp) {
+	protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector,
+			final String testModelItemId, final long startTimestamp) {
 		return new BsxDsTestCaseResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
 	}
 
 	@Override
-	protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector, final String testModelItemId, final long startTimestamp) {
+	protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector,
+			final String testModelItemId, final long startTimestamp) {
 		return new BsxDsTestStepResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
 	}
 

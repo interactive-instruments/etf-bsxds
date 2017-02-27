@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,8 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 		}
 	}
 
-	protected AbstractBsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd, final BsxFilterBuilder filterBuilder) throws StorageException {
+	protected AbstractBsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx,
+			final GetDtoResultCmd<T> getDtoResultCmd, final BsxFilterBuilder filterBuilder) throws StorageException {
 		this.queryPath = queryPath;
 		this.ctx = ctx;
 		this.typeName = typeName;
@@ -145,7 +146,8 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 		initialized = true;
 	}
 
-	private void initAndAddTransformer(final XsltOutputTransformer outputFormat) throws ConfigurationException, InvalidStateTransitionException, InitializationException {
+	private void initAndAddTransformer(final XsltOutputTransformer outputFormat)
+			throws ConfigurationException, InvalidStateTransitionException, InitializationException {
 		outputFormat.getConfigurationProperties().setPropertiesFrom(configProperties, true);
 		outputFormat.init();
 		outputFormatIdMap.put(outputFormat.getId(), outputFormat);
@@ -180,16 +182,19 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	}
 
 	@Override
-	public PreparedDtoCollection<T> getByIds(final Set<EID> set, final Filter filter) throws StorageException, ObjectWithIdNotFoundException {
+	public PreparedDtoCollection<T> getByIds(final Set<EID> set, final Filter filter)
+			throws StorageException, ObjectWithIdNotFoundException {
 		throw new StorageException("Not implemented yet");
 	}
 
 	private BsXQuery createPagedQuery(final Filter filter) throws BaseXException {
-		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("function", "paged").parameter("selection", typeName);
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("function", "paged").parameter("selection",
+				typeName);
 	}
 
 	private BsXQuery createIdQuery(final String id, final Filter filter) throws BaseXException {
-		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("qids", id).parameter("function", "byId").parameter("selection", typeName);
+		return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("qids", id).parameter("function", "byId")
+				.parameter("selection", typeName);
 	}
 
 	@Override

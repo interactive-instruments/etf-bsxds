@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,8 @@ public class TestRunDaoTest {
 	private static WriteDao<TestRunDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+			StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestRunDto.class));
 
@@ -57,7 +58,8 @@ public class TestRunDaoTest {
 	}
 
 	@AfterClass
-	public static void tearDown() throws StorageException, ConfigurationException, InitializationException, InvalidStateTransitionException, ObjectWithIdNotFoundException {
+	public static void tearDown() throws StorageException, ConfigurationException, InitializationException,
+			InvalidStateTransitionException, ObjectWithIdNotFoundException {
 		TestTaskResultDaoTest.tearDown();
 		BsxTestUtils.forceDelete(writeDao, TR_DTO_1.getId());
 	}

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,7 +104,8 @@ final class DtoCache implements WriteDaoListener {
 					return true;
 				}
 			}
-			logger.debug("Validation failed\n\tSeverity: {}\n\tMessage: {}\n\tLinked exception: {}\n\tLocator: {}:{} {}\n\tObject: {}\n\tNode: {}",
+			logger.debug(
+					"Validation failed\n\tSeverity: {}\n\tMessage: {}\n\tLinked exception: {}\n\tLocator: {}:{} {}\n\tObject: {}\n\tNode: {}",
 					event.getSeverity(), message, event.getLinkedException(),
 					event.getLocator().getLineNumber(), event.getLocator().getColumnNumber(), event.getLocator().getOffset(),
 					event.getLocator().getObject(), event.getLocator().getNode());
@@ -122,7 +123,8 @@ final class DtoCache implements WriteDaoListener {
 					return (Callable<Object>) () -> dto;
 				} else if (lazyLookupIds.contains(eid)) {
 					logger.debug("Creating lazy load proxy for {} ({})", eid, type.getSimpleName());
-					return (Callable<Object>) () -> bsxDsCtx.createProxy(EidFactory.getDefault().createAndPreserveStr(eid), type);
+					return (Callable<Object>) () -> bsxDsCtx.createProxy(EidFactory.getDefault().createAndPreserveStr(eid),
+							type);
 				}
 			}
 			logger.trace("Cache miss: {} ({})", id, type);

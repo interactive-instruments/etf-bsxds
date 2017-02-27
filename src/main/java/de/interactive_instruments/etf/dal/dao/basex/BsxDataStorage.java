@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -239,7 +239,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				initLazyDtoProxies();
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
-			} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | TransformerConfigurationException | JAXBException | IOException | StorageException e) {
+			} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException
+					| TransformerConfigurationException | JAXBException | IOException | StorageException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -300,7 +301,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	private void initDaosAndMoxyDtoMapping() throws StorageException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException, InvalidStateTransitionException, InitializationException {
+	private void initDaosAndMoxyDtoMapping()
+			throws StorageException, JAXBException, IOException, TransformerConfigurationException, ConfigurationException,
+			InvalidStateTransitionException, InitializationException {
 		final Map<Class<? extends Dto>, WriteDao<? extends Dto>> tmpDaoMapping = new HashMap<>();
 		tmpDaoMapping.put(TestObjectDto.class, new TestObjectDao(this));
 		tmpDaoMapping.put(TestObjectTypeDto.class, new TestObjectTypeDao(this));
@@ -330,9 +333,12 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		// transformed type (String) correctly
 		// (e.g, in XmlCollectionReferenceMapping.descriptor.getTypedField(tgtFld).getType() )
 		// so the type is explicitly set here
-		final List<Descriptor> descriptors = ((org.eclipse.persistence.jaxb.JAXBContext) jaxbContext).getXMLContext().getDescriptors();
+		final List<Descriptor> descriptors = ((org.eclipse.persistence.jaxb.JAXBContext) jaxbContext).getXMLContext()
+				.getDescriptors();
 		for (final Descriptor descriptor : descriptors) {
-			((XMLDescriptor) descriptor).getAllFields().stream().filter(databaseField -> "@id".equals(databaseField.getQualifiedName())).forEach(databaseField -> databaseField.setType(String.class));
+			((XMLDescriptor) descriptor).getAllFields().stream()
+					.filter(databaseField -> "@id".equals(databaseField.getQualifiedName()))
+					.forEach(databaseField -> databaseField.setType(String.class));
 		}
 	}
 
@@ -654,7 +660,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Note: the member variables of these proxy classes are never accessed, so avoid access
 	 * via reflection!
 	 */
-	private final void initLazyDtoProxies() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+	private final void initLazyDtoProxies()
+			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		for (final Map.Entry<Class<? extends Dto>, Dao<? extends Dto>> classDaoEntry : daoMapping.entrySet()) {
 			final Class<? extends Dto> classType = classDaoEntry.getKey();
 			if (!dtoLazyLoadProxies.containsKey(classType)) {
@@ -665,7 +672,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 						.defineField("cached", Dto.class, Visibility.PRIVATE)
 						.defineField("proxiedId", EID.class, Visibility.PRIVATE)
 						.implement(ProxyAccessor.class).intercept(FieldAccessor.ofBeanProperty())
-						.method(any().and(not(isDeclaredBy(ProxyAccessor.class)))).intercept(MethodDelegation.to(new LazyLoadProxyDto(classDaoEntry.getValue(), logger)))
+						.method(any().and(not(isDeclaredBy(ProxyAccessor.class))))
+						.intercept(MethodDelegation.to(new LazyLoadProxyDto(classDaoEntry.getValue(), logger)))
 						.make()
 						.load(classType.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
 						.getLoaded();
@@ -687,7 +695,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 						.defineField("cached", Dto.class, Visibility.PRIVATE)
 						.defineField("proxiedId", EID.class, Visibility.PRIVATE)
 						.implement(ProxyAccessor.class).intercept(FieldAccessor.ofBeanProperty())
-						.method(any().and(not(isDeclaredBy(ProxyAccessor.class)))).intercept(MethodDelegation.to(new CacheAccessProxyDto(this, logger)))
+						.method(any().and(not(isDeclaredBy(ProxyAccessor.class))))
+						.intercept(MethodDelegation.to(new CacheAccessProxyDto(this, logger)))
 						.make()
 						.load(classType.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
 						.getLoaded();
@@ -705,7 +714,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * @return LazyLoadProxyDto
 	 * @throws ObjectWithIdNotFoundException invalid EID
 	 */
-	public Dto createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException {
+	public Dto createProxy(final EID eid, final Class<? extends Dto> type)
+			throws ObjectWithIdNotFoundException, StorageException {
 		final Dao dao = daoMapping.get(type);
 		if (dao == null) {
 			final Class<? extends Dto> cacheAccessProxy = dtoCacheAccessProxies.get(type);

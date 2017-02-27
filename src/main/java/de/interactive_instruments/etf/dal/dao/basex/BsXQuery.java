@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,9 @@ final class BsXQuery {
 		if (filter == null) {
 			return this;
 		}
-		return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer").parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer").parameter("levelOfDetail", valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)));
+		return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer")
+				.parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer").parameter("levelOfDetail",
+						valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)));
 	}
 
 	String getParameter(final String name) {

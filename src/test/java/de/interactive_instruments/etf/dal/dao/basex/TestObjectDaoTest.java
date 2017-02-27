@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,8 @@ public class TestObjectDaoTest {
 	private static WriteDao<TestObjectDto> writeDao;
 
 	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException, ObjectWithIdNotFoundException, IOException {
+	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+			StorageException, ObjectWithIdNotFoundException, IOException {
 		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestObjectDto.class));
 
@@ -77,14 +78,16 @@ public class TestObjectDaoTest {
 		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_2);
 		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_3);
 
-		final WriteDao<TestObjectTypeDto> testObjectTypeDao = (WriteDao<TestObjectTypeDto>) DATA_STORAGE.getDao(TestObjectTypeDto.class);
+		final WriteDao<TestObjectTypeDto> testObjectTypeDao = (WriteDao<TestObjectTypeDto>) DATA_STORAGE
+				.getDao(TestObjectTypeDto.class);
 		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_1);
 		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_2);
 		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_3);
 	}
 
 	@AfterClass
-	public static void tearDown() throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException {
+	public static void tearDown()
+			throws ConfigurationException, InvalidStateTransitionException, InitializationException, StorageException {
 		BsxTestUtils.forceDelete(writeDao, EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
 
 		BsxTestUtils.forceDelete(writeDao, TAG_DTO_1.getId());
@@ -298,12 +301,14 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_4_1_streaming_xml() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+	public void test_4_1_streaming_xml()
+			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		compareStreamingContent(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.xml", "DsResult2Xml");
 	}
 
 	@Test
-	public void test_4_2_streaming_json() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+	public void test_4_2_streaming_json()
+			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		compareStreamingContent(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.json", "DsResult2Json");
 	}
 

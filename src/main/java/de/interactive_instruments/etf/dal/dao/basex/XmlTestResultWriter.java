@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 interactive instruments GmbH
+ * Copyright 2010-2017 interactive instruments GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,8 @@ final class XmlTestResultWriter implements Releasable {
 		private final String mimeType;
 		private final String type;
 
-		public Attachment(final String id, final IFile attachmentFile, final String label, final String encoding, final String mimeType, final String type) {
+		public Attachment(final String id, final IFile attachmentFile, final String label, final String encoding,
+				final String mimeType, final String type) {
 			this.id = id;
 			this.attachmentFile = attachmentFile;
 			this.base64EncodedContent = null;
@@ -108,7 +109,8 @@ final class XmlTestResultWriter implements Releasable {
 			this.type = type;
 		}
 
-		public Attachment(final String id, final byte[] base64EncodedContent, final String label, final String encoding, final String mimeType, final String type) {
+		public Attachment(final String id, final byte[] base64EncodedContent, final String label, final String encoding,
+				final String mimeType, final String type) {
 			this.id = id;
 			this.attachmentFile = null;
 			this.base64EncodedContent = base64EncodedContent;
@@ -206,7 +208,8 @@ final class XmlTestResultWriter implements Releasable {
 		}
 	}
 
-	private String writeEidAndMarkResultModelItem(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	private String writeEidAndMarkResultModelItem(final String resultedFrom, final long startTimestamp)
+			throws XMLStreamException {
 		long time = startTimestamp << 32;
 		time |= ((startTimestamp & 0xFFFF00000000L) >> 16);
 		time |= 0x1000 | ((startTimestamp >> 48) & 0x0FFF);
@@ -219,7 +222,8 @@ final class XmlTestResultWriter implements Releasable {
 	// Start writing results
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public String writeStartTestTaskResult(final String resultedFrom, final long startTimestamp, final String testObjectRef) throws XMLStreamException {
+	public String writeStartTestTaskResult(final String resultedFrom, final long startTimestamp, final String testObjectRef)
+			throws XMLStreamException {
 		writer.writeStartDocument("UTF-8", "1.0");
 		writer.writeStartElement(ETF_NS_PREFIX, "TestTaskResult", ETF_NS);
 		writer.setPrefix(ETF_NS_PREFIX, ETF_NS);
@@ -268,7 +272,8 @@ final class XmlTestResultWriter implements Releasable {
 		writer.writeStartElement("testAssertionResults");
 	}
 
-	public String writeStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	public String writeStartTestAssertionResult(final String resultedFrom, final long startTimestamp)
+			throws XMLStreamException {
 		writer.writeStartElement("TestAssertionResult");
 		return writeEidAndMarkResultModelItem(resultedFrom, startTimestamp);
 	}
@@ -283,7 +288,8 @@ final class XmlTestResultWriter implements Releasable {
 		return resultModelItem.getResultedFromId();
 	}
 
-	public String writeEndTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException, FileNotFoundException, StorageException {
+	public String writeEndTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException, FileNotFoundException, StorageException {
 		writer.writeEndElement();
 		if (!attachments.isEmpty()) {
 			writer.writeStartElement("attachments");
@@ -297,17 +303,20 @@ final class XmlTestResultWriter implements Releasable {
 		return id;
 	}
 
-	public String writeEndTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	public String writeEndTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		writer.writeEndElement();
 		return writeResultModelItem(status, stopTimestamp);
 	}
 
-	public String writeEndTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	public String writeEndTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		writer.writeEndElement();
 		return writeResultModelItem(status, stopTimestamp);
 	}
 
-	public String writeEndTestStepResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	public String writeEndTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		return writeResultModelItem(status, stopTimestamp);
 	}
 
@@ -319,7 +328,8 @@ final class XmlTestResultWriter implements Releasable {
 		writer.writeEndElement();
 	}
 
-	public String writeEndTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp) throws XMLStreamException {
+	public String writeEndTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
+			throws XMLStreamException {
 		if (!messages.isEmpty()) {
 			writer.writeStartElement("messages");
 			for (final Message message : this.messages) {
@@ -378,11 +388,13 @@ final class XmlTestResultWriter implements Releasable {
 		results.addLast(new ResultModelItem(id, startTimestamp, resultedFrom));
 	}
 
-	void addAttachment(final String eid, final IFile attachmentFile, final String label, final String encoding, final String mimeType, final String type) {
+	void addAttachment(final String eid, final IFile attachmentFile, final String label, final String encoding,
+			final String mimeType, final String type) {
 		attachments.put(eid, new Attachment(eid, attachmentFile, label, encoding, mimeType, type));
 	}
 
-	void addAttachment(final String eid, final byte[] base64EncodedContent, final String label, final String encoding, final String mimeType, final String type) {
+	void addAttachment(final String eid, final byte[] base64EncodedContent, final String label, final String encoding,
+			final String mimeType, final String type) {
 		attachments.put(eid, new Attachment(eid, base64EncodedContent, label, encoding, mimeType, type));
 	}
 
