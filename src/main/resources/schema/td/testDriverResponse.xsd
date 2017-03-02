@@ -7,12 +7,9 @@
     elementFormDefault="qualified" version="1.0">
 
     <xs:annotation>
-        <!-- Author: Jon Herrmann (interactive instruments) -->
-        <xs:documentation xml:lang="en">
-            <![CDATA[
-            testdriverResponse.xsd, (c) 2016 interactive instruments, part of ETF, licensed under the Apache License Version 2.0
-            ]]>
-        </xs:documentation>
+        <xs:documentation xml:lang="en"> testdriverResponse.xsd. Created by Jon Herrmann, (c) 2016-2017
+            interactive instruments GmbH. This file is part of ETF which is licensed under the
+            Apache License Version 2.0 </xs:documentation>
     </xs:annotation>
 
     <!-- =============================================================== -->
