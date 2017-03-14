@@ -59,7 +59,6 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	protected boolean initialized = false;
 	private final GetDtoResultCmd getDtoResultCmd;
 	protected long lastModificationDate = System.currentTimeMillis();
-	protected final BsxFilterBuilder filterBuilder;
 
 	protected void ensureType(final T t) {
 		if (!this.getDtoType().isAssignableFrom(t.getClass())) {
@@ -73,7 +72,7 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	}
 
 	protected AbstractBsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx,
-			final GetDtoResultCmd<T> getDtoResultCmd, final BsxFilterBuilder filterBuilder) throws StorageException {
+			final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		this.queryPath = queryPath;
 		this.ctx = ctx;
 		this.typeName = typeName;
@@ -84,7 +83,6 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 		} catch (IOException e) {
 			throw new StorageException("Could not load XQuery resource for " + typeName, e);
 		}
-		this.filterBuilder = filterBuilder;
 	}
 
 	@Override
@@ -216,8 +214,4 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 		return lastModificationDate;
 	}
 
-	@Override
-	public FilterBuilder getFilterBuilder() {
-		return this.filterBuilder;
-	}
 }

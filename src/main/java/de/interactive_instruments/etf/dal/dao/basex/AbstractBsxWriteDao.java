@@ -58,7 +58,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected AbstractBsxWriteDao(final String queryPath, final String typeName,
 			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
-		super(queryPath, typeName, ctx, getDtoResultCmd, null);
+		super(queryPath, typeName, ctx, getDtoResultCmd);
 	}
 
 	@Override
