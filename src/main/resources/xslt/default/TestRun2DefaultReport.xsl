@@ -415,6 +415,31 @@
 		</div>
 	</xsl:template>
 	
+	<!-- Attachments -->
+	<!-- ########################################################################################## -->
+	<xsl:template match="etf:Attachment" priority="1">
+		<xsl:variable name="id" select="./@id"/>
+		<xsl:choose>
+			<xsl:when test="exists(./etf:referencedData/@href)">
+				<!--xsl:choose>
+					<xsl:when test="unparsed-text-available(./etf:referencedData/@href, 'UTF-8')">
+						<xsl:value-of select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<pre>Referenced data not available</pre>
+					</xsl:otherwise>
+				</xsl:choose-->
+				<xsl:variable name="testTaskResultId" select="../../@id"/>
+				<xsl:value-of select="concat($serviceUrl, '/TestTaskResults/', $testTaskResultId, '/Attachments/', $id)"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="convertBase64ToAscii">
+					<xsl:with-param name="base64String" select="./etf:embeddedData" />
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
 	<!-- StatisticalReport (Attachment) -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:Attachment[@type = 'StatisticalReport']" priority="4">
@@ -458,31 +483,6 @@
 					<h3><xsl:value-of select="$lang/x:e[@key = 'LogFile']"/><xsl:if test="$TestSuite">: <xsl:value-of select="$TestSuite/etf:label"/></xsl:if></h3>
 					<pre>Log path not available</pre>
 				</div>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	<!-- Attachments -->
-	<!-- ########################################################################################## -->
-	<xsl:template match="etf:Attachment[@type = 'ServiceEndpoint' or @type = 'ServiceResponse' or @type = 'GetParameter']" priority="7">
-		<xsl:variable name="id" select="./@id"/>
-		<xsl:choose>
-			<xsl:when test="exists(./etf:referencedData/@href)">
-				<!--xsl:choose>
-					<xsl:when test="unparsed-text-available(./etf:referencedData/@href, 'UTF-8')">
-						<xsl:value-of select="unparsed-text(./etf:referencedData/@href, 'UTF-8')"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<pre>Referenced data not available</pre>
-					</xsl:otherwise>
-				</xsl:choose-->
-					<xsl:variable name="testTaskResultId" select="../../@id"/>
-					<xsl:value-of select="concat($serviceUrl, '/TestTaskResults/', $testTaskResultId, '/Attachments/', $id)"/>
-			</xsl:when>
-			<xsl:otherwise>
-					<xsl:call-template name="convertBase64ToAscii">
-						<xsl:with-param name="base64String" select="./etf:embeddedData" />
-					</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -975,6 +975,31 @@
 								<xsl:value-of select="$TestStep/@id"/>
 							</td>
 						</tr>
+						
+						<!-- Invoked Tests -->
+						<xsl:if test="$resultItem/etf:invokedTests/etf:TestStepResult">
+							<xsl:for-each select="$resultItem/etf:invokedTests/etf:TestStepResult">
+								<xsl:variable name="DepTestStep" select="key('testStepKey', ./etf:resultedFrom/@ref)"/>
+								<tr>
+									<!--xsl:attribute name="class">
+										<xsl:if test="not($failedOrSkipped)">DoNotShowInSimpleView</xsl:if>
+									</xsl:attribute-->
+									<td>
+										<xsl:value-of select="$lang/x:e[@key = 'Dependency']"/>
+									</td>
+									<td>
+										<xsl:variable name="depTestStepId" select="$DepTestStep/@id"/>
+										<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$depTestStepId}"
+											data-ajax="false"
+											onclick="event.preventDefault(); jumpToAnchor('{$depTestStepId}'); return false;">
+											<xsl:variable name="status" select="./etf:status/text()"/>
+											<xsl:value-of select="$DepTestStep/etf:label/text()"/> (<xsl:value-of select="$lang/x:e[@key = $status]"/>) 
+										</a>
+									</td>
+								</tr>
+							</xsl:for-each>
+						</xsl:if>
+						
 					</table>
 					<br/>
 					
@@ -1007,7 +1032,6 @@
 					</xsl:if>
 					
 					
-					
 					<!-- Execution Statement -->
 					<xsl:if test="$TestStep/etf:statementForExecution[1] and 
 						not($TestStep/etf:statementForExecution[1]='NOT_APPLICABLE')">
@@ -1022,17 +1046,34 @@
 					<xsl:variable name="attachments" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[
 						not(@type='ServiceEndpoint' or @type='ServiceResponse' or @type='GetParameter')]"/>
 					<xsl:if test="$attachments">
-						<div class="Attachments">
+						<div class="Attachments DoNotShowInSimpleView">
 							<h4>Attachments</h4>
+							<xsl:if test="$attachments[etf:referencedData]">
 							<ul>
-								<xsl:for-each select="$attachments">
+								<xsl:for-each select="$attachments[etf:referencedData]">
 									<li><a target="_blank" data-ajax="false">
 										<xsl:attribute name="href">
 											<xsl:apply-templates select="."/>
 										</xsl:attribute>
-										<xsl:value-of select="./etf:label"/></a></li>
+										<xsl:choose>
+											<xsl:when test="./etf:referencedData/@size">
+												<xsl:value-of select="concat(./etf:label, ' (', ./etf:referencedData/@size, 'bytes )')"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:value-of select="./etf:label"/>
+											</xsl:otherwise>
+										</xsl:choose>
+									</a></li>
 								</xsl:for-each>
 							</ul>
+							</xsl:if>
+							<xsl:if test="$attachments[etf:embeddedData]">
+								<textarea data-mini="true" readonly="readonly">
+									<xsl:for-each select="$attachments[etf:embeddedData]">
+											<xsl:apply-templates select="."/>
+									</xsl:for-each>
+								</textarea>
+							</xsl:if>
 						</div>
 					</xsl:if>
 					
@@ -1046,7 +1087,12 @@
 					</xsl:if>
 				</div>
 			</xsl:otherwise>
+			
 		</xsl:choose>
+		
+		<!-- Call invoked Test Steps -->
+		<xsl:apply-templates select="$resultItem/etf:invokedTests/etf:TestStepResult"/>
+		
 	</xsl:template>
 	<!-- Messages -->
 	<!-- ########################################################################################## -->
