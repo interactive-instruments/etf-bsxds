@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"/>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.js"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"/>
 	</xsl:template>
 	<!-- Report controls-->
 	<!-- ########################################################################################## -->
