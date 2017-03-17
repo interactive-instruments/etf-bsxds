@@ -26,8 +26,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<!-- VERSION (todo: integrate into build process) -->
-	<xsl:variable name="reportVersion">2.0.0-b170115</xsl:variable>
+	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
+	<xsl:variable name="reportVersion">2.0.0-b170317</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -867,7 +867,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<div class="TestStep" data-role="collapsible" data-theme="g" data-content-theme="g"
-					data-mini="true">
+					data-mini="true" id="{$resultItem/@id}">
 					<xsl:attribute name="data-theme">
 						<xsl:choose>
 							<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
@@ -988,7 +988,7 @@
 										<xsl:value-of select="$lang/x:e[@key = 'Dependency']"/>
 									</td>
 									<td>
-										<xsl:variable name="depTestStepId" select="$DepTestStep/@id"/>
+										<xsl:variable name="depTestStepId" select="./@id"/>
 										<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$depTestStepId}"
 											data-ajax="false"
 											onclick="event.preventDefault(); jumpToAnchor('{$depTestStepId}'); return false;">
