@@ -284,21 +284,21 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public void addMessage(final String translationTemplateId) {
+	public void doAddMessage(final String translationTemplateId) {
 		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId);
 		}
 	}
 
 	@Override
-	public void addMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
+	public void doAddMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
 		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId, tokenValuePairs);
 		}
 	}
 
 	@Override
-	public void addMessage(final String translationTemplateId, final String... tokensAndValues) {
+	public void doAddMessage(final String translationTemplateId, final String... tokensAndValues) {
 		if (errorCount++ < errorLimit) {
 			writer.addMessage(translationTemplateId, tokensAndValues);
 		}

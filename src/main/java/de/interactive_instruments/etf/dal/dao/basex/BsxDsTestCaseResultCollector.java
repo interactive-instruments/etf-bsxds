@@ -17,6 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -139,6 +140,18 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 		} catch (XMLStreamException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@Override protected void doAddMessage(final String s) {
+		writer.addMessage(s);
+	}
+
+	@Override protected void doAddMessage(final String s, final Map<String, String> map) {
+		writer.addMessage(s, map);
+	}
+
+	@Override protected void doAddMessage(final String s, final String... strings) {
+		writer.addMessage(s, strings);
 	}
 
 	@Override
