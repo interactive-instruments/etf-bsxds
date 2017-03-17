@@ -155,7 +155,7 @@
 						</xsl:choose>
 					</td>
 				</tr>
-				<tr class="DoNotShowInSimpleView">
+				<tr>
 					<td>
 						<xsl:value-of select="$lang/x:e[@key = 'Started']"/>
 					</td>
@@ -1293,7 +1293,7 @@
 			</tr>
 		</xsl:if>
 		<xsl:if test="$Node/etf:version/text()">
-			<tr class="ReportDetail">
+			<tr>
 				<td>
 					<xsl:value-of select="$lang/x:e[@key = 'Version']"/>
 				</td>
