@@ -172,6 +172,17 @@
                 </xs:simpleType>
             </xs:attribute>
         </xs:complexType>
+        <xs:unique name="UniqueEGAIDandVersionCombinationsInCollection">
+            <xs:annotation>
+                <xs:documentation>
+                    Each combination of EGAID and a Version must be unique. 
+                    Note: only referenced model items can be checked with XSD 1.0.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="*/referencedItems/*"/>
+            <xs:field xpath="@egaid"/>
+            <xs:field xpath="version"/>
+        </xs:unique>
     </xs:element>
 
 </xs:schema>
