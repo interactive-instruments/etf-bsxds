@@ -699,7 +699,8 @@
 		<xsl:variable name="TestCase" select="key('testCaseKey', ./etf:resultedFrom/@ref)"/>
 		<xsl:variable name="resultItem" select="."/>
 		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true" id="{$TestCase/@id}">
-			<xsl:variable name="failedOrSkipped" select="key('testCaseResultKey', $TestCase/etf:dependencies[1]/etf:testCase/@ref)[./etf:status[1]='FAILED' or ./etf:status[1]='SKIPPED'][1]"/>
+			<xsl:variable name="failedOrSkipped" select="key('testCaseResultKey', 
+				$TestCase/etf:dependencies[1]/etf:testCase/@ref)[./etf:status[1]='FAILED' or ./etf:status[1]='SKIPPED'][1]"/>
 			
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
@@ -787,7 +788,7 @@
 				</div>
 			</h3>
 			<xsl:if test="$failedOrSkipped">
-				<h3>The test case was skipped because it depends on other test cases that failed or were skipped as well. Check the the cause of the problem by checking failed test cases which this test case depends on.</h3>
+				<h3>The test case was skipped because it depends on other test cases that failed or were skipped as well. Check the cause of the problem by checking failed test cases which this test case depends on.</h3>
 			</xsl:if>
 			<xsl:if
 				test="$TestCase/etf:description and normalize-space($TestCase/etf:description/text()) ne ''">
