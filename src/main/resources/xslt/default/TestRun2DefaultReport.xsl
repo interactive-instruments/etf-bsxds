@@ -27,7 +27,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b170317</xsl:variable>
+	<xsl:variable name="reportVersion">2.0.0-b170320</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -699,44 +699,64 @@
 		<xsl:variable name="TestCase" select="key('testCaseKey', ./etf:resultedFrom/@ref)"/>
 		<xsl:variable name="resultItem" select="."/>
 		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true" id="{$TestCase/@id}">
-			<xsl:variable name="failedOrSkipped" select="key('testCaseResultKey', 
-				$TestCase/etf:dependencies[1]/etf:testCase/@ref)[./etf:status[1]='FAILED' or ./etf:status[1]='SKIPPED'][1]"/>
-			
+		
+			<xsl:variable name="skipped" select="./etf:status[1]/text() = 'SKIPPED'" as="xs:boolean"/>
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
-					<xsl:when test="$failedOrSkipped">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">j</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">j</xsl:when>
+					<xsl:when test="$skipped">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">f</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">f</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
 			<xsl:attribute name="data-content-theme">
 				<xsl:choose>
-					<xsl:when test="$failedOrSkipped">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">g</xsl:when>
+					<xsl:when test="$skipped">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">f</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">f</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
+			<xsl:attribute name="data-collapsed-icon">
+				<xsl:choose>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'">check</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">eye</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'">alert</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">forbidden</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">forbidden</xsl:when>
+				</xsl:choose>
+			</xsl:attribute>			
+			<xsl:attribute name="data-collapsed-icon">
+				<xsl:choose>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'">plus</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">eye</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'">plus</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">alert</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">plus</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">plus</xsl:when>
+				</xsl:choose>
+			</xsl:attribute>
 			<xsl:attribute name="class">
 				<xsl:choose>
-					<xsl:when test="$failedOrSkipped">TestCase FailedTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">TestCase SuccessfulTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">TestCase ManualTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">TestCase FailedTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">TestCase SuccessfulTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">TestCase SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">TestCase FailedTestCase</xsl:when>
+					<xsl:when test="$skipped">TestCase FailedTestCase</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
 				</xsl:choose>
@@ -787,7 +807,7 @@
 					<xsl:value-of select="$Count"/>
 				</div>
 			</h3>
-			<xsl:if test="$failedOrSkipped">
+			<xsl:if test="$skipped">
 				<h3>The test case was skipped because it depends on other test cases that failed or were skipped as well. Check the cause of the problem by checking failed test cases which this test case depends on.</h3>
 			</xsl:if>
 			<xsl:if
@@ -821,7 +841,7 @@
 					<xsl:variable name="DepTestCase" select="key('testCaseKey', .)"/>
 					<tr>
 						<xsl:attribute name="class">
-							<xsl:if test="not($failedOrSkipped)">DoNotShowInSimpleView</xsl:if>
+							<xsl:if test="not($skipped)">DoNotShowInSimpleView</xsl:if>
 						</xsl:attribute>
 						<td>
 							<xsl:value-of select="$lang/x:e[@key = 'Dependency']"/>
@@ -848,7 +868,7 @@
 			</table>
 			<br/>
 			<!--Add test step results and information about the teststeps -->
-				<xsl:if test="not($failedOrSkipped)">
+				<xsl:if test="not($skipped)">
 					<xsl:apply-templates select="./etf:testStepResults[1]/etf:TestStepResult"/>
 				</xsl:if>
 		</div>
@@ -1086,6 +1106,11 @@
 								select="./etf:testAssertionResults[1]/etf:TestAssertionResult"/>
 						</div>
 					</xsl:if>
+					
+					<xsl:if test="etf:messages[1]/*">
+						<xsl:apply-templates select="etf:messages[1]"/>
+					</xsl:if>
+					
 				</div>
 			</xsl:otherwise>
 			
@@ -1149,7 +1174,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">alert</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">info</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">alert</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">forbidden</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">forbidden</xsl:when>
 				</xsl:choose>
@@ -1325,6 +1350,24 @@
 				</td>
 			</tr>
 		</xsl:if>
+		<xsl:variable name="reference" select="$Node/etf:reference/text()"/>
+		<xsl:if test="$reference and $reference ne 'http://none'">
+			<tr class="ReportDetail">
+				<td>
+					<xsl:value-of select="$lang/x:e[@key = 'Reference']"/>
+				</td>
+				<td>
+					<xsl:choose>
+						<xsl:when test="starts-with($reference, 'http')">
+							<a href="{$reference}">Link</a>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$reference"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
+		</xsl:if>
 		<xsl:if test="$Node/etf:itemHash/text()">
 			<tr class="ReportDetail">
 				<td>
@@ -1389,13 +1432,19 @@
 			select="concat(etf:replace-multi-tokens($str, $translationArguments[1]/etf:argument), '&#13;&#10;')"
 		/>
 	</xsl:template>
+	
 	<xsl:function name="etf:replace-multi-tokens" as="xs:string?">
 		<xsl:param name="arg" as="xs:string?"/>
 		<xsl:param name="arguments" as="element()*"/>
+		<!-- temporary repace backslashes with a dagger &#8224; symbol for replace()... -->
 		<xsl:sequence
 			select="
 				if (count($arguments) &gt; 0) then
-					etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), replace(etf:if-absent($arguments[1]/text(), ''), '([$])', '\\$1')), $arguments[position() &gt; 1])
+					translate(
+						etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), 
+							replace(
+								translate(etf:if-absent($arguments[1]/text(), ''), '\', '&#8224;'), '([$])', '\\$1')), $arguments[position() &gt; 1])
+								, '&#8224;' , '\')
 				else
 					$arg"
 		/>
