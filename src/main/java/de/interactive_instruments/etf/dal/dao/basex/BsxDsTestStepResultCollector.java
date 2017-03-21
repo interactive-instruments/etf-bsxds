@@ -49,7 +49,7 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		bos = new ByteArrayOutputStream(512);
 		testCaseResultFile = null;
 		try {
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"));
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"),100);
 			writer.writeStartTestStepResult(testStepId, startTimestamp);
 		} catch (XMLStreamException e) {
 			throw new IllegalStateException(e);
@@ -66,18 +66,19 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 	}
 
 	@Override
-	protected String startTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
+	protected String doStartTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
 		return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
 	}
 
 	@Override
-	protected String startTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
+	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
 		return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
 	}
 
 	@Override
 	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws Exception {
+		writer.finalizeMessages();
 		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
@@ -88,6 +89,7 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 	@Override
 	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws Exception {
+		writer.finalizeMessages();
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
 

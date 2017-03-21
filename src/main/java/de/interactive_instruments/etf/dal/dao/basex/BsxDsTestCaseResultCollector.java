@@ -58,7 +58,7 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 		this.testStepAttachmentIds = testStepAttachmentIds;
 		bos = new ByteArrayOutputStream(512);
 		try {
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"));
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"),100);
 			writer.writeStartTestCaseResult(testCaseId, startTimestamp);
 		} catch (XMLStreamException e) {
 			throw new IllegalStateException(e);
@@ -70,17 +70,17 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	}
 
 	@Override
-	protected String startTestCaseResult(final String resultedFrom, final long startTimestamp) throws Exception {
+	protected String doStartTestCaseResult(final String resultedFrom, final long startTimestamp) throws Exception {
 		return writer.writeStartTestCaseResult(resultedFrom, startTimestamp);
 	}
 
 	@Override
-	protected String startTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
+	protected String doStartTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
 		return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
 	}
 
 	@Override
-	protected String startTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
+	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
 		return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
 	}
 
@@ -93,6 +93,7 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	@Override
 	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws Exception {
+		writer.finalizeMessages();
 		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
@@ -103,6 +104,7 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 	@Override
 	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws Exception {
+		writer.finalizeMessages();
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
 	}
 
@@ -142,15 +144,18 @@ final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector
 		}
 	}
 
-	@Override protected void doAddMessage(final String s) {
+	@Override
+	protected void doAddMessage(final String s) {
 		writer.addMessage(s);
 	}
 
-	@Override protected void doAddMessage(final String s, final Map<String, String> map) {
+	@Override
+	protected void doAddMessage(final String s, final Map<String, String> map) {
 		writer.addMessage(s, map);
 	}
 
-	@Override protected void doAddMessage(final String s, final String... strings) {
+	@Override
+	protected void doAddMessage(final String s, final String... strings) {
 		writer.addMessage(s, strings);
 	}
 

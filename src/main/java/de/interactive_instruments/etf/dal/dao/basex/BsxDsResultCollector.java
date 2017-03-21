@@ -51,8 +51,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	private final BufferedOutputStream fileOutputStream;
 	private final List<String> testStepAttachmentIds = new ArrayList<>(8);
 	private final XmlTestResultWriter writer;
-	private final long errorLimit;
-	private long errorCount = 0;
+	private final int errorLimit;
 
 	public BsxDsResultCollector(final DataStorage dataStorage, final TestRunLogger testRunLogger, final IFile resultFile,
 			final IFile attachmentDir, final TestTaskDto testTaskDto) {
@@ -66,10 +65,10 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		this.dataStorage = dataStorage;
 		final String errorLimitStr = testTaskDto.getArguments().value("maximum_number_of_error_messages_per_test");
 		// default fallback
-		long errorLimitTmp = 100;
+		int errorLimitTmp = 150;
 		if (!SUtils.isNullOrEmpty(errorLimitStr)) {
 			try {
-				errorLimitTmp = Long.valueOf(errorLimitStr);
+				errorLimitTmp = Integer.valueOf(errorLimitStr);
 			} catch (final NumberFormatException e) {
 				logger.error("Invalid error limit ", e);
 			}
@@ -77,7 +76,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		errorLimit = errorLimitTmp;
 		try {
 			fileOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile), 16384);
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(fileOutputStream, "UTF-8"));
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(fileOutputStream, "UTF-8"), errorLimit);
 		} catch (XMLStreamException | IOException e) {
 			throw new IllegalStateException(e);
 		}
@@ -115,15 +114,15 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return writer.writeStartTestModuleResult(resultedFrom, startTimestamp);
 	}
 
-	protected String startTestCaseResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	protected String doStartTestCaseResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
 		return writer.writeStartTestCaseResult(resultedFrom, startTimestamp);
 	}
 
-	protected String startTestStepResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	protected String doStartTestStepResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
 		return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
 	}
 
-	protected String startTestAssertionResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
 		return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
 	}
 
@@ -132,7 +131,6 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	protected String endTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException, FileNotFoundException, StorageException {
-		finalizeMessages();
 		final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
 		writer.close();
 		try {
@@ -147,19 +145,17 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	protected String endTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException {
-		finalizeMessages();
 		return writer.writeEndTestModuleResult(testModelItemId, status, stopTimestamp);
 	}
 
 	protected String endTestCaseResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException {
-		finalizeMessages();
 		return writer.writeEndTestCaseResult(testModelItemId, status, stopTimestamp);
 	}
 
 	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException {
-		finalizeMessages();
+		writer.finalizeMessages();
 		if (!testStepAttachmentIds.isEmpty()) {
 			writer.addAttachmentRefs(testStepAttachmentIds);
 			testStepAttachmentIds.clear();
@@ -169,16 +165,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException {
-		finalizeMessages();
+		writer.finalizeMessages();
 		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
-	}
-
-	private void finalizeMessages() {
-		if (isErrorLimitExceeded()) {
-			// ... and {errorCount} more messages
-			writer.addMessage("TR.errorLimitExceeded", "errorCount", String.valueOf(errorCount - errorLimit));
-		}
-		errorCount = 0;
 	}
 
 	@Override
@@ -210,7 +198,6 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	protected void endTestAssertionResults() {
-		finalizeMessages();
 		try {
 			writer.writeEndTestAssertionResults();
 		} catch (XMLStreamException e) {
@@ -269,7 +256,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	public TestResultStatus status(final String testModelItemId) throws IllegalArgumentException {
-		throw new IllegalStateException("Unimplemented");
+		return TestResultStatus.valueOf(getContextStatus());
 	}
 
 	@Override
@@ -280,28 +267,22 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	public final boolean isErrorLimitExceeded() {
-		return errorCount >= errorLimit;
+		return writer.isErrorLimitExceeded();
 	}
 
 	@Override
 	public void doAddMessage(final String translationTemplateId) {
-		if (errorCount++ < errorLimit) {
-			writer.addMessage(translationTemplateId);
-		}
+		writer.addMessage(translationTemplateId);
 	}
 
 	@Override
 	public void doAddMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
-		if (errorCount++ < errorLimit) {
-			writer.addMessage(translationTemplateId, tokenValuePairs);
-		}
+		writer.addMessage(translationTemplateId, tokenValuePairs);
 	}
 
 	@Override
 	public void doAddMessage(final String translationTemplateId, final String... tokensAndValues) {
-		if (errorCount++ < errorLimit) {
-			writer.addMessage(translationTemplateId, tokensAndValues);
-		}
+		writer.addMessage(translationTemplateId, tokensAndValues);
 	}
 
 	@Override

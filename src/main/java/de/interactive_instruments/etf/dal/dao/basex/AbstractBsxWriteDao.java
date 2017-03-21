@@ -17,10 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.xml.bind.JAXBException;
 
@@ -32,6 +29,7 @@ import org.basex.core.cmd.Flush;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.Version;
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dao.WriteDaoListener;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
@@ -61,11 +59,12 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		super(queryPath, typeName, ctx, getDtoResultCmd);
 	}
 
+	// Fires the 'add' event
 	@Override
 	public final void add(final T t) throws StorageException {
 		ensureType(t);
 		doMarshallAndAdd(t);
-		fireEvent(WriteDaoListener.EventType.ADD, t);
+		fireEventAdd(t);
 		updateLasModificationDate();
 	}
 
@@ -99,6 +98,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		}
 	}
 
+	// Fires the 'add' event
 	@Override
 	public final void addAll(final Collection<T> collection) throws StorageException {
 		// OPTIMIZE could be tuned
@@ -138,7 +138,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		} catch (BaseXException e) {
 			throw new StoreException(e);
 		}
-		fireEvent(WriteDaoListener.EventType.ADD, collection);
+		fireEventAdd(collection);
 		updateLasModificationDate();
 	}
 
@@ -162,7 +162,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	public void updateWithoutEidChange(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doDeleteAndAdd(t);
-		fireEvent(WriteDaoListener.EventType.UPDATE, t);
+		fireEventUpdate(t);
 		updateLasModificationDate();
 	}
 
@@ -170,11 +170,11 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	public final T update(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doUpdate(t);
-		fireEvent(WriteDaoListener.EventType.UPDATE, t);
 		updateLasModificationDate();
 		return t;
 	}
 
+	// Fires the update event.
 	protected T doUpdate(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		if (t instanceof RepositoryItemDto) {
 			// get old dto from db and set "replacedBy" property to the new dto
@@ -204,7 +204,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			// Set replaceBy property and write back
 			oldDtoInDb.setReplacedBy((RepositoryItemDto) t);
 			doDeleteAndAdd((T) oldDtoInDb);
-			fireEvent(WriteDaoListener.EventType.UPDATE, oldDtoInDb);
+			fireEventUpdate(oldDtoInDb);
 			updateLasModificationDate();
 
 			// Add new one
@@ -229,15 +229,15 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		for (final T dto : collection) {
 			updatedDtos.add(doUpdate(dto));
 		}
-		fireEvent(WriteDaoListener.EventType.UPDATE, updatedDtos);
 		updateLasModificationDate();
 		return updatedDtos;
 	}
 
+	// Fires the delete event.
 	@Override
 	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
+		fireEventDelete(eid);
 		doDelete(eid, true);
-		fireEvent(WriteDaoListener.EventType.DELETE, eid);
 		updateLasModificationDate();
 	}
 
@@ -265,37 +265,52 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected abstract void doCleanAfterDelete(final EID eid) throws BaseXException;
 
+	// Fires the delete event.
 	@Override
 	public final void deleteAll(final Set<EID> collection) throws StorageException, ObjectWithIdNotFoundException {
-		// OPTIMIZE could be tuned
+		// OPTIMIZE could be optimized
 		for (final EID eid : collection) {
+			fireEventDelete(eid);
 			doDelete(eid, true);
 		}
-		fireEvent(WriteDaoListener.EventType.DELETE, collection);
 		updateLasModificationDate();
 	}
 
-	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Dto dto) {
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, dto);
+	protected final void fireEventDelete(final EID eid) throws ObjectWithIdNotFoundException, StorageException {
+		if (!listeners.isEmpty()) {
+			final PreparedDto<T> dto = getById(eid);
+			for (int i = 0; i < listeners.size(); i++) {
+				listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.DELETE, dto);
+			}
 		}
 	}
 
-	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Collection<? extends Dto> dtos) {
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, dtos);
+	protected final void fireEventUpdate(final Dto updatedDto) {
+		if (!listeners.isEmpty()) {
+				final BsxResolvedDto dto = new BsxResolvedDto(updatedDto);
+				for (int i = 0; i < listeners.size(); i++) {
+					listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.UPDATE, dto);
+				}
 		}
 	}
 
-	protected final void fireEvent(final WriteDaoListener.EventType eventType, final Set<EID> ids) {
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, ids);
+	protected final void fireEventAdd(final T addedDto) {
+		if (!listeners.isEmpty()) {
+			final BsxResolvedDto dto = new BsxResolvedDto(addedDto);
+			for (int i = 0; i < listeners.size(); i++) {
+				listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.UPDATE, dto);
+			}
 		}
 	}
 
-	protected final void fireEvent(final WriteDaoListener.EventType eventType, final EID id) {
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).writeOperationPerformed(eventType, id);
+	protected final void fireEventAdd(final Collection<T> addedDtos) {
+		if (!listeners.isEmpty()) {
+			for (final T addedDto : addedDtos) {
+				final BsxResolvedDto dto = new BsxResolvedDto(addedDto);
+				for (int i = 0; i < listeners.size(); i++) {
+					listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.UPDATE, dto);
+				}
+			}
 		}
 	}
 

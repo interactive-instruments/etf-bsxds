@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.io.StringReader;
 
+import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -64,13 +65,6 @@ public class ResultCollectorTest {
 	}
 
 	@Test
-	public void testCollectorStates() throws IOException, ObjectWithIdNotFoundException, StorageException {
-		final TestResultCollector c = new BsxDsResultCollector(Mockito.mock(BsxDataStorage.class),
-				loggerMock, attachmentDir.expandPath("Result1.xml"), attachmentDir, TASK_DTO_1);
-
-	}
-
-	@Test
 	public void testCollectorWithPersistance() throws IOException, ObjectWithIdNotFoundException, StorageException {
 		final TestResultCollector c = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
 				loggerMock, attachmentDir.expandPath("Result2.xml"), attachmentDir, TASK_DTO_1);
@@ -78,27 +72,33 @@ public class ResultCollectorTest {
 		// Start Test Task
 		final String id = c.startTestTask(ETS_DTO_1.getId().getId());
 		assertEquals(1, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Start Test Module
 		c.startTestModule(ETS_DTO_1.getTestModules().get(0).getId().getId());
 		assertEquals(2, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Start Test Case
 		c.startTestCase(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
 		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Start Test Step (1)
 		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
 		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Start assertion
 		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions()
 				.get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
 		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(0).getId()
-				.getId(), 2);
+				.getId(), TestResultStatus.PASSED_MANUAL.value());
+		assertEquals(TestResultStatus.PASSED_MANUAL, c.status(""));
 
 		// Still in Test Step context
 		assertEquals(4, c.currentModelType());
@@ -107,56 +107,112 @@ public class ResultCollectorTest {
 		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions()
 				.get(1).getId().getId());
 		assertEquals(5, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
 		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getTestAssertions().get(1).getId()
-				.getId(), 1);
+				.getId(), TestResultStatus.PASSED_MANUAL.value());
+		assertEquals(TestResultStatus.PASSED_MANUAL, c.status(""));
 
 		// End Test Step, back in Test Case context
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
 		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.PASSED_MANUAL, c.status(""));
 
 		// Test calling another Test Step
-
 		// Start Test Step (2)
 		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId());
 		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Call a Test Step (3)
 		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId());
 		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
 		// Start assertion
 		c.startTestAssertion(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions()
 				.get(0).getId().getId());
 		assertEquals(5, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 		c.addMessage("TR.Template.1", "TOKEN.1", "Value.1", "TOKEN.2", "Value.2", "TOKEN.3", "Value.3");
 		c.saveAttachment(new StringReader("Message in Attachment"), "Message.1", "text/plain", "Message");
 		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getTestAssertions().get(0).getId()
-				.getId(), 2);
+				.getId(), TestResultStatus.FAILED.value());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// In Test Step (3) context
 		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// End Test Step call (3)
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(2).getId().getId());
 		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// End Test Step (2), back in Test Case context
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(1).getId().getId());
 		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// End Test Case
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
 		assertEquals(2, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
+
+
+		// Start another Test Case which depends on the first one
+		c.startTestCase(ETS_DTO_1.getTestModules().get(0).getTestCases().get(1).getId().getId());
+		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
+
+		// Start Test Step
+		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(1).getTestSteps().get(0).getId().getId());
+		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
+
+		// Call first Test Case
+		c.startTestCase(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
+		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
+
+		// Start Test Step (1)
+		c.startTestStep(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId());
+		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
+
+		// Fail Test Step (1)
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), TestResultStatus.FAILED.value());
+		assertEquals(3, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
+
+		// End called, first Test Case
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getId().getId());
+		assertEquals(4, c.currentModelType());
+		assertEquals(TestResultStatus.SKIPPED, c.status(""));
+
+		// End Test Step, back in Test Case context
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(1).getTestSteps().get(0).getId().getId());
+		assertEquals(3, c.currentModelType());
+		// failed test case = skipped
+		assertEquals(TestResultStatus.SKIPPED, c.status(""));
+
+		// End Test Case, back in Test Module context
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(1).getId().getId());
+		assertEquals(2, c.currentModelType());
+		// aggregated status of all Test Cases in the context
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// End Test Module
-		c.end(ETS_DTO_1.getTestModules().get(0).getId().getId(), 2);
+		c.end(ETS_DTO_1.getTestModules().get(0).getId().getId());
 		assertEquals(1, c.currentModelType());
+		// first Test Case failed
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// End Test Task
-		c.end(ETS_DTO_1.getId().getId(), 2);
+		c.end(ETS_DTO_1.getId().getId());
 		assertEquals(-1, c.currentModelType());
+		assertEquals(TestResultStatus.FAILED, c.status(""));
 
 		// Get TestTaskResult
 		final TestTaskResultDto result = dao.getById(EidFactory.getDefault().createUUID(id)).getDto();
