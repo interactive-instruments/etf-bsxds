@@ -106,6 +106,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+   
 
     <!-- =============================================================== -->
     <!-- filter itemHash and localPath -->
@@ -133,7 +134,8 @@
 
     <!-- =============================================================== -->
     <xsl:template priority="8"
-                  match="*/etf:translationTemplate">
+        match="*/etf:translationTemplate | */etf:dependencies/etf:testCase | */etf:attachments/etf:attachment">
+        <!-- The referenced items shall be included in the result -->
         <xsl:element name="{name()}">
             <xsl:variable name="local_reference" select="@ref"/>
             <xsl:if test="$includeRefType">
@@ -158,7 +160,7 @@
             </xsl:attribute>
         </xsl:element>
     </xsl:template>
-
+    
     <!-- =============================================================== -->
     <xsl:template match="*/etf:testDriver" priority="8">
         <xsl:element name="{name()}"
