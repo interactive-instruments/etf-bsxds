@@ -306,9 +306,10 @@
 					</xsl:if>
 					<!-- TEST STEPS STATS-->
 					<xsl:if
-						test="$executableTestSuites/etf:testModule[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep[etf:label ne 'IGNORE']">
+						test="$executableTestSuites/etf:testModules[1]/etf:TestModule/etf:testCases[1]/etf:TestCase/etf:testSteps[1]/etf:TestStep[etf:label ne 'IGNORE']">
 						<xsl:variable name="results"
-							select="$testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult/etf:testStepResults[1]/etf:TestStepResult"/>
+							select="($testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult[not(/etf:status='SKIPPED')]/etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)],
+							$testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult[not(/etf:status='SKIPPED')]/etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[not(etf:resultedFrom/@href)])"/>
 						<tr>
 							<td>
 								<xsl:value-of select="$lang/x:e[@key = 'TestSteps']"/>
@@ -333,7 +334,8 @@
 					</xsl:if>
 					<!-- TEST ASSERTIONS STATS-->
 					<xsl:variable name="results"
-						select="$testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult/etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult"/>
+						select="($testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult/etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult,
+							$testTaskResults/etf:testModuleResults[1]/etf:TestModuleResult/etf:testCaseResults[1]/etf:TestCaseResult[not(/etf:status='SKIPPED')]/etf:testStepResults[1]/etf:TestStepResult/etf:invokedTests[1]//etf:testAssertionResults/etf:TestAssertionResult)"/>
 					<tr>
 						<td>
 							<xsl:value-of select="$lang/x:e[@key = 'TestAssertions']"/>
@@ -776,8 +778,10 @@
 						<xsl:choose>
 							<xsl:when
 								test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
+								<!-- TODO detect technical test steps through href in resultedFrom -->
 								<xsl:value-of
-									select="count(./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED'])"
+									select="count((./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)], 
+									./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)] ))"
 								/>
 							</xsl:when>
 							<xsl:otherwise>
@@ -792,7 +796,8 @@
 							<xsl:when
 								test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
 								<xsl:value-of
-									select="count(./etf:testStepResults[1]/etf:TestStepResult)"/>
+									select="count((./etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)],
+										./etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[not(etf:resultedFrom/@href)]))"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:value-of
@@ -944,14 +949,16 @@
 							</xsl:call-template>
 						</xsl:variable>
 						<xsl:value-of select="$label"/>
-						<div class="ui-li-count">
-							<xsl:if test="$FailedAssertionCount &gt; 0"><xsl:value-of
-									select="$lang/x:e[@key = 'FAILED']"/>: <xsl:value-of
-									select="$FailedAssertionCount"/> / </xsl:if>
-							<xsl:value-of
-								select="count(./etf:testAssertionResults[1]/etf:TestAssertionResult)"
-							/>
-						</div>
+						<xsl:if test="./etf:testAssertionResults[1]/etf:TestAssertionResult">
+							<div class="ui-li-count">
+								<xsl:if test="$FailedAssertionCount &gt; 0"><xsl:value-of
+										select="$lang/x:e[@key = 'FAILED']"/>: <xsl:value-of
+										select="$FailedAssertionCount"/> / </xsl:if>
+								<xsl:value-of
+									select="count(./etf:testAssertionResults[1]/etf:TestAssertionResult)"
+								/>
+							</div>
+						</xsl:if>
 					</h4>
 					<xsl:if
 						test="$TestStep/etf:description and normalize-space($TestStep/etf:description/text()) ne ''">
@@ -1117,7 +1124,7 @@
 		</xsl:choose>
 		
 		<!-- Call invoked Test Steps -->
-		<xsl:apply-templates select="$resultItem/etf:invokedTests/etf:TestStepResult"/>
+		<xsl:apply-templates select="$resultItem/etf:invokedTests[1]/etf:TestStepResult"/>
 		
 	</xsl:template>
 	<!-- Messages -->
