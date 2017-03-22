@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-01-31T09:30:38.595+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-03-21T00:03:05.803+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>author</name>
@@ -123,6 +123,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>addTag</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

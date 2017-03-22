@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-01-31T09:30:38.563+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-03-21T00:03:05.767+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>parent</name>

@@ -361,7 +361,7 @@
     <xs:attributeGroup name="IdentifierAttributeGroup">
         <xs:attribute name="id" type="IdType" use="required">
             <xs:annotation>
-                <xs:documentation>A ETF model item instance possesses an unique ETF ID.</xs:documentation>
+                <xs:documentation>An ETF model item instance possesses an unique ETF ID.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:attributeGroup>
@@ -405,6 +405,7 @@
     <xs:simpleType name="EGAIDRefType">
         <xs:annotation>
             <xs:documentation>
+                The EGAIDRefType references exactly one model item instance with an absolute URI.
                 Must start with 'http' or 'https', contain 'egaid.' before the lower-case EGAID and end with ':' 
                 plus the version or 'latest'. 
                 Example: https://service/etf-webapp/v2/ExecutableTestSuites/egaid.de.interactive-instruments.ets.example:latest
@@ -418,7 +419,7 @@
                     group name ID is in Group 1, the artifact ID in Group 2, the version in Group 3  
                 </xs:documentation>
             </xs:annotation>
-            <xs:pattern value="https?:\/\/.*\/egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*):([0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT)?|latest)"/>
+            <xs:pattern value="https?://.*/egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*):([0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT)?|latest)"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -486,7 +487,8 @@
     <!-- =============================================================== -->
     <xs:element name="reference" nillable="false" type="xs:string">
         <xs:annotation>
-            <xs:documentation> The reference property may provide a link to a resource that
+            <xs:documentation>
+                The reference property may provide a link to a resource that
                 describes the item in detail, in an human readable format or data are linked in a
                 machine readable format that are intrepreted by an ETF component.
             </xs:documentation>

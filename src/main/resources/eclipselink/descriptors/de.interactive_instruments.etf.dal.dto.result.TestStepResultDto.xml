@@ -127,6 +127,23 @@
             </container-class>
          </container-policy>
       </mapping>
+      <mapping type="composite-collection">
+         <name>messages</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.result.TestStepResultDto</attribute-declaring-type-name>
+            <attribute-name>messages</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>messages/message</xpath>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
       <mapping type="xml-object-reference">
          <name>parent</name>
          <inherited>true</inherited>

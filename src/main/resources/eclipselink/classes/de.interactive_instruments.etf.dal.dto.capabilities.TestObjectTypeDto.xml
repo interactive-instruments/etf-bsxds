@@ -5,8 +5,17 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-01-31T09:30:38.612+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-03-21T00:03:05.781+01:00</last-refresh-timestamp>
    <attributes>
+      <class-attribute>
+         <name>descriptionExpression</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>detectionExpression</name>
          <modifier>2</modifier>
@@ -22,6 +31,15 @@
          <type-declaration>
             <type-handle>
                <type-name>java.util.List</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>labelExpression</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -101,6 +119,15 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getDescriptionExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getDetectionExpression</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -115,6 +142,15 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getLabelExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -144,6 +180,24 @@
                <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>setDescriptionExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setDetectionExpression</name>
@@ -176,6 +230,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setLabelExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

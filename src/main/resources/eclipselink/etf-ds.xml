@@ -2666,6 +2666,14 @@
                   <map-key-method>getId</map-key-method>
                </container>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>messages</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto</reference-class>
+               <field name="messages/message" xsi:type="node"/>
+               <container xsi:type="list-container-policy">
+                  <collection-type>java.util.Vector</collection-type>
+               </container>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>attachments</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>

@@ -408,10 +408,18 @@
                                        <attributes>
                                           <attribute type="attribute">
                                              <name>href</name>
-                                             <use>optional</use>
+                                             <use>required</use>
                                              <type type="simple-type-ref">
                                                 <name>ExternalUriType</name>
                                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             </type>
+                                          </attribute>
+                                          <attribute type="attribute">
+                                             <name>size</name>
+                                             <use>optional</use>
+                                             <type type="simple-type-ref">
+                                                <name>nonNegativeInteger</name>
+                                                <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                              </type>
                                           </attribute>
                                        </attributes>
@@ -445,6 +453,14 @@
                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                   </base-type>
                   <attributes>
+                     <attribute type="attribute">
+                        <name>egaid</name>
+                        <use>optional</use>
+                        <type type="simple-type-ref">
+                           <name>EGAIDType</name>
+                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                        </type>
+                     </attribute>
                      <attribute type="attribute">
                         <name>id</name>
                         <use>required</use>
@@ -1001,6 +1017,14 @@
                   </base-type>
                   <attributes>
                      <attribute type="attribute">
+                        <name>egaid</name>
+                        <use>optional</use>
+                        <type type="simple-type-ref">
+                           <name>EGAIDType</name>
+                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                        </type>
+                     </attribute>
+                     <attribute type="attribute">
                         <name>id</name>
                         <use>required</use>
                         <type type="simple-type-ref">
@@ -1488,11 +1512,44 @@
                                     </particle>
                                  </content>
                               </type>
+                              <identity-constraints>
+                                 <identity-constraint>
+                                    <name>UniqueNameAndLanguageInTranslationTemplate</name>
+                                    <constraint type="unique">
+                                       <selector>./etf:TranslationTemplate</selector>
+                                       <fields>
+                                          <field>./@language</field>
+                                          <field>./@name</field>
+                                       </fields>
+                                    </constraint>
+                                 </identity-constraint>
+                              </identity-constraints>
                            </particle>
                         </particles>
                      </particle>
                   </content>
                </type>
+               <identity-constraints>
+                  <identity-constraint>
+                     <name>RefParentNameFromChild</name>
+                     <constraint type="key-ref">
+                        <selector>./etf:translationTemplates/etf:TranslationTemplate</selector>
+                        <fields>
+                           <field>./@name</field>
+                        </fields>
+                        <refer>TrParentName</refer>
+                     </constraint>
+                  </identity-constraint>
+                  <identity-constraint>
+                     <name>TrParentName</name>
+                     <constraint type="key">
+                        <selector>.</selector>
+                        <fields>
+                           <field>./@name</field>
+                        </fields>
+                     </constraint>
+                  </identity-constraint>
+               </identity-constraints>
             </element-declaration>
             <element-declaration type="element">
                <name>ParameterList</name>
@@ -4124,6 +4181,100 @@
                               </type>
                               <min-occurs>0</min-occurs>
                            </particle>
+                           <particle type="element">
+                              <name>filenameExtensions</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <particles>
+                                          <particle type="element">
+                                             <name>filenameExtension</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             <type type="simple-type-ref">
+                                                <name>string</name>
+                                                <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                             </type>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
+                              <name>mimeTypes</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <particles>
+                                          <particle type="element">
+                                             <name>mimeType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             <type type="simple-type-ref">
+                                                <name>MimeType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             </type>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
+                              <name>labelExpression</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type-ref">
+                                 <name>ExpressionType</name>
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
+                              <name>descriptionExpression</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type-ref">
+                                 <name>ExpressionType</name>
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
+                              <name>detectionExpression</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type-ref">
+                                 <name>ExpressionType</name>
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
+                              <name>namingConvention</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="simple-type-ref">
+                                 <name>string</name>
+                                 <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                              </type>
+                              <min-occurs>0</min-occurs>
+                           </particle>
                         </particles>
                      </particle>
                   </content>
@@ -5753,6 +5904,45 @@
             </element-declaration>
          </element-declarations>
          <type-definitions>
+            <type-definition type="simple-type">
+               <name>EGAIDRefType</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+               <variety>atomic</variety>
+               <base-type type="simple-type-ref">
+                  <name>string</name>
+                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+               </base-type>
+            </type-definition>
+            <type-definition type="simple-type">
+               <name>EGAIDType</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+               <variety>atomic</variety>
+               <base-type type="simple-type-ref">
+                  <name>string</name>
+                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+               </base-type>
+            </type-definition>
+            <type-definition type="complex-type">
+               <name>ExpressionType</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+               <abstract>false</abstract>
+               <derivation-method>extension</derivation-method>
+               <base-type type="simple-type-ref">
+                  <name>string</name>
+                  <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+               </base-type>
+               <attributes>
+                  <attribute type="attribute">
+                     <name>type</name>
+                     <use>optional</use>
+                     <type type="simple-type-ref">
+                        <name>string</name>
+                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                     </type>
+                  </attribute>
+               </attributes>
+               <content type="simple"/>
+            </type-definition>
             <type-definition type="simple-type">
                <name>ExternalUriType</name>
                <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>

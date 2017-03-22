@@ -31,7 +31,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:group ref="RepositoryItemGroup"/>
+                <xs:group ref="MetaDataItemGroup"/>
                 <xs:element name="subTypes" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Sub Test Object Types</xs:documentation>
@@ -90,7 +90,7 @@
                 </xs:element>
                 <xs:element name="namingConvention" type="xs:string" minOccurs="0"/>
             </xs:sequence>
-            <xs:attributeGroup ref="GroupAndArtifactIdentifierAttributeGroup"/>
+            <xs:attributeGroup ref="IdentifierAttributeGroup"/>
         </xs:complexType>
     </xs:element>
     
