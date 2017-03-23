@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import de.interactive_instruments.Initializable;
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDaoListener;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
@@ -182,39 +183,13 @@ final class DtoCache implements WriteDaoListener {
 	}
 
 	@Override
-	public void writeOperationPerformed(WriteDaoListener.EventType event, EID id) {
-		if (event == EventType.DELETE || event == EventType.UPDATE) {
-			dtoCache.invalidate(id);
-		}
-	}
-
-	@Override
-	public void writeOperationPerformed(final EventType event, final Set<EID> ids) {
-		if (event == EventType.DELETE || event == EventType.UPDATE) {
-			dtoCache.invalidateAll(ids);
-		}
-	}
-
-	@Override
-	public void writeOperationPerformed(WriteDaoListener.EventType event, Dto dto) {
-		if (event == EventType.DELETE || event == EventType.UPDATE) {
-			dtoCache.invalidate(dto.getId().getId());
-		}
-	}
-
-	@Override
-	public void writeOperationPerformed(final EventType event, final Collection<? extends Dto> dtos) {
-		if (event == EventType.DELETE) {
-			final List<String> ids = dtos.stream().map(dto -> dto.getId().getId()).collect(Collectors.toList());
-			dtoCache.invalidateAll(ids);
-		} else if (event == EventType.UPDATE) {
-			/*
-			for (final Dto dto : dtos) {
-				dtoCache.put(dto.getId().getId(), dto);
-			}
-			*/
-			final List<String> ids = dtos.stream().map(dto -> dto.getId().getId()).collect(Collectors.toList());
-			dtoCache.invalidateAll(ids);
+	public void writeOperationPerformed(final EventType eventType, final PreparedDto preparedDto) {
+		if (eventType == EventType.DELETE) {
+			dtoCache.invalidate(preparedDto.getDtoId());
+		} else if (eventType == EventType.UPDATE) {
+			// TODO
+			dtoCache.invalidate(preparedDto.getDtoId());
+			// dtoCache.put(preparedDto.getDtoId(), preparedDto.getDto());
 		}
 	}
 

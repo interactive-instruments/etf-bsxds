@@ -287,10 +287,10 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected final void fireEventUpdate(final Dto updatedDto) {
 		if (!listeners.isEmpty()) {
-				final BsxResolvedDto dto = new BsxResolvedDto(updatedDto);
-				for (int i = 0; i < listeners.size(); i++) {
-					listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.UPDATE, dto);
-				}
+			final BsxResolvedDto dto = new BsxResolvedDto(updatedDto);
+			for (int i = 0; i < listeners.size(); i++) {
+				listeners.get(i).writeOperationPerformed(WriteDaoListener.EventType.UPDATE, dto);
+			}
 		}
 	}
 

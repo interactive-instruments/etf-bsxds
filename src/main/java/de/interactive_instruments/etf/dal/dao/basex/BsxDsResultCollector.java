@@ -76,7 +76,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		errorLimit = errorLimitTmp;
 		try {
 			fileOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile), 16384);
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(fileOutputStream, "UTF-8"), errorLimit);
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(fileOutputStream, "UTF-8"),
+					errorLimit);
 		} catch (XMLStreamException | IOException e) {
 			throw new IllegalStateException(e);
 		}
@@ -122,7 +123,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
 	}
 
-	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws XMLStreamException {
+	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp)
+			throws XMLStreamException {
 		return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
 	}
 

@@ -49,7 +49,7 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 		bos = new ByteArrayOutputStream(512);
 		testCaseResultFile = null;
 		try {
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"),100);
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"), 100);
 			writer.writeStartTestStepResult(testStepId, startTimestamp);
 		} catch (XMLStreamException e) {
 			throw new IllegalStateException(e);
