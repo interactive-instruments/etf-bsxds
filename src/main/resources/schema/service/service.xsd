@@ -97,6 +97,9 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="previous" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation> URL to the previous page</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                         <xs:attribute name="href" type="etf:httpUriType" use="required"/>
                     </xs:complexType>
@@ -110,6 +113,9 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="next" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation> URL to the next page</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                         <xs:attribute name="href" type="etf:httpUriType" use="required"/>
                     </xs:complexType>
@@ -155,19 +161,22 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="position" type="xs:nonNegativeInteger" use="optional"/>
+            <xs:attribute name="position" type="xs:nonNegativeInteger" use="optional">
+                <xs:annotation>
+                    <xs:documentation>Position of this page in relation to the complete set of unpaginated items.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="returnedItems" type="xs:nonNegativeInteger" use="required">
                 <xs:annotation>
-                    <xs:documentation>Number of returned items in this (paginable) response -not
+                    <xs:documentation>Number of returned items in this page -not
                         including the referenced items</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="version" use="required">
+                <xs:annotation>
+                    <xs:documentation> The service version in the form MAJOR.MINOR</xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation> The service version in the form MAJOR.MINOR
-                        </xs:documentation>
-                    </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:pattern value="2\.[0-9]+"/>
                     </xs:restriction>
