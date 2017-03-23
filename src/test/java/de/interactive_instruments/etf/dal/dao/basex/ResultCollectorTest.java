@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.io.StringReader;
 
-import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,6 +28,7 @@ import org.mockito.Mockito;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.testdriver.TestResultCollector;
@@ -160,7 +160,6 @@ public class ResultCollectorTest {
 		assertEquals(2, c.currentModelType());
 		assertEquals(TestResultStatus.FAILED, c.status(""));
 
-
 		// Start another Test Case which depends on the first one
 		c.startTestCase(ETS_DTO_1.getTestModules().get(0).getTestCases().get(1).getId().getId());
 		assertEquals(3, c.currentModelType());
@@ -181,8 +180,12 @@ public class ResultCollectorTest {
 		assertEquals(4, c.currentModelType());
 		assertEquals(TestResultStatus.UNDEFINED, c.status(""));
 
+		// Add an attachment
+		c.saveAttachment("Test String", "Label", "text/plain", null);
+
 		// Fail Test Step (1)
-		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(), TestResultStatus.FAILED.value());
+		c.end(ETS_DTO_1.getTestModules().get(0).getTestCases().get(0).getTestSteps().get(0).getId().getId(),
+				TestResultStatus.FAILED.value());
 		assertEquals(3, c.currentModelType());
 		assertEquals(TestResultStatus.FAILED, c.status(""));
 
