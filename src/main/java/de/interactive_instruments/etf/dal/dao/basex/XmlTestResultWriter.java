@@ -37,16 +37,20 @@ final class XmlTestResultWriter implements Releasable {
 	public static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
 	public static final String ETF_NS_PREFIX = "etf";
 	public static final String ID_PREFIX = "EID";
+	public static final String TR_ERROR_LIMIT_EXCEEDED = "TR.errorLimitExceeded";
 
 	private final Deque<ResultModelItem> results = new LinkedList<>();
 	private final Map<String, Attachment> attachments = new HashMap<>();
 	private final List<Message> messages = new ArrayList<>();
 	private final Random random = new Random();
+	private final int errorLimit;
+	private int errorCount = 0;
 
 	private final XMLStreamWriter writer;
 
-	XmlTestResultWriter(final XMLStreamWriter writer) throws XMLStreamException {
+	XmlTestResultWriter(final XMLStreamWriter writer, final int errorLimit) throws XMLStreamException {
 		this.writer = writer;
+		this.errorLimit = errorLimit;
 	}
 
 	private final class ResultModelItem {
@@ -330,14 +334,6 @@ final class XmlTestResultWriter implements Releasable {
 
 	public String writeEndTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException {
-		if (!messages.isEmpty()) {
-			writer.writeStartElement("messages");
-			for (final Message message : this.messages) {
-				message.write();
-			}
-			writer.writeEndElement();
-			messages.clear();
-		}
 		return writeResultModelItem(status, stopTimestamp);
 	}
 
@@ -365,15 +361,21 @@ final class XmlTestResultWriter implements Releasable {
 	}
 
 	void addMessage(final String translationTemplateId) {
-		messages.add(new Message(translationTemplateId));
+		if (++errorCount <= errorLimit) {
+			messages.add(new Message(translationTemplateId));
+		}
 	}
 
 	void addMessage(final String translationTemplateId, final Map<String, String> tokenValuePairs) {
-		messages.add(new Message(translationTemplateId, tokenValuePairs));
+		if (++errorCount <= errorLimit) {
+			messages.add(new Message(translationTemplateId, tokenValuePairs));
+		}
 	}
 
 	void addMessage(final String translationTemplateId, final String... tokensAndValues) {
-		messages.add(new Message(translationTemplateId, tokensAndValues));
+		if (++errorCount <= errorLimit) {
+			messages.add(new Message(translationTemplateId, tokensAndValues));
+		}
 	}
 
 	private void writeId(final String id) throws XMLStreamException {
@@ -408,4 +410,31 @@ final class XmlTestResultWriter implements Releasable {
 		writer.writeEndElement();
 	}
 
+	public void finalizeMessages() throws XMLStreamException {
+		if (!messages.isEmpty()) {
+			writer.writeStartElement("messages");
+			for (final Message message : this.messages) {
+				message.write();
+			}
+			if (errorCount > errorLimit) {
+				// ... and {errorCount} more messages
+				writer.writeStartElement("message");
+				writer.writeAttribute("ref", TR_ERROR_LIMIT_EXCEEDED);
+				writer.writeStartElement("translationArguments");
+				writer.writeStartElement("argument");
+				writer.writeAttribute("token", "errorCount");
+				writer.writeCharacters(String.valueOf(errorCount - errorLimit));
+				writer.writeEndElement();
+				writer.writeEndElement();
+				writer.writeEndElement();
+			}
+			errorCount = 0;
+			writer.writeEndElement();
+			messages.clear();
+		}
+	}
+
+	public final boolean isErrorLimitExceeded() {
+		return errorCount >= errorLimit;
+	}
 }
