@@ -2418,6 +2418,8 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>testResultStatus</attribute-name>
+               <get-method>getTestResultStatus</get-method>
+               <set-method>setTestResultStatus</set-method>
                <field name="@status" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
