@@ -85,6 +85,15 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</attribute-declaring-type-name>
             <attribute-name>testResultStatus</attribute-name>
          </attribute-handle>
+         <uses-method-accessing>true</uses-method-accessing>
+         <get-method-handle>
+            <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</method-declaring-type-name>
+            <method-signature>getTestResultStatus()</method-signature>
+         </get-method-handle>
+         <set-method-handle>
+            <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</method-declaring-type-name>
+            <method-signature>setTestResultStatus(de.interactive_instruments.etf.dal.dto.result.TestResultStatus)</method-signature>
+         </set-method-handle>
          <xml-field>@status</xml-field>
       </mapping>
       <mapping type="composite-collection">
