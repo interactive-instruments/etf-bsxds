@@ -37,7 +37,7 @@ declare function etfxdb:get-replacedByRec($dbs as node()*, $item as node()*) {
  : get-all
  : ----------------------------------------------------------------
  :)
-declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, $offset as xs:integer, $limit as xs:integer) {
+declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, $offset as xs:integer, $limit as xs:integer, $fields as xs:string) {
     (
         for $item in $items
         where
@@ -48,15 +48,34 @@ declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, 
                 true()
         order by $item/etf:label/text() ascending
         return
-            $item )[position() > $offset and position() <= $offset + $limit]
+            if ($fields = '*')
+            then
+              $item
+            else 
+              etfxdb:filter-fields($item, $fields)
+     )[position() > $offset and position() <= $offset + $limit]
 };
 
-declare function etfxdb:get-all($items as node()*, $offset as xs:integer, $limit as xs:integer) {
+declare function etfxdb:get-all($items as node()*, $offset as xs:integer, $limit as xs:integer, $fields as xs:string) {
     (
         for $item in $items
         order by $item/etf:label/text() ascending
-        return
-            $item )[position() > $offset and position() <= $offset + $limit]
+         return
+            if ($fields = '*')
+            then
+              $item
+            else 
+              etfxdb:filter-fields($item, $fields)
+    )[position() > $offset and position() <= $offset + $limit]
+};
+
+declare function etfxdb:filter-fields($item as node(), $fields as xs:string) {
+       element {
+         node-name($item)
+       }{
+        $item/@*,
+        $item/*[contains($fields, local-name())]
+       }
 };
 
 (:~

@@ -225,8 +225,8 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 
 			transformer.transform(
 					new StreamSource(inputStream), new StreamResult(outputStreamStream));
-		} catch (TransformerException e) {
-			throw new IOException(e.getMessage());
+		} catch (final TransformerException e) {
+			throw new IOException(e);
 		}
 	}
 

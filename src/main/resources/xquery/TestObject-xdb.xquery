@@ -11,6 +11,7 @@ declare variable $qids external := "";
 declare variable $offset external := 0;
 declare variable $limit external := 0;
 declare variable $levelOfDetail external := 'SIMPLE';
+declare variable $fields external := '*';
 
 declare function local:get-testobjects($offset as xs:integer, $limit as xs:integer) {
     <DsResultSet
@@ -19,7 +20,7 @@ declare function local:get-testobjects($offset as xs:integer, $limit as xs:integ
     xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
     xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
         <testObjects>
-            {etfxdb:get-all(db:open('etf-ds')/etf:TestObject, $levelOfDetail, $offset, $limit)}
+            {etfxdb:get-all(db:open('etf-ds')/etf:TestObject, $levelOfDetail, $offset, $limit, $fields)}
         </testObjects>
     </DsResultSet>
 };

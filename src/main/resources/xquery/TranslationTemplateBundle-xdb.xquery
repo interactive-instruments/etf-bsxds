@@ -18,7 +18,7 @@ declare function local:get-translationtemplatebundles($offset as xs:integer, $li
         xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
             <translationTemplateBundles>
-                {etfxdb:get-all(db:open('etf-ds')/etf:TranslationTemplateBundle, $offset, $limit)}
+                {etfxdb:get-all(db:open('etf-ds')/etf:TranslationTemplateBundle, $offset, $limit, '*')}
             </translationTemplateBundles>
         </DsResultSet>
 };

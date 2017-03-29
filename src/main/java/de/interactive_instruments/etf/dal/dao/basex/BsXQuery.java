@@ -63,8 +63,10 @@ final class BsXQuery {
 			return this;
 		}
 		return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer")
-				.parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer").parameter("levelOfDetail",
-						valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)));
+				.parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer")
+				.parameter("levelOfDetail",
+						valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)))
+				.parameter("fields", valueOfOrDefault(filter.fields(), "ALL"));
 	}
 
 	String getParameter(final String name) {

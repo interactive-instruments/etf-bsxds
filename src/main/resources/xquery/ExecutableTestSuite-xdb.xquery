@@ -11,17 +11,18 @@ declare variable $qids external := "";
 declare variable $offset external := 0;
 declare variable $limit external := 0;
 declare variable $levelOfDetail external := 'SIMPLE';
+declare variable $fields external := '*';
 
-declare function local:get-executableTestSuites($offset as xs:integer, $limit as xs:integer) {
-    <DsResultSet
-    xmlns="http://www.interactive-instruments.de/etf/2.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-    xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
-        <executableTestSuites>
-            {etfxdb:get-all(db:open('etf-ds')/etf:ExecutableTestSuite, $levelOfDetail, $offset, $limit)}
-        </executableTestSuites>
-    </DsResultSet>
+declare function local:get-executableTestSuites($offset as xs:integer, $limit as xs:integer, $fields as xs:string*) {
+      <DsResultSet
+      xmlns="http://www.interactive-instruments.de/etf/2.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
+      xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
+          <executableTestSuites>
+              {etfxdb:get-all(db:open('etf-ds')/etf:ExecutableTestSuite, $levelOfDetail, $offset, $limit, $fields)}
+          </executableTestSuites>
+      </DsResultSet>
 };
 
 
@@ -56,4 +57,4 @@ if ($function = 'byId')
 then
     local:get-executableTestSuite($qids)
 else
-    local:get-executableTestSuites($offset, $limit)
+    local:get-executableTestSuites($offset, $limit, $fields)
