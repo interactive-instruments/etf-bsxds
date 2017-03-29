@@ -71,7 +71,7 @@
 		select="//etf:executableTestSuites[1]/etf:ExecutableTestSuite"/>
 	<xsl:variable name="testTasks" select="//etf:testTasks[1]/etf:TestTask"/>
 	<xsl:variable name="testObjects"
-		select="key('testObjectKey', $testTasks/etf:testObject[1]/@ref)"/>
+		select="key('testObjectKey', $testTaskResults/etf:testObject[1]/@ref)"/>
 	<xsl:variable name="statisticAttachments"
 		select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'StatisticalReport'][1]"/>
 	<xsl:variable name="logAttachment" select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'LogFile']"/>
@@ -1357,19 +1357,19 @@
 				</td>
 			</tr>
 		</xsl:if>
-		<xsl:variable name="reference" select="$Node/etf:reference/text()"/>
-		<xsl:if test="$reference and $reference ne 'http://none'">
+		<xsl:variable name="remoteResource" select="$Node/etf:remoteResource/text()"/>
+		<xsl:if test="$remoteResource and $remoteResource ne 'http://none'">
 			<tr class="ReportDetail">
 				<td>
 					<xsl:value-of select="$lang/x:e[@key = 'Reference']"/>
 				</td>
 				<td>
 					<xsl:choose>
-						<xsl:when test="starts-with($reference, 'http')">
-							<a href="{$reference}">Link</a>
+						<xsl:when test="starts-with($remoteResource, 'http')">
+							<a href="{$remoteResource}">Link</a>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="$reference"/>
+							<xsl:value-of select="$remoteResource"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</td>
