@@ -203,12 +203,12 @@
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>
-        <xs:key name="TrParentName">
+        <xs:key name="TranslationTemplateParentName">
             <xs:selector xpath="."/>
             <!-- Saxon warning can be ignored here! -->
             <xs:field xpath="@name"/>
         </xs:key>
-        <xs:keyref name="RefParentNameFromChild" refer="TrParentName">
+        <xs:keyref name="RefParentNameFromChild" refer="TranslationTemplateParentName">
             <xs:selector xpath="etf:translationTemplates/etf:TranslationTemplate"/>
             <xs:field xpath="@name"/>
         </xs:keyref>

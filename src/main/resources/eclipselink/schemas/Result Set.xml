@@ -1537,11 +1537,20 @@
                         <fields>
                            <field>./@name</field>
                         </fields>
-                        <refer>TrParentName</refer>
+                        <refer>TranslationTemplateParentName</refer>
                      </constraint>
                   </identity-constraint>
                   <identity-constraint>
                      <name>TrParentName</name>
+                     <constraint type="key">
+                        <selector>.</selector>
+                        <fields>
+                           <field>./@name</field>
+                        </fields>
+                     </constraint>
+                  </identity-constraint>
+                  <identity-constraint>
+                     <name>TranslationTemplateParentName</name>
                      <constraint type="key">
                         <selector>.</selector>
                         <fields>
@@ -3274,6 +3283,14 @@
                      <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                   </base-type>
                   <attributes>
+                     <attribute type="attribute">
+                        <name>deselectable</name>
+                        <use>optional</use>
+                        <type type="simple-type-ref">
+                           <name>boolean</name>
+                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        </type>
+                     </attribute>
                      <attribute type="attribute">
                         <name>id</name>
                         <use>required</use>
