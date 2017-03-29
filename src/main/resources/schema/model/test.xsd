@@ -115,6 +115,14 @@
                 </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
+            <xs:attribute name="deselectable" type="xs:boolean" default="true">
+                <xs:annotation>
+                    <xs:documentation>
+                        If set to "true" the Test Case can be deselected by the user and must be skipped by the test driver.
+                        Otherwise, it can't be deselected.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
