@@ -14,9 +14,6 @@
     <xsl:strip-space elements="*"/>
 
     <xsl:param name="serviceUrl" select="'https://localhost/etf-webapp/v2'"/>
-    <xsl:param name="selection"/>
-    <xsl:param name="offset" select="0"/>
-    <xsl:param name="limit" select="-1"/>
     
     <!-- Overwrite template defaults -->
     <xsl:param name="skip-root" as="xs:boolean" select="true()"/>
@@ -27,6 +24,9 @@
         
         <xsl:variable name="collection">
         <xsl:element name="EtfItemCollection">
+            <!-- Collection attributes -->
+            <xsl:attribute name="version">2.0</xsl:attribute>
+            
             <xsl:variable name="subSet" select="*[./*[1]/local-name() = $selection]"/>
             <xsl:variable name="returnedItems" select="count($subSet/*)"/>
             <xsl:attribute name="returnedItems" select="$returnedItems"/>
@@ -37,12 +37,11 @@
             <xsl:element name="etf:ref">
                 <xsl:choose>
                     <xsl:when test="number($limit) gt 0">
-                        <xsl:value-of select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', $offset, '&amp;limit=', $limit)"
-                        />
+                        <xsl:value-of select="etf:createUrl(concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding), ('offset', $offset, 'limit', $limit, 'fields', $fieldsParam))"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <!-- Set reference to the single included item -->
-                        <xsl:value-of select="concat($serviceUrl, '/', $selection, 's/', substring-after($subSet/*[1]/@id, 'EID'), $hrefTypeEnding )"
+                        <xsl:value-of select="etf:createUrl(concat($serviceUrl, '/', $selection, 's/', substring-after($subSet/*[1]/@id, 'EID'), $hrefTypeEnding ), ('fields', $fieldsParam))"
                         />
                     </xsl:otherwise>
                 </xsl:choose>
@@ -50,14 +49,14 @@
             <xsl:if test="number($limit) gt 0">
                 <xsl:if test="number($offset - $limit) ge 0">
                     <xsl:element name="etf:previous">
-                        <xsl:value-of select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', ($offset - $limit), '&amp;limit=', $limit)"
+                        <xsl:value-of select="etf:createUrl(concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding), ('offset', $offset - $limit, 'limit', $limit, 'fields', $fieldsParam))"
                         />
                     </xsl:element>
                 </xsl:if>
                 <xsl:if test="$returnedItems gt 0 and number($returnedItems) eq number($limit)">
                     <xsl:element name="etf:next">
                         <!-- Unknown if there are any items -->
-                        <xsl:value-of select="concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding, '?offset=', ($offset + $limit), '&amp;limit=', $limit)"
+                        <xsl:value-of select="etf:createUrl(concat($serviceUrl, '/', $selection, 's', $hrefTypeEnding), ('offset', $offset + $limit, 'limit', $limit, 'fields', $fieldsParam))"
                         />
                     </xsl:element>
                 </xsl:if>
