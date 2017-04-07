@@ -92,7 +92,7 @@
          </get-method-handle>
          <set-method-handle>
             <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.run.TestRunDto</method-declaring-type-name>
-            <method-signature>setTestResultStatus(de.interactive_instruments.etf.dal.dto.result.TestResultStatus)</method-signature>
+            <method-signature>setTestResultStatus(java.lang.String)</method-signature>
          </set-method-handle>
          <xml-field>@status</xml-field>
       </mapping>

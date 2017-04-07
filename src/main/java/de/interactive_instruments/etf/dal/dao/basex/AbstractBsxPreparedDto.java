@@ -26,6 +26,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.BaseXException;
 
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.OutputFormatStreamable;
 import de.interactive_instruments.etf.dal.dto.Arguments;
@@ -48,6 +49,8 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 		this.bsXquery = xquery;
 	}
 
+	private static String[] optionalParameterNames = {"offset", "limit"};
+
 	/**
 	 * Streams the result from the BaseX database to the Output Format directly
 	 * through a piped stream
@@ -55,6 +58,7 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 	 * @param outputFormat the Output Format
 	 * @param arguments transformation arguments
 	 * @param outputStream transformed output stream
+	 *
 	 */
 	public void streamTo(final OutputFormat outputFormat, final PropertyHolder arguments, final OutputStream outputStream) {
 		try {
@@ -65,16 +69,25 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 			// DETAILED_WITHOUT_HISTORY level is required
 			bsXquery.parameter("levelOfDetail", String.valueOf(Filter.LevelOfDetail.DETAILED_WITHOUT_HISTORY), "xs:string");
 
-			final String offset = bsXquery.getParameter("offset");
-			if (offset != null) {
-				properties.setProperty("offset", offset);
+			// Pass parameters from query to XSLT
+			for (final String optionalParameterName : optionalParameterNames) {
+				final String val = bsXquery.getParameter(optionalParameterName);
+				if (!SUtils.isNullOrEmpty(val)) {
+					properties.setProperty(optionalParameterName, val);
+				}
 			}
 
-			final String limit = bsXquery.getParameter("limit");
-			if (limit != null) {
-				properties.setProperty("limit", limit);
+			final String fields = bsXquery.getParameter("fields");
+			if (!SUtils.isNullOrEmpty(fields) && !fields.equals("*")) {
+				properties.setProperty("fields", fields);
 			}
-			properties.setProperty("selection", bsXquery.getParameter("selection"));
+
+			// Required property
+			properties.setProperty(
+					"selection",
+					Objects.requireNonNull(
+							bsXquery.getParameter("selection"),
+							"Invalid selection"));
 
 			final PipedInputStream in = new PipedInputStream();
 			final PipedOutputStream out = new PipedOutputStream(in);

@@ -18,14 +18,13 @@ package de.interactive_instruments.etf.dal.dao.basex;
 import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.HashMap;
-
-import net.sf.saxon.value.StringValue;
+import java.util.Map;
 
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
 
-import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Filter;
 
 /**
@@ -66,7 +65,7 @@ final class BsXQuery {
 				.parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer")
 				.parameter("levelOfDetail",
 						valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)))
-				.parameter("fields", valueOfOrDefault(filter.fields(), "ALL"));
+				.parameter("fields", valueOfOrDefault(filter.fields(), "*"));
 	}
 
 	String getParameter(final String name) {
