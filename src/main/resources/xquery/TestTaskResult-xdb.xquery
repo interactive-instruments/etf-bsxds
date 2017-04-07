@@ -50,9 +50,7 @@ declare function local:get-testTaskResult($ids as xs:string*) {
                 {$testObjects}
             </testObjects>
             <testObjectTypes>
-                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:supportedTestObjectTypes)}
-                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:consumableResultObjectTypes)}
-                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $testObjects/etf:testObjectTypes)}
+                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, ($executableTestSuite/etf:supportedTestObjectTypes, $executableTestSuite/etf:consumableResultObjectTypes, $testObjects/etf:testObjectType))}
             </testObjectTypes>
             <translationTemplateBundles>
                 {etfxdb:get-translationTemplateBundles($translationTemplateBundleDb, $levelOfDetail, $executableTestSuite)}
