@@ -35,6 +35,7 @@ declare function local:get-testTaskResult($ids as xs:string*) {
 
     let $testTaskResult := $testTaskResultsDb[@id = $ids]
     let $executableTestSuite := etfxdb:get-executableTestSuites($executableTestSuiteDb, $levelOfDetail, $testTaskResult)
+    let $testObjects := etfxdb:get-testObjects($testObjectsDb, $levelOfDetail, $testTaskResult)
 
     return
         <DsResultSet
@@ -46,11 +47,12 @@ declare function local:get-testTaskResult($ids as xs:string*) {
                 {$executableTestSuite}
             </executableTestSuites>
             <testObjects>
-                {etfxdb:get-testObjects($testObjectsDb, $levelOfDetail, $testTaskResult)}
+                {$testObjects}
             </testObjects>
             <testObjectTypes>
                 {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:supportedTestObjectTypes)}
                 {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:consumableResultObjectTypes)}
+                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $testObjects/etf:testObjectTypes)}
             </testObjectTypes>
             <translationTemplateBundles>
                 {etfxdb:get-translationTemplateBundles($translationTemplateBundleDb, $levelOfDetail, $executableTestSuite)}

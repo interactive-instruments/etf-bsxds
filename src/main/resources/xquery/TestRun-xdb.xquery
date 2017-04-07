@@ -35,6 +35,7 @@ declare function local:get-testrun($ids as xs:string*) {
 
     let $testRun := $testRunDb[@id = $ids]
     let $executableTestSuite := etfxdb:get-executableTestSuites($executableTestSuiteDb, $levelOfDetail, $testRun/etf:testTasks/etf:TestTask)
+    let $testObjects := etfxdb:get-testObjects($testObjectsDb, $levelOfDetail, $testRun/etf:testTasks/etf:TestTask)
 
     return
         <DsResultSet
@@ -51,11 +52,12 @@ declare function local:get-testrun($ids as xs:string*) {
                 {$executableTestSuite}
             </executableTestSuites>
             <testObjects>
-                {etfxdb:get-testObjects($testObjectsDb, $levelOfDetail, $testRun/etf:testTasks/etf:TestTask)}
+                {$testObjects}
             </testObjects>
             <testObjectTypes>
                 {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:supportedTestObjectTypes)}
                 {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $executableTestSuite/etf:consumableResultObjectTypes)}
+                {etfxdb:get-testObjectTypes($testObjectTypesDb, $levelOfDetail, $testObjects/etf:testObjectTypes)}
             </testObjectTypes>
             <translationTemplateBundles>
                 {etfxdb:get-translationTemplateBundles($translationTemplateBundleDb, $levelOfDetail, $executableTestSuite)}
