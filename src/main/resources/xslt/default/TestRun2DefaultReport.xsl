@@ -1443,15 +1443,18 @@
 	<xsl:function name="etf:replace-multi-tokens" as="xs:string?">
 		<xsl:param name="arg" as="xs:string?"/>
 		<xsl:param name="arguments" as="element()*"/>
-		<!-- temporary repace backslashes with a dagger &#8224; symbol for replace()... -->
+		<!--
+			temporary replace backslashes with a dagger &#8224; symbol and a
+			$ with a double dagger &#8225; for replace() https://www.w3.org/TR/xpath-functions/#func-replace
+		-->
 		<xsl:sequence
 			select="
 				if (count($arguments) &gt; 0) then
 					translate(
 						etf:replace-multi-tokens(replace($arg, concat('\{', $arguments[1]/@token, '\}'), 
 							replace(
-								translate(etf:if-absent($arguments[1]/text(), ''), '\', '&#8224;'), '([$])', '\\$1')), $arguments[position() &gt; 1])
-								, '&#8224;' , '\')
+								translate(etf:if-absent($arguments[1]/text(), ''), '\$', '&#8224;&#8225;'), '([$])', '\\$1')), $arguments[position() &gt; 1])
+								, '&#8224;&#8225;' , '\$')
 				else
 					$arg"
 		/>
