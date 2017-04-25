@@ -73,7 +73,7 @@ final class BsxSchemaResourceResolver implements LSResourceResolver {
 				try {
 					final byte[] input = new byte[inputStream.available()];
 					inputStream.read(input);
-					return new String(input);
+					return new String(input, "UTF-8");
 				} catch (IOException e) {
 					ExcUtils.suppress(e);
 					throw new IllegalStateException("Cannot access schema file: " + e);

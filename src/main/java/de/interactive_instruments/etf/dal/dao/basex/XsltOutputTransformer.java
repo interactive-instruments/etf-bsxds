@@ -104,7 +104,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 				if (file.isAbsolute()) {
 					try {
 						return new StreamSource(new FileInputStream(file), file.getPath());
-					} catch (FileNotFoundException e) {
+					} catch (final FileNotFoundException e) {
 						ExcUtils.suppress(e);
 					}
 				}
@@ -175,18 +175,20 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		this.label = label;
 		this.stylesheetFile = stylesheetFile;
 		stylesheetFile.expectFileIsReadable();
-		checkForChangedStylesheet();
+		newTransformerFromCurrentStyle();
 	}
 
-	private void checkForChangedStylesheet() throws TransformerConfigurationException {
+	private Transformer newTransformerFromCurrentStyle() throws TransformerConfigurationException {
 		if (stylesheetFile != null && stylesheetFile.lastModified() != stylesheetLastModified) {
 			synchronized (this) {
 				logger.info(this.label + " : caching stylesheet " + stylesheetFile.getAbsolutePath());
 				final Source xsltSource = new StreamSource(stylesheetFile);
 				this.cachedXSLT = transFact.newTemplates(xsltSource);
 				this.stylesheetLastModified = stylesheetFile.lastModified();
+				return this.cachedXSLT.newTransformer();
 			}
 		}
+		return this.cachedXSLT.newTransformer();
 	}
 
 	@Override
@@ -208,9 +210,7 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 	public void streamTo(final PropertyHolder arguments, final InputStream inputStream, final OutputStream outputStreamStream)
 			throws IOException {
 		try {
-			checkForChangedStylesheet();
-
-			final Transformer transformer = cachedXSLT.newTransformer();
+			final Transformer transformer = newTransformerFromCurrentStyle();
 			if (arguments != null) {
 				arguments.forEach(a -> transformer.setParameter(a.getKey(), a.getValue()));
 			}
@@ -228,11 +228,6 @@ final class XsltOutputTransformer implements OutputFormat, Configurable {
 		} catch (final TransformerException e) {
 			throw new IOException(e);
 		}
-	}
-
-	@Override
-	public int compareTo(final OutputFormat o) {
-		return 0;
 	}
 
 	@Override

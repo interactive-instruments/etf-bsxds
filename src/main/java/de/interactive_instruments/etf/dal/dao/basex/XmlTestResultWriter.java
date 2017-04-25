@@ -170,15 +170,14 @@ final class XmlTestResultWriter implements Releasable {
 		}
 
 		public Message(final String translationTemplateId, final String[] arguments) {
-			if (arguments.length % 2 != 0) {
+			if (arguments == null || arguments.length == 0) {
+				this.arguments = null;
+			} else if (arguments.length % 2 != 0) {
 				throw new IllegalStateException("There is at least one invalid token value pair");
+			} else {
+				this.arguments = Arrays.asList(arguments);
 			}
 			this.translationTemplateId = translationTemplateId;
-			if (arguments != null && arguments.length > 0) {
-				this.arguments = Arrays.asList(arguments);
-			} else {
-				this.arguments = null;
-			}
 		}
 
 		public Message(final String translationTemplateId, final Map<String, String> arguments) {
