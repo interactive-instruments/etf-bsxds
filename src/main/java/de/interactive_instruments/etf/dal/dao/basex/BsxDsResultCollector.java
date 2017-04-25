@@ -68,7 +68,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		int errorLimitTmp = 150;
 		if (!SUtils.isNullOrEmpty(errorLimitStr)) {
 			try {
-				errorLimitTmp = Integer.valueOf(errorLimitStr);
+				errorLimitTmp = Integer.parseInt(errorLimitStr);
 			} catch (final NumberFormatException e) {
 				logger.error("Invalid error limit ", e);
 			}
@@ -366,7 +366,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 				mimeType = "text/plain";
 			}
 		}
-		writer.addAttachment(eid, Base64.getEncoder().encode(content.getBytes()), label, "UTF-8", mimeType, type);
+		writer.addAttachment(eid, Base64.getEncoder().encode(content.getBytes("UTF-8")), label, "UTF-8", mimeType, type);
 		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
