@@ -18,7 +18,7 @@ declare function local:get-executableTestSuites($offset as xs:integer, $limit as
       xmlns="http://www.interactive-instruments.de/etf/2.0"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-      xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
+      xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/model/resultSet.xsd">
           <executableTestSuites>
               {etfxdb:get-all(db:open('etf-ds')/etf:ExecutableTestSuite, $levelOfDetail, $offset, $limit, $fields)}
           </executableTestSuites>
@@ -39,7 +39,7 @@ declare function local:get-executableTestSuite($ids as xs:string*) {
         xmlns="http://www.interactive-instruments.de/etf/2.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
-        xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/model/resultSet.xsd">
+        xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/model/resultSet.xsd">
             <executableTestSuites>
                 {$executableTestSuite}{etfxdb:get-replacedByRec($executableTestSuiteDb, $levelOfDetail, $executableTestSuite)}
             </executableTestSuites>

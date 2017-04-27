@@ -35,7 +35,7 @@
             <!-- Collection attributes -->
             <xsl:attribute name="version">2.0</xsl:attribute>
             <xsl:if test="$fieldsParam=''">
-                <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/service/service.xsd</xsl:attribute>
+                <xsl:attribute name="xsi:schemaLocation">http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/service/service.xsd</xsl:attribute>
             </xsl:if>
             <xsl:attribute name="returnedItems" select="$returnedItems"/>
             <!-- page position -->
