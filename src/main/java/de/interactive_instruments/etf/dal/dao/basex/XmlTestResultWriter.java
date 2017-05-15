@@ -140,7 +140,11 @@ final class XmlTestResultWriter implements Releasable {
 			writer.writeEndElement();
 
 			writer.writeStartElement("mimeType");
-			writer.writeCharacters(mimeType);
+			if (mimeType != null) {
+				writer.writeCharacters(mimeType);
+			} else {
+				writer.writeCharacters("text/plain");
+			}
 			writer.writeEndElement();
 			if (attachmentFile != null) {
 				writer.writeStartElement("referencedData");
