@@ -52,7 +52,7 @@
                             and will be synchonized by the ETF, e.g. a git URL</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="localPath" type="xs:anyURI" minOccurs="1">
+                <xs:element name="localPath" type="xs:anyURI" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Path to a synchronized local copy of the remote
                             data</xs:documentation>
