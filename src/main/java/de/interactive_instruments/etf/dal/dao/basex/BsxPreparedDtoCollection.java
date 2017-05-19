@@ -20,13 +20,13 @@ import java.util.*;
 
 import javax.xml.bind.JAXBException;
 
-import de.interactive_instruments.etf.model.DefaultEidMap;
-import de.interactive_instruments.etf.model.EidMap;
 import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
+import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidMap;
 
 /**
  * A prepared XQuery statement for querying multiple items - without their references!
@@ -79,7 +79,8 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " is read only");
 	}
 
-	@Override public void removeAll(final Collection<?> collection) {
+	@Override
+	public void removeAll(final Collection<?> collection) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " is read only");
 	}
 
@@ -94,8 +95,8 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 		final EidMap map = new DefaultEidMap();
 		for (final Object key : keys) {
 			final T t = mappedDtos.get(key);
-			if(t!=null) {
-				map.put(key,t);
+			if (t != null) {
+				map.put(key, t);
 			}
 		}
 		return map;
