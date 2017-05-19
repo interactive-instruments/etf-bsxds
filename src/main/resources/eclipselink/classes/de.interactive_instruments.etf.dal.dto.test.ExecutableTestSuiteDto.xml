@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-03-21T00:03:05.828+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-05-18T18:31:25.558+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
@@ -83,7 +83,7 @@
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.model.DefaultEidMap</type-name>
+               <type-name>de.interactive_instruments.etf.model.DefaultEidHolderMap</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -342,6 +342,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setDependencies</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.model.EidHolderMap</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

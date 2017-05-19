@@ -278,7 +278,7 @@
             </key-method-handle>
             <container-class>
                <container-class-handle>
-                  <type-name>de.interactive_instruments.etf.model.DefaultEidMap</type-name>
+                  <type-name>de.interactive_instruments.etf.model.DefaultEidHolderMap</type-name>
                </container-class-handle>
             </container-class>
          </container-policy>
