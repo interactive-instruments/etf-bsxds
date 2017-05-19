@@ -20,6 +20,8 @@ import java.util.*;
 
 import javax.xml.bind.JAXBException;
 
+import de.interactive_instruments.etf.model.DefaultEidMap;
+import de.interactive_instruments.etf.model.EidMap;
 import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
@@ -75,6 +77,28 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	@Override
 	public void putAll(final Map<? extends EID, ? extends T> m) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " is read only");
+	}
+
+	@Override public void removeAll(final Collection<?> collection) {
+		throw new UnsupportedOperationException(getClass().getSimpleName() + " is read only");
+	}
+
+	@Override
+	public EidMap<T> unmodifiable() {
+		return this;
+	}
+
+	@Override
+	public EidMap<T> getAll(final Collection<?> keys) {
+		ensureMap();
+		final EidMap map = new DefaultEidMap();
+		for (final Object key : keys) {
+			final T t = mappedDtos.get(key);
+			if(t!=null) {
+				map.put(key,t);
+			}
+		}
+		return map;
 	}
 
 	@Override
