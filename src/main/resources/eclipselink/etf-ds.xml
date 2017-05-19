@@ -836,7 +836,7 @@
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestModuleDto</reference-class>
                <field name="testModules/TestModule" xsi:type="node"/>
                <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidHolderMap</collection-type>
                   <map-key-method>getId</map-key-method>
                </container>
             </attribute-mapping>
