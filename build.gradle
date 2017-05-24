@@ -54,7 +54,7 @@ dependencies {
 
     compile group: 'commons-io', name: 'commons-io', version: etf_commonsIoVersion
 
-    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.4'
 
     compile group: 'org.basex', name: 'basex', version: basexVersion
 
