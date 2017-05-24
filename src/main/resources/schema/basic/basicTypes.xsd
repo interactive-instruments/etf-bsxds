@@ -397,7 +397,7 @@
                     group name ID is in Group 1, the artifact ID in Group 2  
                 </xs:documentation>
             </xs:annotation>
-            <xs:pattern value="([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*)"/>
+            <xs:pattern value="egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*)"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -416,10 +416,10 @@
             <xs:annotation>
                 <xs:documentation>
                     The regular expression can be used to extract the group name ID, artifact ID and version: 
-                    group name ID is in Group 1, the artifact ID in Group 2, the version in Group 3  
+                    group name ID is in Group 1 (starting from index 0), the artifact ID in Group 2, the version in Group 4  
                 </xs:documentation>
             </xs:annotation>
-            <xs:pattern value="https?://.*/egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*):([0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT)?|latest)"/>
+            <xs:pattern value="https?://.*/egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*)(:([0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT)?|latest))?"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -531,6 +531,7 @@
             <xs:element name="creationDate" type="xs:dateTime" minOccurs="1"/>
             <xs:element name="lastEditor" type="xs:string" minOccurs="0"/>
             <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="disabled" type="xs:boolean" minOccurs="0" default="false"/>
             <xs:element name="tags" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence>
