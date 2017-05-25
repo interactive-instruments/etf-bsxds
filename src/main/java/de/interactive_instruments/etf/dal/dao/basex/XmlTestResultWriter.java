@@ -15,6 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -439,5 +440,102 @@ final class XmlTestResultWriter implements Releasable {
 
 	public final boolean isErrorLimitExceeded() {
 		return errorCount >= errorLimit;
+	}
+
+	public static void internalError(
+			final XMLStreamWriter errorWriter, final String resultedFrom, final String testObjectRef,
+			final String errorMessage, final File logFile,
+			final String errorAttachmentId, final IFile errorFile, final String mimeType) throws XMLStreamException {
+
+		errorWriter.writeStartDocument("UTF-8", "1.0");
+		errorWriter.writeStartElement(ETF_NS_PREFIX, "TestTaskResult", ETF_NS);
+		errorWriter.setPrefix(ETF_NS_PREFIX, ETF_NS);
+		errorWriter.writeNamespace(ETF_NS_PREFIX, ETF_NS);
+		errorWriter.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		errorWriter.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
+				ETF_NS + " " + ETF_RESULT_XSD);
+		errorWriter.writeAttribute("xmlns", ETF_NS);
+		final String id = UUID.randomUUID().toString();
+
+		errorWriter.writeAttribute("id", ID_PREFIX + id);
+
+		errorWriter.writeStartElement("testObject");
+		errorWriter.writeAttribute("ref", ID_PREFIX + testObjectRef);
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("errorMessage");
+		errorWriter.writeCharacters(errorMessage);
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("attachments");
+
+		errorWriter.writeStartElement("Attachment");
+		errorWriter.writeAttribute("id", ID_PREFIX + errorAttachmentId);
+		errorWriter.writeAttribute("type", "LogFile");
+
+		errorWriter.writeStartElement("label");
+		errorWriter.writeCharacters("Log file");
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("encoding");
+		errorWriter.writeCharacters("UTF-8");
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("mimeType");
+		errorWriter.writeCharacters("text/plain");
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("referencedData");
+		errorWriter.writeAttribute("href", "file://" + logFile.getAbsolutePath());
+		errorWriter.writeEndElement();
+		// end log file attachment
+		errorWriter.writeEndElement();
+
+		if (errorFile != null) {
+			errorWriter.writeStartElement("Attachment");
+			errorWriter.writeAttribute("id", ID_PREFIX + UUID.randomUUID().toString());
+			errorWriter.writeAttribute("type", "internalError");
+
+			errorWriter.writeStartElement("label");
+			errorWriter.writeCharacters("Internal error");
+			errorWriter.writeEndElement();
+
+			errorWriter.writeStartElement("encoding");
+			errorWriter.writeCharacters("UTF-8");
+			errorWriter.writeEndElement();
+
+			errorWriter.writeStartElement("mimeType");
+			errorWriter.writeCharacters(mimeType);
+			errorWriter.writeEndElement();
+
+			errorWriter.writeStartElement("referencedData");
+			errorWriter.writeAttribute("href", "file://" + errorFile.getAbsolutePath());
+			errorWriter.writeEndElement();
+			// end error file attachment
+			errorWriter.writeEndElement();
+		}
+		// end attachments
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("resultedFrom");
+		errorWriter.writeAttribute("ref", ID_PREFIX + resultedFrom);
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("startTimestamp");
+		errorWriter.writeCharacters(TimeUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(System.currentTimeMillis()));
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("duration");
+		errorWriter.writeCharacters("1");
+		errorWriter.writeEndElement();
+
+		errorWriter.writeStartElement("status");
+		errorWriter.writeCharacters(TestResultStatus.toString(TestResultStatus.UNDEFINED.value()));
+		errorWriter.writeEndElement();
+
+		errorWriter.writeEndElement();
+		errorWriter.writeEndDocument();
+		errorWriter.flush();
+		errorWriter.close();
 	}
 }
