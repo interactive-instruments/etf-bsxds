@@ -73,6 +73,14 @@
          </attribute-handle>
          <xml-field>duration/text()</xml-field>
       </mapping>
+      <mapping type="xml-direct">
+         <name>errorMessage</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto</attribute-declaring-type-name>
+            <attribute-name>errorMessage</attribute-name>
+         </attribute-handle>
+         <xml-field>errorMessage/text()</xml-field>
+      </mapping>
       <mapping type="xml-transformation">
          <name>id</name>
          <inherited>true</inherited>

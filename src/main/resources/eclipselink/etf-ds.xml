@@ -2892,6 +2892,40 @@
          <events/>
          <querying/>
          <attribute-mappings>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>attachments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
+               <field name="attachments/Attachment" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-collection-mapping">
+               <attribute-name>children</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</reference-class>
+               <field name="testModuleResults/TestModuleResult" xsi:type="node"/>
+               <container xsi:type="map-container-policy">
+                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
+                  <map-key-method>getId</map-key-method>
+               </container>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>duration</attribute-name>
+               <field name="duration/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>errorMessage</attribute-name>
+               <field name="errorMessage/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-transformation-mapping">
                <attribute-name>id</attribute-name>
                <attribute-transformer>de.interactive_instruments.etf.dal.dao.basex.transformers.EidAttributeTransformer</attribute-transformer>
@@ -2914,24 +2948,6 @@
                <source-to-target-key-fields>
                   <field name="testObject/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>children</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.TestModuleResultDto</reference-class>
-               <field name="testModuleResults/TestModuleResult" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-collection-mapping">
-               <attribute-name>attachments</attribute-name>
-               <reference-class>de.interactive_instruments.etf.dal.dto.result.AttachmentDto</reference-class>
-               <field name="attachments/Attachment" xsi:type="node"/>
-               <container xsi:type="map-container-policy">
-                  <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
-                  <map-key-method>getId</map-key-method>
-               </container>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>parent</attribute-name>
@@ -2964,14 +2980,6 @@
                <field name="startTimestamp/text()" xsi:type="node">
                   <schema-type>{http://www.w3.org/2001/XMLSchema}dateTime</schema-type>
                </field>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>duration</attribute-name>
-               <field name="duration/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>

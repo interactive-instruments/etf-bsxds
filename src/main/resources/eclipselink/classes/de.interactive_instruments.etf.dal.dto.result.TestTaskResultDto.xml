@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-18T18:31:25.613+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-05-19T16:00:26.984+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>attachments</name>
@@ -13,6 +13,15 @@
          <type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.etf.model.EidMap</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>errorMessage</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -149,6 +158,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setInternalError</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.Exception</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

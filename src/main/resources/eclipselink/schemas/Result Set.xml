@@ -215,6 +215,16 @@
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
                                           <name>tags</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                           <type type="complex-type">
@@ -842,6 +852,16 @@
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
                                           <name>tags</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                           <type type="complex-type">
@@ -1194,6 +1214,16 @@
                                              <name>dateTime</name>
                                              <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                           </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
@@ -1860,6 +1890,16 @@
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
                                           <name>tags</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                           <type type="complex-type">
@@ -2137,6 +2177,16 @@
                                              <name>dateTime</name>
                                              <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                           </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
@@ -2504,6 +2554,16 @@
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
                                           <name>tags</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                           <type type="complex-type">
@@ -2825,6 +2885,16 @@
                                              <name>dateTime</name>
                                              <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                           </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
@@ -4017,6 +4087,16 @@
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
                                           <name>tags</name>
                                           <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                           <type type="complex-type">
@@ -4593,6 +4673,16 @@
                                              <name>dateTime</name>
                                              <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                           </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                       <particle type="element">
+                                          <name>disabled</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="simple-type-ref">
+                                             <name>boolean</name>
+                                             <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                          </type>
+                                          <default-value>false</default-value>
                                           <min-occurs>0</min-occurs>
                                        </particle>
                                        <particle type="element">
@@ -5186,30 +5276,54 @@
                                  <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                               </type>
                            </particle>
-                           <particle type="element">
-                              <name>testModuleResults</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <type type="complex-type">
-                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                 <abstract>false</abstract>
-                                 <derivation-method>restriction</derivation-method>
-                                 <base-type type="complex-type-ref">
-                                    <name>anyType</name>
-                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                                 </base-type>
-                                 <content type="complex">
-                                    <mixed-flag>false</mixed-flag>
-                                    <particle compositor="sequence" type="model-group">
-                                       <max-occurs>2147483640</max-occurs>
-                                       <particles>
-                                          <particle type="element-ref">
-                                             <name>TestModuleResult</name>
+                           <particle compositor="sequence" type="model-group">
+                              <particles>
+                                 <particle compositor="sequence" type="model-group">
+                                    <particles>
+                                       <particle type="element">
+                                          <name>parent</name>
+                                          <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                          <type type="complex-type-ref">
+                                             <name>RefType</name>
                                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                                          </particle>
-                                       </particles>
-                                    </particle>
-                                 </content>
-                              </type>
+                                          </type>
+                                          <min-occurs>0</min-occurs>
+                                       </particle>
+                                    </particles>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>resultedFrom</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="complex-type-ref">
+                                       <name>RefType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>startTimestamp</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>dateTime</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>duration</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>unsignedLong</name>
+                                       <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                    </type>
+                                 </particle>
+                                 <particle type="element">
+                                    <name>status</name>
+                                    <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    <type type="simple-type-ref">
+                                       <name>TestResultStatusType</name>
+                                       <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                    </type>
+                                 </particle>
+                              </particles>
                            </particle>
                            <particle type="element">
                               <name>attachments</name>
@@ -6163,6 +6277,39 @@
                   <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                </base-type>
             </type-definition>
+            <type-definition type="complex-type">
+               <name>egarefLoc</name>
+               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+               <abstract>false</abstract>
+               <derivation-method>extension</derivation-method>
+               <base-type type="complex-type-ref">
+                  <name>RefType</name>
+                  <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+               </base-type>
+               <attributes>
+                  <attribute type="attribute">
+                     <name>egaref</name>
+                     <use>required</use>
+                     <type type="simple-type">
+                        <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                        <variety>atomic</variety>
+                        <base-type type="simple-type-ref">
+                           <name>string</name>
+                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        </base-type>
+                     </type>
+                  </attribute>
+                  <attribute type="attribute">
+                     <name>ref</name>
+                     <use>required</use>
+                     <type type="simple-type-ref">
+                        <name>IdRefType</name>
+                        <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                     </type>
+                  </attribute>
+               </attributes>
+               <content type="empty"/>
+            </type-definition>
             <type-definition type="simple-type">
                <name>httpUriType</name>
                <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -6449,6 +6596,16 @@
                               <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
+                              <name>disabled</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="simple-type-ref">
+                                 <name>boolean</name>
+                                 <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                              </type>
+                              <default-value>false</default-value>
+                              <min-occurs>0</min-occurs>
+                           </particle>
+                           <particle type="element">
                               <name>tags</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                               <type type="complex-type">
@@ -6614,6 +6771,16 @@
                            <name>dateTime</name>
                            <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                         </type>
+                        <min-occurs>0</min-occurs>
+                     </particle>
+                     <particle type="element">
+                        <name>disabled</name>
+                        <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                        <type type="simple-type-ref">
+                           <name>boolean</name>
+                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                        </type>
+                        <default-value>false</default-value>
                         <min-occurs>0</min-occurs>
                      </particle>
                      <particle type="element">

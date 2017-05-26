@@ -26,8 +26,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import sun.misc.IOUtils;
+
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EidFactory;
@@ -51,10 +54,20 @@ public class ResultCollectorTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, InvalidStateTransitionException, StorageException, InitializationException,
-			ConfigurationException {
+			ConfigurationException, ObjectWithIdNotFoundException {
+
 		BsxTestUtils.ensureInitialization();
 		dao = BsxTestUtils.DATA_STORAGE.getDao(TestTaskResultDto.class);
+		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(TAG_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_1);
+		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_2);
+		BsxTestUtils.forceDeleteAndAdd(TOT_DTO_3);
+		BsxTestUtils.forceDeleteAndAdd(TASK_DTO_1.getTestObject());
+
 		attachmentDir = IFile.createTempDir("etf-bsxds-test");
+
+		Mockito.when(loggerMock.getLogFile()).thenReturn(new IFile(attachmentDir.expandPath("log.txt")));
 	}
 
 	@AfterClass
@@ -65,7 +78,7 @@ public class ResultCollectorTest {
 	}
 
 	@Test
-	public void testCollectorWithPersistance() throws IOException, ObjectWithIdNotFoundException, StorageException {
+	public void testCollector() throws IOException, ObjectWithIdNotFoundException, StorageException {
 		final TestResultCollector c = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
 				loggerMock, attachmentDir.expandPath("Result2.xml"), attachmentDir, TASK_DTO_1);
 
@@ -220,7 +233,13 @@ public class ResultCollectorTest {
 		// Get TestTaskResult
 		final TestTaskResultDto result = dao.getById(EidFactory.getDefault().createUUID(id)).getDto();
 		assertEquals(id, result.getId().getId());
+	}
 
+	@Test
+	public void testCollectorInternalError() throws IOException, ObjectWithIdNotFoundException, StorageException {
+		final TestResultCollector c = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
+				loggerMock, attachmentDir.expandPath("Result3.xml"), attachmentDir, TASK_DTO_1);
+		c.internalError("Error message", "ERROR dumped in file".getBytes(), "text/plain");
 	}
 
 }

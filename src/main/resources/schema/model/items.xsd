@@ -55,9 +55,6 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="testItemTypes">
-        <xs:annotation>
-            <xs:documentation>not implemented yet</xs:documentation>
-        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
                 <xs:element ref="TestItemType"/>

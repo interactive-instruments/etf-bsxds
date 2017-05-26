@@ -36,13 +36,23 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="testObject" type="RefType"/>
-                <xs:element name="testModuleResults">
-                    <xs:complexType>
-                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element ref="TestModuleResult"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:choice>
+                    <xs:element name="errorMessage" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation> A low level error from which the test driver could
+                                not recover and which led to the termination of the tests. No result
+                                information could be gather and it is unknown whether the Test
+                                Object is valid or not.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="testModuleResults">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestModuleResult"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
                 <xs:element name="attachments">
                     <xs:annotation>
                         <xs:documentation>Contains at least one log file</xs:documentation>
@@ -101,7 +111,8 @@
             </xs:sequence>
             <xs:attribute name="type" type="xs:string" use="optional">
                 <xs:annotation>
-                    <xs:documentation>Optional type to describe the kind of attachment</xs:documentation>
+                    <xs:documentation>Optional type to describe the kind of
+                        attachment</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>

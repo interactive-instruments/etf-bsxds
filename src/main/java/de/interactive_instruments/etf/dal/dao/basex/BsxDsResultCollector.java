@@ -20,6 +20,7 @@ import java.util.*;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.io.IOUtils;
 
@@ -52,6 +53,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	private final List<String> testStepAttachmentIds = new ArrayList<>(8);
 	private final XmlTestResultWriter writer;
 	private final int errorLimit;
+	private boolean internalError = false;
 
 	public BsxDsResultCollector(final DataStorage dataStorage, final TestRunLogger testRunLogger, final IFile resultFile,
 			final IFile attachmentDir, final TestTaskDto testTaskDto) {
@@ -135,12 +137,14 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 			throws XMLStreamException, FileNotFoundException, StorageException {
 		final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
 		writer.close();
-		try {
-			((AbstractBsxStreamWriteDao) dataStorage.getDao(
-					TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
-		} catch (StorageException e) {
-			testRunLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
-			throw e;
+		if (!this.internalError) {
+			try {
+				((AbstractBsxStreamWriteDao) dataStorage.getDao(
+						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
+			} catch (StorageException e) {
+				testRunLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
+				throw e;
+			}
 		}
 		return id;
 	}
@@ -310,10 +314,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		return "EID" + eid;
 	}
 
-	@Override
-	public String saveAttachment(final InputStream inputStream, final String label, final String mimeType, final String type)
-			throws IOException {
-		final String eid = UUID.randomUUID().toString();
+	private IFile createAttachmentFile(final String eid, final String mimeType) {
 		String extension = ".txt";
 		if (mimeType != null) {
 			try {
@@ -322,7 +323,14 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 				ExcUtils.suppress(e);
 			}
 		}
-		final IFile attachmentFile = attachmentDir.secureExpandPathDown(eid + extension);
+		return attachmentDir.secureExpandPathDown(eid + extension);
+	}
+
+	@Override
+	public String saveAttachment(final InputStream inputStream, final String label, final String mimeType, final String type)
+			throws IOException {
+		final String eid = UUID.randomUUID().toString();
+		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		attachmentFile.writeContent(inputStream, "UTF-8");
 		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
 		if (currentModelType() == 4) {
@@ -335,15 +343,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	public String saveAttachment(final Reader reader, final String label, final String mimeType, final String type)
 			throws IOException {
 		final String eid = UUID.randomUUID().toString();
-		String extension = ".txt";
-		if (mimeType != null) {
-			try {
-				extension = MimeTypeUtils.getFileExtensionForMimeType(mimeType);
-			} catch (MimeTypeUtilsException e) {
-				ExcUtils.suppress(e);
-			}
-		}
-		final IFile attachmentFile = attachmentDir.secureExpandPathDown(eid + extension);
+		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		IOUtils.copy(reader, new FileOutputStream(attachmentFile), "UTF-8");
 		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
 		if (currentModelType() == 4) {
@@ -376,12 +376,52 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	@Override
 	public void internalError(final String translationTemplateId, final Map<String, String> tokenValuePairs,
 			final Throwable e) {
+		if (!this.internalError) {
+			this.internalError = true;
+		}
 		throw new IllegalStateException("Not implemented");
 	}
 
 	@Override
 	public void internalError(final Throwable e) {
+		if (!this.internalError) {
+			this.internalError = true;
+		}
 		throw new IllegalStateException("Not implemented");
+	}
+
+	@Override
+	public void internalError(final String errorMessage, final byte[] bytes, final String mimeType) {
+		if (!this.internalError) {
+			this.internalError = true;
+
+			try {
+				resultFile.delete();
+				final BufferedOutputStream errorOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile),
+						16384);
+				final XMLStreamWriter errorWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(errorOutputStream);
+				if (bytes != null) {
+					final String attachmentEid = UUID.randomUUID().toString();
+					final IFile attachmentFile = createAttachmentFile(attachmentEid, mimeType);
+					IOUtils.write(bytes, new FileOutputStream(attachmentFile));
+					XmlTestResultWriter.internalError(errorWriter,
+							testTaskDto.getExecutableTestSuite().getId().getId(),
+							testTaskDto.getTestObject().getId().getId(),
+							errorMessage, testRunLogger.getLogFile(),
+							attachmentEid, attachmentFile, mimeType);
+				} else {
+					XmlTestResultWriter.internalError(errorWriter,
+							testTaskDto.getExecutableTestSuite().getId().getId(),
+							testTaskDto.getTestObject().getId().getId(),
+							errorMessage, testRunLogger.getLogFile(),
+							null, null, null);
+				}
+				((AbstractBsxStreamWriteDao) dataStorage.getDao(
+						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
+			} catch (StorageException | XMLStreamException | IOException e) {
+				throw new IllegalStateException("Could not save internal error", e);
+			}
+		}
 	}
 
 	@Override
