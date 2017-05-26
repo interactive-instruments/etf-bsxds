@@ -35,17 +35,16 @@ declare function etfxdb:get-replacedByRec($dbs as node()*, $item as node()*) {
 (:~
  : ----------------------------------------------------------------
  : get-all
+ :
+ : 'disabled' items are filtered
  : ----------------------------------------------------------------
+ : TODO implement abstract filter as higher order function http://docs.basex.org/wiki/Higher-Order_Functions
  :)
 declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, $offset as xs:integer, $limit as xs:integer, $fields as xs:string) {
     (
         for $item in $items
         where
-            if (not($levelOfDetail = 'HISTORY'))
-            then
-                not(exists($item/etf:replacedBy[1]))
-            else
-                true()
+            ($levelOfDetail = 'HISTORY' or not(exists($item/etf:replacedBy[1]))) and not($item/etf:disabled = 'true')
         order by $item/etf:label/text() ascending
         return
             if ($fields = '*')
@@ -59,6 +58,8 @@ declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, 
 declare function etfxdb:get-all($items as node()*, $offset as xs:integer, $limit as xs:integer, $fields as xs:string) {
     (
         for $item in $items
+        where
+            not($item/etf:disabled = 'true')
         order by $item/etf:label/text() ascending
          return
             if ($fields = '*')
