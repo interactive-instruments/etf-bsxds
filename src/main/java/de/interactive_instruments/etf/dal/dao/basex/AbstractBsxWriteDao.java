@@ -50,7 +50,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	private final List<WriteDaoListener> listeners = new ArrayList<>(2);
 
-	private void updateLasModificationDate() {
+	protected final void updateLastModificationDate() {
 		this.lastModificationDate = System.currentTimeMillis();
 	}
 
@@ -65,7 +65,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		ensureType(t);
 		doMarshallAndAdd(t);
 		fireEventAdd(t);
-		updateLasModificationDate();
+		updateLastModificationDate();
 	}
 
 	protected void doMarshallAndAdd(final T t) throws StorageException {
@@ -139,7 +139,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			throw new StoreException(e);
 		}
 		fireEventAdd(collection);
-		updateLasModificationDate();
+		updateLastModificationDate();
 	}
 
 	protected byte[] createHash(final String str) {
@@ -163,14 +163,14 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		ensureType(t);
 		doDeleteAndAdd(t);
 		fireEventUpdate(t);
-		updateLasModificationDate();
+		updateLastModificationDate();
 	}
 
 	@Override
 	public final T update(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doUpdate(t);
-		updateLasModificationDate();
+		updateLastModificationDate();
 		return t;
 	}
 
@@ -205,7 +205,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			oldDtoInDb.setReplacedBy((RepositoryItemDto) t);
 			doDeleteAndAdd((T) oldDtoInDb);
 			fireEventUpdate(oldDtoInDb);
-			updateLasModificationDate();
+			updateLastModificationDate();
 
 			// Add new one
 			doMarshallAndAdd(t);
@@ -229,7 +229,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		for (final T dto : collection) {
 			updatedDtos.add(doUpdate(dto));
 		}
-		updateLasModificationDate();
+		updateLastModificationDate();
 		return updatedDtos;
 	}
 
@@ -238,7 +238,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
 		fireEventDelete(eid);
 		doDelete(eid, true);
-		updateLasModificationDate();
+		updateLastModificationDate();
 	}
 
 	protected void doDelete(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
@@ -273,7 +273,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			fireEventDelete(eid);
 			doDelete(eid, true);
 		}
-		updateLasModificationDate();
+		updateLastModificationDate();
 	}
 
 	protected final void fireEventDelete(final EID eid) throws ObjectWithIdNotFoundException, StorageException {
