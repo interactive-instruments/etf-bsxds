@@ -28,7 +28,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.PropertyUtils;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class DsUtils {
 

@@ -34,7 +34,7 @@ import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBun
  * may possess references to other object types that were unmarshaled into the other
  * lists.
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class DsResultSet {
 

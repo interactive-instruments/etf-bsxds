@@ -15,20 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.List;
-
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Test Object Type Data Access Object
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TestObjectTypeDao extends AbstractBsxStreamWriteDao<TestObjectTypeDto> {
 
@@ -47,4 +43,8 @@ final class TestObjectTypeDao extends AbstractBsxStreamWriteDao<TestObjectTypeDt
 	@Override
 	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
+	}
 }

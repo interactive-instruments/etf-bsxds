@@ -28,7 +28,7 @@ import de.interactive_instruments.exceptions.ExcUtils;
 /**
  * Resolver for schemas inside the jar package
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxSchemaResourceResolver implements LSResourceResolver {
 

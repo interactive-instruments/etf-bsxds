@@ -29,7 +29,7 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * Test Object Data Access Object
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TestObjectDao extends AbstractBsxWriteDao<TestObjectDto> {
 

@@ -39,7 +39,7 @@ import de.interactive_instruments.exceptions.MimeTypeUtilsException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxDsResultCollector extends AbstractTestResultCollector {
 
@@ -418,7 +418,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 				}
 				((AbstractBsxStreamWriteDao) dataStorage.getDao(
 						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
-			} catch (StorageException | XMLStreamException | IOException e) {
+			} catch (XMLStreamException | IOException e) {
 				throw new IllegalStateException("Could not save internal error", e);
 			}
 		}

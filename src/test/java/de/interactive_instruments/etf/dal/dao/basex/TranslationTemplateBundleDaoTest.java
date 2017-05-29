@@ -16,7 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
-import static de.interactive_instruments.etf.test.TestDtos.*;
+import static de.interactive_instruments.etf.test.TestDtos.TTB_DTO_1;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -51,7 +51,7 @@ import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TranslationTemplateBundleDaoTest {

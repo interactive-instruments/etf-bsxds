@@ -15,12 +15,11 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
-import java.util.Objects;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
-
-import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -30,7 +29,7 @@ import de.interactive_instruments.etf.model.EID;
  * A prepared XQuery statement for querying a single item and its references.
  * The getDto() or the streamTo() method will execute the request.
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto implements PreparedDto<T> {
 

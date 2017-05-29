@@ -23,7 +23,7 @@ import de.interactive_instruments.etf.model.EID;
  *
  * Must be public!
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public interface ProxyAccessor {
 	Dto getCached();

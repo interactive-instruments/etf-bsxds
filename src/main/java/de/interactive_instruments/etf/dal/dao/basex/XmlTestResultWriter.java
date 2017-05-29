@@ -30,7 +30,7 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class XmlTestResultWriter implements Releasable {
 

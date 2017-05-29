@@ -26,7 +26,7 @@ import de.interactive_instruments.etf.model.EidFactory;
 /**
  * Reads the string form XML and transform it to an EID
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public final class EidAttributeTransformer implements AttributeTransformer {
 

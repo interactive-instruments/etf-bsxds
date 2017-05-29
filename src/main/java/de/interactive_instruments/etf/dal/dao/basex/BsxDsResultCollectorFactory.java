@@ -23,7 +23,7 @@ import de.interactive_instruments.etf.testdriver.TestResultCollectorFactory;
 import de.interactive_instruments.etf.testdriver.TestRunLogger;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public class BsxDsResultCollectorFactory implements TestResultCollectorFactory {
 

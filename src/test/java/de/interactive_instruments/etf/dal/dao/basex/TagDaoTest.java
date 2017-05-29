@@ -16,7 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
-import static de.interactive_instruments.etf.test.TestDtos.*;
+import static de.interactive_instruments.etf.test.TestDtos.TAG_DTO_1;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
 
@@ -36,7 +36,7 @@ import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public class TagDaoTest {
 
@@ -44,7 +44,7 @@ public class TagDaoTest {
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			StorageException, IOException {
+			IOException {
 		BsxTestUtils.ensureInitialization();
 		writeDao = ((WriteDao) DATA_STORAGE.getDao(TagDto.class));
 	}
@@ -68,6 +68,7 @@ public class TagDaoTest {
 		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
 
 		final PreparedDto<TagDto> preparedDto = writeDao.getById(TAG_DTO_1.getId());
+
 		// Check internal ID
 		assertEquals(TAG_DTO_1.getId(), preparedDto.getDtoId());
 		final TagDto dto = preparedDto.getDto();

@@ -22,7 +22,7 @@ import de.interactive_instruments.etf.dal.dto.Dto;
 /**
  * Command object for getting the specific Dtos from a DsResultSet
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 @FunctionalInterface
 interface GetDtoResultCmd<T extends Dto> {

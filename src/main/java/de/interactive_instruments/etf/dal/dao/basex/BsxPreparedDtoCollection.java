@@ -15,12 +15,12 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 import javax.xml.bind.JAXBException;
-
-import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -32,7 +32,7 @@ import de.interactive_instruments.etf.model.EidMap;
  * A prepared XQuery statement for querying multiple items - without their references!
  * Every inherited Map or the streamTo method will execute the request.
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedDto implements PreparedDtoCollection<T> {
 

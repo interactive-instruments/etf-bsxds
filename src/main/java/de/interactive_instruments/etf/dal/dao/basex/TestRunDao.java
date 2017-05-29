@@ -32,7 +32,7 @@ import de.interactive_instruments.properties.ConfigProperties;
 /**
  * Test Run Data Access Object
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TestRunDao extends AbstractBsxWriteDao<TestRunDto> {
 
@@ -60,4 +60,8 @@ final class TestRunDao extends AbstractBsxWriteDao<TestRunDto> {
 		return TestRunDto.class;
 	}
 
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
+	}
 }

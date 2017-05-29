@@ -15,9 +15,10 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
 
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
@@ -30,20 +31,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import de.interactive_instruments.Initializable;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDaoListener;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
-import de.interactive_instruments.exceptions.InitializationException;
-import de.interactive_instruments.exceptions.InvalidStateTransitionException;
-import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
  * Cache for queried DTO objects
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class DtoCache implements WriteDaoListener {
 

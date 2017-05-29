@@ -16,7 +16,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
-import static de.interactive_instruments.etf.test.TestDtos.*;
+import static de.interactive_instruments.etf.test.TestDtos.ASSERTION_TYPE_1;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public class TestItemTypeDaoTest {
 

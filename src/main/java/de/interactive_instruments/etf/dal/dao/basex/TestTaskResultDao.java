@@ -15,25 +15,29 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
+import java.io.IOException;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.validation.Schema;
 
 import org.basex.core.BaseXException;
 import org.slf4j.Logger;
-import org.xml.sax.*;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
-import de.interactive_instruments.etf.model.*;
-import de.interactive_instruments.exceptions.*;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.InitializationException;
+import de.interactive_instruments.exceptions.InvalidStateTransitionException;
+import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
 
 /**
  * Test Task Result Data Access Object
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDto> {
 
@@ -94,4 +98,8 @@ final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDt
 		return TestTaskResultDto.class;
 	}
 
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
+	}
 }

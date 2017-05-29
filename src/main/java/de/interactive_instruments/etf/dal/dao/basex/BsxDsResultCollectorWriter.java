@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public interface BsxDsResultCollectorWriter {
 	void writeTo(OutputStream outputStream) throws IOException;

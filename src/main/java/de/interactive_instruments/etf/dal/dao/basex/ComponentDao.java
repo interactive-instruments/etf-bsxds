@@ -22,7 +22,7 @@ import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class ComponentDao extends AbstractBsxWriteDao<ComponentDto> {
 
@@ -37,6 +37,11 @@ final class ComponentDao extends AbstractBsxWriteDao<ComponentDto> {
 	@Override
 	public Class<ComponentDto> getDtoType() {
 		return ComponentDto.class;
+	}
+
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
 	}
 
 }

@@ -15,21 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.List;
-
 import org.basex.core.BaseXException;
 
-import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Tag Data Access Object
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TagDao extends AbstractBsxStreamWriteDao<TagDto> {
 
@@ -48,4 +43,8 @@ final class TagDao extends AbstractBsxStreamWriteDao<TagDto> {
 	@Override
 	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
+	}
 }

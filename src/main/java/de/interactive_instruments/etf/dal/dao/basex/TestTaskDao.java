@@ -26,7 +26,7 @@ import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class TestTaskDao extends AbstractBsxWriteDao<TestTaskDto> {
 
@@ -52,4 +52,8 @@ final class TestTaskDao extends AbstractBsxWriteDao<TestTaskDto> {
 		return TestTaskDto.class;
 	}
 
+	@Override
+	public boolean isDisabled(final EID eid) {
+		return false;
+	}
 }

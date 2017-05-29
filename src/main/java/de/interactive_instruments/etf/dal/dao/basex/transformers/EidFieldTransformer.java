@@ -21,12 +21,11 @@ import org.eclipse.persistence.sessions.Session;
 
 import de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage;
 import de.interactive_instruments.etf.dal.dto.Dto;
-import de.interactive_instruments.etf.model.EID;
 
 /**
  * Writes an EID to XML as String
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public final class EidFieldTransformer implements FieldTransformer {
 

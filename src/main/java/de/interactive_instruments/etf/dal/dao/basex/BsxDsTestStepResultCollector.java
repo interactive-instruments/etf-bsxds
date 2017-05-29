@@ -28,7 +28,7 @@ import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestStepResultCollector;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector implements BsxDsResultCollectorWriter {
 

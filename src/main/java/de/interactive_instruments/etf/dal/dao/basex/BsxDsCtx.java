@@ -15,28 +15,23 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.basex.core.Context;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Basex data storage context
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 interface BsxDsCtx {
 

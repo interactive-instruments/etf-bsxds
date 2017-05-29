@@ -18,9 +18,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
@@ -30,7 +28,7 @@ import de.interactive_instruments.etf.dal.dao.Filter;
 /**
  * Wrapped Xquery
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsXQuery {
 

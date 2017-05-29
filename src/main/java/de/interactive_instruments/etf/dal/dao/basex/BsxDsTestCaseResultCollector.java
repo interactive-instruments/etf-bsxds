@@ -15,7 +15,9 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ import de.interactive_instruments.etf.testdriver.AbstractTestCaseResultCollector
 import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxDsTestCaseResultCollector extends AbstractTestCaseResultCollector implements BsxDsResultCollectorWriter {
 
