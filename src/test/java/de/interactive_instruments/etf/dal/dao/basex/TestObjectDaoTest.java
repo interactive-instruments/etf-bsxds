@@ -15,9 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.compareStreamingContent;
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.trimAllWhitespace;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
 import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
@@ -27,7 +25,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -52,13 +51,12 @@ import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
-import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.etf.test.TestDtos;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestObjectDaoTest {
@@ -132,11 +130,12 @@ public class TestObjectDaoTest {
 	@Test
 	public void test_1_2_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
 		assertTrue(writeDao.isInitialized());
-		assertFalse(writeDao.exists(TO_DTO_1.getId()));
+
+		notExistsOrDisabled(TO_DTO_1);
 		writeDao.add(TO_DTO_1);
-		assertTrue(writeDao.exists(TO_DTO_1.getId()));
+		existsAndNotDisabled(TO_DTO_1);
 		writeDao.delete(TO_DTO_1.getId());
-		assertFalse(writeDao.exists(TO_DTO_1.getId()));
+		notExistsOrDisabled(TO_DTO_1);
 	}
 
 	@Test
@@ -167,7 +166,7 @@ public class TestObjectDaoTest {
 				preparedDto.getDto().getTags().size());
 
 		writeDao.delete(TO_DTO_1.getId());
-		assertFalse(writeDao.exists(TO_DTO_1.getId()));
+		notExistsOrDisabled(TO_DTO_1);
 	}
 
 	@Test(expected = ObjectWithIdNotFoundException.class)
@@ -185,7 +184,7 @@ public class TestObjectDaoTest {
 		}
 	}
 
-	@Test(timeout = 30000L)
+	@Test(timeout = 40000L)
 	public void test_3_0_pagination() throws StorageException {
 
 		// Clean
@@ -322,9 +321,9 @@ public class TestObjectDaoTest {
 			ExcUtils.suppress(e);
 		}
 
-		assertFalse(writeDao.exists(TO_DTO_1.getId()));
+		notExistsOrDisabled(TO_DTO_1);
 		writeDao.add(TO_DTO_1);
-		assertTrue(writeDao.exists(TO_DTO_1.getId()));
+		existsAndNotDisabled(TO_DTO_1);
 
 		final String originalLabel = TO_DTO_1.getLabel();
 
@@ -370,7 +369,7 @@ public class TestObjectDaoTest {
 	@Test(expected = StoreException.class)
 	public void test_5_1_fail_on_update_replaced_item() throws StorageException, ObjectWithIdNotFoundException {
 		test_5_0_update();
-		assertTrue(writeDao.exists(TO_DTO_1.getId()));
+		existsAndNotDisabled(TO_DTO_1);
 		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
 		writeDao.update(TO_DTO_1);
 	}
@@ -380,7 +379,7 @@ public class TestObjectDaoTest {
 		test_5_0_update();
 		DATA_STORAGE.reset();
 		// Updated item still exists after reset
-		assertTrue(writeDao.exists(TO_DTO_1.getId()));
+		existsAndNotDisabled(TO_DTO_1);
 		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
 		writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
 	}
@@ -390,7 +389,7 @@ public class TestObjectDaoTest {
 		cleanGeneratedItems();
 
 		test_5_0_update();
-		assertTrue(writeDao.exists(TO_DTO_1.getId()));
+		existsAndNotDisabled(TO_DTO_1);
 		assertTrue(writeDao.exists(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID)));
 
 		{

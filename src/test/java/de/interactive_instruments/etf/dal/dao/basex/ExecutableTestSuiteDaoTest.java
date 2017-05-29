@@ -17,14 +17,12 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
 import static de.interactive_instruments.etf.test.TestDtos.*;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -34,10 +32,12 @@ import org.junit.runners.MethodSorters;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
-import de.interactive_instruments.etf.model.*;
+import de.interactive_instruments.etf.model.DefaultEidMap;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
@@ -45,12 +45,24 @@ import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ExecutableTestSuiteDaoTest {
 
 	private static WriteDao<ExecutableTestSuiteDto> writeDao;
+
+	private final static Filter ALL = new Filter() {
+		@Override
+		public int offset() {
+			return 0;
+		}
+
+		@Override
+		public int limit() {
+			return 2000;
+		}
+	};
 
 	@BeforeClass
 	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
@@ -139,16 +151,15 @@ public class ExecutableTestSuiteDaoTest {
 	}
 
 	@Before
-	public void clean() {
-		try {
-			writeDao.delete(ETS_DTO_1.getId());
-			writeDao.delete(ETS_DTO_2.getId());
-		} catch (ObjectWithIdNotFoundException | StorageException e) {}
+	public void clean() throws StorageException {
+		BsxTestUtils.forceDelete(ETS_DTO_1);
+		BsxTestUtils.forceDelete(ETS_DTO_2);
+		BsxTestUtils.forceDelete(ETS_DTO_3);
 	}
 
-	@Test
+	@Test(timeout = 15000)
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(ETS_DTO_1.getId()));
+		assertTrue(!writeDao.exists(ETS_DTO_3.getId()) || writeDao.isDisabled(ETS_DTO_3.getId()));
 		writeDao.add(ETS_DTO_1);
 		assertTrue(writeDao.exists(ETS_DTO_1.getId()));
 
@@ -167,19 +178,80 @@ public class ExecutableTestSuiteDaoTest {
 		assertEquals("Parameter.2.value", dto.getParameters().getParameter("Parameter.2.key").getDefaultValue());
 	}
 
+	@Test(timeout = 15000)
+	public void test_2_1_get_disabled() throws StorageException, ObjectWithIdNotFoundException {
+		assertTrue(!writeDao.exists(ETS_DTO_3.getId()) || writeDao.isDisabled(ETS_DTO_3.getId()));
+		writeDao.add(ETS_DTO_3);
+		assertTrue(writeDao.exists(ETS_DTO_3.getId()));
+
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto = writeDao.getById(ETS_DTO_3.getId());
+		assertEquals(ETS_DTO_3.getId(), preparedDto.getDtoId());
+		final ExecutableTestSuiteDto dto = preparedDto.getDto();
+		assertNotNull(dto);
+		assertEquals(ETS_DTO_3.getId(), dto.getId());
+		assertEquals(ETS_DTO_3.toString(), dto.toString());
+
+		final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getAll(ALL);
+		assertNotNull(etsCollection);
+		assertNull(etsCollection.get(ETS_DTO_3.getId()));
+
+		assertTrue(writeDao.exists(ETS_DTO_3.getId()));
+		assertTrue(writeDao.isDisabled(ETS_DTO_3.getId()));
+	}
+
 	@Test
+	public void test_2_2_overwrite_disabled() throws StorageException, ObjectWithIdNotFoundException {
+		forceDelete(ETS_DTO_3);
+		ETS_DTO_3.setDisabled(false);
+		writeDao.add(ETS_DTO_3);
+		assertTrue(writeDao.exists(ETS_DTO_3.getId()));
+
+		// throw an exception as the item already exists
+		boolean exceptionThrown = false;
+		try {
+			writeDao.add(ETS_DTO_3);
+		} catch (StorageException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto1 = writeDao.getById(ETS_DTO_3.getId());
+		assertEquals(ETS_DTO_3.getId(), preparedDto1.getDtoId());
+		assertFalse(preparedDto1.getDto().isDisabled());
+
+		// Disable ETS
+		writeDao.delete(ETS_DTO_3.getId());
+		assertTrue(writeDao.exists(ETS_DTO_3.getId()));
+		assertTrue(writeDao.isDisabled(ETS_DTO_3.getId()));
+
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto2 = writeDao.getById(ETS_DTO_3.getId());
+		assertEquals(ETS_DTO_3.getId(), preparedDto2.getDtoId());
+		assertTrue(preparedDto2.getDto().isDisabled());
+
+		// Can be overwritten now
+		ETS_DTO_3.setDisabled(false);
+		writeDao.add(ETS_DTO_3);
+		assertTrue(writeDao.exists(ETS_DTO_3.getId()));
+		assertFalse(writeDao.isDisabled(ETS_DTO_3.getId()));
+
+		final PreparedDto<ExecutableTestSuiteDto> preparedDto3 = writeDao.getById(ETS_DTO_3.getId());
+		assertEquals(ETS_DTO_3.getId(), preparedDto3.getDtoId());
+		assertFalse(preparedDto3.getDto().isDisabled());
+	}
+
+	@Test(timeout = 15000)
 	public void test_4_1_streaming_xml()
 			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.xml", "DsResult2Xml");
 	}
 
-	@Test
+	@Test(timeout = 15000)
 	public void test_4_2_streaming_json()
 			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.json", "DsResult2Json");
 	}
 
-	@Test
+	@Test(timeout = 15000)
 	public void test_7_0_stream_file_to_store()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
 		final EID id = EidFactory.getDefault().createAndPreserveStr("61070ae8-13cb-4303-a340-72c8b877b00a");
@@ -193,9 +265,13 @@ public class ExecutableTestSuiteDaoTest {
 
 		assertEquals(id.getId(), etsId.getId().getId());
 
+		// Disable afterwards
+		writeDao.delete(id);
+		assertTrue(writeDao.exists(id));
+		assertTrue(writeDao.isDisabled(id));
 	}
 
-	@Test
+	@Test(timeout = 15000)
 	public void test_8_0_caching_references()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
 		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1, true);
@@ -210,21 +286,10 @@ public class ExecutableTestSuiteDaoTest {
 
 		getAndCheckCollection();
 		getAndCheckCollection();
-
 	}
 
 	private void getAndCheckCollection() throws StorageException {
-		final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getAll(new Filter() {
-			@Override
-			public int offset() {
-				return 0;
-			}
-
-			@Override
-			public int limit() {
-				return 3;
-			}
-		});
+		final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getAll(ALL);
 		assertNotNull(etsCollection);
 
 		assertEquals(2, etsCollection.size());

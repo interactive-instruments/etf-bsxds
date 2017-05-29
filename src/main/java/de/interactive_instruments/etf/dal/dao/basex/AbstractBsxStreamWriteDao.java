@@ -15,7 +15,10 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -51,7 +54,7 @@ import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWriteDao<T> implements StreamWriteDao<T> {
 
@@ -143,7 +146,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 			}
 
 			if (exists(id)) {
-				delete(id);
+				doDelete(id, false);
 			}
 
 			// Create file
@@ -200,7 +203,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 						.ensureBasicValidity();
 			}
 			// do not update as Id would change
-			delete(dto.getId());
+			doDelete(dto.getId(), false);
 			add(dto);
 			return dto;
 		} catch (IncompleteDtoException | ObjectWithIdNotFoundException | IOException e) {

@@ -15,21 +15,19 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static net.bytebuddy.matcher.ElementMatchers.any;
-import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
-import static net.bytebuddy.matcher.ElementMatchers.not;
+import static net.bytebuddy.matcher.ElementMatchers.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.*;
-import javax.xml.bind.JAXBContext;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -50,7 +48,8 @@ import org.basex.query.QueryException;
 import org.basex.query.util.pkg.Pkg;
 import org.basex.query.util.pkg.RepoManager;
 import org.eclipse.persistence.internal.oxm.mappings.Descriptor;
-import org.eclipse.persistence.jaxb.*;
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.eclipse.persistence.oxm.XMLDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,14 +73,7 @@ import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.testdriver.TestResultCollector;
-import de.interactive_instruments.etf.testdriver.TestResultCollectorFactory;
-import de.interactive_instruments.etf.testdriver.TestRunLogger;
-import de.interactive_instruments.exceptions.ExcUtils;
-import de.interactive_instruments.exceptions.InitializationException;
-import de.interactive_instruments.exceptions.InvalidStateTransitionException;
-import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
-import de.interactive_instruments.exceptions.StorageException;
+import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.exceptions.config.MissingPropertyException;
 import de.interactive_instruments.properties.ConfigProperties;
@@ -90,7 +82,7 @@ import de.interactive_instruments.properties.ConfigPropertyHolder;
 /**
  * Basex Data Storage
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 
@@ -240,7 +232,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 				initDtoCacheAccessProxies();
 				initBsxDatabase();
 			} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException
-					| TransformerConfigurationException | JAXBException | IOException | StorageException e) {
+					| TransformerConfigurationException | JAXBException | IOException e) {
 				throw new InitializationException(e);
 			}
 			logger.info("BsxDataStorage initialized");
@@ -534,7 +526,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		try {
 			new CreateBackup(bakName).execute(getBsxCtx());
 		} catch (BaseXException e) {
-			new StorageException(e.getMessage());
+			new StorageException(e);
 		}
 		return bakName;
 	}
@@ -547,7 +539,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	@Override
 	public List<String> getBackupList() {
 		// TODO not implemented in this version
-		return null;
+		throw new UnsupportedOperationException("not implemented in this version");
 	}
 
 	/**
@@ -561,7 +553,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		try {
 			new Restore(backupName).execute(getBsxCtx());
 		} catch (BaseXException e) {
-			new StorageException(e.getMessage());
+			new StorageException(e);
 		}
 	}
 

@@ -24,10 +24,13 @@ import javax.xml.transform.TransformerConfigurationException;
 
 import org.apache.commons.io.IOUtils;
 import org.basex.core.BaseXException;
+import org.basex.core.cmd.XQuery;
 
-import de.interactive_instruments.Configurable;
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.*;
+import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.etf.dal.dao.Filter;
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dao.exceptions.RetrieveException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.DefaultEidMap;
@@ -45,7 +48,7 @@ import de.interactive_instruments.properties.ConfigPropertyHolder;
 /**
  * BaseX based Data Access Object for read only operations
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 
@@ -60,17 +63,6 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	private final GetDtoResultCmd getDtoResultCmd;
 	protected long lastModificationDate = System.currentTimeMillis();
 
-	protected void ensureType(final T t) {
-		if (!this.getDtoType().isAssignableFrom(t.getClass())) {
-			throw new IllegalArgumentException(
-					"Item " + t.getDescriptiveLabel() + " is not of type " + this.getDtoType().getSimpleName());
-		}
-		if (t.getId() == null) {
-			throw new IllegalArgumentException(
-					"Item " + t.getClass().getName() + t.hashCode() + " has no ID");
-		}
-	}
-
 	protected AbstractBsxDao(final String queryPath, final String typeName, final BsxDsCtx ctx,
 			final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		this.queryPath = queryPath;
@@ -82,6 +74,17 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 					"xquery/" + typeName + "-xdb.xquery"), "UTF-8");
 		} catch (IOException e) {
 			throw new StorageException("Could not load XQuery resource for " + typeName, e);
+		}
+	}
+
+	protected void ensureType(final T t) {
+		if (!this.getDtoType().isAssignableFrom(t.getClass())) {
+			throw new IllegalArgumentException(
+					"Item " + t.getDescriptiveLabel() + " is not of type " + this.getDtoType().getSimpleName());
+		}
+		if (t.getId() == null) {
+			throw new IllegalArgumentException(
+					"Item " + t.getClass().getName() + t.hashCode() + " has no ID");
 		}
 	}
 
@@ -107,6 +110,22 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	@Override
 	public boolean exists(final EID eid) {
 		return getFile(eid).exists();
+	}
+
+	@Override
+	public boolean isDisabled(final EID eid) {
+		if (!exists(eid)) {
+			return false;
+		}
+		try {
+			final String result = new XQuery("declare namespace etf = "
+					+ "\"http://www.interactive-instruments.de/etf/2.0\";\n"
+					+ "db:open('etf-ds')/etf:*[@id = 'EID" + eid.toString() +
+					"']/etf:disabled='true'").execute(ctx.getBsxCtx());
+			return "true".equals(result);
+		} catch (final BaseXException e) {
+			throw new IllegalStateException("Internal error in isDisabled(), ", e);
+		}
 	}
 
 	@Override

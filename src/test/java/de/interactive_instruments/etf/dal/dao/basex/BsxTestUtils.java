@@ -15,17 +15,12 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.test.TestDtos.ETS_DTO_1;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.EtfConstants;
@@ -34,25 +29,15 @@ import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dto.Dto;
-import de.interactive_instruments.etf.dal.dto.MetaDataItemDto;
-import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
-import de.interactive_instruments.etf.dal.dto.capabilities.*;
-import de.interactive_instruments.etf.dal.dto.result.*;
-import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
-import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
-import de.interactive_instruments.etf.dal.dto.test.*;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationArgumentCollectionDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
-import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateDto;
+import de.interactive_instruments.etf.model.Disableable;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.OutputFormat;
-import de.interactive_instruments.etf.model.ParameterSet;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
 /**
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 class BsxTestUtils {
 
@@ -95,13 +80,42 @@ class BsxTestUtils {
 		}
 	}
 
+	static void forceDelete(final Dto dto) throws StorageException {
+		forceDelete(getDao(dto), dto.getId());
+	}
+
 	static void forceDelete(final Dao dao, final EID eid) throws StorageException {
 		try {
 			((WriteDao) dao).delete(eid);
 		} catch (ObjectWithIdNotFoundException e) {
 			ExcUtils.suppress(e);
 		}
-		assertFalse(dao.exists(eid));
+		if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
+			if (dao.exists(eid)) {
+				assertTrue(dao.isDisabled(eid));
+			}
+		} else {
+			assertFalse(dao.exists(eid));
+			assertFalse(dao.isDisabled(eid));
+		}
+	}
+
+	static void notExistsOrDisabled(final Dto dto) {
+		final WriteDao dao = getDao(dto);
+		if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
+			if (dao.exists(dto.getId())) {
+				assertTrue(dao.isDisabled(dto.getId()));
+			}
+		} else {
+			assertFalse(dao.exists(dto.getId()));
+			assertFalse(dao.isDisabled(dto.getId()));
+		}
+	}
+
+	static void existsAndNotDisabled(final Dto dto) {
+		final WriteDao dao = getDao(dto);
+		assertTrue(dao.exists(dto.getId()));
+		assertFalse(dao.isDisabled(dto.getId()));
 	}
 
 	static WriteDao getDao(final Dto dto) {
@@ -120,7 +134,6 @@ class BsxTestUtils {
 		final WriteDao dao = getDao(dto);
 
 		forceDelete(dao, dto.getId());
-		assertFalse(dao.exists(dto.getId()));
 		try {
 			dao.add(dto);
 		} catch (StorageException e) {
@@ -144,9 +157,9 @@ class BsxTestUtils {
 
 	static void addTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
 		final WriteDao dao = getDao(dto);
-		assertFalse(dao.exists(dto.getId()));
+		assertTrue(!dao.exists(dto.getId()) || dao.isDisabled(dto.getId()));
 		dao.add(dto);
-		assertTrue(dao.exists(dto.getId()));
+		assertTrue(dao.exists(dto.getId()) && !dao.isDisabled(dto.getId()));
 	}
 
 	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {

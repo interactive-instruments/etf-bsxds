@@ -15,9 +15,12 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -36,6 +39,7 @@ import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.ModelItemDto;
 import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
+import de.interactive_instruments.etf.model.Disableable;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
@@ -44,19 +48,19 @@ import de.interactive_instruments.exceptions.StorageException;
 /**
  * BaseX based Data Access Object for read and write operations
  *
- * @author J. Herrmann ( herrmann <aT) interactive-instruments (doT> de )
+ * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> implements WriteDao<T> {
 
 	private final List<WriteDaoListener> listeners = new ArrayList<>(2);
 
-	protected final void updateLastModificationDate() {
-		this.lastModificationDate = System.currentTimeMillis();
-	}
-
 	protected AbstractBsxWriteDao(final String queryPath, final String typeName,
 			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
 		super(queryPath, typeName, ctx, getDtoResultCmd);
+	}
+
+	protected final void updateLastModificationDate() {
+		this.lastModificationDate = System.currentTimeMillis();
 	}
 
 	// Fires the 'add' event
@@ -72,8 +76,15 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		final IFile item = getFile(t.getId());
 		try {
 			if (!item.createNewFile()) {
-				throw new StorageException("Item " + t.getDescriptiveLabel() + " already exists!");
+				if (t instanceof Disableable && isDisabled(t.getId())) {
+					// Will be flushed later
+					new Delete(item.getName()).execute(ctx.getBsxCtx());
+				} else {
+					throw new StorageException("Item " + t.getDescriptiveLabel() + " already exists!");
+				}
 			}
+		} catch (StorageException e) {
+			throw e;
 		} catch (IOException e) {
 			item.delete();
 			throw new StorageException(e);
@@ -87,7 +98,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			ctx.getLogger().error("Object {} cannot be marshaled.\n\tProperties: {}",
 					t.getDescriptiveLabel(), t.toString());
 			if (ctx.getLogger().isDebugEnabled()) {
-				ctx.getLogger().debug("Path to corrupted file: {}", item.getAbsolutePath());
+				ctx.getLogger().debug("Path to corrupt file: {}", item.getAbsolutePath());
 			} else {
 				// File contains invalid content
 				item.delete();
@@ -104,27 +115,35 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		// OPTIMIZE could be tuned
 		final List<IFile> files = getFiles(collection);
 		final Dto[] colArr = collection.toArray(new Dto[collection.size()]);
+		final boolean disableable = colArr[0] instanceof Disableable;
 		for (int i = 0; i < colArr.length; i++) {
+			final IFile item = files.get(i);
 			try {
-				if (!files.get(i).createNewFile()) {
-					throw new StoreException("Item " + colArr[i].getDescriptiveLabel() +
-							" already exists!");
+				if (!item.createNewFile()) {
+					if (disableable && isDisabled(colArr[i].getId())) {
+						// Will be flushed later
+						new Delete(item.getName()).execute(ctx.getBsxCtx());
+					} else {
+						throw new StoreException("Item " + colArr[i].getDescriptiveLabel() +
+								" already exists!");
+					}
 				}
+			} catch (StorageException e) {
+				throw e;
 			} catch (IOException e) {
 				throw new StoreException(e);
 			}
 			try {
-				FileUtils.touch(files.get(i));
-				ctx.createMarshaller().marshal(colArr[i], files.get(i));
+				FileUtils.touch(item);
+				ctx.createMarshaller().marshal(colArr[i], item);
 			} catch (JAXBException e) {
 				if (ctx.getLogger().isDebugEnabled()) {
 					ctx.getLogger().debug("Object {} cannot be marshaled.\n\tProperties: {}\n\tPath to file: {}",
-							colArr[i].getDescriptiveLabel(), colArr[i].toString(), files.get(i).getAbsolutePath());
+							colArr[i].getDescriptiveLabel(), colArr[i].toString(), item.getAbsolutePath());
 				} else {
 					// File may contain invalid content
-					files.get(i).delete();
+					item.delete();
 				}
-
 				throw new StoreException(e);
 			} catch (IOException e) {
 				throw new StoreException(e);
@@ -159,7 +178,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	}
 
 	@Override
-	public void updateWithoutEidChange(final T t) throws StorageException, ObjectWithIdNotFoundException {
+	public void replace(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
 		doDeleteAndAdd(t);
 		fireEventUpdate(t);
@@ -217,7 +236,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected void doDeleteAndAdd(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
-		doDelete(t.getId(), false);
+		doDeleteOrDisable(t.getId(), false);
 		doMarshallAndAdd(t);
 	}
 
@@ -237,8 +256,33 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	@Override
 	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
 		fireEventDelete(eid);
-		doDelete(eid, true);
+		doDeleteOrDisable(eid, true);
 		updateLastModificationDate();
+	}
+
+	protected void doDeleteOrDisable(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
+		final IFile oldItem = getFile(eid);
+		if (!oldItem.exists()) {
+			throw new ObjectWithIdNotFoundException(this, eid.toString());
+		}
+
+		final T disabledDto;
+		if (Disableable.class.isAssignableFrom(this.getDtoType())) {
+			T tmpDisabledDto = null;
+			try {
+				tmpDisabledDto = getById(eid).getDto();
+				((Disableable) tmpDisabledDto).setDisabled(true);
+			} catch (StorageException | ObjectWithIdNotFoundException | IllegalStateException ign) {
+				tmpDisabledDto = null;
+			}
+			disabledDto = tmpDisabledDto;
+		} else {
+			disabledDto = null;
+		}
+		doDelete(eid, clean);
+		if (disabledDto != null) {
+			doMarshallAndAdd(disabledDto);
+		}
 	}
 
 	protected void doDelete(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
@@ -255,11 +299,11 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 				doCleanAfterDelete(eid);
 			}
 		} catch (BaseXException e) {
-			throw new StorageException(e.getMessage());
-		}
-
-		if (!oldItem.delete()) {
-			ctx.getLogger().error("File {} could not be deleted", oldItem.getAbsolutePath());
+			throw new StorageException(e);
+		} finally {
+			if (!oldItem.delete()) {
+				ctx.getLogger().error("File {} could not be deleted", oldItem.getAbsolutePath());
+			}
 		}
 	}
 
@@ -271,7 +315,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		// OPTIMIZE could be optimized
 		for (final EID eid : collection) {
 			fireEventDelete(eid);
-			doDelete(eid, true);
+			doDeleteOrDisable(eid, true);
 		}
 		updateLastModificationDate();
 	}
