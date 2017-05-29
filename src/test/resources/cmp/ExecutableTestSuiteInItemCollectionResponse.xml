@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EtfItemCollection xmlns="http://www.interactive-instruments.de/etf/2.0"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
-                   xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 https://services.interactive-instruments.de/etf/schema/service/service.xsd"
+                   xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/service/service.xsd"
                    returnedItems="1">
     <etf:ref xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
              href="http://localhost/etf-webapp/v2/ExecutableTestSuites/336d6ee6-5070-327d-90fc-e95b04ac93db"/>
