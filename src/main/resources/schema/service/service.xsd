@@ -61,9 +61,6 @@
             <xs:documentation> Local reference to item in collection </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:annotation>
-                <xs:documentation> ID Reference within the document</xs:documentation>
-            </xs:annotation>
             <xs:extension base="RefType">
                 <xs:attribute name="ref" type="IdRefType" use="required"/>
             </xs:extension>
@@ -74,12 +71,9 @@
     <!-- =============================================================== -->
     <xs:complexType name="ext">
         <xs:annotation>
-            <xs:documentation> External reference </xs:documentation>
+            <xs:documentation> Reference to an external type</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:annotation>
-                <xs:documentation> Reference to an external type</xs:documentation>
-            </xs:annotation>
             <xs:extension base="RefType">
                 <xs:attribute name="href" type="ExternalUriType" use="required"/>
                 <xs:attribute name="title" type="xs:string" use="optional">
@@ -87,6 +81,18 @@
                         <xs:documentation> Optional description </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- =============================================================== -->
+    <xs:complexType name="egaref">
+        <xs:annotation>
+            <xs:documentation> Reference to an external type </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="RefType">
+                <xs:attribute name="gaidref" type="EGAIDRefType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
