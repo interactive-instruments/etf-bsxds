@@ -1,19 +1,28 @@
-<!--
-  ~ Copyright ${year} interactive instruments GmbH
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<TranslationTemplateBundle xmlns="http://www.interactive-instruments.de/etf/2.0" id="EID1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 schema/basic/basicTypes.xsd">
-	<translationTemplateCollections/>
+<TranslationTemplateBundle xmlns="http://www.interactive-instruments.de/etf/2.0"
+						   id="EID1"
+						   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						   xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/service/service.xsd">
+	<translationTemplateCollections>
+		<LangTranslationTemplateCollection name="TR.constraintViolation">
+			<translationTemplates>
+				<TranslationTemplate language="en" name="TR.constraintViolation">XML document
+					'{filename}', {featureType} '{gmlid}': The constraint '{constraint}' is
+					violated. {addtionalInfo}</TranslationTemplate>
+			</translationTemplates>
+		</LangTranslationTemplateCollection>
+		<LangTranslationTemplateCollection name="TR.brokenLink">
+			<translationTemplates>
+				<TranslationTemplate language="en" name="TR.brokenLink2">XML document '{filename}',
+					{featureType} '{gmlid}': The property '{property}' has a value '{value}' that
+					cannot be retrieved using HTTP.</TranslationTemplate>
+			</translationTemplates>
+		</LangTranslationTemplateCollection>
+		<LangTranslationTemplateCollection name="TR.constraintViolation">
+			<translationTemplates>
+				<TranslationTemplate language="en" name="TR.constraintViolation">XML document
+					'{filename}', {featureType} '{gmlid}': The constraint '{constraint}' is
+					violated. {addtionalInfo}</TranslationTemplate>
+			</translationTemplates>
+		</LangTranslationTemplateCollection>
+	</translationTemplateCollections>
 </TranslationTemplateBundle>

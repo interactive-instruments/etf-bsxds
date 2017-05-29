@@ -1,19 +1,21 @@
 {"EtfItemCollection": {
+    "version": 2.0,
     "returnedItems": 1,
-    "ref": "http:\/\/localhost\/etf-webapp\/v2\/ExecutableTestSuites\/336d6ee6-5070-327d-90fc-e95b04ac93db",
+    "ref": "http://localhost/etf-webapp/v2/ExecutableTestSuites/336d6ee6-5070-327d-90fc-e95b04ac93db.json",
     "executableTestSuites": {"ExecutableTestSuite": {
         "id": "EID336d6ee6-5070-327d-90fc-e95b04ac93db",
-        "remoteResource": "http:\/\/notset",
+        "remoteResource": "http://notset",
         "label": "ExecutableTestSuiteDto.00001.label",
         "description": "ExecutableTestSuiteDto.00001.description",
         "version": "1.0.0",
         "author": "ExecutableTestSuiteDto.00001.author",
         "creationDate": "1970-01-01T01:00:00+01:00",
+        "disabled": false,
         "tags": {"tag": [
-            {"href": "http:\/\/localhost\/etf-webapp\/v2\/Tags\/d037af85-a2f8-38d5-abf5-e306477ba95f"},
-            {"href": "http:\/\/localhost\/etf-webapp\/v2\/Tags\/6fa87b77-8591-3f52-ab86-2717bc6bb09d"}
+            {"href": "http://localhost/etf-webapp/v2/Tags/d037af85-a2f8-38d5-abf5-e306477ba95f.json"},
+            {"href": "http://localhost/etf-webapp/v2/Tags/6fa87b77-8591-3f52-ab86-2717bc6bb09d.json"}
         ]},
-        "testDriver": {"href": "http:\/\/localhost\/etf-webapp\/v2\/Components\/4dddc9e2-1b21-40b7-af70-6a2d156ad130"},
+        "testDriver": {"href": "http://localhost/etf-webapp/v2/Components/4dddc9e2-1b21-40b7-af70-6a2d156ad130.json"},
         "translationTemplateBundle": {"ref": "EID70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52"},
         "ParameterList": {"parameter": [
             {
@@ -47,7 +49,7 @@
                                 "description": "TestStepDto.00001.description",
                                 "parent": {"ref": "EIDe9ed2b33-9300-3430-bae7-1a8c4976e7c4"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID38a66e6d-d6f1-3ade-a72b-f9f08c1bb8fa",
@@ -56,7 +58,7 @@
                                         "parent": {"ref": "EID61492804-551b-30e7-9db0-cbe21c78885e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -69,7 +71,7 @@
                                         "parent": {"ref": "EID61492804-551b-30e7-9db0-cbe21c78885e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -82,7 +84,7 @@
                                         "parent": {"ref": "EID61492804-551b-30e7-9db0-cbe21c78885e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -96,7 +98,7 @@
                                 "description": "TestStepDto.00005.description",
                                 "parent": {"ref": "EIDe9ed2b33-9300-3430-bae7-1a8c4976e7c4"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDf287e4b0-ce1a-3fe9-ab44-52395cc07b1f",
@@ -105,7 +107,7 @@
                                         "parent": {"ref": "EIDdc265295-a0d2-37d2-8ce9-05cdb3c47043"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -118,7 +120,7 @@
                                         "parent": {"ref": "EIDdc265295-a0d2-37d2-8ce9-05cdb3c47043"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -131,7 +133,7 @@
                                         "parent": {"ref": "EIDdc265295-a0d2-37d2-8ce9-05cdb3c47043"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -145,7 +147,7 @@
                                 "description": "TestStepDto.00009.description",
                                 "parent": {"ref": "EIDe9ed2b33-9300-3430-bae7-1a8c4976e7c4"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDb64edf4b-904d-32b8-b8f0-e69fc30b79fa",
@@ -154,7 +156,7 @@
                                         "parent": {"ref": "EIDeec3e924-53e6-37b0-aa62-b77221c97ca2"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -167,7 +169,7 @@
                                         "parent": {"ref": "EIDeec3e924-53e6-37b0-aa62-b77221c97ca2"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -180,7 +182,7 @@
                                         "parent": {"ref": "EIDeec3e924-53e6-37b0-aa62-b77221c97ca2"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -202,7 +204,7 @@
                                 "description": "TestStepDto.00014.description",
                                 "parent": {"ref": "EIDda362728-0099-3308-a83f-8ebadbfb19c0"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDc9be5fcc-d557-3f80-bce0-28417ee9c784",
@@ -211,7 +213,7 @@
                                         "parent": {"ref": "EIDece2af84-0b72-3837-927b-697e19bf45de"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -224,7 +226,7 @@
                                         "parent": {"ref": "EIDece2af84-0b72-3837-927b-697e19bf45de"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -237,7 +239,7 @@
                                         "parent": {"ref": "EIDece2af84-0b72-3837-927b-697e19bf45de"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -251,7 +253,7 @@
                                 "description": "TestStepDto.00018.description",
                                 "parent": {"ref": "EIDda362728-0099-3308-a83f-8ebadbfb19c0"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDe0355233-b46c-3f0c-897a-ff8693153416",
@@ -260,7 +262,7 @@
                                         "parent": {"ref": "EID54153144-4700-3c0a-b0bc-5ac62b119cae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -273,7 +275,7 @@
                                         "parent": {"ref": "EID54153144-4700-3c0a-b0bc-5ac62b119cae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -286,7 +288,7 @@
                                         "parent": {"ref": "EID54153144-4700-3c0a-b0bc-5ac62b119cae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -300,7 +302,7 @@
                                 "description": "TestStepDto.00022.description",
                                 "parent": {"ref": "EIDda362728-0099-3308-a83f-8ebadbfb19c0"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID8e918a05-edb9-383b-87a5-88068d94c9e5",
@@ -309,7 +311,7 @@
                                         "parent": {"ref": "EID92519e38-6961-34fd-afab-b0be19db8f7b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -322,7 +324,7 @@
                                         "parent": {"ref": "EID92519e38-6961-34fd-afab-b0be19db8f7b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -335,7 +337,7 @@
                                         "parent": {"ref": "EID92519e38-6961-34fd-afab-b0be19db8f7b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -357,7 +359,7 @@
                                 "description": "TestStepDto.00027.description",
                                 "parent": {"ref": "EIDe44161eb-d750-3b75-b7bb-430814bdd6ab"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDa940ad13-c94d-3c9a-bec6-db593fc085fa",
@@ -366,7 +368,7 @@
                                         "parent": {"ref": "EID09e1abb0-f076-33ea-8f08-68a7d0f6c107"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -379,7 +381,7 @@
                                         "parent": {"ref": "EID09e1abb0-f076-33ea-8f08-68a7d0f6c107"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -392,7 +394,7 @@
                                         "parent": {"ref": "EID09e1abb0-f076-33ea-8f08-68a7d0f6c107"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -406,7 +408,7 @@
                                 "description": "TestStepDto.00031.description",
                                 "parent": {"ref": "EIDe44161eb-d750-3b75-b7bb-430814bdd6ab"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID68c7a902-97a9-379b-bc02-9b27240c836b",
@@ -415,7 +417,7 @@
                                         "parent": {"ref": "EID673609d4-75a6-3c95-9978-1ad120467689"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -428,7 +430,7 @@
                                         "parent": {"ref": "EID673609d4-75a6-3c95-9978-1ad120467689"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -441,7 +443,7 @@
                                         "parent": {"ref": "EID673609d4-75a6-3c95-9978-1ad120467689"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -455,7 +457,7 @@
                                 "description": "TestStepDto.00035.description",
                                 "parent": {"ref": "EIDe44161eb-d750-3b75-b7bb-430814bdd6ab"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDf9d563b8-eaec-3a06-b303-77ebfc7000e4",
@@ -464,7 +466,7 @@
                                         "parent": {"ref": "EID761d2135-3780-3dfe-a2cd-2f36b7b40022"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -477,7 +479,7 @@
                                         "parent": {"ref": "EID761d2135-3780-3dfe-a2cd-2f36b7b40022"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -490,7 +492,7 @@
                                         "parent": {"ref": "EID761d2135-3780-3dfe-a2cd-2f36b7b40022"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -520,7 +522,7 @@
                                 "description": "TestStepDto.00040.description",
                                 "parent": {"ref": "EID4709b752-ada8-35bc-acd7-535110a083a5"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDd92be2f2-cac4-3f8d-ac4a-6ec8707e89ff",
@@ -529,7 +531,7 @@
                                         "parent": {"ref": "EIDc9917e7a-b9af-3cfa-a598-fa1d38a7c7df"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -542,7 +544,7 @@
                                         "parent": {"ref": "EIDc9917e7a-b9af-3cfa-a598-fa1d38a7c7df"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -555,7 +557,7 @@
                                         "parent": {"ref": "EIDc9917e7a-b9af-3cfa-a598-fa1d38a7c7df"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -569,7 +571,7 @@
                                 "description": "TestStepDto.00044.description",
                                 "parent": {"ref": "EID4709b752-ada8-35bc-acd7-535110a083a5"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID846f559f-fc4e-34c2-855e-2042c625c1be",
@@ -578,7 +580,7 @@
                                         "parent": {"ref": "EID900fe1fd-4659-3f37-a6a4-1a6950cce7cc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -591,7 +593,7 @@
                                         "parent": {"ref": "EID900fe1fd-4659-3f37-a6a4-1a6950cce7cc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -604,7 +606,7 @@
                                         "parent": {"ref": "EID900fe1fd-4659-3f37-a6a4-1a6950cce7cc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -618,7 +620,7 @@
                                 "description": "TestStepDto.00048.description",
                                 "parent": {"ref": "EID4709b752-ada8-35bc-acd7-535110a083a5"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID079f4618-c300-3784-bb7a-151305445c4f",
@@ -627,7 +629,7 @@
                                         "parent": {"ref": "EID285c3ec1-a623-3393-8b84-4ba9b6b5351b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -640,7 +642,7 @@
                                         "parent": {"ref": "EID285c3ec1-a623-3393-8b84-4ba9b6b5351b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -653,7 +655,7 @@
                                         "parent": {"ref": "EID285c3ec1-a623-3393-8b84-4ba9b6b5351b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -675,7 +677,7 @@
                                 "description": "TestStepDto.00053.description",
                                 "parent": {"ref": "EIDf48ac82c-95e9-37a2-b505-dc9fb2a4e717"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID84519184-a61a-39b9-a672-8b876d9853aa",
@@ -684,7 +686,7 @@
                                         "parent": {"ref": "EIDb32017ea-d1bc-391d-aff7-2fb484971430"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -697,7 +699,7 @@
                                         "parent": {"ref": "EIDb32017ea-d1bc-391d-aff7-2fb484971430"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -710,7 +712,7 @@
                                         "parent": {"ref": "EIDb32017ea-d1bc-391d-aff7-2fb484971430"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -724,7 +726,7 @@
                                 "description": "TestStepDto.00057.description",
                                 "parent": {"ref": "EIDf48ac82c-95e9-37a2-b505-dc9fb2a4e717"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID075d330f-5f72-3c46-b393-6758d1110742",
@@ -733,7 +735,7 @@
                                         "parent": {"ref": "EIDc7127b66-3407-309c-9bcd-b6e82cd885cd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -746,7 +748,7 @@
                                         "parent": {"ref": "EIDc7127b66-3407-309c-9bcd-b6e82cd885cd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -759,7 +761,7 @@
                                         "parent": {"ref": "EIDc7127b66-3407-309c-9bcd-b6e82cd885cd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -773,7 +775,7 @@
                                 "description": "TestStepDto.00061.description",
                                 "parent": {"ref": "EIDf48ac82c-95e9-37a2-b505-dc9fb2a4e717"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID70a43e10-bd66-32ad-bc29-8a8d60e8e27f",
@@ -782,7 +784,7 @@
                                         "parent": {"ref": "EID4a4b2026-a70b-3de6-b733-91365761dfab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -795,7 +797,7 @@
                                         "parent": {"ref": "EID4a4b2026-a70b-3de6-b733-91365761dfab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -808,7 +810,7 @@
                                         "parent": {"ref": "EID4a4b2026-a70b-3de6-b733-91365761dfab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -830,7 +832,7 @@
                                 "description": "TestStepDto.00066.description",
                                 "parent": {"ref": "EIDb8471842-d648-3f66-b82d-2674234d0815"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID389eb819-3e84-38ab-9c19-b5ecb3fb9226",
@@ -839,7 +841,7 @@
                                         "parent": {"ref": "EIDbf82d379-f8b4-38c7-96ec-7af2f88ebaab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -852,7 +854,7 @@
                                         "parent": {"ref": "EIDbf82d379-f8b4-38c7-96ec-7af2f88ebaab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -865,7 +867,7 @@
                                         "parent": {"ref": "EIDbf82d379-f8b4-38c7-96ec-7af2f88ebaab"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -879,7 +881,7 @@
                                 "description": "TestStepDto.00070.description",
                                 "parent": {"ref": "EIDb8471842-d648-3f66-b82d-2674234d0815"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID5aae94d3-d33c-371e-8522-b526f70d69d2",
@@ -888,7 +890,7 @@
                                         "parent": {"ref": "EID89e3811d-ac7b-3d31-9889-d8fd217bcd0d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -901,7 +903,7 @@
                                         "parent": {"ref": "EID89e3811d-ac7b-3d31-9889-d8fd217bcd0d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -914,7 +916,7 @@
                                         "parent": {"ref": "EID89e3811d-ac7b-3d31-9889-d8fd217bcd0d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -928,7 +930,7 @@
                                 "description": "TestStepDto.00074.description",
                                 "parent": {"ref": "EIDb8471842-d648-3f66-b82d-2674234d0815"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID6447562d-4c23-3240-97b3-3791fbcb7482",
@@ -937,7 +939,7 @@
                                         "parent": {"ref": "EID91274b1a-1429-34a8-a9b8-980fbaeadddc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -950,7 +952,7 @@
                                         "parent": {"ref": "EID91274b1a-1429-34a8-a9b8-980fbaeadddc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -963,7 +965,7 @@
                                         "parent": {"ref": "EID91274b1a-1429-34a8-a9b8-980fbaeadddc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -993,7 +995,7 @@
                                 "description": "TestStepDto.00079.description",
                                 "parent": {"ref": "EID8d6db8f2-0546-33cf-9e14-f9479a75677a"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDcaa4eca7-5382-3483-b641-0d265844c35d",
@@ -1002,7 +1004,7 @@
                                         "parent": {"ref": "EID2231000a-3fb0-3ccf-9a62-46b7d25a80dd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1015,7 +1017,7 @@
                                         "parent": {"ref": "EID2231000a-3fb0-3ccf-9a62-46b7d25a80dd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1028,7 +1030,7 @@
                                         "parent": {"ref": "EID2231000a-3fb0-3ccf-9a62-46b7d25a80dd"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1042,7 +1044,7 @@
                                 "description": "TestStepDto.00083.description",
                                 "parent": {"ref": "EID8d6db8f2-0546-33cf-9e14-f9479a75677a"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID6d6289e7-8e4b-3a29-b6bb-41bc8cea77d9",
@@ -1051,7 +1053,7 @@
                                         "parent": {"ref": "EID06f856ff-f16c-3f47-b7d8-f91f7d4bb05b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1064,7 +1066,7 @@
                                         "parent": {"ref": "EID06f856ff-f16c-3f47-b7d8-f91f7d4bb05b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1077,7 +1079,7 @@
                                         "parent": {"ref": "EID06f856ff-f16c-3f47-b7d8-f91f7d4bb05b"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1091,7 +1093,7 @@
                                 "description": "TestStepDto.00087.description",
                                 "parent": {"ref": "EID8d6db8f2-0546-33cf-9e14-f9479a75677a"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID616fb32c-66ab-348e-b227-7aedfcc8bd87",
@@ -1100,7 +1102,7 @@
                                         "parent": {"ref": "EID0d6cd112-fb8b-3d18-88e7-3d41e13fee4a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1113,7 +1115,7 @@
                                         "parent": {"ref": "EID0d6cd112-fb8b-3d18-88e7-3d41e13fee4a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1126,7 +1128,7 @@
                                         "parent": {"ref": "EID0d6cd112-fb8b-3d18-88e7-3d41e13fee4a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1148,7 +1150,7 @@
                                 "description": "TestStepDto.00092.description",
                                 "parent": {"ref": "EID1cf8764e-77af-3fe0-8f20-0f34daa24a0b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDf6b05547-e859-3dad-8673-808cc1666f3b",
@@ -1157,7 +1159,7 @@
                                         "parent": {"ref": "EIDb51cc6bb-e639-3631-9a90-b278d5ef9209"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1170,7 +1172,7 @@
                                         "parent": {"ref": "EIDb51cc6bb-e639-3631-9a90-b278d5ef9209"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1183,7 +1185,7 @@
                                         "parent": {"ref": "EIDb51cc6bb-e639-3631-9a90-b278d5ef9209"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1197,7 +1199,7 @@
                                 "description": "TestStepDto.00096.description",
                                 "parent": {"ref": "EID1cf8764e-77af-3fe0-8f20-0f34daa24a0b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID4179f622-f705-35c9-be9a-0f8d5e28de38",
@@ -1206,7 +1208,7 @@
                                         "parent": {"ref": "EID67f5a7c8-8a76-3a71-b6be-7e88f97b0a91"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1219,7 +1221,7 @@
                                         "parent": {"ref": "EID67f5a7c8-8a76-3a71-b6be-7e88f97b0a91"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1232,7 +1234,7 @@
                                         "parent": {"ref": "EID67f5a7c8-8a76-3a71-b6be-7e88f97b0a91"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1246,7 +1248,7 @@
                                 "description": "TestStepDto.00100.description",
                                 "parent": {"ref": "EID1cf8764e-77af-3fe0-8f20-0f34daa24a0b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDd09caf28-d184-380e-b1e2-9fb55b8b5337",
@@ -1255,7 +1257,7 @@
                                         "parent": {"ref": "EIDfd6d7df0-8164-36df-be4e-6d16bc8a559d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1268,7 +1270,7 @@
                                         "parent": {"ref": "EIDfd6d7df0-8164-36df-be4e-6d16bc8a559d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1281,7 +1283,7 @@
                                         "parent": {"ref": "EIDfd6d7df0-8164-36df-be4e-6d16bc8a559d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1303,7 +1305,7 @@
                                 "description": "TestStepDto.00105.description",
                                 "parent": {"ref": "EID0ee18a2a-b257-3c57-9d6e-28cdba626cda"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDe32ba724-b355-3395-854c-0d9ac008ab6e",
@@ -1312,7 +1314,7 @@
                                         "parent": {"ref": "EIDfb871fc0-b426-3d5c-b1e2-a45e5bfeace0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1325,7 +1327,7 @@
                                         "parent": {"ref": "EIDfb871fc0-b426-3d5c-b1e2-a45e5bfeace0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1338,7 +1340,7 @@
                                         "parent": {"ref": "EIDfb871fc0-b426-3d5c-b1e2-a45e5bfeace0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1352,7 +1354,7 @@
                                 "description": "TestStepDto.00109.description",
                                 "parent": {"ref": "EID0ee18a2a-b257-3c57-9d6e-28cdba626cda"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID97336fba-8bd0-39f8-b78d-293b88b0d7af",
@@ -1361,7 +1363,7 @@
                                         "parent": {"ref": "EID448d4855-31d9-371c-99e5-44ea29835a39"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1374,7 +1376,7 @@
                                         "parent": {"ref": "EID448d4855-31d9-371c-99e5-44ea29835a39"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1387,7 +1389,7 @@
                                         "parent": {"ref": "EID448d4855-31d9-371c-99e5-44ea29835a39"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1401,7 +1403,7 @@
                                 "description": "TestStepDto.00113.description",
                                 "parent": {"ref": "EID0ee18a2a-b257-3c57-9d6e-28cdba626cda"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDd728d23a-db49-376c-b978-3dce13f68481",
@@ -1410,7 +1412,7 @@
                                         "parent": {"ref": "EID287c1ecf-b5a1-34d8-bdea-f7ae423e5802"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1423,7 +1425,7 @@
                                         "parent": {"ref": "EID287c1ecf-b5a1-34d8-bdea-f7ae423e5802"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1436,7 +1438,7 @@
                                         "parent": {"ref": "EID287c1ecf-b5a1-34d8-bdea-f7ae423e5802"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1466,7 +1468,7 @@
                                 "description": "TestStepDto.00118.description",
                                 "parent": {"ref": "EIDdf59c8a3-b7b0-3036-b0a6-b625dc08cdae"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID83aa6dee-12f2-3b19-a055-b062283a1047",
@@ -1475,7 +1477,7 @@
                                         "parent": {"ref": "EIDcd176a6b-09ac-3377-a47c-14465f4e50b5"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1488,7 +1490,7 @@
                                         "parent": {"ref": "EIDcd176a6b-09ac-3377-a47c-14465f4e50b5"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1501,7 +1503,7 @@
                                         "parent": {"ref": "EIDcd176a6b-09ac-3377-a47c-14465f4e50b5"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1515,7 +1517,7 @@
                                 "description": "TestStepDto.00122.description",
                                 "parent": {"ref": "EIDdf59c8a3-b7b0-3036-b0a6-b625dc08cdae"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID1a34e6a9-462d-38a7-9509-378a18e11880",
@@ -1524,7 +1526,7 @@
                                         "parent": {"ref": "EIDabacd48c-544c-376d-b847-ea089217c2af"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1537,7 +1539,7 @@
                                         "parent": {"ref": "EIDabacd48c-544c-376d-b847-ea089217c2af"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1550,7 +1552,7 @@
                                         "parent": {"ref": "EIDabacd48c-544c-376d-b847-ea089217c2af"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1564,7 +1566,7 @@
                                 "description": "TestStepDto.00126.description",
                                 "parent": {"ref": "EIDdf59c8a3-b7b0-3036-b0a6-b625dc08cdae"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDd14fb694-569e-3206-b6cc-da9b2aea2f50",
@@ -1573,7 +1575,7 @@
                                         "parent": {"ref": "EID621a2545-bab4-34b7-a964-cf31f7ed8f73"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1586,7 +1588,7 @@
                                         "parent": {"ref": "EID621a2545-bab4-34b7-a964-cf31f7ed8f73"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1599,7 +1601,7 @@
                                         "parent": {"ref": "EID621a2545-bab4-34b7-a964-cf31f7ed8f73"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1621,7 +1623,7 @@
                                 "description": "TestStepDto.00131.description",
                                 "parent": {"ref": "EID1cd09775-96ce-3e9d-b72f-7ea573535bb6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID40ae1469-c119-362c-b9d6-d10837c55cf8",
@@ -1630,7 +1632,7 @@
                                         "parent": {"ref": "EIDf0f3f69c-d10e-38c9-aa8f-1b888e9eaaa7"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1643,7 +1645,7 @@
                                         "parent": {"ref": "EIDf0f3f69c-d10e-38c9-aa8f-1b888e9eaaa7"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1656,7 +1658,7 @@
                                         "parent": {"ref": "EIDf0f3f69c-d10e-38c9-aa8f-1b888e9eaaa7"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1670,7 +1672,7 @@
                                 "description": "TestStepDto.00135.description",
                                 "parent": {"ref": "EID1cd09775-96ce-3e9d-b72f-7ea573535bb6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID7b479791-d710-3e0f-9f3e-6b0d31bed4a8",
@@ -1679,7 +1681,7 @@
                                         "parent": {"ref": "EID57d9f32d-2f41-37ff-83fd-eaf1e3b66923"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1692,7 +1694,7 @@
                                         "parent": {"ref": "EID57d9f32d-2f41-37ff-83fd-eaf1e3b66923"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1705,7 +1707,7 @@
                                         "parent": {"ref": "EID57d9f32d-2f41-37ff-83fd-eaf1e3b66923"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1719,7 +1721,7 @@
                                 "description": "TestStepDto.00139.description",
                                 "parent": {"ref": "EID1cd09775-96ce-3e9d-b72f-7ea573535bb6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID7843def4-3b4b-3d3d-adb7-accffc18043d",
@@ -1728,7 +1730,7 @@
                                         "parent": {"ref": "EID31b6888a-b2f0-360b-b28b-4eebe559435e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1741,7 +1743,7 @@
                                         "parent": {"ref": "EID31b6888a-b2f0-360b-b28b-4eebe559435e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1754,7 +1756,7 @@
                                         "parent": {"ref": "EID31b6888a-b2f0-360b-b28b-4eebe559435e"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1776,7 +1778,7 @@
                                 "description": "TestStepDto.00144.description",
                                 "parent": {"ref": "EID1b3f6c13-55cb-3a66-bbc7-ce5f73ab7b1b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDad209a6b-6927-30f0-82c0-f9504f564c84",
@@ -1785,7 +1787,7 @@
                                         "parent": {"ref": "EIDe6815a8d-13c0-3634-be66-642bccb5316d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1798,7 +1800,7 @@
                                         "parent": {"ref": "EIDe6815a8d-13c0-3634-be66-642bccb5316d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1811,7 +1813,7 @@
                                         "parent": {"ref": "EIDe6815a8d-13c0-3634-be66-642bccb5316d"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1825,7 +1827,7 @@
                                 "description": "TestStepDto.00148.description",
                                 "parent": {"ref": "EID1b3f6c13-55cb-3a66-bbc7-ce5f73ab7b1b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDeff220f3-21b1-38f9-9969-05ab85df1635",
@@ -1834,7 +1836,7 @@
                                         "parent": {"ref": "EIDc4299365-3f0d-3144-9776-d680b0f5e10a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1847,7 +1849,7 @@
                                         "parent": {"ref": "EIDc4299365-3f0d-3144-9776-d680b0f5e10a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1860,7 +1862,7 @@
                                         "parent": {"ref": "EIDc4299365-3f0d-3144-9776-d680b0f5e10a"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1874,7 +1876,7 @@
                                 "description": "TestStepDto.00152.description",
                                 "parent": {"ref": "EID1b3f6c13-55cb-3a66-bbc7-ce5f73ab7b1b"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID2d4c0d8c-621f-3527-9a48-fb4d8381949f",
@@ -1883,7 +1885,7 @@
                                         "parent": {"ref": "EID990a775c-b8db-32d9-9996-52ccb61c8f99"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1896,7 +1898,7 @@
                                         "parent": {"ref": "EID990a775c-b8db-32d9-9996-52ccb61c8f99"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1909,7 +1911,7 @@
                                         "parent": {"ref": "EID990a775c-b8db-32d9-9996-52ccb61c8f99"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1939,7 +1941,7 @@
                                 "description": "TestStepDto.00157.description",
                                 "parent": {"ref": "EIDb6ccf980-6bf1-31bd-a575-50b1f80cc9c9"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDdf8da056-7b55-32ab-a97a-8cb3d3825752",
@@ -1948,7 +1950,7 @@
                                         "parent": {"ref": "EIDb748f59b-d913-3def-8d97-cf0addade1b8"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1961,7 +1963,7 @@
                                         "parent": {"ref": "EIDb748f59b-d913-3def-8d97-cf0addade1b8"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1974,7 +1976,7 @@
                                         "parent": {"ref": "EIDb748f59b-d913-3def-8d97-cf0addade1b8"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -1988,7 +1990,7 @@
                                 "description": "TestStepDto.00161.description",
                                 "parent": {"ref": "EIDb6ccf980-6bf1-31bd-a575-50b1f80cc9c9"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDa3dcfad3-d9c1-35a8-86aa-1191f85f4168",
@@ -1997,7 +1999,7 @@
                                         "parent": {"ref": "EID87289fd5-0f53-36bf-80b5-9d61ceca5b95"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2010,7 +2012,7 @@
                                         "parent": {"ref": "EID87289fd5-0f53-36bf-80b5-9d61ceca5b95"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2023,7 +2025,7 @@
                                         "parent": {"ref": "EID87289fd5-0f53-36bf-80b5-9d61ceca5b95"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2037,7 +2039,7 @@
                                 "description": "TestStepDto.00165.description",
                                 "parent": {"ref": "EIDb6ccf980-6bf1-31bd-a575-50b1f80cc9c9"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID6225f149-5d98-3668-8d13-f0dc6b7a4b90",
@@ -2046,7 +2048,7 @@
                                         "parent": {"ref": "EIDb6c579fa-bdf9-33dc-a9b7-1fd3e68cf8ea"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2059,7 +2061,7 @@
                                         "parent": {"ref": "EIDb6c579fa-bdf9-33dc-a9b7-1fd3e68cf8ea"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2072,7 +2074,7 @@
                                         "parent": {"ref": "EIDb6c579fa-bdf9-33dc-a9b7-1fd3e68cf8ea"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2094,7 +2096,7 @@
                                 "description": "TestStepDto.00170.description",
                                 "parent": {"ref": "EIDeca6fb19-b5b8-31bb-b3ea-17fd4a58f8f6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDb3ef1044-2a6e-327f-b8ea-5555cef7fcae",
@@ -2103,7 +2105,7 @@
                                         "parent": {"ref": "EID190b1f86-1186-3aed-b31e-08c68fe8aaef"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2116,7 +2118,7 @@
                                         "parent": {"ref": "EID190b1f86-1186-3aed-b31e-08c68fe8aaef"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2129,7 +2131,7 @@
                                         "parent": {"ref": "EID190b1f86-1186-3aed-b31e-08c68fe8aaef"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2143,7 +2145,7 @@
                                 "description": "TestStepDto.00174.description",
                                 "parent": {"ref": "EIDeca6fb19-b5b8-31bb-b3ea-17fd4a58f8f6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EIDe821f2d8-750a-3686-9e7b-f2b72531e6e5",
@@ -2152,7 +2154,7 @@
                                         "parent": {"ref": "EID1e338096-eede-3a1e-8307-aaa1378c94fc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2165,7 +2167,7 @@
                                         "parent": {"ref": "EID1e338096-eede-3a1e-8307-aaa1378c94fc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2178,7 +2180,7 @@
                                         "parent": {"ref": "EID1e338096-eede-3a1e-8307-aaa1378c94fc"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2192,7 +2194,7 @@
                                 "description": "TestStepDto.00178.description",
                                 "parent": {"ref": "EIDeca6fb19-b5b8-31bb-b3ea-17fd4a58f8f6"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID04567f2d-9ccc-3a6f-aede-1f14d28504e4",
@@ -2201,7 +2203,7 @@
                                         "parent": {"ref": "EID00909d8c-bcec-3f14-8547-33a3a76ef2e9"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2214,7 +2216,7 @@
                                         "parent": {"ref": "EID00909d8c-bcec-3f14-8547-33a3a76ef2e9"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2227,7 +2229,7 @@
                                         "parent": {"ref": "EID00909d8c-bcec-3f14-8547-33a3a76ef2e9"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2249,7 +2251,7 @@
                                 "description": "TestStepDto.00183.description",
                                 "parent": {"ref": "EIDb0cdde93-6903-3ff2-8df1-09649a95a84d"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID2820698d-d684-3f0d-ab57-7e0b30a89270",
@@ -2258,7 +2260,7 @@
                                         "parent": {"ref": "EID31eb7f9f-493d-3cdb-b255-8c8b275b0ec0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2271,7 +2273,7 @@
                                         "parent": {"ref": "EID31eb7f9f-493d-3cdb-b255-8c8b275b0ec0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2284,7 +2286,7 @@
                                         "parent": {"ref": "EID31eb7f9f-493d-3cdb-b255-8c8b275b0ec0"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2298,7 +2300,7 @@
                                 "description": "TestStepDto.00187.description",
                                 "parent": {"ref": "EIDb0cdde93-6903-3ff2-8df1-09649a95a84d"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID5c3e6399-d08c-37eb-a519-e11e29b93c11",
@@ -2307,7 +2309,7 @@
                                         "parent": {"ref": "EID64d478a0-9a66-31b7-baa6-a04537c91718"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2320,7 +2322,7 @@
                                         "parent": {"ref": "EID64d478a0-9a66-31b7-baa6-a04537c91718"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2333,7 +2335,7 @@
                                         "parent": {"ref": "EID64d478a0-9a66-31b7-baa6-a04537c91718"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2347,7 +2349,7 @@
                                 "description": "TestStepDto.00191.description",
                                 "parent": {"ref": "EIDb0cdde93-6903-3ff2-8df1-09649a95a84d"},
                                 "statementForExecution": "ExecutionStatement",
-                                "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/c23eb68a-db34-3ae7-96cd-3833f077ece8"},
+                                "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/c23eb68a-db34-3ae7-96cd-3833f077ece8.json"},
                                 "testAssertions": {"TestAssertion": [
                                     {
                                         "id": "EID6e6acbaa-0d74-38c5-9c63-b48a716e6cd1",
@@ -2356,7 +2358,7 @@
                                         "parent": {"ref": "EID9f55a117-98c9-3bea-af7b-13cad4f053ae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2369,7 +2371,7 @@
                                         "parent": {"ref": "EID9f55a117-98c9-3bea-af7b-13cad4f053ae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
@@ -2382,7 +2384,7 @@
                                         "parent": {"ref": "EID9f55a117-98c9-3bea-af7b-13cad4f053ae"},
                                         "expectedResult": "ExpectedResult",
                                         "expression": "Expression",
-                                        "testItemType": {"href": "http:\/\/localhost\/etf-webapp\/v2\/TestItemTypes\/392032fe-b23c-3bd8-9d07-b59af2386544"},
+                                        "testItemType": {"href": "http://localhost/etf-webapp/v2/TestItemTypes/392032fe-b23c-3bd8-9d07-b59af2386544.json"},
                                         "translationTemplates": {"translationTemplate": [
                                             {"ref": "TR.Template.1"},
                                             {"ref": "TR.Template.2"}
