@@ -8,10 +8,14 @@
 	<!-- JQuery Mobile and Styling includes-->
 	<!-- ########################################################################################## -->
 	<xsl:template name="jsfdeclAndCss">
-		<!--link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
-		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/-->
+		
+		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
+		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
+		<!--
 		<link rel="stylesheet" href="http://resources.etf-validator.net/report/v2/css/de.interactive-instruments.min.css"/>
 		<link rel="stylesheet" href="http://resources.etf-validator.net/report/v2/css/de.interactive-instruments.rep.css"/>
+		-->
+		
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"/>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"/>
@@ -78,81 +82,98 @@
 		
 		<script>
 			
+			function SelectorCache() {
+				var cache = {};
+				function getFromCache( selector ) {
+					if ( undefined === cache[ selector ] ) {
+						cache[ selector ] = $( selector );
+					}
+					return cache[ selector ];
+				}
+				return { get: getFromCache };
+			}
+			var cache = new SelectorCache();
+
+			function hide(element) {
+				element.css({ display: 'none' });
+			}
+
+			function show(element) {
+				element.css({ display: '' });
+			}
+
 			function updateLod(cntrl) {
 				if(cntrl=="cntrlSimplified")
 				{
-					$( ".ReportDetail" ).hide("slow");
-					$('.DoNotShowInSimpleView').hide('slow');
-					
-					<!-- Cut text -->
-					var assertionFailureMessage = 
-					'Expected text value \'AssertionFailures:\' but was \'AssertionFailures:\'';
-					$('.XQueryContainsAssertion').hide('slow');
+					console.log(cache.get( ".ReportDetail" ));
+					cache.get( ".ReportDetail" ).hide("slow");
+					cache.get('.DoNotShowInSimpleView').hide('slow');
+					cache.get('.XQueryContainsAssertion').hide('slow');
 				}
 				else if(cntrl=="cntrlLessInformation")
 				{
-					$('.ReportDetail').hide('slow');
-					$('.DoNotShowInSimpleView').show('slow');
+					cache.get('.ReportDetail').hide('slow');
+					cache.get('.DoNotShowInSimpleView').show('slow');
 				}
 				else if(cntrl=="cntrlAllDetails")
 				{
-					$('.ReportDetail').show('slow');
-					$('.DoNotShowInSimpleView').show('slow');
+					cache.get('.ReportDetail').show('slow');
+					cache.get('.DoNotShowInSimpleView').show('slow');
 				}
 			}
 			
 			<!-- Controls for filtering -->
-			$( "input[name=radio-filter]" ).on( "click", function() {
+			cache.get( "input[name=radio-filter]" ).on( "click", function() {
 			var cntrl = $( "input[name=radio-filter]:checked" ).val();
 				if(cntrl=="cntrlShowOnlyFailed")
 				{
-					$('.TestSuite').collapsible('expand');
-					$('.TestModule').collapsible('expand');
-					$('.SuccessfulTestCase').hide('slow');
-					$('.ManualTestCase').hide('slow');
-					$('.FailedTestCase').collapsible('expand');
-					$('.FailedTestCase').show('fast');
-					$('.SuccessfulTestStep').collapsible('collapse');
-					$('.ManualTestStep').collapsible('collapse');
-					$('.FailedTestStep').collapsible('expand');
-					$('.FailedTestStep').show('fast');
-					$('.SuccessfulTestStep').hide('slow');
-					$('.ManualTestStep').hide('slow');
-					$('.FailedAssertion').collapsible('expand');
-					$('.FailedAssertion').show('fast');
-					$('.SuccessfulAssertion').hide('slow');
-					$('.ManualAssertion').hide('slow');
+					cache.get('.TestSuite').collapsible('expand');
+					cache.get('.TestModule').collapsible('expand');
+					cache.get('.SuccessfulTestCase').hide('slow');
+					cache.get('.ManualTestCase').hide('slow');
+					cache.get('.FailedTestCase').collapsible('expand');
+					cache.get('.FailedTestCase').show('fast');
+					cache.get('.SuccessfulTestStep').collapsible('collapse');
+					cache.get('.ManualTestStep').collapsible('collapse');
+					cache.get('.FailedTestStep').collapsible('expand');
+					cache.get('.FailedTestStep').show('fast');
+					cache.get('.SuccessfulTestStep').hide('slow');
+					cache.get('.ManualTestStep').hide('slow');
+					cache.get('.FailedAssertion').collapsible('expand');
+					cache.get('.FailedAssertion').show('fast');
+					cache.get('.SuccessfulAssertion').hide('slow');
+					cache.get('.ManualAssertion').hide('slow');
 				}
 				else if(cntrl=="cntrlShowOnlyManual")
 				{
-					$('.TestSuite').collapsible('expand');
-					$('.TestModule').collapsible('expand');
-					$('.SuccessfulTestCase').hide('slow');
-					$('.FailedTestCase').hide('slow');
-					$('.ManualTestCase').collapsible('expand');
-					$('.ManualTestCase').show('fast');
-					$('.SuccessfulTestStep').collapsible('collapse');
-					$('.FailedTestStep').collapsible('collapse');
-					$('.ManualTestStep').collapsible('expand');
-					$('.ManualTestStep').show('fast');
-					$('.SuccessfulTestStep').hide('slow');
-					$('.FailedTestStep').hide('slow');
-					$('.ManualAssertion').collapsible('expand');
-					$('.ManualAssertion').show('fast');
-					$('.SuccessfulAssertion').hide('slow');
-					$('.FailedAssertion').hide('slow');
+					cache.get('.TestSuite').collapsible('expand');
+					cache.get('.TestModule').collapsible('expand');
+					cache.get('.SuccessfulTestCase').hide('slow');
+					cache.get('.FailedTestCase').hide('slow');
+					cache.get('.ManualTestCase').collapsible('expand');
+					cache.get('.ManualTestCase').show('fast');
+					cache.get('.SuccessfulTestStep').collapsible('collapse');
+					cache.get('.FailedTestStep').collapsible('collapse');
+					cache.get('.ManualTestStep').collapsible('expand');
+					cache.get('.ManualTestStep').show('fast');
+					cache.get('.SuccessfulTestStep').hide('slow');
+					cache.get('.FailedTestStep').hide('slow');
+					cache.get('.ManualAssertion').collapsible('expand');
+					cache.get('.ManualAssertion').show('fast');
+					cache.get('.SuccessfulAssertion').hide('slow');
+					cache.get('.FailedAssertion').hide('slow');
 				}
 				else if(cntrl=="cntrlShowAll")
 				{
-					$('.SuccessfulTestCase').show('fast');
-					$('.SuccessfulTestStep').show('fast');
-					$('.SuccessfulAssertion').show('fast');
-					$('.ManualTestCase').show('fast');
-					$('.ManualTestStep').show('fast');
-					$('.ManualAssertion').show('fast');
-					$('.FailedTestCase').show('fast');
-					$('.FailedTestStep').show('fast');
-					$('.FailedAssertion').show('fast');
+					cache.get('.SuccessfulTestCase').show('fast');
+					cache.get('.SuccessfulTestStep').show('fast');
+					cache.get('.SuccessfulAssertion').show('fast');
+					cache.get('.ManualTestCase').show('fast');
+					cache.get('.ManualTestStep').show('fast');
+					cache.get('.ManualAssertion').show('fast');
+					cache.get('.FailedTestCase').show('fast');
+					cache.get('.FailedTestStep').show('fast');
+					cache.get('.FailedAssertion').show('fast');
 				}
 			});
 			
@@ -209,41 +230,36 @@
 			$(document).scroll(function () {
 				var y = $(this).scrollTop();
 				if (y > 370) {
-					$('#lodFadinMenu').fadeIn();
+					cache.get('#lodFadinMenu').fadeIn();
 				} else {
-					$('#lodFadinMenu').fadeOut();
+					cache.get('#lodFadinMenu').fadeOut();
 				}
 			});
 			
 			<!-- Init page -->
-			$(document).one('pagebeforeshow', function() {
-				$('.ReportDetail').hide();
-				
+			$(document).one('pagebeforeshow', function() {				
 				<!-- Jump to element with ID on page initialization -->
 				var url = decodeURIComponent(window.location.href);
 				var anchorIdx = url.indexOf("#");
 				var anchorId = anchorIdx != -1 ? url.substring(anchorIdx+1) : "";
 				var anchorElement = $('#'+anchorId);
 				if(anchorId!="" &amp;&amp; anchorElement.exists()) {
-					$('.DoNotShowInSimpleView').show();
+					cache.get('.DoNotShowInSimpleView').show();
 					jumpToAnchor(anchorId);
 					$("body").one("pagecontainershow", function () {
-						var position = $(anchorElement).offset().top;
+						var position = cache.get(anchorElement).offset().top;
 						// ... but it works...
 						setTimeout( function() {
-							$("html, body").stop().animate({ scrollTop: position });
+							cache.get("html, body").stop().animate({ scrollTop: position });
 							},150);
 						});
-				}else{
-					$('.DoNotShowInSimpleView').hide();
 				}
 				
-				
 				<!-- Hide checkbox if there are no manual assertions -->
-				if ( $('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
-					$('#cntrlShowOnlyManual').checkboxradio();
-					$('#cntrlShowOnlyManual').checkboxradio('refresh');
-					$('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
+				if ( cache.get('.ManualTestCase, .ManualTestStep, .ManualAssertion').length==0) {
+					cache.get('#cntrlShowOnlyManual').checkboxradio();
+					cache.get('#cntrlShowOnlyManual').checkboxradio('refresh');
+					cache.get('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
 			});
 			
