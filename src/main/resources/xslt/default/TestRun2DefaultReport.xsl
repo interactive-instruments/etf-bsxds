@@ -27,7 +27,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b170320</xsl:variable>
+	<xsl:variable name="reportVersion">2.0.0-b170531</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -363,6 +363,7 @@
 	<!-- Properties used in test run -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:ArgumentList">
+		<xsl:if test="etf:arguments/etf:argument/@name ne ''">
 		<div id="rprtParameters" data-role="collapsible" data-collapsed-icon="info"
 			class="ReportDetail">
 			<h3>
@@ -383,6 +384,7 @@
 				</xsl:for-each>
 			</table>
 		</div>
+		</xsl:if>
 	</xsl:template>
 	<!-- TestObject -->
 	<!-- ########################################################################################## -->
@@ -893,7 +895,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<div class="TestStep" data-role="collapsible" data-theme="g" data-content-theme="g"
-					data-mini="true" id="{$resultItem/@id}">
+					data-mini="true" id="{$TestStep/@id}">
 					<xsl:attribute name="data-theme">
 						<xsl:choose>
 							<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
@@ -1003,6 +1005,18 @@
 								<xsl:value-of select="$TestStep/@id"/>
 							</td>
 						</tr>
+						<tr class="DoNotShowInSimpleView">
+							<td><xsl:value-of select="$lang/x:e[@key = 'TestStepLocation']"/></td>
+							<xsl:variable name="testStepId" select="$TestStep/@id"/>
+							<td>
+								<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$testStepId}"
+									data-ajax="false"
+									onclick="event.preventDefault(); jumpToAnchor('{$testStepId}'); return false;">
+									<xsl:value-of select="$lang/x:e[@key = 'PublicationLocationLink']"/>
+								</a>
+							</td>
+						</tr>
+						
 						
 						<!-- Invoked Tests -->
 						<xsl:if test="$resultItem/etf:invokedTests/etf:TestStepResult">

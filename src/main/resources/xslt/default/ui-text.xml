@@ -5,6 +5,8 @@
 		<x:e key="TestReport">test report</x:e>
 		<x:e key="PublicationLocation">Report URI</x:e>
 		<x:e key="PublicationLocationLink">Link</x:e>
+		<x:e key="TestStepLocation">Test Step URI</x:e>
+		<x:e key="TestStepLocationLink">Link</x:e>
 		<x:e key="AssertionLocation">Assertion URI</x:e>
 		<x:e key="AssertionLocationLink">Link</x:e>
 		<x:e key="Created">Created</x:e>
@@ -86,6 +88,8 @@
 		<x:e key="TestReport">Testbericht</x:e>
 		<x:e key="PublicationLocation">Berichts-URI</x:e>
 		<x:e key="PublicationLocationLink">Link</x:e>
+		<x:e key="TestStepLocation">Test Step URI</x:e>
+		<x:e key="TestStepLocationLink">Link</x:e>
 		<x:e key="AssertionLocation">Test URI</x:e>
 		<x:e key="AssertionLocationLink">Link</x:e>
 		<x:e key="Created">Erzeugt</x:e>
