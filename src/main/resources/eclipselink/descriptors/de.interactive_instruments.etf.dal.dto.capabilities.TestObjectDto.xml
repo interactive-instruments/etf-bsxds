@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <descriptor type="o-x">
    <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
-   <comment>There is no need to map the &quot;parent&quot; property yet.</comment>
+   <comment>There is no need to map the &quot;parent&quot; property yet. The parent could be a collection of Test Objects in future versions 
+and a TestObjectCollection could be created from a discovery service for example.</comment>
    <class-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
    </class-handle>
@@ -44,6 +45,15 @@
             <attribute-name>description</attribute-name>
          </attribute-handle>
          <xml-field>description/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>disabled</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>disabled</attribute-name>
+         </attribute-handle>
+         <xml-field>disabled/text()</xml-field>
       </mapping>
       <mapping type="xml-transformation">
          <name>id</name>
@@ -249,6 +259,14 @@
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
          <attribute-name>descriptionTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>disabled</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>egaid</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>

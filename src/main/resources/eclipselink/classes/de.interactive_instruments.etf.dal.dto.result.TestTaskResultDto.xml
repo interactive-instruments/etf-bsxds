@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.result.ResultModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-19T16:00:26.984+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-05-30T01:40:20.699+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>attachments</name>
@@ -124,6 +124,15 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.util.Collection</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getErrorMessage</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </return-type-declaration>
       </method>

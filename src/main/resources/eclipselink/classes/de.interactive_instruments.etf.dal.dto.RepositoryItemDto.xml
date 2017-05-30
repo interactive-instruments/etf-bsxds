@@ -5,7 +5,12 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-18T18:31:25.607+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-05-29T16:25:18.676+02:00</last-refresh-timestamp>
+   <interface-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.EgaidHolder</type-name>
+      </class-handle>
+   </interface-handles>
    <attributes>
       <class-attribute>
          <name>author</name>
@@ -22,6 +27,24 @@
          <type-declaration>
             <type-handle>
                <type-name>java.util.Date</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>disabled</name>
+         <modifier>4</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>egaid</name>
+         <modifier>4</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -188,6 +211,24 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getEgaId</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.model.EGAID</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getEgaIdRef</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getItemHash</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -288,6 +329,15 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>isDisabled</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>setAuthor</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -331,6 +381,42 @@
                <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>setDisabled</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>boolean</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setEgaId</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setItemHash</name>

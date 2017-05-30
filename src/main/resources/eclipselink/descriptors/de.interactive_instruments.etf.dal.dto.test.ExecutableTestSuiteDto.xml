@@ -87,6 +87,24 @@
          </attribute-handle>
          <xml-field>description/text()</xml-field>
       </mapping>
+      <mapping type="xml-direct">
+         <name>disabled</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>disabled</attribute-name>
+         </attribute-handle>
+         <xml-field>disabled/text()</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
+         <name>egaid</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+            <attribute-name>egaid</attribute-name>
+         </attribute-handle>
+         <xml-field>@egaid</xml-field>
+      </mapping>
       <mapping type="xml-transformation">
          <name>id</name>
          <inherited>true</inherited>
@@ -325,6 +343,14 @@
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
          <attribute-name>descriptionTranslationTemplate</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>disabled</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</attribute-declaring-type-name>
+         <attribute-name>egaid</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Dto</attribute-declaring-type-name>

@@ -28,6 +28,12 @@
             <descriptor-name>de.interactive_instruments.etf.dal.dto.Arguments</descriptor-name>
          </reference-descriptor-handle>
          <xpath>ArgumentList</xpath>
+         <container-accessor type="attribute-based">
+            <accessor-attribute-handle>
+               <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Arguments</attribute-declaring-type-name>
+               <attribute-name>values</attribute-name>
+            </accessor-attribute-handle>
+         </container-accessor>
       </mapping>
       <mapping type="xml-object-reference">
          <name>executableTestSuite</name>
