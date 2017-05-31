@@ -35,11 +35,18 @@ final class BsXQuery {
 	private XQuery xQuery;
 	private final BsxDsCtx ctx;
 	private final String queryStr;
-	private final HashMap<String, String[]> parameter = new HashMap<>();
+	private final HashMap<String, String[]> parameter;
 
 	BsXQuery(final BsxDsCtx ctx, final String queryStr) {
 		this.ctx = ctx;
 		this.queryStr = queryStr;
+		this.parameter = new HashMap<>();
+	}
+
+	private BsXQuery(final BsxDsCtx ctx, final String queryStr, final HashMap parameter) {
+		this.ctx = ctx;
+		this.queryStr = queryStr;
+		this.parameter = new HashMap<>(parameter);
 	}
 
 	BsXQuery parameter(final String name, final String value, final String type) {
@@ -95,8 +102,12 @@ final class BsXQuery {
 		return xQuery.execute(ctx.getBsxCtx());
 	}
 
+	BsXQuery createCopy() {
+		return new BsXQuery(ctx, queryStr, this.parameter);
+	}
+
 	@Override
 	public String toString() {
-		return xQuery.toString();
+		return xQuery != null ? xQuery.toString() : "Note compiled: " + queryStr;
 	}
 }

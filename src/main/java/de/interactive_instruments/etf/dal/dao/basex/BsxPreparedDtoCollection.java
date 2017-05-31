@@ -21,16 +21,23 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import de.interactive_instruments.etf.XmlUtils;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
-import de.interactive_instruments.etf.model.DefaultEidMap;
-import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidMap;
+import de.interactive_instruments.etf.model.*;
 
 /**
  * A prepared XQuery statement for querying multiple items - without their references!
- * Every inherited Map or the streamTo method will execute the request.
+
+ * Every inherited Map or the streamTo method will execute the request,
+ * except {@link #keySet() } which only queries the ids.
  *
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
@@ -39,6 +46,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	private final GetDtoResultCmd<T> getter;
 	private List<T> cachedDtos;
 	private HashMap<EID, T> mappedDtos;
+	private HashSet<EID> ids;
 
 	BsxPreparedDtoCollection(final BsXQuery bsXQuery, final GetDtoResultCmd<T> getter) {
 		super(bsXQuery);
@@ -114,7 +122,28 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 
 	@Override
 	public Set<EID> keySet() {
-		ensureMap();
+		if (mappedDtos == null) {
+			if (ids == null) {
+				try {
+					final ByteArrayOutputStream output = new ByteArrayOutputStream(32784);
+					bsXquery.createCopy().parameter("levelOfDetail", "simple").parameter("fields", "@id").execute(output);
+					final XPath xpath = XmlUtils.newXPath();
+					final String xpathExpression = "/etf:DsResultSet/etf:*[1]/etf:*/@id";
+					final NodeList ns = ((NodeList) xpath.evaluate(xpathExpression, new InputSource(
+							new ByteArrayInputStream(output.toByteArray())), XPathConstants.NODESET));
+					ids = new HashSet<>();
+					for (int index = 0; index < ns.getLength(); index++) {
+						ids.add(EidFactory.getDefault().createUUID(ns.item(index).getTextContent()));
+					}
+				} catch (ClassCastException | NullPointerException | XPathExpressionException | IOException e) {
+					// Use fallback
+					logError(e);
+					enusreDtosQueried();
+					return mappedDtos.keySet();
+				}
+			}
+			return ids;
+		}
 		return mappedDtos.keySet();
 	}
 
@@ -158,7 +187,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	private void enusreDtosQueried() {
 		if (cachedDtos == null) {
 			try {
-				final ByteArrayOutputStream output = new ByteArrayOutputStream();
+				final ByteArrayOutputStream output = new ByteArrayOutputStream(65568);
 				bsXquery.execute(output);
 				final DsResultSet result = (DsResultSet) bsXquery.getCtx().createUnmarshaller().unmarshal(
 						new ByteArrayInputStream(output.toByteArray()));

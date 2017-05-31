@@ -88,6 +88,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 
 	public final static String ID_PREFIX = "EID";
 
+	public final static String ETF_NAMESPACE_DECL = "declare namespace etf = "
+			+ "\"http://www.interactive-instruments.de/etf/2.0\"; ";
+
 	private final Logger logger = LoggerFactory.getLogger(BsxDataStorage.class);
 
 	private static final String ETF_DB_NAME = "etf-ds";
