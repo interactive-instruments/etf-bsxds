@@ -17,10 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.xml.bind.JAXBException;
 
@@ -29,8 +26,10 @@ import org.basex.core.BaseXException;
 import org.basex.core.cmd.Add;
 import org.basex.core.cmd.Delete;
 import org.basex.core.cmd.Flush;
+import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.Version;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
@@ -42,6 +41,8 @@ import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
 import de.interactive_instruments.etf.model.Disableable;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.EidSet;
+import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
@@ -84,6 +85,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 				}
 			}
 		} catch (StorageException e) {
+			item.delete();
 			throw e;
 		} catch (IOException e) {
 			item.delete();
@@ -94,17 +96,19 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			ctx.createMarshaller().marshal(t, item);
 			new Add(item.getName(), item.getAbsolutePath()).execute(ctx.getBsxCtx());
 			new Flush().execute(ctx.getBsxCtx());
-		} catch (JAXBException e) {
+		} catch (IOException | JAXBException e) {
 			ctx.getLogger().error("Object {} cannot be marshaled.\n\tProperties: {}",
 					t.getDescriptiveLabel(), t.toString());
 			if (ctx.getLogger().isDebugEnabled()) {
-				ctx.getLogger().debug("Path to corrupt file: {}", item.getAbsolutePath());
-			} else {
-				// File contains invalid content
-				item.delete();
+				try {
+					final IFile tmpFile = IFile.createTempFile("etf-bsxds", ".xml");
+					item.copyTo(tmpFile.getPath());
+					ctx.getLogger().debug("Path to corrupt file: {}", tmpFile.getAbsolutePath());
+				} catch (IOException ign) {
+					ExcUtils.suppress(ign);
+				}
 			}
-			throw new IllegalArgumentException(e);
-		} catch (IOException e) {
+			item.delete();
 			throw new StorageException(e);
 		}
 	}
@@ -236,7 +240,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected void doDeleteAndAdd(final T t) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
-		doDeleteOrDisable(t.getId(), false);
+		doDeleteOrDisable(Collections.singleton(t.getId()), false);
 		doMarshallAndAdd(t);
 	}
 
@@ -256,32 +260,27 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	@Override
 	public final void delete(final EID eid) throws StorageException, ObjectWithIdNotFoundException {
 		fireEventDelete(eid);
-		doDeleteOrDisable(eid, true);
+		doDeleteOrDisable(Collections.singleton(eid), true);
 		updateLastModificationDate();
 	}
 
-	protected void doDeleteOrDisable(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
-		final IFile oldItem = getFile(eid);
-		if (!oldItem.exists()) {
-			throw new ObjectWithIdNotFoundException(this, eid.toString());
-		}
-
+	protected void doDeleteOrDisable(final Collection<EID> eids, boolean clean)
+			throws StorageException, ObjectWithIdNotFoundException {
 		final T disabledDto;
 		if (Disableable.class.isAssignableFrom(this.getDtoType())) {
-			T tmpDisabledDto = null;
-			try {
-				tmpDisabledDto = getById(eid).getDto();
-				((Disableable) tmpDisabledDto).setDisabled(true);
-			} catch (StorageException | ObjectWithIdNotFoundException | IllegalStateException ign) {
-				tmpDisabledDto = null;
+			// Check if IDs exist
+			for (final EID eid : eids) {
+				final IFile oldItem = getFile(eid);
+				if (!oldItem.exists()) {
+					throw new ObjectWithIdNotFoundException(this, eid.toString());
+				}
 			}
-			disabledDto = tmpDisabledDto;
+			updateProperty(eids, "etf:disabled", "true");
 		} else {
-			disabledDto = null;
-		}
-		doDelete(eid, clean);
-		if (disabledDto != null) {
-			doMarshallAndAdd(disabledDto);
+			for (final EID eid : eids) {
+				// ID checks are done in doDelete()
+				doDelete(eid, clean);
+			}
 		}
 	}
 
@@ -307,16 +306,43 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		}
 	}
 
+	/**
+	 * Update a property in the XML database. The changes are not synced with the backup files!
+	 *
+	 * @param ids IDS to change
+	 * @param propertyXpath the property to change WITHOUT leading '/'
+	 * @param newValue the new property value
+	 */
+	protected void updateProperty(final Collection<EID> ids, final String propertyXpath, final String newValue) {
+		final StringBuilder query = new StringBuilder("declare namespace etf = "
+				+ "\"http://www.interactive-instruments.de/etf/2.0\";"
+				+ " for $item in db:open('etf-ds')");
+		query.append(queryPath);
+		query.append('[');
+		query.append(SUtils.concatStrWithPrefixAndSuffix(" or ", "@id = 'EID", "'", ids));
+		query.append("]/");
+		query.append(propertyXpath);
+		query.append(" return replace value of node $item with '");
+		query.append(newValue);
+		query.append('\'');
+		try {
+			new XQuery(query.toString()).execute(ctx.getBsxCtx());
+		} catch (final BaseXException e) {
+			ctx.getLogger().error("Internal error in updateProperty(). Query: {}", query.toString(), e);
+			throw new IllegalStateException("Internal error in updateProperty()", e);
+		}
+	}
+
 	protected abstract void doCleanAfterDelete(final EID eid) throws BaseXException;
 
 	// Fires the delete event.
 	@Override
-	public final void deleteAll(final Set<EID> collection) throws StorageException, ObjectWithIdNotFoundException {
+	public final void deleteAll(final Set<EID> eids) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be optimized
-		for (final EID eid : collection) {
+		for (final EID eid : eids) {
 			fireEventDelete(eid);
-			doDeleteOrDisable(eid, true);
 		}
+		doDeleteOrDisable(eids, true);
 		updateLastModificationDate();
 	}
 

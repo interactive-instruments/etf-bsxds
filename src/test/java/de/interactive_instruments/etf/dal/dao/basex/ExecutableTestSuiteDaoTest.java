@@ -30,6 +30,7 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
@@ -306,4 +307,5 @@ public class ExecutableTestSuiteDaoTest {
 		assertEquals(TAG_DTO_2.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(0).getId());
 		assertEquals(TAG_DTO_3.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(1).getId());
 	}
+
 }

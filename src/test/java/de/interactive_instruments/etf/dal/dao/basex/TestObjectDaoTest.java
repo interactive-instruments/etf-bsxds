@@ -32,6 +32,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -117,7 +118,7 @@ public class TestObjectDaoTest {
 		// Must fail because no resources and test object types are set
 		try {
 			writeDao.add(invalidDto);
-		} catch (IllegalArgumentException e) {
+		} catch (StorageException e) {
 			if (!DATA_STORAGE.getLogger().isDebugEnabled()) {
 				assertFalse(writeDao.exists(invalidDto.getId()));
 			}
@@ -285,11 +286,19 @@ public class TestObjectDaoTest {
 				return max2;
 			}
 		});
+
 		{
 			assertNotNull(result2);
+
+			// Prequery ids
+			final Set<EID> idsInCollection = result2.keySet();
 			assertEquals(max2, result2.size());
+			assertEquals(idsInCollection.size(), result2.size());
+
 			int i2 = min2;
 			for (final TestObjectDto testObjectDto : result2) {
+				assertTrue(idsInCollection.contains(testObjectDto.getId()));
+
 				final String iStr = BsxTestUtils.toStrWithTrailingZeros(i2);
 				// Result shall be sorted based on its label
 				assertEquals("TestObjectDto." + iStr + ".label", testObjectDto.getLabel());

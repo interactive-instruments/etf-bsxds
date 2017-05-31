@@ -15,6 +15,8 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -27,6 +29,7 @@ import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
@@ -110,6 +113,15 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 	@Override
 	public boolean exists(final EID eid) {
 		return getFile(eid).exists();
+		/*
+		alternative implementation
+		try {
+			return "true".equals(new XQuery(ETF_NAMESPACE_DECL +
+					"exists(db:open('etf-ds')"+queryPath+"[@id = 'EID"+eid.toString()+"'])").execute(ctx.getBsxCtx()));
+		} catch (BaseXException e) {
+			throw new IllegalStateException("Internal error in isDisabled(), ", e);
+		}
+		 */
 	}
 
 	@Override
@@ -118,10 +130,13 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 			return false;
 		}
 		try {
-			final String result = new XQuery("declare namespace etf = "
-					+ "\"http://www.interactive-instruments.de/etf/2.0\";\n"
-					+ "db:open('etf-ds')/etf:*[@id = 'EID" + eid.toString() +
-					"']/etf:disabled='true'").execute(ctx.getBsxCtx());
+			final StringBuilder query = new StringBuilder(ETF_NAMESPACE_DECL
+					+ "db:open('etf-ds')");
+			query.append(queryPath);
+			query.append("[@id = 'EID");
+			query.append(eid.toString());
+			query.append("']/etf:disabled='true'");
+			final String result = new XQuery(query.toString()).execute(ctx.getBsxCtx());
 			return "true".equals(result);
 		} catch (final BaseXException e) {
 			throw new IllegalStateException("Internal error in isDisabled(), ", e);

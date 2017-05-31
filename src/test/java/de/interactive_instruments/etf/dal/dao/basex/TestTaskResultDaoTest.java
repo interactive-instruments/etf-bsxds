@@ -109,7 +109,7 @@ public class TestTaskResultDaoTest {
 		TestCase.assertFalse(writeDao.exists(TTR_DTO_1.getId()));
 	}
 
-	@Test
+	// @Test
 	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
 		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
 		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
