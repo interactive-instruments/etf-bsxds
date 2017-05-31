@@ -391,7 +391,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	@Override
-	public void internalError(final String errorMessage, final byte[] bytes, final String mimeType) {
+	public String internalError(final String errorMessage, final byte[] bytes, final String mimeType) {
 		if (!this.internalError) {
 			this.internalError = true;
 
@@ -400,6 +400,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 				final BufferedOutputStream errorOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile),
 						16384);
 				final XMLStreamWriter errorWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(errorOutputStream);
+
 				if (bytes != null) {
 					final String attachmentEid = UUID.randomUUID().toString();
 					final IFile attachmentFile = createAttachmentFile(attachmentEid, mimeType);
@@ -416,12 +417,13 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 							errorMessage, testRunLogger.getLogFile(),
 							null, null, null);
 				}
-				((AbstractBsxStreamWriteDao) dataStorage.getDao(
-						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
+				return ((AbstractBsxStreamWriteDao) dataStorage.getDao(
+						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile)).getId();
 			} catch (XMLStreamException | IOException e) {
 				throw new IllegalStateException("Could not save internal error", e);
 			}
 		}
+		return null;
 	}
 
 	@Override

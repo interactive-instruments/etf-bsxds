@@ -438,11 +438,11 @@ final class XmlTestResultWriter implements Releasable {
 		}
 	}
 
-	public final boolean isErrorLimitExceeded() {
+	final boolean isErrorLimitExceeded() {
 		return errorCount >= errorLimit;
 	}
 
-	public static void internalError(
+	static void internalError(
 			final XMLStreamWriter errorWriter, final String resultedFrom, final String testObjectRef,
 			final String errorMessage, final File logFile,
 			final String errorAttachmentId, final IFile errorFile, final String mimeType) throws XMLStreamException {
@@ -455,9 +455,7 @@ final class XmlTestResultWriter implements Releasable {
 		errorWriter.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
 				ETF_NS + " " + ETF_RESULT_XSD);
 		errorWriter.writeAttribute("xmlns", ETF_NS);
-		final String id = UUID.randomUUID().toString();
-
-		errorWriter.writeAttribute("id", ID_PREFIX + id);
+		errorWriter.writeAttribute("id",   ID_PREFIX + UUID.randomUUID().toString());
 
 		errorWriter.writeStartElement("testObject");
 		errorWriter.writeAttribute("ref", ID_PREFIX + testObjectRef);
