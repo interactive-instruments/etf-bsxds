@@ -22,6 +22,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import de.interactive_instruments.etf.model.EidFactory;
 import org.apache.commons.io.IOUtils;
 
 import de.interactive_instruments.IFile;
@@ -139,25 +140,31 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	protected String endTestTaskResult(final String testModelItemId, final int status, final long stopTimestamp)
 			throws XMLStreamException, FileNotFoundException, StorageException {
-		final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
-		writer.close();
 		if (!this.internalError) {
+			// Add log file as attachment
+			writer.addAttachment(
+					EidFactory.getDefault().createRandomId().toString(),
+					new IFile(testRunLogger.getLogFile()), "Log file", "UTF-8","text/plain","LogFile" );
+			final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
 			try {
+				writer.flush();
 				final EID resultId = ((AbstractBsxStreamWriteDao) dataStorage.getDao(
 						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
 				if (listener != null) {
-					try {
-						listener.testTaskFinished(dataStorage.getDao(TestTaskResultDto.class).getById(resultId).getDto());
-					} catch (ObjectWithIdNotFoundException e) {
-						testRunLogger.error("Failed to reload result {}", resultId);
-					}
+					listener.testTaskFinished(dataStorage.getDao(TestTaskResultDto.class).getById(resultId).getDto());
 				}
+			} catch (ObjectWithIdNotFoundException e) {
+				testRunLogger.error("Failed to reload result ",e);
+				throw new StorageException(e);
 			} catch (StorageException e) {
 				testRunLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
 				throw e;
+			}finally {
+				writer.close();
 			}
+			return id;
 		}
-		return id;
+		return null;
 	}
 
 	protected String endTestModuleResult(final String testModelItemId, final int status, final long stopTimestamp)
@@ -226,7 +233,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	protected void notifyError() {
 		try {
 			writer.flush();
-		} catch (XMLStreamException e) {
+		} catch (NullPointerException | XMLStreamException e) {
 			ExcUtils.suppress(e);
 		}
 	}
@@ -395,9 +402,6 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	public void internalError(final Throwable e) {
-		if (!this.internalError) {
-			this.internalError = true;
-		}
 		internalError(e.getMessage(), (byte[]) null, null);
 	}
 
