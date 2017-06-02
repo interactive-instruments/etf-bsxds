@@ -51,7 +51,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="arguments">
+                <xs:element name="arguments" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="argument" minOccurs="0" maxOccurs="unbounded">

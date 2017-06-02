@@ -15,9 +15,14 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
+
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 
 import javax.xml.bind.JAXBException;
 
@@ -27,6 +32,12 @@ import org.basex.core.cmd.Add;
 import org.basex.core.cmd.Delete;
 import org.basex.core.cmd.Flush;
 import org.basex.core.cmd.XQuery;
+import org.basex.io.serial.Serializer;
+import org.basex.query.QueryException;
+import org.basex.query.QueryProcessor;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.item.Item;
+import org.basex.query.value.node.DBNode;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
@@ -41,7 +52,6 @@ import de.interactive_instruments.etf.dal.dto.RepositoryItemDto;
 import de.interactive_instruments.etf.model.Disableable;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
-import de.interactive_instruments.etf.model.EidSet;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
@@ -73,42 +83,70 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		updateLastModificationDate();
 	}
 
-	protected void doMarshallAndAdd(final T t) throws StorageException {
-		final IFile item = getFile(t.getId());
+	private void flush() throws StorageException {
+		try {
+			new Flush().execute(ctx.getBsxCtx());
+		} catch (final BaseXException e) {
+			throw new StorageException(e);
+		}
+	}
+
+	private void checkItemNotExists(final IFile item, final Dto t, final boolean disableable) throws StorageException {
 		try {
 			if (!item.createNewFile()) {
-				if (t instanceof Disableable && isDisabled(t.getId())) {
-					// Will be flushed later
+				if (disableable && isDisabled(t.getId())) {
+					// Attempt to overwrite a disabled item
+					((Disableable) t).setDisabled(false);
+					// Will be flushed later, in upper functions
 					new Delete(item.getName()).execute(ctx.getBsxCtx());
 				} else {
 					throw new StorageException("Item " + t.getDescriptiveLabel() + " already exists!");
 				}
 			}
 		} catch (StorageException e) {
-			item.delete();
+			if (isDisabled(t.getId())) {
+				item.delete();
+				flush();
+			}
 			throw e;
 		} catch (IOException e) {
-			item.delete();
+			if (isDisabled(t.getId())) {
+				item.delete();
+				flush();
+			}
 			throw new StorageException(e);
 		}
+		if (disableable) {
+			// Attempt to overwrite a disabled item
+			((Disableable) t).setDisabled(false);
+		}
+	}
+
+	private void marshallingFailed(final Dto t, final IFile item) {
+		ctx.getLogger().error("Object {} cannot be marshaled.\n\tProperties: {}",
+				t.getDescriptiveLabel(), t.toString());
+		if (ctx.getLogger().isDebugEnabled()) {
+			try {
+				final IFile tmpFile = IFile.createTempFile("etf-bsxds", ".xml");
+				item.copyTo(tmpFile.getPath());
+				ctx.getLogger().debug("Path to corrupt file: {}", tmpFile.getAbsolutePath());
+			} catch (IOException ign) {
+				ExcUtils.suppress(ign);
+			}
+		}
+		item.delete();
+	}
+
+	protected void doMarshallAndAdd(final T t) throws StorageException {
+		final IFile item = getFile(t.getId());
+		checkItemNotExists(item, t, t instanceof Disableable);
 		try {
 			FileUtils.touch(item);
 			ctx.createMarshaller().marshal(t, item);
 			new Add(item.getName(), item.getAbsolutePath()).execute(ctx.getBsxCtx());
-			new Flush().execute(ctx.getBsxCtx());
+			flush();
 		} catch (IOException | JAXBException e) {
-			ctx.getLogger().error("Object {} cannot be marshaled.\n\tProperties: {}",
-					t.getDescriptiveLabel(), t.toString());
-			if (ctx.getLogger().isDebugEnabled()) {
-				try {
-					final IFile tmpFile = IFile.createTempFile("etf-bsxds", ".xml");
-					item.copyTo(tmpFile.getPath());
-					ctx.getLogger().debug("Path to corrupt file: {}", tmpFile.getAbsolutePath());
-				} catch (IOException ign) {
-					ExcUtils.suppress(ign);
-				}
-			}
-			item.delete();
+			marshallingFailed(t, item);
 			throw new StorageException(e);
 		}
 	}
@@ -122,34 +160,13 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		final boolean disableable = colArr[0] instanceof Disableable;
 		for (int i = 0; i < colArr.length; i++) {
 			final IFile item = files.get(i);
-			try {
-				if (!item.createNewFile()) {
-					if (disableable && isDisabled(colArr[i].getId())) {
-						// Will be flushed later
-						new Delete(item.getName()).execute(ctx.getBsxCtx());
-					} else {
-						throw new StoreException("Item " + colArr[i].getDescriptiveLabel() +
-								" already exists!");
-					}
-				}
-			} catch (StorageException e) {
-				throw e;
-			} catch (IOException e) {
-				throw new StoreException(e);
-			}
+			checkItemNotExists(item, colArr[i], disableable);
 			try {
 				FileUtils.touch(item);
 				ctx.createMarshaller().marshal(colArr[i], item);
-			} catch (JAXBException e) {
-				if (ctx.getLogger().isDebugEnabled()) {
-					ctx.getLogger().debug("Object {} cannot be marshaled.\n\tProperties: {}\n\tPath to file: {}",
-							colArr[i].getDescriptiveLabel(), colArr[i].toString(), item.getAbsolutePath());
-				} else {
-					// File may contain invalid content
-					item.delete();
-				}
-				throw new StoreException(e);
-			} catch (IOException e) {
+			} catch (IOException | JAXBException e) {
+				marshallingFailed(colArr[i], item);
+				flush();
 				throw new StoreException(e);
 			}
 		}
@@ -157,7 +174,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			for (int i = 0; i < files.size(); i++) {
 				new Add(files.get(i).getName(), files.get(i).getAbsolutePath()).execute(ctx.getBsxCtx());
 			}
-			new Flush().execute(ctx.getBsxCtx());
+			flush();
 		} catch (BaseXException e) {
 			throw new StoreException(e);
 		}
@@ -182,23 +199,23 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	}
 
 	@Override
-	public void replace(final T t) throws StorageException, ObjectWithIdNotFoundException {
+	public void replace(final T t, final EID newId) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
-		doDeleteAndAdd(t);
+		doDeleteAndAdd(t, newId);
 		fireEventUpdate(t);
 		updateLastModificationDate();
 	}
 
 	@Override
-	public final T update(final T t) throws StorageException, ObjectWithIdNotFoundException {
+	public final T update(final T t, final EID newId) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
-		doUpdate(t);
+		doUpdate(t, newId);
 		updateLastModificationDate();
 		return t;
 	}
 
 	// Fires the update event.
-	protected T doUpdate(final T t) throws StorageException, ObjectWithIdNotFoundException {
+	protected T doUpdate(final T t, final EID newId) throws StorageException, ObjectWithIdNotFoundException {
 		if (t instanceof RepositoryItemDto) {
 			// get old dto from db and set "replacedBy" property to the new dto
 			final RepositoryItemDto oldDtoInDb = ((RepositoryItemDto) getById(t.getId()).getDto());
@@ -218,29 +235,53 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 				oldVersion = new Version(oldDtoInDb.getVersion());
 			}
 
-			// increment version and add new dto
+			final EID changedId;
+			if (newId == null) {
+				changedId = EidFactory.getDefault().createUUID(
+						oldDtoInDb.getId().toString() + "." + ((RepositoryItemDto) t).getVersionAsStr());
+			} else {
+				if (exists(newId)) {
+					throw new StorageException("An item with ID " + newId + " already exists");
+				}
+				changedId = newId;
+			}
+			t.setId(changedId);
+			if (exists(t.getId())) {
+				ctx.getLogger().warn("Overwriting existing Dto " + t.getId());
+				doDeleteOrDisable(Collections.singleton(t.getId()), false);
+			}
+
+			// do internal updates
+			doUpdateProperties(t);
+			// ensure ID is not changed
+			t.setId(changedId);
+			// Increment version and change hash
 			((RepositoryItemDto) t).setVersion(oldVersion.incBugfix());
-			t.setId(EidFactory.getDefault().createUUID(
-					oldDtoInDb.getId().toString() + "." + ((RepositoryItemDto) t).getVersionAsStr()));
 			((RepositoryItemDto) t).setItemHash(createHash(t.toString()));
 
 			// Set replaceBy property and write back
+			// TODO we can not use changeProperty here because the property does not exist, maybe addProperty is required.
 			oldDtoInDb.setReplacedBy((RepositoryItemDto) t);
-			doDeleteAndAdd((T) oldDtoInDb);
+			doDeleteAndAdd((T) oldDtoInDb, null);
 			fireEventUpdate(oldDtoInDb);
 			updateLastModificationDate();
 
 			// Add new one
 			doMarshallAndAdd(t);
 		} else {
-			doDeleteAndAdd(t);
+			doDeleteAndAdd(t, newId);
 		}
 		return t;
 	}
 
-	protected void doDeleteAndAdd(final T t) throws StorageException, ObjectWithIdNotFoundException {
+	protected void doUpdateProperties(final T t) {}
+
+	protected void doDeleteAndAdd(final T t, final EID newId) throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
-		doDeleteOrDisable(Collections.singleton(t.getId()), false);
+		doDelete(t.getId(), false);
+		if (newId != null) {
+			t.setId(newId);
+		}
 		doMarshallAndAdd(t);
 	}
 
@@ -248,9 +289,9 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	public final Collection<T> updateAll(final Collection<T> collection)
 			throws StorageException, ObjectWithIdNotFoundException {
 		// OPTIMIZE could be tuned
-		final List<T> updatedDtos = new ArrayList<T>(collection.size());
+		final List<T> updatedDtos = new ArrayList<>(collection.size());
 		for (final T dto : collection) {
-			updatedDtos.add(doUpdate(dto));
+			updatedDtos.add(doUpdate(dto, null));
 		}
 		updateLastModificationDate();
 		return updatedDtos;
@@ -266,7 +307,6 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 
 	protected void doDeleteOrDisable(final Collection<EID> eids, boolean clean)
 			throws StorageException, ObjectWithIdNotFoundException {
-		final T disabledDto;
 		if (Disableable.class.isAssignableFrom(this.getDtoType())) {
 			// Check if IDs exist
 			for (final EID eid : eids) {
@@ -314,21 +354,45 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	 * @param newValue the new property value
 	 */
 	protected void updateProperty(final Collection<EID> ids, final String propertyXpath, final String newValue) {
-		final StringBuilder query = new StringBuilder("declare namespace etf = "
-				+ "\"http://www.interactive-instruments.de/etf/2.0\";"
+		final StringBuilder updateQuery = new StringBuilder(ETF_NAMESPACE_DECL
 				+ " for $item in db:open('etf-ds')");
-		query.append(queryPath);
-		query.append('[');
-		query.append(SUtils.concatStrWithPrefixAndSuffix(" or ", "@id = 'EID", "'", ids));
-		query.append("]/");
-		query.append(propertyXpath);
-		query.append(" return replace value of node $item with '");
-		query.append(newValue);
-		query.append('\'');
+		final String targetIdPredicates = SUtils.concatStrWithPrefixAndSuffix(" or ", "@id = 'EID", "'", ids);
+		updateQuery.append(queryPath);
+		updateQuery.append('[');
+		updateQuery.append(targetIdPredicates);
+		updateQuery.append("]/");
+		updateQuery.append(propertyXpath);
+		updateQuery.append(" return replace value of node $item with '");
+		updateQuery.append(newValue);
+		updateQuery.append('\'');
 		try {
-			new XQuery(query.toString()).execute(ctx.getBsxCtx());
+			new XQuery(updateQuery.toString()).execute(ctx.getBsxCtx());
 		} catch (final BaseXException e) {
-			ctx.getLogger().error("Internal error in updateProperty(). Query: {}", query.toString(), e);
+			ctx.getLogger().error("Internal error in updateProperty(). Query: {}", updateQuery, e);
+			throw new IllegalStateException("Internal error in updateProperty()", e);
+		}
+
+		// Todo implement BackgroundTaskWorker with a PriorityBlockingQueue
+		final String queryUpdatedData = ETF_NAMESPACE_DECL + "db:open('etf-ds')" + queryPath + "[" + targetIdPredicates + "]";
+		// Serialize the updated data
+		try (final QueryProcessor proc = new QueryProcessor(queryUpdatedData, ctx.getBsxCtx())) {
+			final Iter iter = proc.iter();
+			for (Item item; (item = iter.next()) != null;) {
+				final EID eid = EidFactory.getDefault().createUUID(
+						new String(((DBNode) item).attribute("id")));
+				final IFile file = getFile(eid);
+				if (!file.exists()) {
+					ctx.getLogger().error("Can not find backup file for {}", eid);
+					continue;
+				}
+				try (OutputStream fileoutput = new FileOutputStream(file)) {
+					proc.getSerializer(fileoutput).serialize(item);
+				} catch (IOException e) {
+					ctx.getLogger().error("Can write backup update file for {}", eid);
+				}
+			}
+		} catch (final QueryException e) {
+			ctx.getLogger().error("Internal error in updateProperty(). Query: {}", queryUpdatedData, e);
 			throw new IllegalStateException("Internal error in updateProperty()", e);
 		}
 	}

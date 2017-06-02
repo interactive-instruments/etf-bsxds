@@ -124,6 +124,15 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
 		 */
 	}
 
+	public boolean exists2(final EID eid) {
+		try {
+			return "true".equals(new XQuery(ETF_NAMESPACE_DECL +
+					"exists(db:open('etf-ds')" + queryPath + "[@id = 'EID" + eid.toString() + "'])").execute(ctx.getBsxCtx()));
+		} catch (BaseXException e) {
+			throw new IllegalStateException("Internal error in isDisabled(), ", e);
+		}
+	}
+
 	@Override
 	public boolean isDisabled(final EID eid) {
 		if (!exists(eid)) {

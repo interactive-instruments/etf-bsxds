@@ -413,6 +413,9 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	}
 
 	IFile getAttachmentDir() {
+		if (!isInitialized()) {
+			throw new IllegalStateException("BSX Data storage not initialized");
+		}
 		return attachmentDir;
 	}
 
@@ -425,22 +428,44 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Clean unused items and optimize data storage
 	 */
 	@Override
-	public void cleanAndOptimize() {
+	public synchronized void cleanAndOptimize() {
 		this.initialized.set(false);
 		long start = System.currentTimeMillis();
 		try {
-			// Sleep 3 seconds
+			// Wait for other operations to finish
 			wait(3000);
 		} catch (final InterruptedException e) {
 			ExcUtils.suppress(e);
 		}
 
-		// TODO delete unused items
-		logger.info("Optimizing " + ETF_DB_NAME);
+		logger.info("Creating backup... of {}...", ETF_DB_NAME);
+		try {
+			createBackup();
+			logger.info("[OK]");
+		} catch (StorageException e) {
+			logger.error("[Failed]: {}");
+			logger.error("Try to reset data storage manually!");
+			return;
+		}
+
+		logger.info("Removing unreferenced items in {}...", ETF_DB_NAME);
+		try {
+			// TODO delete disabled / unreferenced items
+			new XQuery("").execute(ctx);
+			logger.info("[OK]");
+		} catch (BaseXException e) {
+			logger.error("[Failed]: {}");
+			logger.error("Try to reset data storage manually!");
+			return;
+		}
+
+		logger.info("Optimizing {}...", ETF_DB_NAME);
 		try {
 			new OptimizeAll().execute(ctx);
+			logger.info("[OK]");
 		} catch (BaseXException e) {
-			logger.error("Optimization failed: {} - Try to reset data storage manually!");
+			logger.error("[Failed]: {}");
+			logger.error("Try to reset data storage manually!");
 			return;
 		}
 		logger.info("Cleaned and optimized store in: " + TimeUtils.currentDurationAsMinsSeconds(start));
@@ -657,7 +682,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	 * Note: the member variables of these proxy classes are never accessed, so avoid access
 	 * via reflection!
 	 */
-	private final void initLazyDtoProxies()
+	private void initLazyDtoProxies()
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		for (final Map.Entry<Class<? extends Dto>, Dao<? extends Dto>> classDaoEntry : daoMapping.entrySet()) {
 			final Class<? extends Dto> classType = classDaoEntry.getKey();
@@ -679,7 +704,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		}
 	}
 
-	private final void initDtoCacheAccessProxies() {
+	private void initDtoCacheAccessProxies() {
 		final Class[] treeModelDtos = {
 				TestModuleDto.class, TestCaseDto.class, TestStepDto.class, TestAssertionDto.class
 		};

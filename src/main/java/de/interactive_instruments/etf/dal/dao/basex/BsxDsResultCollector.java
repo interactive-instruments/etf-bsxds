@@ -31,11 +31,14 @@ import de.interactive_instruments.etf.dal.dao.DataStorage;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
+import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestResultCollector;
 import de.interactive_instruments.etf.testdriver.TestRunLogger;
+import de.interactive_instruments.etf.testdriver.TestTaskEndListener;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.MimeTypeUtilsException;
+import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
@@ -54,6 +57,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	private final XmlTestResultWriter writer;
 	private final int errorLimit;
 	private boolean internalError = false;
+	private TestTaskEndListener listener;
 
 	public BsxDsResultCollector(final DataStorage dataStorage, final TestRunLogger testRunLogger, final IFile resultFile,
 			final IFile attachmentDir, final TestTaskDto testTaskDto) {
@@ -417,9 +421,14 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 							errorMessage, testRunLogger.getLogFile(),
 							null, null, null);
 				}
-				return ((AbstractBsxStreamWriteDao) dataStorage.getDao(
-						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile)).getId();
-			} catch (XMLStreamException | IOException e) {
+
+				final EID resultId = ((AbstractBsxStreamWriteDao) dataStorage.getDao(
+						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
+				if (listener != null) {
+					listener.testTaskFinished(dataStorage.getDao(TestTaskResultDto.class).getById(resultId).getDto());
+				}
+				return resultId.toString();
+			} catch (XMLStreamException | ObjectWithIdNotFoundException | IOException e) {
 				throw new IllegalStateException("Could not save internal error", e);
 			}
 		}
@@ -429,5 +438,10 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	@Override
 	public void release() {
 
+	}
+
+	@Override
+	public void registerTestTaskEndListener(final TestTaskEndListener listener) {
+		this.listener = listener;
 	}
 }

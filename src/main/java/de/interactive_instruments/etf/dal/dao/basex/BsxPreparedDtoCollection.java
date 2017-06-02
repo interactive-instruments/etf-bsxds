@@ -207,7 +207,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	private Set<EID> ensureIdsQueried() {
 		try {
 			final ByteArrayOutputStream output = new ByteArrayOutputStream(32784);
-			bsXquery.createCopy().parameter("levelOfDetail", "simple").parameter("fields", "@id").execute(output);
+			bsXquery.createCopy().parameter("fields", "@id").execute(output);
 			final XPath xpath = XmlUtils.newXPath();
 			final String xpathExpression = "/etf:DsResultSet/etf:*[1]/etf:*/@id";
 			final NodeList ns = ((NodeList) xpath.evaluate(xpathExpression, new InputSource(
@@ -287,19 +287,25 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer("BsxPreparedDtoCollection{");
-		sb.append("xquery=").append(bsXquery.toString());
-		sb.append(", size=").append(cachedDtos != null ? cachedDtos.size() : "unknown");
-		final Set<EID> qids;
+		sb.append("xquery='").append(bsXquery.toString());
+		sb.append("', size=");
+		if (cachedDtos != null) {
+			sb.append(cachedDtos.size());
+		} else if (ids != null) {
+			sb.append(ids.size());
+		} else {
+			sb.append("unknown");
+		}
+		sb.append(", ids={");
 		if (mappedDtos == null) {
 			if (ids != null) {
-				qids = ids;
+				sb.append(SUtils.concatStr(",", ids));
 			} else {
-				qids = null;
+				sb.append("unresolved");
 			}
 		} else {
-			qids = mappedDtos.keySet();
+			sb.append(SUtils.concatStr(",", mappedDtos.keySet()));
 		}
-		sb.append(", ids={").append(qids != null ? SUtils.concatStr(",", qids) : "unresolved");
 		sb.append("}}");
 		return sb.toString();
 	}

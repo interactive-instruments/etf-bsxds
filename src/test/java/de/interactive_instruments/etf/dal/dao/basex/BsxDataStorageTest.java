@@ -41,7 +41,7 @@ public class BsxDataStorageTest {
 	 *
 	 * @throws SAXException
 	 */
-	@Test(timeout = 20000)
+	@Test(timeout = 25000)
 	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException,
 			InitializationException, StorageException, IOException {
 		BsxTestUtils.ensureInitialization();
@@ -50,7 +50,7 @@ public class BsxDataStorageTest {
 		assertNotNull(DATA_STORAGE.getSchema().newValidator());
 	}
 
-	@Test(timeout = 20000)
+	@Test(timeout = 25000)
 	public void releaseAndInit() throws ConfigurationException, InvalidStateTransitionException, InitializationException {
 		assertTrue(DATA_STORAGE.isInitialized());
 		DATA_STORAGE.release();

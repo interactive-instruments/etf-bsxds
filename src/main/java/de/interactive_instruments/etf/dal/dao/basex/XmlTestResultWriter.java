@@ -455,7 +455,7 @@ final class XmlTestResultWriter implements Releasable {
 		errorWriter.writeAttribute("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation",
 				ETF_NS + " " + ETF_RESULT_XSD);
 		errorWriter.writeAttribute("xmlns", ETF_NS);
-		errorWriter.writeAttribute("id",   ID_PREFIX + UUID.randomUUID().toString());
+		errorWriter.writeAttribute("id", ID_PREFIX + UUID.randomUUID().toString());
 
 		errorWriter.writeStartElement("testObject");
 		errorWriter.writeAttribute("ref", ID_PREFIX + testObjectRef);

@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 
 import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestStepResultCollector;
+import de.interactive_instruments.etf.testdriver.TestTaskEndListener;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
@@ -180,5 +181,12 @@ final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector
 	@Override
 	public void release() {
 
+	}
+
+	@Override
+	public void registerTestTaskEndListener(final TestTaskEndListener listener) {
+		throw new UnsupportedOperationException(
+				"Operation not supported by collector, "
+						+ "illegal delegation from parent collector");
 	}
 }

@@ -53,19 +53,12 @@ class BsxTestUtils {
 		return String.format("%05d", i);
 	}
 
-	static void ensureInitialization() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			StorageException, IOException {
+	static void ensureInitialization()
+			throws ConfigurationException, InvalidStateTransitionException, InitializationException, IOException {
 		if (!DATA_STORAGE.isInitialized()) {
 
-			if (System.getenv("ETF_DS_DIR") != null) {
-				DATA_STORAGE_DIR = new IFile(System.getenv("ETF_DS_DIR"));
-				DATA_STORAGE_DIR.mkdirs();
-			} else if (new IFile("./build").exists()) {
-				DATA_STORAGE_DIR = new IFile("./build/tmp/etf-ds");
-				DATA_STORAGE_DIR.mkdirs();
-			} else {
-				DATA_STORAGE_DIR = null;
-			}
+			DATA_STORAGE_DIR = new IFile("./build/tmp/etf-ds");
+			DATA_STORAGE_DIR.mkdirs();
 
 			final IFile styleDir = new IFile("./src/main/resources/xslt/default/style");
 			styleDir.expectDirIsReadable();

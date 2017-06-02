@@ -15,6 +15,8 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.util.List;
+
 import javax.xml.validation.Schema;
 
 import org.basex.core.BaseXException;
@@ -23,8 +25,12 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import de.interactive_instruments.etf.dal.dto.Dto;
+import de.interactive_instruments.etf.dal.dto.ModelItemTreeNode;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
+import de.interactive_instruments.etf.dal.dto.test.TestModelItemDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
@@ -76,6 +82,21 @@ final class ExecutableTestSuiteDao extends AbstractBsxStreamWriteDao<ExecutableT
 				throw new SAXException(exception);
 			}
 		}
+	}
 
+	private void updateChildrenIds(final List<? extends TestModelItemDto> children, int maxDepth) {
+		if (children != null && maxDepth > 0) {
+			for (final ModelItemTreeNode child : children) {
+				if (child instanceof Dto) {
+					((Dto) child).setId(EidFactory.getDefault().createRandomId());
+				}
+				updateChildrenIds(child.getChildren(), --maxDepth);
+			}
+		}
+	}
+
+	@Override
+	protected void doUpdateProperties(final ExecutableTestSuiteDto executableTestSuiteDto) {
+		updateChildrenIds(executableTestSuiteDto.getChildren(), 8);
 	}
 }

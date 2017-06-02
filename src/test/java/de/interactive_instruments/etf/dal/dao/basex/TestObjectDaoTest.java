@@ -62,7 +62,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestObjectDaoTest {
 
-	private static final String TO_DTO_1_REPLACED_ID = "893c4274-fce8-3543-ac13-c9e7a37b79ee";
+	private static final String TO_DTO_1_REPLACED_ID = "aa1b77e2-59d5-3ce6-bbe2-eb2b4c4ae61d";
 	final int maxDtos = 250;
 	private static WriteDao<TestObjectDto> writeDao;
 
@@ -323,6 +323,8 @@ public class TestObjectDaoTest {
 	@Test
 	public void test_5_0_update() throws StorageException, ObjectWithIdNotFoundException {
 
+		// This test case only works after a clean because the generated ID
+
 		// Clean
 		try {
 			writeDao.delete(EidFactory.getDefault().createAndPreserveStr(TO_DTO_1_REPLACED_ID));
@@ -356,6 +358,7 @@ public class TestObjectDaoTest {
 		// Write back
 		final TestObjectDto newDto = writeDao.update(preparedDto.getDto());
 		assertEquals("NEW LABEL", newDto.getLabel());
+		assertEquals(TO_DTO_1_REPLACED_ID, newDto.getId().getId());
 
 		// Check that the old one still exists
 		final PreparedDto<TestObjectDto> preparedOldDto = writeDao.getById(TO_DTO_1.getId());
@@ -375,7 +378,7 @@ public class TestObjectDaoTest {
 		assertEquals(newDto.toString(), preparedNewDto.getDto().toString());
 	}
 
-	@Test(expected = StoreException.class)
+	@Test(expected = StorageException.class)
 	public void test_5_1_fail_on_update_replaced_item() throws StorageException, ObjectWithIdNotFoundException {
 		test_5_0_update();
 		existsAndNotDisabled(TO_DTO_1);
@@ -441,7 +444,7 @@ public class TestObjectDaoTest {
 			});
 			assertEquals(2, result2.size());
 			assertNotNull(result2);
-			assertTrue(result2.toString().contains("cachedDtos=2"));
+			assertTrue(result2.toString().contains("size=2"));
 
 			final TestObjectDto dto1 = result2.get(TO_DTO_1_REPLACED_ID);
 			assertNotNull(dto1);
