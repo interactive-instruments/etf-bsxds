@@ -23,7 +23,9 @@ import java.io.StringReader;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 
 import de.interactive_instruments.IFile;
@@ -42,6 +44,7 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ResultCollectorTest {
 
 	static IFile attachmentDir = null;
