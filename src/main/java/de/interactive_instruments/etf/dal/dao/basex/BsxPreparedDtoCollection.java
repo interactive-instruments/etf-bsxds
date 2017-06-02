@@ -25,6 +25,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import de.interactive_instruments.SUtils;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -36,8 +37,8 @@ import de.interactive_instruments.etf.model.*;
 /**
  * A prepared XQuery statement for querying multiple items - without their references!
 
- * Every inherited Map or the streamTo method will execute the request,
- * except {@link #keySet() } which only queries the ids.
+ * Every inherited Map or the streamTo method will execute the either a request
+ * that queries the whole Dtos or a simple request that queries all IDs.
  *
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
@@ -53,6 +54,22 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 		this.getter = getter;
 	}
 
+	private BsxPreparedDtoCollection(final BsxPreparedDtoCollection<T> preparedDtoCollection) {
+		super(preparedDtoCollection.bsXquery.createCopy());
+		this.getter = preparedDtoCollection.getter;
+		this.ids = preparedDtoCollection.ids;
+		if(preparedDtoCollection.mappedDtos!=null) {
+			this.mappedDtos = new HashMap<>(preparedDtoCollection.mappedDtos);
+		}else if(this.cachedDtos!=null){
+			this.cachedDtos = new ArrayList<>(preparedDtoCollection.cachedDtos);
+		}
+	}
+
+	@Override
+	public EidMap<T> createCopy() {
+		return new BsxPreparedDtoCollection(this);
+	}
+
 	@Override
 	public Iterator<T> iterator() {
 		enusreDtosQueried();
@@ -61,13 +78,23 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 
 	@Override
 	public int size() {
-		enusreDtosQueried();
+		if (cachedDtos == null) {
+			if (ids == null) {
+				return ensureIdsQueried().size();
+			}
+			return ids.size();
+		}
 		return cachedDtos.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		enusreDtosQueried();
+		if (cachedDtos == null) {
+			if (ids == null) {
+				return ensureIdsQueried().isEmpty();
+			}
+			return ids.isEmpty();
+		}
 		return cachedDtos.isEmpty();
 	}
 
@@ -118,29 +145,16 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 				mappedDtos.clear();
 			}
 		}
+		if(ids!=null) {
+			ids.clear();
+		}
 	}
 
 	@Override
 	public Set<EID> keySet() {
 		if (mappedDtos == null) {
 			if (ids == null) {
-				try {
-					final ByteArrayOutputStream output = new ByteArrayOutputStream(32784);
-					bsXquery.createCopy().parameter("levelOfDetail", "simple").parameter("fields", "@id").execute(output);
-					final XPath xpath = XmlUtils.newXPath();
-					final String xpathExpression = "/etf:DsResultSet/etf:*[1]/etf:*/@id";
-					final NodeList ns = ((NodeList) xpath.evaluate(xpathExpression, new InputSource(
-							new ByteArrayInputStream(output.toByteArray())), XPathConstants.NODESET));
-					ids = new HashSet<>();
-					for (int index = 0; index < ns.getLength(); index++) {
-						ids.add(EidFactory.getDefault().createUUID(ns.item(index).getTextContent()));
-					}
-				} catch (ClassCastException | NullPointerException | XPathExpressionException | IOException e) {
-					// Use fallback
-					logError(e);
-					enusreDtosQueried();
-					return mappedDtos.keySet();
-				}
+				return ensureIdsQueried();
 			}
 			return ids;
 		}
@@ -166,6 +180,9 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 
 	@Override
 	public T _internalGet(final Object o) {
+		if(ids!=null && !ids.contains(o)) {
+			return null;
+		}
 		ensureMap();
 		return mappedDtos.get(o);
 	}
@@ -177,8 +194,35 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 
 	@Override
 	public boolean _internalContainsKey(final Object o) {
+		if(ids!=null && !ids.contains(o)) {
+			return false;
+		}
 		ensureMap();
 		return mappedDtos.containsKey(o);
+	}
+
+	/**
+	 *
+	 */
+	private Set<EID> ensureIdsQueried() {
+		try {
+			final ByteArrayOutputStream output = new ByteArrayOutputStream(32784);
+			bsXquery.createCopy().parameter("levelOfDetail", "simple").parameter("fields", "@id").execute(output);
+			final XPath xpath = XmlUtils.newXPath();
+			final String xpathExpression = "/etf:DsResultSet/etf:*[1]/etf:*/@id";
+			final NodeList ns = ((NodeList) xpath.evaluate(xpathExpression, new InputSource(
+					new ByteArrayInputStream(output.toByteArray())), XPathConstants.NODESET));
+			ids = new HashSet<>();
+			for (int index = 0; index < ns.getLength(); index++) {
+				ids.add(EidFactory.getDefault().createUUID(ns.item(index).getTextContent()));
+			}
+			return ids;
+		} catch (ClassCastException | NullPointerException | XPathExpressionException | IOException e) {
+			// Use fallback
+			logError(e);
+			ensureMap();
+			return mappedDtos.keySet();
+		}
 	}
 
 	/**
@@ -194,6 +238,20 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 				cachedDtos = getter.getMainDtos(result);
 				if (cachedDtos == null) {
 					throw new IllegalStateException("Data storage returned no data for collection");
+				}
+				// consistency check
+				if(ids!=null) {
+					// Inconsistencies can be avoided by not reusing the prepared collection for multiple calls.
+					if(ids.size()!=cachedDtos.size()) {
+						throw new ConcurrentModificationException("Data storage changed since last call. "
+								+ "Actual size is "+cachedDtos.size()+", previous size was "+ids.size()+".");
+					}
+					for (final T cachedDto : cachedDtos) {
+						if(!ids.contains(cachedDto.getId())) {
+							throw new ConcurrentModificationException("Data storage changed since last call. "
+									+ "The object "+cachedDto.getId()+" was not fetched before.");
+						}
+					}
 				}
 			} catch (IOException | JAXBException e) {
 				logError(e);
@@ -223,19 +281,6 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 			return -1;
 		}
 		final BsxPreparedDtoCollection bsxO = (BsxPreparedDtoCollection) o;
-		if (cachedDtos != null && bsxO.cachedDtos != null) {
-			final int sizeCmp = cachedDtos.size() - bsxO.cachedDtos.size();
-			if (sizeCmp != 0) {
-				return sizeCmp;
-			}
-			for (int i = 0; i < cachedDtos.size(); i++) {
-				final int cmp = cachedDtos.get(i).getId().compareTo(
-						((Dto) bsxO.cachedDtos.get(i)).getId());
-				if (cmp != 0) {
-					return cmp;
-				}
-			}
-		}
 		return this.bsXquery.toString().compareTo(bsxO.bsXquery.toString());
 	}
 
@@ -243,10 +288,23 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 	public String toString() {
 		final StringBuffer sb = new StringBuffer("BsxPreparedDtoCollection{");
 		sb.append("xquery=").append(bsXquery.toString());
-		sb.append(", cachedDtos=").append(cachedDtos != null ? cachedDtos.size() : "unresolved");
-		sb.append('}');
+		sb.append(", size=").append(cachedDtos != null ? cachedDtos.size() : "unknown");
+		final Set<EID> qids;
+		if (mappedDtos==null) {
+			if(ids!=null) {
+				qids=ids;
+			}else{
+				qids=null;
+			}
+		}else{
+			qids=mappedDtos.keySet();
+		}
+		sb.append(", ids={").append(qids != null ? SUtils.concatStr(",", qids) : "unresolved");
+		sb.append("}}");
 		return sb.toString();
 	}
+
+
 
 	@Override
 	public void release() {
