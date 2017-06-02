@@ -25,24 +25,24 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 
-import de.interactive_instruments.IFile;
-import de.interactive_instruments.etf.dal.dao.*;
-import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
-import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
-import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidFactory;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+import de.interactive_instruments.IFile;
+import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
+import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
+import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
-import org.junit.runners.MethodSorters;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
@@ -111,7 +111,7 @@ public class TagDaoTest {
 		boolean exceptionThrown = false;
 		try {
 			writeDao.getById(TAG_DTO_1.getId()).getDto();
-		}catch (ObjectWithIdNotFoundException e) {
+		} catch (ObjectWithIdNotFoundException e) {
 			exceptionThrown = true;
 		}
 		assertTrue(exceptionThrown);
@@ -139,7 +139,7 @@ public class TagDaoTest {
 		boolean exceptionThrown = false;
 		try {
 			writeDao.add(TAG_DTO_1);
-		}catch (StorageException e) {
+		} catch (StorageException e) {
 			exceptionThrown = true;
 		}
 		assertTrue(exceptionThrown);
@@ -161,7 +161,8 @@ public class TagDaoTest {
 	}
 
 	@Test
-	public void test_7_2_testDoubleStreamIntoStore() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException {
+	public void test_7_2_testDoubleStreamIntoStore()
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException {
 
 		final int sizeBefore = writeDao.getAll(ALL).size();
 		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
