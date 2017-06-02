@@ -91,7 +91,6 @@ var annotationBoxes= new Array('annotations_items.xsd',
 				'annotations_components', 
 				'annotations_testCases', 
 				'annotations_testAssertions', 
-				'annotations_testItemTypes', 
 				'annotations_executableTestSuites', 
 				'annotations_testObjects', 
 				'annotations_testObjectTypes', 
@@ -895,29 +894,12 @@ var modelBoxes= new Array('model_components',
                      </tr>
                      <tr>
                         <td class="firstColumn">
-                           <div class="floatLeft"><b>Annotations</b></div>
-                           <div class="floatRight"><input id="button_annotations_testItemTypes" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_testItemTypes');" class="control" /></div>
-                        </td>
-                        <td>
-                           <div id="annotations_testItemTypes" style="display:block">
-                              <div class="annotation">
-                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
-                                    <tr>
-                                       <td width="100%"><pre><span class="tT">not implemented yet</span></pre></td>
-                                    </tr>
-                                 </table>
-                              </div>
-                           </div>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td class="firstColumn">
                            <div class="floatLeft"><b>Diagram</b></div>
                            <div class="floatRight"><input id="button_diagram_testItemTypes" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_testItemTypes');" class="control" /></div>
                         </td>
                         <td class="diagram">
                            <div id="diagram_testItemTypes" style="display:block"><img alt="Diagram" border="0" src="img/items_xsd_Element_testItemTypes.jpeg" usemap="#items_xsd_Element_testItemTypes" /><map name="items_xsd_Element_testItemTypes" id="items_xsd_Element_testItemTypes">
-                                 <area alt="test_xsd.tmp#TestItemType" href="test_xsd.html#TestItemType" coords="246,6,349,30" /></map></div>
+                                 <area alt="test_xsd.tmp#TestItemType" href="test_xsd.html#TestItemType" coords="226,6,329,30" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -990,9 +972,6 @@ var modelBoxes= new Array('model_components',
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
                                     <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testItemTypes"</span><span class="tEl">&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">not implemented yet</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:sequence</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> ref=</span><span class="tAV">"TestItemType"</span><span class="tEl">/&gt;</span><span class="tI">

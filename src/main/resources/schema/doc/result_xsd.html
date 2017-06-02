@@ -28,6 +28,7 @@
 				'properties_TestStepResult_TestStepResult_messages_message', 
 				'properties_TestStepResult_attachments', 
 				'properties_TestStepResult_TestStepResult_attachments_attachment', 
+				'properties_TestTaskResult_errorMessage', 
 				'properties_TestTaskResult_attachments', 
 				'properties_Attachment', 
 				'properties_Attachment_label', 
@@ -72,6 +73,7 @@ var sourceBoxes= new Array('source_TestTaskResult',
 				'source_TestStepResult_TestStepResult_messages_message', 
 				'source_TestStepResult_attachments', 
 				'source_TestStepResult_TestStepResult_attachments_attachment', 
+				'source_TestTaskResult_errorMessage', 
 				'source_TestTaskResult_attachments', 
 				'source_Attachment', 
 				'source_Attachment_label', 
@@ -121,6 +123,7 @@ var diagramBoxes= new Array('diagram_TestTaskResult',
 				'diagram_TestStepResult_TestStepResult_messages_message', 
 				'diagram_TestStepResult_attachments', 
 				'diagram_TestStepResult_TestStepResult_attachments_attachment', 
+				'diagram_TestTaskResult_errorMessage', 
 				'diagram_TestTaskResult_attachments', 
 				'diagram_Attachment', 
 				'diagram_Attachment_label', 
@@ -132,6 +135,7 @@ var diagramBoxes= new Array('diagram_TestTaskResult',
 var annotationBoxes= new Array('annotations_result.xsd', 
 				'annotations_TestStepResult_invokedTests', 
 				'annotations_ResultModelItemGroup_resultedFrom', 
+				'annotations_TestTaskResult_errorMessage', 
 				'annotations_TestTaskResult_attachments', 
 				'annotations_Attachment_label', 
 				'annotations_Attachment_encoding', 
@@ -545,12 +549,13 @@ var modelBoxes= new Array('model_TestTaskResult',
                                  <area alt="basicTypes_xsd.tmp#IdentifierAttributeGroup" href="basicTypes_xsd.html#IdentifierAttributeGroup" coords="157,43,342,69" />
                                  <area alt="result_xsd.tmp#TestTaskResult_testObject" href="result_xsd.html#TestTaskResult_testObject" coords="211,91,297,115" />
                                  <area alt="result_xsd.tmp#TestTaskResult_testModuleResults" href="result_xsd.html#TestTaskResult_testModuleResults" coords="211,125,340,149" />
-                                 <area alt="result_xsd.tmp#TestTaskResult_attachments" href="result_xsd.html#TestTaskResult_attachments" coords="211,159,308,183" />
-                                 <area alt="result_xsd.tmp#ResultModelItemGroup_resultedFrom" href="result_xsd.html#ResultModelItemGroup_resultedFrom" coords="296,386,399,410" />
-                                 <area alt="result_xsd.tmp#ResultModelItemGroup_startTimestamp" href="result_xsd.html#ResultModelItemGroup_startTimestamp" coords="296,450,411,474" />
-                                 <area alt="result_xsd.tmp#ResultModelItemGroup_duration" href="result_xsd.html#ResultModelItemGroup_duration" coords="296,484,373,508" />
-                                 <area alt="result_xsd.tmp#ResultModelItemGroup_status" href="result_xsd.html#ResultModelItemGroup_status" coords="296,518,360,542" />
-                                 <area alt="result_xsd.tmp#ResultModelItemGroup" href="result_xsd.html#ResultModelItemGroup" coords="214,226,391,252" /></map></div>
+                                 <area alt="result_xsd.tmp#TestTaskResult_errorMessage" href="result_xsd.html#TestTaskResult_errorMessage" coords="211,159,316,183" />
+                                 <area alt="result_xsd.tmp#TestTaskResult_attachments" href="result_xsd.html#TestTaskResult_attachments" coords="211,249,308,273" />
+                                 <area alt="result_xsd.tmp#ResultModelItemGroup_resultedFrom" href="result_xsd.html#ResultModelItemGroup_resultedFrom" coords="296,476,399,500" />
+                                 <area alt="result_xsd.tmp#ResultModelItemGroup_startTimestamp" href="result_xsd.html#ResultModelItemGroup_startTimestamp" coords="296,540,411,564" />
+                                 <area alt="result_xsd.tmp#ResultModelItemGroup_duration" href="result_xsd.html#ResultModelItemGroup_duration" coords="296,574,373,598" />
+                                 <area alt="result_xsd.tmp#ResultModelItemGroup_status" href="result_xsd.html#ResultModelItemGroup_status" coords="296,608,360,632" />
+                                 <area alt="result_xsd.tmp#ResultModelItemGroup" href="result_xsd.html#ResultModelItemGroup" coords="214,316,391,342" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -589,12 +594,12 @@ var modelBoxes= new Array('model_TestTaskResult',
                         <td class="firstColumn"><b>Model</b><div class="floatRight"><input id="button_model_TestTaskResult" type="image" src="img/btM.gif" value="-" onclick="switchState('model_TestTaskResult');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="model_TestTaskResult" style="display:block"><b><a href="result_xsd.html#TestTaskResult_testObject" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testObject</a></b> , <b><a href="result_xsd.html#TestTaskResult_testModuleResults" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testModuleResults</a></b> , <b><a href="result_xsd.html#TestTaskResult_attachments" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">attachments</a></b> , <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent{0,1}</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_resultedFrom" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">resultedFrom</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_startTimestamp" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">startTimestamp</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_duration" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">duration</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_status" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">status</a></b></div>
+                           <div id="model_TestTaskResult" style="display:block"><b><a href="result_xsd.html#TestTaskResult_testObject" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testObject</a></b> , <b><a href="result_xsd.html#TestTaskResult_testModuleResults" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testModuleResults{0,1}</a></b> , <b><a href="result_xsd.html#TestTaskResult_errorMessage" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">errorMessage{0,1}</a></b> , <b><a href="result_xsd.html#TestTaskResult_attachments" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">attachments</a></b> , <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent{0,1}</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_resultedFrom" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">resultedFrom</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_startTimestamp" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">startTimestamp</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_duration" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">duration</a></b> , <b><a href="result_xsd.html#ResultModelItemGroup_status" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">status</a></b></div>
                         </td>
                      </tr>
                      <tr>
                         <td class="firstColumn"><b>Children</b></td>
-                        <td><b><a href="result_xsd.html#TestTaskResult_attachments" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">attachments</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_duration" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">duration</a></b>, <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_resultedFrom" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">resultedFrom</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_startTimestamp" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">startTimestamp</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_status" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">status</a></b>, <b><a href="result_xsd.html#TestTaskResult_testModuleResults" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testModuleResults</a></b>, <b><a href="result_xsd.html#TestTaskResult_testObject" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testObject</a></b></td>
+                        <td><b><a href="result_xsd.html#TestTaskResult_attachments" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">attachments</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_duration" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">duration</a></b>, <b><a href="result_xsd.html#TestTaskResult_errorMessage" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">errorMessage</a></b>, <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_resultedFrom" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">resultedFrom</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_startTimestamp" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">startTimestamp</a></b>, <b><a href="result_xsd.html#ResultModelItemGroup_status" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">status</a></b>, <b><a href="result_xsd.html#TestTaskResult_testModuleResults" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testModuleResults</a></b>, <b><a href="result_xsd.html#TestTaskResult_testObject" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">testObject</a></b></td>
                      </tr>
                      <tr>
                         <td class="firstColumn">
@@ -607,7 +612,8 @@ var modelBoxes= new Array('model_TestTaskResult',
                                  <tr>
                                     <td width="100%"><pre><span class="tEl">&lt;TestTaskResult</span><span class="tT"> </span><span class="tAN">id=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">xmlns=</span><span class="tAV">"http://www.interactive-instruments.de/etf/2.0"</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;testObject</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/testObject&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;testModuleResults</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/testModuleResults&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;testModuleResults</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/testModuleResults&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;errorMessage</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/errorMessage&gt;</span><span class="tI">
   </span><span class="tEl">&lt;attachments</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/attachments&gt;</span><span class="tI">
   </span><span class="tEl">&lt;parent</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/parent&gt;</span><span class="tI">
   </span><span class="tEl">&lt;resultedFrom</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/resultedFrom&gt;</span><span class="tI">
@@ -667,12 +673,17 @@ var modelBoxes= new Array('model_TestTaskResult',
   </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:sequence</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testObject"</span><span class="tAN"> type=</span><span class="tAV">"RefType"</span><span class="tEl">/&gt;</span><span class="tI">
-      </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testModuleResults"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testModuleResults"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tEl">&gt;</span><span class="tI">
         </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
           </span><span class="tEl">&lt;xs:sequence</span><span class="tAN"> minOccurs=</span><span class="tAV">"1"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
             </span><span class="tEl">&lt;xs:element</span><span class="tAN"> ref=</span><span class="tAV">"TestModuleResult"</span><span class="tEl">/&gt;</span><span class="tI">
           </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
         </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"errorMessage"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">A low level error from which the test driver could not recover and which led to the termination of the tests. No result information could be gather and it is unknown whether the Test Object is valid or not.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"attachments"</span><span class="tEl">&gt;</span><span class="tI">
         </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
@@ -812,6 +823,10 @@ var modelBoxes= new Array('model_TestTaskResult',
                                     <td class="firstColumn" style="white-space: nowrap;">content</td>
                                     <td><b>complex</b></td>
                                  </tr>
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">minOccurs</td>
+                                    <td><b>0</b></td>
+                                 </tr>
                               </table>
                            </div>
                         </td>
@@ -853,7 +868,7 @@ var modelBoxes= new Array('model_TestTaskResult',
                            <div id="source_TestTaskResult_testModuleResults" style="display:block">
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
-                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testModuleResults"</span><span class="tEl">&gt;</span><span class="tI">
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testModuleResults"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:sequence</span><span class="tAN"> minOccurs=</span><span class="tAV">"1"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> ref=</span><span class="tAV">"TestModuleResult"</span><span class="tEl">/&gt;</span><span class="tI">
@@ -3123,6 +3138,104 @@ var modelBoxes= new Array('model_TestTaskResult',
             <td class="rt_lineBottom"></td>
             <td class="rt_cornerBottomRight"></td>
          </tr>
+      </table><a id="TestTaskResult_errorMessage"></a><div class="componentTitle">Element <span class="qname"><b><a href="result_xsd.html#TestTaskResult" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">TestTaskResult</a></b> / errorMessage</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.interactive-instruments.de/etf/2.0</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_TestTaskResult_errorMessage" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_TestTaskResult_errorMessage');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="annotations_TestTaskResult_errorMessage" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tr>
+                                       <td width="100%"><pre><span class="tT">A low level error from which the test driver could not</span><span class="tI">
+</span><span class="tT">recover and which led to the termination of the tests. No result</span><span class="tI">
+</span><span class="tT">information could be gather and it is unknown whether the Test Object is</span><span class="tI">
+</span><span class="tT">valid or not.</span></pre></td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_TestTaskResult_errorMessage" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_TestTaskResult_errorMessage');" class="control" /></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_TestTaskResult_errorMessage" style="display:block"><img alt="Diagram" border="0" src="img/result_xsd_Element_errorMessage.jpeg" /></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_TestTaskResult_errorMessage" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_TestTaskResult_errorMessage');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="properties_TestTaskResult_errorMessage" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">content</td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">minOccurs</td>
+                                    <td><b>0</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_TestTaskResult_errorMessage" type="image" src="img/btM.gif" value="-" onclick="switchState('source_TestTaskResult_errorMessage');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="source_TestTaskResult_errorMessage" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"errorMessage"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">A low level error from which the test driver could not recover and which led to the termination of the tests. No result information could be gather and it is unknown whether the Test Object is valid or not.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
       </table><a id="TestTaskResult_attachments"></a><div class="componentTitle">Element <span class="qname"><b><a href="result_xsd.html#TestTaskResult" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for result.xsd')">TestTaskResult</a></b> / attachments</span></div>
       <table class="rt">
          <tr>
@@ -3379,7 +3492,8 @@ var modelBoxes= new Array('model_TestTaskResult',
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">Optional type to describe the kind of attachment</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">Optional type to describe the kind of</span><span class="tI">
+</span><span class="tT">attachment</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>
@@ -4215,7 +4329,8 @@ var modelBoxes= new Array('model_TestTaskResult',
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">Optional type to describe the kind of attachment</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">Optional type to describe the kind of</span><span class="tI">
+</span><span class="tT">attachment</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
