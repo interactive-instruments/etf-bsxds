@@ -51,6 +51,7 @@
 		<x:e key="FAILED">Failed</x:e>
 		<x:e key="PASSED">Passed</x:e>
 		<x:e key="PASSED_MANUAL">Passed, manual checks required</x:e>
+		<x:e key="INTERNAL_ERROR">Internal error in test engine occured</x:e>
 		<x:e key="WARNING">Passed with warnings</x:e>
 		<x:e key="INFO">Passed with notes</x:e>
 		<x:e key="SKIPPED">Skipped</x:e>
@@ -135,6 +136,7 @@
 		<x:e key="FAILED">Fehler</x:e>
 		<x:e key="PASSED">Bestanden</x:e>
 		<x:e key="PASSED_MANUAL">Bestanden, manuelle Prüfungen</x:e>
+		<x:e key="INTERNAL_ERROR">Interner Fehler in der Test-Engine aufgetreten</x:e>
 		<x:e key="WARNING">Bestanden mit Warnungen</x:e>
 		<x:e key="INFO">Bestanden mit Informationen</x:e>
 		<x:e key="SKIPPED">Ausgelassen</x:e>
