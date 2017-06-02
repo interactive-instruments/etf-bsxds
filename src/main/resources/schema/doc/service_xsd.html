@@ -16,6 +16,7 @@
 				'properties_loc_ref', 
 				'properties_ext_href', 
 				'properties_ext_title', 
+				'properties_egaref_gaidref', 
 				'properties_EtfItemCollection_EtfItemCollection_previous_href', 
 				'properties_EtfItemCollection_EtfItemCollection_ref_href', 
 				'properties_EtfItemCollection_EtfItemCollection_next_href', 
@@ -25,6 +26,7 @@
 var facetsBoxes= new Array('facets_RepositoryItemGroup_remoteResource', 
 				'facets_loc_ref', 
 				'facets_ext_href', 
+				'facets_egaref_gaidref', 
 				'facets_EtfItemCollection_EtfItemCollection_previous_href', 
 				'facets_EtfItemCollection_EtfItemCollection_ref_href', 
 				'facets_EtfItemCollection_EtfItemCollection_next_href', 
@@ -32,6 +34,7 @@ var facetsBoxes= new Array('facets_RepositoryItemGroup_remoteResource',
 var usedByBoxes= new Array('usedBy_loc_ref', 
 				'usedBy_ext_href', 
 				'usedBy_ext_title', 
+				'usedBy_egaref_gaidref', 
 				'usedBy_EtfItemCollection_EtfItemCollection_previous_href', 
 				'usedBy_EtfItemCollection_EtfItemCollection_ref_href', 
 				'usedBy_EtfItemCollection_EtfItemCollection_next_href', 
@@ -47,9 +50,11 @@ var sourceBoxes= new Array('source_RepositoryItemGroup_remoteResource',
 				'source_EtfItemCollection_referencedItems', 
 				'source_loc', 
 				'source_ext', 
+				'source_egaref', 
 				'source_loc_ref', 
 				'source_ext_href', 
 				'source_ext_title', 
+				'source_egaref_gaidref', 
 				'source_EtfItemCollection_EtfItemCollection_previous_href', 
 				'source_EtfItemCollection_EtfItemCollection_ref_href', 
 				'source_EtfItemCollection_EtfItemCollection_next_href', 
@@ -68,6 +73,7 @@ var diagramBoxes= new Array('diagram_RepositoryItemGroup_remoteResource',
 				'diagram_EtfItemCollection_referencedItems', 
 				'diagram_loc', 
 				'diagram_ext', 
+				'diagram_egaref', 
 				'diagram_MetaDataItemGroup', 
 				'diagram_RepositoryItemGroup');
 var annotationBoxes= new Array('annotations_service.xsd', 
@@ -77,6 +83,7 @@ var annotationBoxes= new Array('annotations_service.xsd',
 				'annotations_EtfItemCollection_next', 
 				'annotations_loc', 
 				'annotations_ext', 
+				'annotations_egaref', 
 				'annotations_ext_title', 
 				'annotations_EtfItemCollection_position', 
 				'annotations_EtfItemCollection_returnedItems', 
@@ -86,7 +93,8 @@ var attributesBoxes= new Array('attributes_EtfItemCollection',
 				'attributes_EtfItemCollection_ref', 
 				'attributes_EtfItemCollection_next', 
 				'attributes_loc', 
-				'attributes_ext');
+				'attributes_ext', 
+				'attributes_egaref');
 var identityConstraintsBoxes= new Array('identityConstraints_EtfItemCollection');
 var modelBoxes= new Array('model_EtfItemCollection', 
 				'model_EtfItemCollection_referencedItems', 
@@ -596,19 +604,19 @@ var modelBoxes= new Array('model_EtfItemCollection',
                                  <area alt="items_xsd.tmp#testCases" href="items_xsd.html#testCases" coords="292,549,375,573" />
                                  <area alt="items_xsd.tmp#testAssertions" href="items_xsd.html#testAssertions" coords="292,613,401,637" />
                                  <area alt="items_xsd.tmp#testItemTypes" href="items_xsd.html#testItemTypes" coords="292,677,398,701" />
-                                 <area alt="items_xsd.tmp#executableTestSuites" href="items_xsd.html#executableTestSuites" coords="292,741,436,765" />
-                                 <area alt="items_xsd.tmp#testObjects" href="items_xsd.html#testObjects" coords="292,805,384,829" />
-                                 <area alt="items_xsd.tmp#testObjectTypes" href="items_xsd.html#testObjectTypes" coords="292,882,410,906" />
-                                 <area alt="items_xsd.tmp#credentials" href="items_xsd.html#credentials" coords="292,959,382,983" />
-                                 <area alt="items_xsd.tmp#users" href="items_xsd.html#users" coords="292,1023,353,1047" />
-                                 <area alt="items_xsd.tmp#tags" href="items_xsd.html#tags" coords="292,1087,346,1111" />
-                                 <area alt="items_xsd.tmp#translationTemplateBundles" href="items_xsd.html#translationTemplateBundles" coords="292,1164,472,1188" />
-                                 <area alt="items_xsd.tmp#resultStyles" href="items_xsd.html#resultStyles" coords="292,1228,385,1252" />
-                                 <area alt="items_xsd.tmp#abstractTestSuites" href="items_xsd.html#abstractTestSuites" coords="292,1292,422,1316" />
-                                 <area alt="items_xsd.tmp#testRunTemplates" href="items_xsd.html#testRunTemplates" coords="292,1369,419,1393" />
-                                 <area alt="items_xsd.tmp#testRuns" href="items_xsd.html#testRuns" coords="292,1433,370,1457" />
-                                 <area alt="items_xsd.tmp#testTaskResults" href="items_xsd.html#testTaskResults" coords="292,1510,407,1534" />
-                                 <area alt="service_xsd.tmp#EtfItemCollection_referencedItems" href="service_xsd.html#EtfItemCollection_referencedItems" coords="221,1587,339,1611" /></map></div>
+                                 <area alt="items_xsd.tmp#executableTestSuites" href="items_xsd.html#executableTestSuites" coords="292,711,436,735" />
+                                 <area alt="items_xsd.tmp#testObjects" href="items_xsd.html#testObjects" coords="292,775,384,799" />
+                                 <area alt="items_xsd.tmp#testObjectTypes" href="items_xsd.html#testObjectTypes" coords="292,852,410,876" />
+                                 <area alt="items_xsd.tmp#credentials" href="items_xsd.html#credentials" coords="292,929,382,953" />
+                                 <area alt="items_xsd.tmp#users" href="items_xsd.html#users" coords="292,993,353,1017" />
+                                 <area alt="items_xsd.tmp#tags" href="items_xsd.html#tags" coords="292,1057,346,1081" />
+                                 <area alt="items_xsd.tmp#translationTemplateBundles" href="items_xsd.html#translationTemplateBundles" coords="292,1134,472,1158" />
+                                 <area alt="items_xsd.tmp#resultStyles" href="items_xsd.html#resultStyles" coords="292,1198,385,1222" />
+                                 <area alt="items_xsd.tmp#abstractTestSuites" href="items_xsd.html#abstractTestSuites" coords="292,1262,422,1286" />
+                                 <area alt="items_xsd.tmp#testRunTemplates" href="items_xsd.html#testRunTemplates" coords="292,1339,419,1363" />
+                                 <area alt="items_xsd.tmp#testRuns" href="items_xsd.html#testRuns" coords="292,1403,370,1427" />
+                                 <area alt="items_xsd.tmp#testTaskResults" href="items_xsd.html#testTaskResults" coords="292,1480,407,1504" />
+                                 <area alt="service_xsd.tmp#EtfItemCollection_referencedItems" href="service_xsd.html#EtfItemCollection_referencedItems" coords="221,1557,339,1581" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -843,6 +851,18 @@ var modelBoxes= new Array('model_EtfItemCollection',
     </span><span class="tEl">&lt;xs:field</span><span class="tAN"> xpath=</span><span class="tAV">"@egaid"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:field</span><span class="tAN"> xpath=</span><span class="tAV">"version"</span><span class="tEl">/&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:unique&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:key</span><span class="tAN"> name=</span><span class="tAV">"TranslationMessageName"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:selector</span><span class="tAN"> xpath=</span><span class="tAV">"etf:referencedItems/etf:translationTemplateBundles/etf:TranslationTemplateBundle/etf:translationTemplateCollections/etf:LangTranslationTemplateCollection"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:field</span><span class="tAN"> xpath=</span><span class="tAV">"@name"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:key&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:keyref</span><span class="tAN"> name=</span><span class="tAV">"AssertionMessageTranslationReference"</span><span class="tAN"> refer=</span><span class="tAV">"TranslationMessageName"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:selector</span><span class="tAN"> xpath=</span><span class="tAV">"etf:referencedItems/etf:testTaskResults/etf:TestTaskResult/etf:testModuleResults/etf:TestModuleResult/etf:testCaseResults/etf:TestCaseResult/etf:testStepResults/etf:TestStepResult/etf:testAssertionResults/etf:TestAssertionResult/etf:messages/etf:message"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:field</span><span class="tAN"> xpath=</span><span class="tAV">"@ref"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:keyref&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:keyref</span><span class="tAN"> name=</span><span class="tAV">"TestStepMessageTranslationReference"</span><span class="tAN"> refer=</span><span class="tAV">"TranslationMessageName"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:selector</span><span class="tAN"> xpath=</span><span class="tAV">"etf:referencedItems/etf:testTaskResults/etf:TestTaskResult/etf:testModuleResults/etf:TestModuleResult/etf:testCaseResults/etf:TestCaseResult/etf:testStepResults/etf:TestStepResult/etf:messages/etf:message"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:field</span><span class="tAN"> xpath=</span><span class="tAV">"@ref"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:keyref&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
                                  </tr>
                               </table>
@@ -1255,18 +1275,18 @@ var modelBoxes= new Array('model_EtfItemCollection',
                                  <area alt="items_xsd.tmp#testCases" href="items_xsd.html#testCases" coords="217,66,300,90" />
                                  <area alt="items_xsd.tmp#testAssertions" href="items_xsd.html#testAssertions" coords="217,130,326,154" />
                                  <area alt="items_xsd.tmp#testItemTypes" href="items_xsd.html#testItemTypes" coords="217,194,323,218" />
-                                 <area alt="items_xsd.tmp#executableTestSuites" href="items_xsd.html#executableTestSuites" coords="217,258,361,282" />
-                                 <area alt="items_xsd.tmp#testObjects" href="items_xsd.html#testObjects" coords="217,322,309,346" />
-                                 <area alt="items_xsd.tmp#testObjectTypes" href="items_xsd.html#testObjectTypes" coords="217,399,335,423" />
-                                 <area alt="items_xsd.tmp#credentials" href="items_xsd.html#credentials" coords="217,476,307,500" />
-                                 <area alt="items_xsd.tmp#users" href="items_xsd.html#users" coords="217,540,278,564" />
-                                 <area alt="items_xsd.tmp#tags" href="items_xsd.html#tags" coords="217,604,271,628" />
-                                 <area alt="items_xsd.tmp#translationTemplateBundles" href="items_xsd.html#translationTemplateBundles" coords="217,681,397,705" />
-                                 <area alt="items_xsd.tmp#resultStyles" href="items_xsd.html#resultStyles" coords="217,745,310,769" />
-                                 <area alt="items_xsd.tmp#abstractTestSuites" href="items_xsd.html#abstractTestSuites" coords="217,809,347,833" />
-                                 <area alt="items_xsd.tmp#testRunTemplates" href="items_xsd.html#testRunTemplates" coords="217,886,344,910" />
-                                 <area alt="items_xsd.tmp#testRuns" href="items_xsd.html#testRuns" coords="217,950,295,974" />
-                                 <area alt="items_xsd.tmp#testTaskResults" href="items_xsd.html#testTaskResults" coords="217,1027,332,1051" /></map></div>
+                                 <area alt="items_xsd.tmp#executableTestSuites" href="items_xsd.html#executableTestSuites" coords="217,228,361,252" />
+                                 <area alt="items_xsd.tmp#testObjects" href="items_xsd.html#testObjects" coords="217,292,309,316" />
+                                 <area alt="items_xsd.tmp#testObjectTypes" href="items_xsd.html#testObjectTypes" coords="217,369,335,393" />
+                                 <area alt="items_xsd.tmp#credentials" href="items_xsd.html#credentials" coords="217,446,307,470" />
+                                 <area alt="items_xsd.tmp#users" href="items_xsd.html#users" coords="217,510,278,534" />
+                                 <area alt="items_xsd.tmp#tags" href="items_xsd.html#tags" coords="217,574,271,598" />
+                                 <area alt="items_xsd.tmp#translationTemplateBundles" href="items_xsd.html#translationTemplateBundles" coords="217,651,397,675" />
+                                 <area alt="items_xsd.tmp#resultStyles" href="items_xsd.html#resultStyles" coords="217,715,310,739" />
+                                 <area alt="items_xsd.tmp#abstractTestSuites" href="items_xsd.html#abstractTestSuites" coords="217,779,347,803" />
+                                 <area alt="items_xsd.tmp#testRunTemplates" href="items_xsd.html#testRunTemplates" coords="217,856,344,880" />
+                                 <area alt="items_xsd.tmp#testRuns" href="items_xsd.html#testRuns" coords="217,920,295,944" />
+                                 <area alt="items_xsd.tmp#testTaskResults" href="items_xsd.html#testTaskResults" coords="217,997,332,1021" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -1478,9 +1498,6 @@ var modelBoxes= new Array('model_EtfItemCollection',
     </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Local reference to item in collection</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:complexContent</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">ID Reference within the document</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:extension</span><span class="tAN"> base=</span><span class="tAV">"RefType"</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ref"</span><span class="tAN"> type=</span><span class="tAV">"IdRefType"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/xs:extension&gt;</span><span class="tI">
@@ -1527,7 +1544,7 @@ var modelBoxes= new Array('model_EtfItemCollection',
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">External reference</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">Reference to an external type</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -1613,12 +1630,9 @@ var modelBoxes= new Array('model_EtfItemCollection',
                                  <tr>
                                     <td width="100%"><pre><span class="tEl">&lt;xs:complexType</span><span class="tAN"> name=</span><span class="tAV">"ext"</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">External reference</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Reference to an external type</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:complexContent</span><span class="tEl">&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
-      </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Reference to an external type</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
-    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:extension</span><span class="tAN"> base=</span><span class="tAV">"RefType"</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"href"</span><span class="tAN"> type=</span><span class="tAV">"ExternalUriType"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"title"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"optional"</span><span class="tEl">&gt;</span><span class="tI">
@@ -1626,6 +1640,126 @@ var modelBoxes= new Array('model_EtfItemCollection',
           </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Optional description</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
         </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:extension&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:complexContent&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:complexType&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </table><a id="egaref"></a><div class="componentTitle">Complex Type <span class="qname">egaref</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.interactive-instruments.de/etf/2.0</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_egaref" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_egaref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="annotations_egaref" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tr>
+                                       <td width="100%"><pre><span class="tT">Reference to an external type</span></pre></td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_egaref" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_egaref');" class="control" /></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_egaref" style="display:block"><img alt="Diagram" border="0" src="img/service_xsd_Complex_Type_egaref.jpeg" usemap="#service_xsd_Complex_Type_egaref" /><map name="service_xsd_Complex_Type_egaref" id="service_xsd_Complex_Type_egaref">
+                                 <area alt="service_xsd.tmp#egaref_gaidref" href="service_xsd.html#egaref_gaidref" coords="197,108,338,150" /></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td>extension of <b><a href="basicTypes_xsd.html#RefType" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">RefType</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type hierarchy</b></td>
+                        <td>
+                           <ul class="internal">
+                              <li class="internal"><b><a href="basicTypes_xsd.html#RefType" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">RefType</a></b><ul class="internal">
+                                    <li class="internal"><b><a href="service_xsd.html#egaref" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">egaref</a></b></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_egaref" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_egaref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="attributes_egaref" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th width="10%">Type</th>
+                                       <th width="5%">Use</th>
+                                       <th></th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="service_xsd.html#egaref_gaidref" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for service.xsd')">gaidref</a></b></td>
+                                    <td><b><a href="basicTypes_xsd.html#EGAIDRefType" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">EGAIDRefType</a></b></td>
+                                    <td>required</td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_egaref" type="image" src="img/btM.gif" value="-" onclick="switchState('source_egaref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="source_egaref" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:complexType</span><span class="tAN"> name=</span><span class="tAV">"egaref"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Reference to an external type</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:complexContent</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:extension</span><span class="tAN"> base=</span><span class="tAV">"RefType"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"gaidref"</span><span class="tAN"> type=</span><span class="tAV">"EGAIDRefType"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/xs:extension&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:complexContent&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:complexType&gt;</span></pre></td>
@@ -1926,6 +2060,102 @@ var modelBoxes= new Array('model_EtfItemCollection',
     </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Optional description</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </table><a id="egaref_gaidref"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="service_xsd.html#egaref" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">egaref</a></b> / @gaidref</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b><a href="basicTypes_xsd.html#EGAIDRefType" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">EGAIDRefType</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_egaref_gaidref" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_egaref_gaidref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="properties_egaref_gaidref" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">use</td>
+                                    <td><b>required</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Facets</b></div>
+                           <div class="floatRight"><input id="button_facets_egaref_gaidref" type="image" src="img/btM.gif" value="-" onclick="switchState('facets_egaref_gaidref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="facets_egaref_gaidref" style="display:block">
+                              <table class="facetsTable">
+                                 <tr>
+                                    <td class="firstColumn">pattern</td>
+                                    <td width="30%"><b>https?://.*/egaid\.([a-z][a-z1-9\-\.]*)\.([a-z][a-z1-9\-]*)(:([0-9]+\.[0-9]+\.[0-9]+(-SNAPSHOT)?|latest))?</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_egaref_gaidref" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_egaref_gaidref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_egaref_gaidref" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="service_xsd.html#egaref" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">egaref</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_egaref_gaidref" type="image" src="img/btM.gif" value="-" onclick="switchState('source_egaref_gaidref');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="source_egaref_gaidref" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"gaidref"</span><span class="tAN"> type=</span><span class="tAV">"EGAIDRefType"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span></pre></td>
                                  </tr>
                               </table>
                            </div>
@@ -2684,7 +2914,8 @@ var modelBoxes= new Array('model_EtfItemCollection',
                                  <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" coords="354,731,453,755" />
                                  <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" coords="354,765,436,789" />
                                  <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" coords="354,799,466,823" />
-                                 <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" coords="354,833,408,857" />
+                                 <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_disabled" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_disabled" coords="354,833,430,857" />
+                                 <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" coords="354,897,408,921" />
                                  <area alt="basicTypes_xsd.tmp#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup" href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup" coords="272,98,442,124" /></map></div>
                         </td>
                      </tr>
@@ -2692,12 +2923,12 @@ var modelBoxes= new Array('model_EtfItemCollection',
                         <td class="firstColumn"><b>Model</b><div class="floatRight"><input id="button_model_RepositoryItemGroup" type="image" src="img/btM.gif" value="-" onclick="switchState('model_RepositoryItemGroup');" class="control" /></div>
                         </td>
                         <td>
-                           <div id="model_RepositoryItemGroup" style="display:block"><b><a href="service_xsd.html#RepositoryItemGroup_remoteResource" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">remoteResource{0,1}</a></b> , (<b><a href="basicTypes_xsd.html#label" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">label</a></b> | <b><a href="basicTypes_xsd.html#translatableLabel" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableLabel</a></b>) , (<b><a href="basicTypes_xsd.html#description" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">description</a></b> | <b><a href="basicTypes_xsd.html#translatableDescription" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableDescription</a></b>) , <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent{0,1}</a></b> , <b><a href="basicTypes_xsd.html#reference" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">reference{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_replacedBy" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">replacedBy{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_version" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">version</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_author" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">author</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">creationDate</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastEditor{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastUpdateDate{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">tags{0,1}</a></b></div>
+                           <div id="model_RepositoryItemGroup" style="display:block"><b><a href="service_xsd.html#RepositoryItemGroup_remoteResource" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">remoteResource{0,1}</a></b> , (<b><a href="basicTypes_xsd.html#label" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">label</a></b> | <b><a href="basicTypes_xsd.html#translatableLabel" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableLabel</a></b>) , (<b><a href="basicTypes_xsd.html#description" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">description</a></b> | <b><a href="basicTypes_xsd.html#translatableDescription" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableDescription</a></b>) , <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent{0,1}</a></b> , <b><a href="basicTypes_xsd.html#reference" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">reference{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_replacedBy" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">replacedBy{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_version" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">version</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_author" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">author</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">creationDate</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastEditor{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastUpdateDate{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_disabled" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">disabled{0,1}</a></b> , <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">tags{0,1}</a></b></div>
                         </td>
                      </tr>
                      <tr>
                         <td class="firstColumn"><b>Children</b></td>
-                        <td><b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_author" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">author</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">creationDate</a></b>, <b><a href="basicTypes_xsd.html#description" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">description</a></b>, <b><a href="basicTypes_xsd.html#label" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">label</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastEditor</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastUpdateDate</a></b>, <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent</a></b>, <b><a href="basicTypes_xsd.html#reference" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">reference</a></b>, <b><a href="service_xsd.html#RepositoryItemGroup_remoteResource" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">remoteResource</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_replacedBy" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">replacedBy</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">tags</a></b>, <b><a href="basicTypes_xsd.html#translatableDescription" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableDescription</a></b>, <b><a href="basicTypes_xsd.html#translatableLabel" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableLabel</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_version" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">version</a></b></td>
+                        <td><b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_author" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">author</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_creationDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">creationDate</a></b>, <b><a href="basicTypes_xsd.html#description" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">description</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_disabled" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">disabled</a></b>, <b><a href="basicTypes_xsd.html#label" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">label</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastEditor" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastEditor</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_lastUpdateDate" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">lastUpdateDate</a></b>, <b><a href="basicTypes_xsd.html#ModelItemGroup_parent" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">parent</a></b>, <b><a href="basicTypes_xsd.html#reference" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">reference</a></b>, <b><a href="service_xsd.html#RepositoryItemGroup_remoteResource" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for service.xsd')">remoteResource</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_replacedBy" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">replacedBy</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_tags" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">tags</a></b>, <b><a href="basicTypes_xsd.html#translatableDescription" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableDescription</a></b>, <b><a href="basicTypes_xsd.html#translatableLabel" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">translatableLabel</a></b>, <b><a href="basicTypes_xsd.html#http___www.interactive-instruments.de_etf_2.0_RepositoryItemGroup_version" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for basicTypes.xsd')">version</a></b></td>
                      </tr>
                      <tr>
                         <td class="firstColumn">
