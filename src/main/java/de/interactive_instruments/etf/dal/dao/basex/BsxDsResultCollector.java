@@ -143,8 +143,15 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		writer.close();
 		if (!this.internalError) {
 			try {
-				((AbstractBsxStreamWriteDao) dataStorage.getDao(
+				final EID resultId = ((AbstractBsxStreamWriteDao) dataStorage.getDao(
 						TestTaskResultDto.class)).addAndValidate(new FileInputStream(resultFile));
+				if (listener != null) {
+					try {
+						listener.testTaskFinished(dataStorage.getDao(TestTaskResultDto.class).getById(resultId).getDto());
+					} catch (ObjectWithIdNotFoundException e) {
+						testRunLogger.error("Failed to reload result {}", resultId);
+					}
+				}
 			} catch (StorageException e) {
 				testRunLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
 				throw e;
@@ -391,7 +398,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		if (!this.internalError) {
 			this.internalError = true;
 		}
-		throw new IllegalStateException("Not implemented");
+		internalError(e.getMessage(), (byte[]) null, null);
 	}
 
 	@Override
