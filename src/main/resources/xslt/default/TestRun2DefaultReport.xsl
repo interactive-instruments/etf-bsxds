@@ -499,10 +499,13 @@
 			<xsl:message terminate="yes">ERROR: Executable Test Suite <xsl:value-of select="./etf:resultedFrom/@ref"/> not found</xsl:message>
 		</xsl:if>
 		<xsl:variable name="resultItem" select="."/>
+		<xsl:variable name="internalError" select="exists($resultItem/etf:errorMessage)"/>
+		
 		<!-- Order by TestSuites -->
 		<div class="TestSuite" data-role="collapsible" data-theme="e" data-content-theme="e">
 			<xsl:attribute name="data-theme">
 				<xsl:choose>
+					<xsl:when test="$internalError">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
@@ -515,6 +518,7 @@
 			</xsl:attribute>
 			<xsl:attribute name="data-content-theme">
 				<xsl:choose>
+					<xsl:when test="$internalError">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
@@ -602,8 +606,21 @@
 				</xsl:call-template>
 			</table>
 			<br/>
-			<!-- TestModule result information -->
-			<xsl:apply-templates select="./etf:testModuleResults[1]/etf:TestModuleResult"/>
+			
+			<xsl:choose>
+				<xsl:when test="$internalError">
+					<h3>The Test Suite was not executed because the Test Driver returned an error.</h3>
+					<label for="error.{$resultItem/@id}">Error message</label>
+					<textarea id="error.{$resultItem/@id}" data-mini="true" readonly="readonly">
+						<xsl:value-of select="$resultItem/etf:errorMessage"/>
+					</textarea>
+					<p>Please contact the system administrator if the problem persists.</p>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- TestModule result information -->
+					<xsl:apply-templates select="./etf:testModuleResults[1]/etf:TestModuleResult"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</xsl:template>
 	<!-- Test module result information -->
