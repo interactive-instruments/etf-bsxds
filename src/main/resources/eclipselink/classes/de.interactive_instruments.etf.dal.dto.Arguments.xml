@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-29T16:25:18.68+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-06-02T14:14:13.213+02:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>applicableParamTypeName</name>
@@ -79,6 +79,15 @@
          </method-parameters>
       </method>
       <method>
+         <name>isEmpty</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>boolean</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>setValue</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -102,6 +111,15 @@
                </type-declaration>
             </method-parameter>
          </method-parameters>
+      </method>
+      <method>
+         <name>toString</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
       </method>
       <method>
          <name>value</name>

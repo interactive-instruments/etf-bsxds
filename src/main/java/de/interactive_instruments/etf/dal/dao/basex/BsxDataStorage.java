@@ -400,7 +400,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			new Open(ETF_DB_NAME).execute(ctx);
 		} catch (Exception e) {
 			try {
-				logger.warn("Opening of the data data storage failed, recreating it");
+				logger.warn("Opening of the data storage failed, recreating it");
 				reset();
 			} catch (Exception e2) {
 				throw new InitializationException("Recreation of etf-ds store failed: ", e2);

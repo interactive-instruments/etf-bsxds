@@ -5,8 +5,11 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-29T16:25:18.676+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-06-02T14:14:13.222+02:00</last-refresh-timestamp>
    <interface-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.Disableable</type-name>
+      </class-handle>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.EgaidHolder</type-name>
       </class-handle>

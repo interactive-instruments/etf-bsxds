@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-29T16:25:18.665+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-06-02T14:14:13.187+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
@@ -83,7 +83,7 @@
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>de.interactive_instruments.etf.model.DefaultEidHolderMap</type-name>
+               <type-name>de.interactive_instruments.etf.model.EidHolderMap</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>

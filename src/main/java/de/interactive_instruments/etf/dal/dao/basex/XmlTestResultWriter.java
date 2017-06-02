@@ -528,7 +528,7 @@ final class XmlTestResultWriter implements Releasable {
 		errorWriter.writeEndElement();
 
 		errorWriter.writeStartElement("status");
-		errorWriter.writeCharacters(TestResultStatus.toString(TestResultStatus.UNDEFINED.value()));
+		errorWriter.writeCharacters(TestResultStatus.toString(TestResultStatus.INTERNAL_ERROR.value()));
 		errorWriter.writeEndElement();
 
 		errorWriter.writeEndElement();

@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-05-29T16:25:18.683+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-06-02T14:14:13.218+02:00</last-refresh-timestamp>
    <methods>
       <method>
          <name>TestItemTypeDto</name>

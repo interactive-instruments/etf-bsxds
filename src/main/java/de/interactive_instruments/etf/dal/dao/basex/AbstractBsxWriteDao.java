@@ -154,7 +154,9 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	// Fires the 'add' event
 	@Override
 	public final void addAll(final Collection<T> collection) throws StorageException {
-		// OPTIMIZE could be tuned
+		if (collection.isEmpty()) {
+			return;
+		}
 		final List<IFile> files = getFiles(collection);
 		final Dto[] colArr = collection.toArray(new Dto[collection.size()]);
 		final boolean disableable = colArr[0] instanceof Disableable;
@@ -288,7 +290,9 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	@Override
 	public final Collection<T> updateAll(final Collection<T> collection)
 			throws StorageException, ObjectWithIdNotFoundException {
-		// OPTIMIZE could be tuned
+		if (collection.isEmpty()) {
+			return collection;
+		}
 		final List<T> updatedDtos = new ArrayList<>(collection.size());
 		for (final T dto : collection) {
 			updatedDtos.add(doUpdate(dto, null));
@@ -402,7 +406,9 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 	// Fires the delete event.
 	@Override
 	public final void deleteAll(final Set<EID> eids) throws StorageException, ObjectWithIdNotFoundException {
-		// OPTIMIZE could be optimized
+		if (eids.isEmpty()) {
+			return;
+		}
 		for (final EID eid : eids) {
 			fireEventDelete(eid);
 		}
