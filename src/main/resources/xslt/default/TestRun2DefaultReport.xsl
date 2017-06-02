@@ -143,16 +143,7 @@
 						<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
 					</td>
 					<td>
-						<xsl:choose>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'FAILED'"> 		<xsl:value-of select="$lang/x:e[@key = 'FAILED']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'WARNING'"> 		<xsl:value-of select="$lang/x:e[@key = 'WARNING']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'UNDEFINED'"> 		<xsl:value-of select="$lang/x:e[@key = 'UNDEFINED']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'INFORMATION'"> 	<xsl:value-of select="$lang/x:e[@key = 'INFORMATION']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'NOT_APPLICABLE'"> <xsl:value-of select="$lang/x:e[@key = 'NOT_APPLICABLE']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'SKIPPED'"> 		<xsl:value-of select="$lang/x:e[@key = 'SKIPPED']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'PASSED_MANUAL'"> 	<xsl:value-of select="$lang/x:e[@key = 'PASSED_MANUAL']"/> </xsl:when>
-							<xsl:when test="$testTaskResults/etf:status/text() = 'PASSED'"> 		<xsl:value-of select="$lang/x:e[@key = 'PASSED']"/> </xsl:when>
-						</xsl:choose>
+						<xsl:value-of select="$lang/x:e[@key = $testTaskResults/etf:status ]"/>
 					</td>
 				</tr>
 				<tr>
@@ -514,6 +505,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INTERNAL_ERROR'">e</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
 			<xsl:attribute name="data-content-theme">
@@ -527,6 +519,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INTERNAL_ERROR'">e</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
 			<h2>
