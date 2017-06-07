@@ -22,7 +22,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import de.interactive_instruments.etf.model.EidFactory;
 import org.apache.commons.io.IOUtils;
 
 import de.interactive_instruments.IFile;
@@ -33,6 +32,7 @@ import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestResultCollector;
 import de.interactive_instruments.etf.testdriver.TestRunLogger;
@@ -144,7 +144,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 			// Add log file as attachment
 			writer.addAttachment(
 					EidFactory.getDefault().createRandomId().toString(),
-					new IFile(testRunLogger.getLogFile()), "Log file", "UTF-8","text/plain","LogFile" );
+					new IFile(testRunLogger.getLogFile()), "Log file", "UTF-8", "text/plain", "LogFile");
 			final String id = writer.writeEndTestTaskResult(testModelItemId, status, stopTimestamp);
 			try {
 				writer.flush();
@@ -154,12 +154,12 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 					listener.testTaskFinished(dataStorage.getDao(TestTaskResultDto.class).getById(resultId).getDto());
 				}
 			} catch (ObjectWithIdNotFoundException e) {
-				testRunLogger.error("Failed to reload result ",e);
+				testRunLogger.error("Failed to reload result ", e);
 				throw new StorageException(e);
 			} catch (StorageException e) {
 				testRunLogger.error("Failed to stream result file into store: {}", resultFile.getPath());
 				throw e;
-			}finally {
+			} finally {
 				writer.close();
 			}
 			return id;

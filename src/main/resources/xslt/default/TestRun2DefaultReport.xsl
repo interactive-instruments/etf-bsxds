@@ -27,7 +27,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b170531</xsl:variable>
+	<xsl:variable name="reportVersion">2.0.0-b170607</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -143,7 +143,7 @@
 						<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
 					</td>
 					<td>
-						<xsl:value-of select="$lang/x:e[@key = $testTaskResults/etf:status ]"/>
+						<xsl:value-of select="$lang/x:e[@key = $testRun/@status ]"/>
 					</td>
 				</tr>
 				<tr>
@@ -904,8 +904,11 @@
 				</div>
 			</xsl:when>
 			<xsl:otherwise>
+				
+				<xsl:variable name="testStepResultId" select="$resultItem/@id"/>
+				
 				<div class="TestStep" data-role="collapsible" data-theme="g" data-content-theme="g"
-					data-mini="true" id="{$TestStep/@id}">
+					data-mini="true" id="{$testStepResultId}">
 					<xsl:attribute name="data-theme">
 						<xsl:choose>
 							<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
@@ -913,7 +916,7 @@
 							<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'WARNING'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">j</xsl:when>
-							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">i</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"/>
 							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">k</xsl:when>
 						</xsl:choose>
@@ -925,7 +928,7 @@
 							<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'WARNING'">g</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">g</xsl:when>
-							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">i</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">g</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"/>
 							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"/>
 						</xsl:choose>
@@ -943,7 +946,7 @@
 							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">TestStep
 								SuccessfulTestStep</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">TestStep
-								FailedTestStep</xsl:when>
+								SkippedTestStep</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">TestStep
 								SuccessfulTestStep DoNotShowInSimpleView</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">TestStep
@@ -1017,11 +1020,10 @@
 						</tr>
 						<tr class="DoNotShowInSimpleView">
 							<td><xsl:value-of select="$lang/x:e[@key = 'TestStepLocation']"/></td>
-							<xsl:variable name="testStepId" select="$TestStep/@id"/>
 							<td>
-								<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$testStepId}"
+								<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$testStepResultId}"
 									data-ajax="false"
-									onclick="event.preventDefault(); jumpToAnchor('{$testStepId}'); return false;">
+									onclick="event.preventDefault(); jumpToAnchor('{$testStepResultId}'); return false;">
 									<xsl:value-of select="$lang/x:e[@key = 'PublicationLocationLink']"/>
 								</a>
 							</td>
@@ -1170,8 +1172,9 @@
 		<xsl:variable name="resultItem" select="."/>
 		<xsl:variable name="TestAssertion" select="key('testAssertionKey', ./etf:resultedFrom/@ref)"/>
 		
+		<xsl:variable name="assertionResultId" select="$resultItem/@id"/>
 		
-		<div id="{$TestAssertion/@id}" data-role="collapsible" data-mini="true">
+		<div id="{$assertionResultId}" data-role="collapsible" data-mini="true">
 			
 			<!-- Assertion Styling: Set attributes do indicate the status -->
 			<xsl:attribute name="data-theme">
@@ -1263,11 +1266,10 @@
 				</tr>
 				<tr class="DoNotShowInSimpleView">
 					<td><xsl:value-of select="$lang/x:e[@key = 'AssertionLocation']"/></td>
-					<xsl:variable name="testAssertionId" select="$TestAssertion/@id"/>
 					<td>
-						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$testAssertionId}"
+						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$assertionResultId}"
 							data-ajax="false"
-							onclick="event.preventDefault(); jumpToAnchor('{$testAssertionId}'); return false;">
+							onclick="event.preventDefault(); jumpToAnchor('{$assertionResultId}'); return false;">
 							<xsl:value-of select="$lang/x:e[@key = 'AssertionLocationLink']"/>
 						</a>
 					</td>

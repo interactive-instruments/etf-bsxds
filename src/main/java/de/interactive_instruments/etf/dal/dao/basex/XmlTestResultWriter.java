@@ -306,7 +306,7 @@ final class XmlTestResultWriter implements Releasable {
 			}
 			attachments.clear();
 			writer.writeEndElement();
-		}else{
+		} else {
 			throw new IllegalStateException("At least the log file is required as attachment");
 		}
 		final String id = writeResultModelItem(status, stopTimestamp);
