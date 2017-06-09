@@ -94,86 +94,63 @@
 			}
 			var cache = new SelectorCache();
 
-			function hide(element) {
-				element.css({ display: 'none' });
+			function hide(elements) {
+				elements.css({ display: 'none' });
 			}
 
-			function show(element) {
-				element.css({ display: '' });
+			function show(elements) {
+				elements.css({ display: '' });
 			}
 
 			function updateLod(cntrl) {
 				if(cntrl=="cntrlSimplified")
 				{
-					console.log(cache.get( ".ReportDetail" ));
-					cache.get( ".ReportDetail" ).hide("slow");
-					cache.get('.DoNotShowInSimpleView').hide('slow');
-					cache.get('.XQueryContainsAssertion').hide('slow');
+					hide(cache.get('.ReportDetail, .DoNotShowInSimpleView, .XQueryContainsAssertion'));
 				}
 				else if(cntrl=="cntrlLessInformation")
 				{
-					cache.get('.ReportDetail').hide('slow');
-					cache.get('.DoNotShowInSimpleView').show('slow');
+					hide(cache.get('.ReportDetail'));
+					show(cache.get('.DoNotShowInSimpleView'));
 				}
 				else if(cntrl=="cntrlAllDetails")
 				{
-					cache.get('.ReportDetail').show('slow');
-					cache.get('.DoNotShowInSimpleView').show('slow');
+					show(cache.get('.ReportDetail, .DoNotShowInSimpleView'));
 				}
 			}
 			
 			<!-- Controls for filtering -->
 			cache.get( "input[name=radio-filter]" ).on( "click", function() {
+			
 			var cntrl = $( "input[name=radio-filter]:checked" ).val();
 				if(cntrl=="cntrlShowOnlyFailed")
 				{
-					cache.get('.TestSuite').collapsible('expand');
-					cache.get('.TestModule').collapsible('expand');
-					cache.get('.SuccessfulTestCase').hide('slow');
-					cache.get('.ManualTestCase').hide('slow');
-					cache.get('.FailedTestCase').collapsible('expand');
-					cache.get('.FailedTestCase').show('fast');
-					cache.get('.SuccessfulTestStep').collapsible('collapse');
-					cache.get('.ManualTestStep').collapsible('collapse');
-					cache.get('.FailedTestStep').collapsible('expand');
-					cache.get('.FailedTestStep').show('fast');
-					cache.get('.SuccessfulTestStep').hide('slow');
-					cache.get('.ManualTestStep').hide('slow');
-					cache.get('.FailedAssertion').collapsible('expand');
-					cache.get('.FailedAssertion').show('fast');
-					cache.get('.SuccessfulAssertion').hide('slow');
-					cache.get('.ManualAssertion').hide('slow');
+					hide(cache.get('.SuccessfulTestModule, .ManualTestModule, .SkippedTestModule, .SuccessfulTestCase, .ManualTestCase, .SuccessfulTestStep, .ManualTestStep, .SuccessfulAssertion, .ManualAssertion, .SkippedTestCase, .SkippedTestStep, .SkippedAssertion'));					
+					show(cache.get('.FailedTestCase, .FailedTestStep, .FailedAssertion'));
+					
+					if(cache.get('.TestStep, .Assertion').length &lt; 3500) {
+						cache.get('.TestSuite').collapsible('expand');
+						cache.get('.FailedTestModule').collapsible('expand');
+						cache.get('.FailedTestCase').collapsible('expand');
+						cache.get('.FailedTestStep').collapsible('expand');
+						cache.get('.FailedAssertion').collapsible('expand');
+					}
 				}
 				else if(cntrl=="cntrlShowOnlyManual")
 				{
-					cache.get('.TestSuite').collapsible('expand');
-					cache.get('.TestModule').collapsible('expand');
-					cache.get('.SuccessfulTestCase').hide('slow');
-					cache.get('.FailedTestCase').hide('slow');
-					cache.get('.ManualTestCase').collapsible('expand');
-					cache.get('.ManualTestCase').show('fast');
-					cache.get('.SuccessfulTestStep').collapsible('collapse');
-					cache.get('.FailedTestStep').collapsible('collapse');
-					cache.get('.ManualTestStep').collapsible('expand');
-					cache.get('.ManualTestStep').show('fast');
-					cache.get('.SuccessfulTestStep').hide('slow');
-					cache.get('.FailedTestStep').hide('slow');
-					cache.get('.ManualAssertion').collapsible('expand');
-					cache.get('.ManualAssertion').show('fast');
-					cache.get('.SuccessfulAssertion').hide('slow');
-					cache.get('.FailedAssertion').hide('slow');
+					hide(cache.get('.SuccessfulTestModule, .FailedTestModule, .SkippedTestModule, .SuccessfulTestCase, .FailedTestCase, .SkippedTestCase, .SkippedTestStep, .SkippedAssertion, .SuccessfulTestStep, .FailedTestStep, .SuccessfulAssertion, .FailedAssertion'));
+					show(cache.get('.ManualTestModule, .ManualTestCase, .ManualTestStep, .ManualAssertion'));
+					
+					if(cache.get('.TestStep, .Assertion').length &lt; 3500) {
+						cache.get('.TestSuite').collapsible('expand');
+						cache.get('.ManualTestModule').collapsible('expand');
+						cache.get('.ManualTestCase').collapsible('expand');
+						cache.get('.ManualTestStep').collapsible('expand');
+						cache.get('.ManualAssertion').collapsible('expand');
+					}
 				}
 				else if(cntrl=="cntrlShowAll")
 				{
-					cache.get('.SuccessfulTestCase').show('fast');
-					cache.get('.SuccessfulTestStep').show('fast');
-					cache.get('.SuccessfulAssertion').show('fast');
-					cache.get('.ManualTestCase').show('fast');
-					cache.get('.ManualTestStep').show('fast');
-					cache.get('.ManualAssertion').show('fast');
-					cache.get('.FailedTestCase').show('fast');
-					cache.get('.FailedTestStep').show('fast');
-					cache.get('.FailedAssertion').show('fast');
+					show(cache.get('.SuccessfulTestModule, .FailedTestModule, .ManualTestModule, .SkippedTestModule, .SuccessfulTestCase, .SuccessfulTestStep, .SuccessfulAssertion, .SkippedTestCase, .SkippedTestStep, .SkippedAssertion, .ManualTestCase, .ManualTestStep, .ManualAssertion, .FailedTestCase, .FailedTestStep, .FailedAssertion'));
 				}
 			});
 			
@@ -261,6 +238,10 @@
 					cache.get('#cntrlShowOnlyManual').checkboxradio('refresh');
 					cache.get('#cntrlShowOnlyManual').checkboxradio('disable').checkboxradio('refresh');
 				}
+				
+				<!-- Default: simplified -->
+				hide(cache.get('.ReportDetail, .DoNotShowInSimpleView, .XQueryContainsAssertion'));
+				
 			});
 			
 		</script>
