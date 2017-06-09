@@ -127,6 +127,7 @@
 	<xsl:template name="reportInfo">
 		<div id="rprtInfo">
 			<table>
+				<tbody>
 				<tr class="ReportDetail">
 					<td>
 						<xsl:value-of select="$lang/x:e[@key = 'PublicationLocation']"/>
@@ -187,6 +188,7 @@
 						</a>
 					</td>
 				</tr>
+				</tbody>
 			</table>
 		</div>
 	</xsl:template>
@@ -361,6 +363,7 @@
 				<xsl:value-of select="$lang/x:e[@key = 'Parameters']"/>
 			</h3>
 			<table>
+				<tbody>
 				<xsl:for-each select="etf:arguments/etf:argument">
 					<xsl:if test="normalize-space(./text())">
 						<tr>
@@ -373,6 +376,7 @@
 						</tr>
 					</xsl:if>
 				</xsl:for-each>
+				</tbody>
 			</table>
 		</div>
 		</xsl:if>
@@ -443,6 +447,7 @@
 			<div id="rprtStatReport" data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
 				<h3><xsl:value-of select="./etf:label"/></h3>
 				<table>
+					<tbody>
 					<tr>
 						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureType']"/></th>
 						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureCount']"/></th>
@@ -453,6 +458,7 @@
 							<td><xsl:value-of select="normalize-space(substring-after(text(),';'))"/></td>
 						</tr>
 					</xsl:for-each>
+					</tbody>
 				</table>
 			</div>
 		</xsl:if>
@@ -570,6 +576,7 @@
 			<br/>
 			<!-- General data about test result and test case -->
 			<table>
+				<tbody>
 				<tr>
 					<td>
 						<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
@@ -597,6 +604,7 @@
 				<xsl:call-template name="itemData">
 					<xsl:with-param name="Node" select="$TestSuite"/>
 				</xsl:call-template>
+				</tbody>
 			</table>
 			<br/>
 			
@@ -675,6 +683,7 @@
 					<br/>
 					<br/>
 					<table>
+						<tbody>
 						<tr>
 							<td>
 								<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
@@ -699,6 +708,7 @@
 								<xsl:value-of select="$TestModule/@id"/>
 							</td>
 						</tr>
+						</tbody>
 					</table>
 					<br/>
 					<!-- TestCase result information -->
@@ -836,6 +846,7 @@
 			<br/>
 			<!-- General data about test result and test case -->
 			<table>
+				<tbody>
 				<tr>
 					<td>
 						<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
@@ -882,6 +893,7 @@
 				<xsl:call-template name="itemData">
 					<xsl:with-param name="Node" select="$TestCase"/>
 				</xsl:call-template>
+				</tbody>
 			</table>
 			<br/>
 			<!--Add test step results and information about the teststeps -->
@@ -955,7 +967,7 @@
 					</xsl:attribute>
 					<xsl:variable name="FailedAssertionCount"
 						select="count(./etf:testAssertionResults[1]/etf:TestAssertionResult[etf:status[1]/text() = 'FAILED'])"/>
-					<h4>
+					<h4 class="ui-collapsible-heading">
 						<xsl:variable name="label">
 							<xsl:call-template name="string-replace">
 								<xsl:with-param name="text" select="$TestStep/etf:label[1]/text()"/>
@@ -983,6 +995,7 @@
 					<br/>
 					<br/>
 					<table>
+						<tbody>
 						<tr>
 							<td>
 								<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
@@ -1053,7 +1066,7 @@
 								</tr>
 							</xsl:for-each>
 						</xsl:if>
-						
+						</tbody>
 					</table>
 					<br/>
 					
@@ -1238,42 +1251,44 @@
 			<br/>
 			<br/>
 			<table>
-				<tr>
-					<td>
-						<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
-					</td>
-					<td>
-						<xsl:value-of select="$lang/x:e[@key = $resultItem/etf:status]"/>
-					</td>
-				</tr>
-				<xsl:if test="./etf:duration[1]/text()">
+				<tbody>
 					<tr>
 						<td>
-							<xsl:value-of select="$lang/x:e[@key = 'Duration']"/>
+							<xsl:value-of select="$lang/x:e[@key = 'Status']"/>
 						</td>
 						<td>
-							<xsl:call-template name="formatDuration">
-								<xsl:with-param name="ms" select="./etf:duration[1]/text()"/>
-							</xsl:call-template>
+							<xsl:value-of select="$lang/x:e[@key = $resultItem/etf:status]"/>
 						</td>
 					</tr>
-				</xsl:if>
-				<tr class="ReportDetail">
-					<td><xsl:value-of select="$lang/x:e[@key = 'TestAssertion']"/> ID</td>
-					<td>
-						<xsl:value-of select="$TestAssertion/@id"/>
-					</td>
-				</tr>
-				<tr class="DoNotShowInSimpleView">
-					<td><xsl:value-of select="$lang/x:e[@key = 'AssertionLocation']"/></td>
-					<td>
-						<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$assertionResultId}"
-							data-ajax="false"
-							onclick="event.preventDefault(); jumpToAnchor('{$assertionResultId}'); return false;">
-							<xsl:value-of select="$lang/x:e[@key = 'AssertionLocationLink']"/>
-						</a>
-					</td>
-				</tr>
+					<xsl:if test="./etf:duration[1]/text()">
+						<tr>
+							<td>
+								<xsl:value-of select="$lang/x:e[@key = 'Duration']"/>
+							</td>
+							<td>
+								<xsl:call-template name="formatDuration">
+									<xsl:with-param name="ms" select="./etf:duration[1]/text()"/>
+								</xsl:call-template>
+							</td>
+						</tr>
+					</xsl:if>
+					<tr class="ReportDetail">
+						<td><xsl:value-of select="$lang/x:e[@key = 'TestAssertion']"/> ID</td>
+						<td>
+							<xsl:value-of select="$TestAssertion/@id"/>
+						</td>
+					</tr>
+					<tr class="DoNotShowInSimpleView">
+						<td><xsl:value-of select="$lang/x:e[@key = 'AssertionLocation']"/></td>
+						<td>
+							<a href="{$serviceUrl}/TestRuns/{$testRun/@id}.html?lang={$language}#{$assertionResultId}"
+								data-ajax="false"
+								onclick="event.preventDefault(); jumpToAnchor('{$assertionResultId}'); return false;">
+								<xsl:value-of select="$lang/x:e[@key = 'AssertionLocationLink']"/>
+							</a>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 			<br/>
 			<xsl:if
