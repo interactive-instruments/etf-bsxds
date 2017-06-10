@@ -3685,7 +3685,8 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF ID.</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF</span><span class="tI">
+</span><span class="tT">ID.</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>
@@ -5384,11 +5385,12 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">The EGAIDRefType references exactly one model item instance with an absolute URI.</span><span class="tI">
-</span><span class="tT">Must start with 'http' or 'https', contain 'egaid.' before the lower-case EGAID and end with ':' </span><span class="tI">
-</span><span class="tT">plus the version or 'latest'. </span><span class="tI">
-</span><span class="tT">Example: https://service/etf-webapp/v2/ExecutableTestSuites/egaid.de.interactive-instruments.ets.example:latest</span><span class="tI">
-</span><span class="tT">where 'de.interactive-instruments.ets' references the group name, 'example' the artifact ID and 'latest' the latest version.</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">The EGAIDRefType references exactly one model item instance with an</span><span class="tI">
+</span><span class="tT">absolute URI. Must start with 'http' or 'https', contain 'egaid.' before the</span><span class="tI">
+</span><span class="tT">lower-case EGAID and end with ':' plus the version or 'latest'. Example:</span><span class="tI">
+</span><span class="tT">https://service/etf-webapp/v2/ExecutableTestSuites/egaid.de.interactive-instruments.ets.example:latest</span><span class="tI">
+</span><span class="tT">where 'de.interactive-instruments.ets' references the group name, 'example' the</span><span class="tI">
+</span><span class="tT">artifact ID and 'latest' the latest version.</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -5505,9 +5507,9 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
                                        <td width="100%"><pre><span class="tT">All characters must be lower-case and may contain '-'. At least one</span><span class="tI">
-</span><span class="tT">group name ID is required followed by the artifact ID.</span><span class="tI">
-</span><span class="tT">Example: de.interactive-instruments.ets.example </span><span class="tI">
-</span><span class="tT">where 'de.interactive-instruments.ets' is the group name and 'example' the artifact ID.</span></pre></td>
+</span><span class="tT">group name ID is required followed by the artifact ID. Example:</span><span class="tI">
+</span><span class="tT">de.interactive-instruments.ets.example where 'de.interactive-instruments.ets' is the</span><span class="tI">
+</span><span class="tT">group name and 'example' the artifact ID.</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -6335,6 +6337,21 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                        </div>
                                     </td>
                                  </tr>
+                                 <tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>INTERNAL_ERROR</b></td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tr>
+                                                <td width="100%"><pre><span class="tT">INTERNAL_ERROR, if at least one status value is INTERNAL_ERROR</span><span class="tI">
+</span><span class="tT">in the case the test engine throws an unexpected error that forces the test</span><span class="tI">
+</span><span class="tT">run to stop</span></pre></td>
+                                             </tr>
+                                          </table>
+                                       </div>
+                                    </td>
+                                 </tr>
                               </table>
                            </div>
                         </td>
@@ -6411,6 +6428,11 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
     </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"PASSED_MANUAL"</span><span class="tEl">&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
         </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">PASSED_MANUAL, if at least one status value is PASSED_MANUAL (if the test is not automated and the user has to validate results manually based on instructions in the report) and all others are values are PASSED</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:enumeration&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:enumeration</span><span class="tAN"> value=</span><span class="tAV">"INTERNAL_ERROR"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">INTERNAL_ERROR, if at least one status value is INTERNAL_ERROR in the case the test engine throws an unexpected error that forces the test run to stop</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/xs:enumeration&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
@@ -6863,9 +6885,11 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">A model item instance that possesses a version property, may posses an EGAID (ETF Group and Artifact ID).</span><span class="tI">
-</span><span class="tT">The EGAID allows to reference a collection of different instances of the same model item type and the same EGAID.</span><span class="tI">
-</span><span class="tT">It also provides an alternative way to identify single items by their EGAID plus the version.</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">A model item instance that possesses a version property, may</span><span class="tI">
+</span><span class="tT">posses an EGAID (ETF Group and Artifact ID). The EGAID allows to reference a</span><span class="tI">
+</span><span class="tT">collection of different instances of the same model item type and the same</span><span class="tI">
+</span><span class="tT">EGAID. It also provides an alternative way to identify single items by their</span><span class="tI">
+</span><span class="tT">EGAID plus the version.</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -6982,7 +7006,8 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF ID.</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF</span><span class="tI">
+</span><span class="tT">ID.</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -8929,9 +8954,11 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">A model item instance that possesses a version property, may posses an EGAID (ETF Group and Artifact ID).</span><span class="tI">
-</span><span class="tT">The EGAID allows to reference a collection of different instances of the same model item type and the same EGAID.</span><span class="tI">
-</span><span class="tT">It also provides an alternative way to identify single items by their EGAID plus the version.</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">A model item instance that possesses a version property, may</span><span class="tI">
+</span><span class="tT">posses an EGAID (ETF Group and Artifact ID). The EGAID allows to reference a</span><span class="tI">
+</span><span class="tT">collection of different instances of the same model item type and the same</span><span class="tI">
+</span><span class="tT">EGAID. It also provides an alternative way to identify single items by their</span><span class="tI">
+</span><span class="tT">EGAID plus the version.</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>
@@ -8945,7 +8972,8 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF ID.</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF</span><span class="tI">
+</span><span class="tT">ID.</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>
@@ -9057,7 +9085,8 @@ var modelBoxes= new Array('model_http___www.interactive-instruments.de_etf_2.0_R
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF ID.</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">An ETF model item instance possesses an unique ETF</span><span class="tI">
+</span><span class="tT">ID.</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>

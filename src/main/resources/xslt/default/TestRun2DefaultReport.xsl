@@ -27,7 +27,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b170607</xsl:variable>
+	<xsl:variable name="reportVersion">2.0.0-b170610</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -84,16 +84,19 @@
 	<!-- Test Report -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="/*[self::etf:DsResultSet or self::etf:EtfItemCollection]">
-		<html>
+		<html class="ui-mobile ui-mobile-rendering">
 			<head>
 				<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				<meta name="web_author" content="interactive instruments GmbH"/>
 				<title>
 					<xsl:value-of select="$lang/x:e[@key = 'Title']"/>
 				</title>
 				<!-- Include Styles and Javascript functions -->
 				<xsl:call-template name="jsfdeclAndCss"/>
 			</head>
-			<body>
+			<body class="ui-mobile-viewport ui-overlay-a">
 				<div data-role="header">
 					<h1>
 						<xsl:value-of select="./etf:testRuns[1]/etf:TestRun[1]/etf:label/text()"/>
@@ -576,8 +579,8 @@
 				test="$TestSuite/etf:description and normalize-space($TestSuite/etf:description/text()[1]) ne ''">
 				<xsl:value-of select="$TestSuite/etf:description/text()"
 					disable-output-escaping="yes"/>
+				<br/>
 			</xsl:if>
-			<br/>
 			<br/>
 			<!-- General data about test result and test case -->
 			<table>
@@ -696,8 +699,8 @@
 						test="$TestModule/etf:description and normalize-space($TestModule/etf:description/text()) ne ''">
 						<xsl:value-of select="$TestModule/etf:description/text()"
 							disable-output-escaping="yes"/>
+						<br/>
 					</xsl:if>
-					<br/>
 					<br/>
 					<table>
 						<tbody>
@@ -739,118 +742,99 @@
 	<xsl:template match="etf:TestCaseResult">
 		<xsl:variable name="TestCase" select="key('testCaseKey', ./etf:resultedFrom/@ref)"/>
 		<xsl:variable name="resultItem" select="."/>
-		<div class="TestCase" data-role="collapsible" data-inset="false" data-mini="true" id="{$TestCase/@id}">
 		
+		<div data-role="collapsible" data-enhanced="true" id="{$TestCase/@id}" data-mini="true">
 			<xsl:variable name="skipped" select="./etf:status[1]/text() = 'SKIPPED'" as="xs:boolean"/>
-			<xsl:attribute name="data-theme">
-				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">j</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">j</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">j</xsl:when>
-					<xsl:when test="$skipped">j</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">f</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">f</xsl:when>
-				</xsl:choose>
-			</xsl:attribute>
-			<xsl:attribute name="data-content-theme">
-				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">h</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">i</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">g</xsl:when>
-					<xsl:when test="$skipped">g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">f</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">f</xsl:when>
-				</xsl:choose>
-			</xsl:attribute>
-			<xsl:attribute name="data-collapsed-icon">
-				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">check</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">eye</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">alert</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">forbidden</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">forbidden</xsl:when>
-				</xsl:choose>
-			</xsl:attribute>			
-			<xsl:attribute name="data-collapsed-icon">
-				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">plus</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">eye</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">plus</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">info</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">alert</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">plus</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">plus</xsl:when>
-				</xsl:choose>
-			</xsl:attribute>
 			<xsl:attribute name="class">
 				<xsl:choose>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED'">TestCase SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'">TestCase ManualTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'FAILED'">TestCase FailedTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'WARNING'">TestCase SuccessfulTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">TestCase SuccessfulTestCase</xsl:when>
-					<xsl:when test="$skipped">TestCase SkippedTestCase</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase ManualTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase FailedTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SuccessfulTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SkippedTestCase</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleJqmClass"/> TestCase SuccessfulTestCase DoNotShowInSimpleView</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
-			<h3>
-				<xsl:variable name="label">
-					<xsl:call-template name="string-replace">
-						<xsl:with-param name="text" select="$TestCase/etf:label"/>
-						<xsl:with-param name="replace" select="'(disabled)'"/>
-						<xsl:with-param name="with" select="''"/>
-					</xsl:call-template>
-				</xsl:variable>
-				<a name="{$TestCase/@id}"/>
-				<xsl:value-of select="$label"/>
-				<div class="ui-li-count">
-					<xsl:variable name="FailedCount">
+			
+			<h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+				<a href="#">
+					<xsl:attribute name="class">
 						<xsl:choose>
-							<xsl:when
-								test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
-								<!-- TODO detect technical test steps through href in resultedFrom -->
-								<xsl:value-of
-									select="count((./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)], 
-									./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)] ))"
-								/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of
-									select="count(./etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult[etf:status = 'FAILED'])"
-								/>
-							</xsl:otherwise>
+							<xsl:when test="./etf:status[1]/text() = 'PASSED'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-plus ui-btn-h ui-mini</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-eye ui-btn-j ui-mini</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'FAILED'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-plus ui-btn-i ui-mini</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-info ui-btn-j ui-mini </xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-info ui-btn-j ui-mini </xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-alert ui-btn-j ui-mini</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-plus ui-btn-f ui-mini</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleHeadingJqmClass"/> ui-icon-plus ui-btn-f ui-mini</xsl:when>
 						</xsl:choose>
+					</xsl:attribute>
+					<xsl:variable name="label">
+						<xsl:call-template name="string-replace">
+							<xsl:with-param name="text" select="$TestCase/etf:label"/>
+							<xsl:with-param name="replace" select="'(disabled)'"/>
+							<xsl:with-param name="with" select="''"/>
+						</xsl:call-template>
 					</xsl:variable>
-					<xsl:variable name="Count">
-						<xsl:choose>
-							<xsl:when
-								test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
-								<xsl:value-of
-									select="count((./etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)],
+					<xsl:value-of select="$label"/>
+					<div class="ui-li-count">
+						<xsl:variable name="FailedCount">
+							<xsl:choose>
+								<xsl:when
+									test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
+									<!-- TODO detect technical test steps through href in resultedFrom -->
+									<xsl:value-of
+										select="count((./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)], 
+										./etf:testStepResults[1]/etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[etf:status = 'FAILED' and not(etf:resultedFrom/@href)] ))"
+									/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of
+										select="count(./etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult[etf:status = 'FAILED'])"
+									/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:variable name="Count">
+							<xsl:choose>
+								<xsl:when
+									test="$TestCase/etf:testSteps/etf:TestStep[etf:label ne 'IGNORE']">
+									<xsl:value-of
+										select="count((./etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)],
 										./etf:testStepResults[1]/etf:TestStepResult[not(etf:resultedFrom/@href)]/etf:invokedTests[1]//etf:TestStepResult[not(etf:resultedFrom/@href)]))"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of
-									select="count(./etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult)"
-								/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
-					<xsl:if test="$FailedCount &gt; 0"><xsl:value-of
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of
+										select="count(./etf:testStepResults[1]/etf:TestStepResult/etf:testAssertionResults[1]/etf:TestAssertionResult)"
+									/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:if test="$FailedCount &gt; 0"><xsl:value-of
 							select="$lang/x:e[@key = 'FAILED']"/>: <xsl:value-of
-							select="$FailedCount"/> / </xsl:if>
-					<xsl:value-of select="$Count"/>
-				</div>
+								select="$FailedCount"/> / </xsl:if>
+						<xsl:value-of select="$Count"/>
+					</div>
+					<span class="ui-collapsible-heading-status"> click to expand contents</span>
+				</a>
 			</h3>
+			<div aria-hidden="true">
+			<xsl:attribute name="class">
+				<xsl:choose>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-h</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'PASSED_MANUAL'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'FAILED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-i</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
+				</xsl:choose>
+			</xsl:attribute>
+
 			<xsl:if test="$skipped">
 				<h3>The test case was skipped because it depends on other test cases that failed or were skipped as well. Check the cause of the problem by checking failed test cases which this test case depends on.</h3>
 			</xsl:if>
@@ -858,8 +842,8 @@
 				test="$TestCase/etf:description and normalize-space($TestCase/etf:description/text()) ne ''">
 				<xsl:value-of select="$TestCase/etf:description/text()"
 					disable-output-escaping="yes"/>
+				<br/>
 			</xsl:if>
-			<br/>
 			<br/>
 			<!-- General data about test result and test case -->
 			<table>
@@ -917,6 +901,7 @@
 				<xsl:if test="not($skipped)">
 					<xsl:apply-templates select="./etf:testStepResults[1]/etf:TestStepResult"/>
 				</xsl:if>
+			</div>
 		</div>
 	</xsl:template>
 	<!-- Test Step Results -->
@@ -1006,8 +991,8 @@
 						test="$TestStep/etf:description and normalize-space($TestStep/etf:description/text()) ne ''">
 						<xsl:value-of select="$TestStep/etf:description/text()"
 							disable-output-escaping="yes"/>
+						<br/>
 					</xsl:if>
-					<br/>
 					<br/>
 					<table>
 						<tbody>
@@ -1251,8 +1236,8 @@
 				test="$TestAssertion/etf:description and normalize-space($TestAssertion/etf:description/text()[1]) ne ''">
 				<xsl:value-of select="$TestAssertion/etf:description/text()"
 					disable-output-escaping="yes"/>
+				<br/>
 			</xsl:if>
-			<br/>
 			<br/>
 			<table>
 				<tbody>
