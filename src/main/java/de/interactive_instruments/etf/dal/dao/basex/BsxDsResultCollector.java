@@ -22,6 +22,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import de.interactive_instruments.container.Pair;
 import org.apache.commons.io.IOUtils;
 
 import de.interactive_instruments.IFile;
@@ -333,7 +334,7 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 	}
 
 	private IFile createAttachmentFile(final String eid, final String mimeType) {
-		String extension = ".txt";
+		String extension = "";
 		if (mimeType != null) {
 			try {
 				extension = MimeTypeUtils.getFileExtensionForMimeType(mimeType);
@@ -350,7 +351,12 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final String eid = UUID.randomUUID().toString();
 		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		attachmentFile.writeContent(inputStream, "UTF-8");
-		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
+		try {
+			final Pair<String, IFile> mimeTypeAndFilePair =  MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
+			writer.addAttachment(eid, mimeTypeAndFilePair.getRight(), label, "UTF-8", mimeTypeAndFilePair.getLeft(), type);
+		}catch (IOException | MimeTypeUtilsException e) {
+			ExcUtils.suppress(e);
+		}
 		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
@@ -363,7 +369,12 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final String eid = UUID.randomUUID().toString();
 		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		IOUtils.copy(reader, new FileOutputStream(attachmentFile), "UTF-8");
-		writer.addAttachment(eid, attachmentFile, label, "UTF-8", mimeType, type);
+		try {
+			final Pair<String, IFile> mimeTypeAndFilePair =  MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
+			writer.addAttachment(eid, mimeTypeAndFilePair.getRight(), label, "UTF-8", mimeTypeAndFilePair.getLeft(), type);
+		}catch (IOException | MimeTypeUtilsException e) {
+			ExcUtils.suppress(e);
+		}
 		if (currentModelType() == 4) {
 			testStepAttachmentIds.add(eid);
 		}
