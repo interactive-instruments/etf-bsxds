@@ -1086,7 +1086,18 @@
 						<textarea id="attachment.{$parameter/@id}" data-mini="true" readonly="readonly" class="{$textAreaJqmClass}">
 							<xsl:apply-templates select="$parameter"/>
 						</textarea>
-					</xsl:if>					
+					</xsl:if>
+						
+					<!-- PostData, deprecated type: PostParameter -->
+					<xsl:variable name="post" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[@type='PostData' or @type='PostParameter']"/>
+					<xsl:if test="$post">
+						<p><a target="_blank" data-ajax="false">
+							<xsl:attribute name="href">
+								<xsl:apply-templates select="$post"/>
+							</xsl:attribute>
+							Open saved POST request data
+						</a></p>
+					</xsl:if>
 					
 					<xsl:variable name="response" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[@type='ServiceResponse']"/>
 					<xsl:if test="$response">
@@ -1111,7 +1122,7 @@
 					</xsl:if>
 					
 					<xsl:variable name="attachments" select="key('attachmentsKey', ./etf:attachments[1]/etf:attachment/@ref)[
-						not(@type='ServiceEndpoint' or @type='ServiceResponse' or @type='GetParameter')]"/>
+						not(@type='ServiceEndpoint' or @type='ServiceResponse' or @type='GetParameter' or @type='PostData' or @type='PostParameter')]"/>
 					<xsl:if test="$attachments">
 						<div class="Attachments DoNotShowInSimpleView">
 							<h4>Attachments</h4>
