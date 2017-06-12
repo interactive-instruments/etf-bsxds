@@ -364,7 +364,7 @@
 	<!-- Properties used in test run -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="etf:ArgumentList">
-		<xsl:if test="etf:arguments/etf:argument/@name ne ''">
+		<xsl:if test="exists(etf:arguments/etf:argument[@name ne ''])">
 		<div id="rprtParameters" data-role="collapsible" data-collapsed-icon="info"
 			class="ReportDetail">
 			<h3>
@@ -372,7 +372,7 @@
 			</h3>
 			<table>
 				<tbody>
-				<xsl:for-each select="etf:arguments/etf:argument">
+					<xsl:for-each select="etf:arguments/etf:argument[@name ne '']">
 					<xsl:if test="normalize-space(./text())">
 						<tr>
 							<td>
