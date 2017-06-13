@@ -15,18 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-
-import org.apache.commons.io.IOUtils;
-
 import de.interactive_instruments.etf.testdriver.AbstractTestCollector;
 import de.interactive_instruments.etf.testdriver.AbstractTestStepResultCollector;
 import de.interactive_instruments.etf.testdriver.TestTaskEndListener;
+import org.apache.commons.io.IOUtils;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

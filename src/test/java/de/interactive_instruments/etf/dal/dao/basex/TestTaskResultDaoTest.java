@@ -143,9 +143,9 @@ public class TestTaskResultDaoTest {
 
 	@Test(expected = StoreException.class)
 	public void test_7_1_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException, URISyntaxException {
 		final IFile taskTestResultFile = new IFile(getClass().getClassLoader().getResource(
-				"database/testtaskresult.xml").getPath());
+				"database/testtaskresult.xml").toURI());
 		((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));
 	}
 

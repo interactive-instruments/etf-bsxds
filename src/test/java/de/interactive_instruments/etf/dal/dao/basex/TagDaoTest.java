@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 
 import org.junit.Before;
@@ -150,10 +151,10 @@ public class TagDaoTest {
 	}
 
 	@Test
-	public void test_7_1_testStreamIntoStore() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException {
+	public void test_7_1_testStreamIntoStore() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 		writeDao.deleteAllExisting(Collections.singleton(streamingTagId));
 		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
-				"database/tag.xml").getPath());
+				"database/tag.xml").toURI());
 		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
 		assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
 		final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
@@ -162,11 +163,11 @@ public class TagDaoTest {
 
 	@Test
 	public void test_7_2_testDoubleStreamIntoStore()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 
 		final int sizeBefore = writeDao.getAll(ALL).size();
 		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
-				"database/tag.xml").getPath());
+				"database/tag.xml").toURI());
 		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
 
 		// assertTrue(exceptionThrown);

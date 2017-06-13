@@ -15,17 +15,15 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import de.interactive_instruments.etf.model.EID;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
-
 import org.slf4j.Logger;
 
-import de.interactive_instruments.etf.model.EID;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Cache access proxy for Dtos

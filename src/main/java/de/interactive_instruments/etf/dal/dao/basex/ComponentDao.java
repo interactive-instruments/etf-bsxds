@@ -15,11 +15,10 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import org.basex.core.BaseXException;
-
 import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StorageException;
+import org.basex.core.BaseXException;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

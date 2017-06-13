@@ -15,19 +15,18 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.*;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.Releasable;
 import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.StorageException;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

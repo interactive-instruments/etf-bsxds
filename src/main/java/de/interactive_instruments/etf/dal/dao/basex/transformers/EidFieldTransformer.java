@@ -15,12 +15,11 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex.transformers;
 
+import de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage;
+import de.interactive_instruments.etf.dal.dto.Dto;
 import org.eclipse.persistence.mappings.foundation.AbstractTransformationMapping;
 import org.eclipse.persistence.mappings.transformers.FieldTransformer;
 import org.eclipse.persistence.sessions.Session;
-
-import de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage;
-import de.interactive_instruments.etf.dal.dto.Dto;
 
 /**
  * Writes an EID to XML as String

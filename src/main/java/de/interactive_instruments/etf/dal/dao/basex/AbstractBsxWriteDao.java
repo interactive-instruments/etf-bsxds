@@ -15,30 +15,6 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.concurrent.BlockingQueue;
-
-import javax.xml.bind.JAXBException;
-
-import org.apache.commons.io.FileUtils;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.Add;
-import org.basex.core.cmd.Delete;
-import org.basex.core.cmd.Flush;
-import org.basex.core.cmd.XQuery;
-import org.basex.io.serial.Serializer;
-import org.basex.query.QueryException;
-import org.basex.query.QueryProcessor;
-import org.basex.query.iter.Iter;
-import org.basex.query.value.item.Item;
-import org.basex.query.value.node.DBNode;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.Version;
@@ -55,6 +31,26 @@ import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
+import org.apache.commons.io.FileUtils;
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.Add;
+import org.basex.core.cmd.Delete;
+import org.basex.core.cmd.Flush;
+import org.basex.core.cmd.XQuery;
+import org.basex.query.QueryException;
+import org.basex.query.QueryProcessor;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.item.Item;
+import org.basex.query.value.node.DBNode;
+
+import javax.xml.bind.JAXBException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.util.*;
+
+import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
 
 /**
  * BaseX based Data Access Object for read and write operations

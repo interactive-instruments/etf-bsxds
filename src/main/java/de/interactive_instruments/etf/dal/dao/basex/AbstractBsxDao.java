@@ -15,21 +15,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.xml.transform.TransformerConfigurationException;
-
-import org.apache.commons.io.IOUtils;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.XQuery;
-
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
@@ -47,6 +33,17 @@ import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
 import de.interactive_instruments.properties.ConfigPropertyHolder;
+import org.apache.commons.io.IOUtils;
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.XQuery;
+
+import javax.xml.transform.TransformerConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NAMESPACE_DECL;
 
 /**
  * BaseX based Data Access Object for read only operations

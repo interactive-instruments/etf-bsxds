@@ -15,19 +15,10 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
-import java.util.*;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
-import de.interactive_instruments.container.Pair;
-import org.apache.commons.io.IOUtils;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MimeTypeUtils;
 import de.interactive_instruments.SUtils;
+import de.interactive_instruments.container.Pair;
 import de.interactive_instruments.etf.dal.dao.DataStorage;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
@@ -42,6 +33,13 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.MimeTypeUtilsException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
+import org.apache.commons.io.IOUtils;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
@@ -352,9 +350,9 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		attachmentFile.writeContent(inputStream, "UTF-8");
 		try {
-			final Pair<String, IFile> mimeTypeAndFilePair =  MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
+			final Pair<String, IFile> mimeTypeAndFilePair = MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
 			writer.addAttachment(eid, mimeTypeAndFilePair.getRight(), label, "UTF-8", mimeTypeAndFilePair.getLeft(), type);
-		}catch (IOException | MimeTypeUtilsException e) {
+		} catch (IOException | MimeTypeUtilsException e) {
 			ExcUtils.suppress(e);
 		}
 		if (currentModelType() == 4) {
@@ -370,9 +368,9 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		final IFile attachmentFile = createAttachmentFile(eid, mimeType);
 		IOUtils.copy(reader, new FileOutputStream(attachmentFile), "UTF-8");
 		try {
-			final Pair<String, IFile> mimeTypeAndFilePair =  MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
+			final Pair<String, IFile> mimeTypeAndFilePair = MimeTypeUtils.setFileExtension(attachmentFile, mimeType);
 			writer.addAttachment(eid, mimeTypeAndFilePair.getRight(), label, "UTF-8", mimeTypeAndFilePair.getLeft(), type);
-		}catch (IOException | MimeTypeUtilsException e) {
+		} catch (IOException | MimeTypeUtilsException e) {
 			ExcUtils.suppress(e);
 		}
 		if (currentModelType() == 4) {

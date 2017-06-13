@@ -15,17 +15,6 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.*;
-import java.util.Collection;
-import java.util.Map;
-
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.interactive_instruments.Configurable;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MediaType;
@@ -41,6 +30,15 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
 import de.interactive_instruments.properties.ConfigPropertyHolder;
 import de.interactive_instruments.properties.PropertyHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

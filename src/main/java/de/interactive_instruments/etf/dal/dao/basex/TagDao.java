@@ -15,11 +15,10 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import org.basex.core.BaseXException;
-
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.StorageException;
+import org.basex.core.BaseXException;
 
 /**
  * Tag Data Access Object

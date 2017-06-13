@@ -495,11 +495,11 @@ public class ExecutableTestSuiteDaoTest {
 
 	@Test(timeout = 15000)
 	public void test_7_0_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException, URISyntaxException {
 		final EID id = EidFactory.getDefault().createAndPreserveStr("61070ae8-13cb-4303-a340-72c8b877b00a");
 		forceDelete(writeDao, id);
 		final IFile etsFile = new IFile(getClass().getClassLoader().getResource(
-				"database/ets.xml").getPath());
+				"database/ets.xml").toURI());
 
 		final ExecutableTestSuiteDto etsId = ((StreamWriteDao<ExecutableTestSuiteDto>) writeDao)
 				.add(new FileInputStream(etsFile));

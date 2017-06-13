@@ -140,9 +140,9 @@ public class TestObjectDaoTest {
 	}
 
 	@Test
-	public void test_1_2_unmarshalling() throws JAXBException, IOException {
+	public void test_1_2_unmarshalling() throws JAXBException, IOException, URISyntaxException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
-				"database/testobjects.xml").getPath());
+				"database/testobjects.xml").toURI());
 		testObjectXmlFile.expectFileIsReadable();
 		final Unmarshaller um = BsxTestUtils.DATA_STORAGE.createUnmarshaller();
 		final DsResultSet dtos = (DsResultSet) um.unmarshal(new StringReader(

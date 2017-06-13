@@ -15,18 +15,17 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
-import org.basex.core.Context;
-import org.slf4j.Logger;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
+import org.basex.core.Context;
+import org.slf4j.Logger;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  * Basex data storage context

@@ -15,10 +15,6 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.io.IOException;
-
-import javax.xml.transform.TransformerConfigurationException;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Dao;
@@ -26,6 +22,9 @@ import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.PropertyUtils;
+
+import javax.xml.transform.TransformerConfigurationException;
+import java.io.IOException;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

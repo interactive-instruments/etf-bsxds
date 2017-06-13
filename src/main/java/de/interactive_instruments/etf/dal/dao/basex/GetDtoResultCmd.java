@@ -15,9 +15,9 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import java.util.List;
-
 import de.interactive_instruments.etf.dal.dto.Dto;
+
+import java.util.List;
 
 /**
  * Command object for getting the specific Dtos from a DsResultSet
