@@ -29,17 +29,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import org.basex.query.expr.Except;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import de.interactive_instruments.IFile;
-import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.IncompleteDtoException;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
-import de.interactive_instruments.etf.model.*;
+import de.interactive_instruments.etf.model.DefaultEidMap;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidFactory;
+import de.interactive_instruments.etf.model.EidMap;
 import de.interactive_instruments.etf.test.TestDtos;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
@@ -495,7 +496,8 @@ public class ExecutableTestSuiteDaoTest {
 
 	@Test(timeout = 15000)
 	public void test_7_0_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException, URISyntaxException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+			URISyntaxException {
 		final EID id = EidFactory.getDefault().createAndPreserveStr("61070ae8-13cb-4303-a340-72c8b877b00a");
 		forceDelete(writeDao, id);
 		final IFile etsFile = new IFile(getClass().getClassLoader().getResource(

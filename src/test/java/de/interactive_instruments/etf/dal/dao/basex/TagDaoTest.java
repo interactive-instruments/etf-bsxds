@@ -35,8 +35,6 @@ import org.junit.runners.MethodSorters;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.*;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
-import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
-import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.InitializationException;
@@ -151,7 +149,8 @@ public class TagDaoTest {
 	}
 
 	@Test
-	public void test_7_1_testStreamIntoStore() throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
+	public void test_7_1_testStreamIntoStore()
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 		writeDao.deleteAllExisting(Collections.singleton(streamingTagId));
 		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
 				"database/tag.xml").toURI());

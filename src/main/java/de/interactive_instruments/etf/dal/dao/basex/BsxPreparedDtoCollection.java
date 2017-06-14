@@ -15,6 +15,19 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.XmlUtils;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
@@ -23,17 +36,6 @@ import de.interactive_instruments.etf.model.DefaultEidMap;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.EidMap;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.*;
 
 /**
  * A prepared XQuery statement for querying multiple items - without their references!

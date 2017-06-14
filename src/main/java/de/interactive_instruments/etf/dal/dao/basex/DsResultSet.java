@@ -15,14 +15,14 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.util.List;
+
 import de.interactive_instruments.etf.dal.dto.capabilities.*;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
 import de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
-
-import java.util.List;
 
 /**
  * Data storage result

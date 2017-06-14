@@ -45,7 +45,6 @@ import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
-import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.capabilities.ResourceDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TagDto;
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;

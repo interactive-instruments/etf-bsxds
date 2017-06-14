@@ -15,6 +15,30 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.UUID;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.validation.Schema;
+import javax.xml.validation.ValidatorHandler;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.Add;
+import org.basex.core.cmd.Delete;
+import org.basex.core.cmd.Flush;
+import org.slf4j.Logger;
+import org.xml.sax.*;
+
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.XmlUtils;
@@ -28,28 +52,6 @@ import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.Add;
-import org.basex.core.cmd.Delete;
-import org.basex.core.cmd.Flush;
-import org.slf4j.Logger;
-import org.xml.sax.*;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.validation.Schema;
-import javax.xml.validation.ValidatorHandler;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

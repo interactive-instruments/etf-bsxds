@@ -17,6 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.test.TestDtos.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -30,6 +31,7 @@ import org.mockito.Mockito;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.dal.dao.Dao;
+import de.interactive_instruments.etf.dal.dto.result.AttachmentDto;
 import de.interactive_instruments.etf.dal.dto.result.TestResultStatus;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EidFactory;
@@ -239,7 +241,22 @@ public class ResultCollectorTest {
 	public void testCollectorInternalError() throws IOException, ObjectWithIdNotFoundException, StorageException {
 		final TestResultCollector c = new BsxDsResultCollector(BsxTestUtils.DATA_STORAGE,
 				loggerMock, attachmentDir.expandPath("Result3.xml"), attachmentDir, TASK_DTO_1);
-		c.internalError("Error message", "ERROR dumped in file".getBytes(), "text/plain");
+		final String id = c.internalError("Error message", "ERROR message in file".getBytes(), "text/plain");
+
+		final TestTaskResultDto result = dao.getById(EidFactory.getDefault().createUUID(id)).getDto();
+		assertEquals("Error message", result.getErrorMessage());
+		assertNotNull(result.getAttachments());
+		// Log file and error message in file
+		assertEquals(2, result.getAttachments().size());
+		AttachmentDto attachment = null;
+		for (final AttachmentDto a : result.getAttachments()) {
+			if ("internalError".equals(a.getType())) {
+				attachment = a;
+			}
+		}
+		assertNotNull(attachment);
+		assertEquals("Internal error", attachment.getLabel());
+		assertEquals("ERROR message in file", new IFile(attachment.getReferencedData()).readContent().toString());
 	}
 
 }

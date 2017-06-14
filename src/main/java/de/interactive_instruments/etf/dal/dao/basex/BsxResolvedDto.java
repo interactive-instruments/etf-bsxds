@@ -15,6 +15,9 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import de.interactive_instruments.etf.dal.dao.DataStorageRegistry;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -24,9 +27,6 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.properties.PropertyHolder;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )

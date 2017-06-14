@@ -15,14 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
-import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.exceptions.StorageException;
+import java.io.IOException;
+
+import javax.xml.transform.TransformerConfigurationException;
+
 import org.basex.core.BaseXException;
 import org.basex.core.cmd.DropDB;
 
-import javax.xml.transform.TransformerConfigurationException;
-import java.io.IOException;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
+import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * Test Object Data Access Object

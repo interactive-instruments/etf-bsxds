@@ -15,6 +15,15 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.*;
+import java.util.*;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
+import org.apache.commons.io.IOUtils;
+
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MimeTypeUtils;
 import de.interactive_instruments.SUtils;
@@ -33,13 +42,6 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.MimeTypeUtilsException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
-import org.apache.commons.io.IOUtils;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.*;
-import java.util.*;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
@@ -82,7 +84,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 		errorLimit = errorLimitTmp;
 		try {
 			fileOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile), 16384);
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(fileOutputStream, "UTF-8"),
+			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(
+					fileOutputStream, "UTF-8"),
 					errorLimit);
 		} catch (XMLStreamException | IOException e) {
 			throw new IllegalStateException(e);
@@ -423,7 +426,8 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 				resultFile.delete();
 				final BufferedOutputStream errorOutputStream = new BufferedOutputStream(new FileOutputStream(resultFile),
 						16384);
-				final XMLStreamWriter errorWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(errorOutputStream);
+				final XMLStreamWriter errorWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(
+						errorOutputStream, "UTF-8");
 
 				if (bytes != null) {
 					final String attachmentEid = UUID.randomUUID().toString();

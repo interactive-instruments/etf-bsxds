@@ -15,6 +15,46 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import static net.bytebuddy.matcher.ElementMatchers.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.xml.XMLConstants;
+import javax.xml.bind.*;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.FieldAccessor;
+import net.bytebuddy.implementation.MethodDelegation;
+
+import org.basex.BaseX;
+import org.basex.core.BaseXException;
+import org.basex.core.Context;
+import org.basex.core.cmd.*;
+import org.basex.core.cmd.Set;
+import org.basex.query.QueryException;
+import org.basex.query.util.pkg.Pkg;
+import org.basex.query.util.pkg.RepoManager;
+import org.eclipse.persistence.internal.oxm.mappings.Descriptor;
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.jaxb.UnmarshallerProperties;
+import org.eclipse.persistence.oxm.XMLDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.EtfConstants;
@@ -38,43 +78,6 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.exceptions.config.MissingPropertyException;
 import de.interactive_instruments.properties.ConfigProperties;
 import de.interactive_instruments.properties.ConfigPropertyHolder;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.description.modifier.Visibility;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.implementation.FieldAccessor;
-import net.bytebuddy.implementation.MethodDelegation;
-import org.basex.BaseX;
-import org.basex.core.BaseXException;
-import org.basex.core.Context;
-import org.basex.core.cmd.*;
-import org.basex.core.cmd.Set;
-import org.basex.query.QueryException;
-import org.basex.query.util.pkg.Pkg;
-import org.basex.query.util.pkg.RepoManager;
-import org.eclipse.persistence.internal.oxm.mappings.Descriptor;
-import org.eclipse.persistence.jaxb.JAXBContextProperties;
-import org.eclipse.persistence.jaxb.UnmarshallerProperties;
-import org.eclipse.persistence.oxm.XMLDescriptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
-
-import javax.xml.XMLConstants;
-import javax.xml.bind.*;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static net.bytebuddy.matcher.ElementMatchers.*;
 
 /**
  * Basex Data Storage

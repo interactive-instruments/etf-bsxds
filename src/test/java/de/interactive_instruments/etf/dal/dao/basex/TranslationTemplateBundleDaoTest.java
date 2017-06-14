@@ -121,7 +121,8 @@ public class TranslationTemplateBundleDaoTest {
 
 	@Test
 	public void test_7_0_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException, URISyntaxException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+			URISyntaxException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
 				"database/translationtemplatebundle.xml").toURI());
 		final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
@@ -136,7 +137,8 @@ public class TranslationTemplateBundleDaoTest {
 
 	@Test(expected = StoreException.class)
 	public void test_7_1_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException, URISyntaxException {
+			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+			URISyntaxException {
 		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
 				"database/invalidtranslationtemplatebundle.xml").toURI());
 		((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));

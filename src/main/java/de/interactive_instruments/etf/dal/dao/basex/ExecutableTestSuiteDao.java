@@ -15,6 +15,16 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.util.List;
+
+import javax.xml.validation.Schema;
+
+import org.basex.core.BaseXException;
+import org.slf4j.Logger;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.dal.dto.ModelItemTreeNode;
 import de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto;
@@ -22,14 +32,6 @@ import de.interactive_instruments.etf.dal.dto.test.TestModelItemDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.exceptions.StorageException;
-import org.basex.core.BaseXException;
-import org.slf4j.Logger;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import javax.xml.validation.Schema;
-import java.util.List;
 
 /**
  * Executable Test Suite Data Access Object

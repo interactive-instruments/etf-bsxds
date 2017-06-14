@@ -15,6 +15,17 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.IOException;
+
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.validation.Schema;
+
+import org.basex.core.BaseXException;
+import org.slf4j.Logger;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.InitializationException;
@@ -22,15 +33,6 @@ import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
-import org.basex.core.BaseXException;
-import org.slf4j.Logger;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.validation.Schema;
-import java.io.IOException;
 
 /**
  * Test Task Result Data Access Object

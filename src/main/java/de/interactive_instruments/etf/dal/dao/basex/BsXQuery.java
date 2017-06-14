@@ -15,14 +15,15 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import de.interactive_instruments.etf.dal.dao.Filter;
-import org.basex.core.BaseXException;
-import org.basex.core.cmd.XQuery;
+import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
 
 import java.io.OutputStream;
 import java.util.HashMap;
 
-import static de.interactive_instruments.etf.dal.dao.basex.DsUtils.valueOfOrDefault;
+import org.basex.core.BaseXException;
+import org.basex.core.cmd.XQuery;
+
+import de.interactive_instruments.etf.dal.dao.Filter;
 
 /**
  * Wrapped Xquery

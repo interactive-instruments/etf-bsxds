@@ -15,6 +15,15 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.Objects;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.basex.core.BaseXException;
+
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.OutputFormatStreamable;
@@ -22,14 +31,6 @@ import de.interactive_instruments.etf.model.OutputFormat;
 import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.properties.Properties;
 import de.interactive_instruments.properties.PropertyHolder;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.basex.core.BaseXException;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.util.Objects;
 
 /**
  * Abstract class for a prepared XQuery statement whose result can be directly
