@@ -182,22 +182,6 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		updateLastModificationDate();
 	}
 
-	protected byte[] createHash(final String str) {
-		int hash = 31;
-		for (int i = 0; i < str.length(); i++) {
-			hash = hash * 71 + str.charAt(i);
-		}
-		return ByteBuffer.allocate(4).putInt(hash).array();
-	}
-
-	protected byte[] createHash(final byte[] bytes) {
-		int hash = 31;
-		for (int i = 0; i < bytes.length; i++) {
-			hash = hash * 71 + bytes[i];
-		}
-		return ByteBuffer.allocate(4).putInt(hash).array();
-	}
-
 	@Override
 	public void replace(final T t, final EID newId) throws StorageException, ObjectWithIdNotFoundException {
 		ensureType(t);
@@ -257,7 +241,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			t.setId(changedId);
 			// Increment version and change hash
 			((RepositoryItemDto) t).setVersion(oldVersion.incBugfix());
-			((RepositoryItemDto) t).setItemHash(createHash(t.toString()));
+			((RepositoryItemDto) t).setItemHash(SUtils.fastCalcHashAsHexStr(t.toString()));
 
 			// Set replaceBy property and write back
 			// TODO we can not use changeProperty here because the property does not exist, maybe addProperty is required.

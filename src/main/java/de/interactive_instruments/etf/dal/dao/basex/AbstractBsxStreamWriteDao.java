@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.xml.sax.*;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.MdUtils;
 import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.XmlUtils;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
@@ -194,8 +195,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
 			final EID id = addAndValidate(buffer);
 			T dto = getById(id).getDto();
 			if (dto instanceof RepositoryItemDto) {
-				final byte[] hash = createHash(buffer);
-				((RepositoryItemDto) dto).setItemHash(hash);
+				((RepositoryItemDto) dto).setItemHash(MdUtils.checksumAsHexStr(buffer));
 			}
 			if (hook != null) {
 				dto = hook.doChangeBeforeStore(dto);
