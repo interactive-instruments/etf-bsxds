@@ -1,5 +1,5 @@
-<jxb:bindings version="2.1" xmlns:etf="http://www.interactive-instruments.de/etf/1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<jxb:bindings version="2.1" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <jxb:globalBindings>
     <xjc:superClass name="de.interactive_instruments.dal.dto.Dto"/>

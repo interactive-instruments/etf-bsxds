@@ -517,7 +517,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">j</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INTERNAL_ERROR'">e</xsl:when>
 				</xsl:choose>
@@ -531,7 +531,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">j</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INTERNAL_ERROR'">e</xsl:when>
 				</xsl:choose>
@@ -655,7 +655,7 @@
 							<xsl:when test="./etf:status[1]/text() = 'WARNING'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">j</xsl:when>
-							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
 						</xsl:choose>
 					</xsl:attribute>
@@ -667,7 +667,7 @@
 							<xsl:when test="./etf:status[1]/text() = 'WARNING'">g</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'INFORMATION'">g</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'SKIPPED'">g</xsl:when>
-							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">e</xsl:when>
+							<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'">j</xsl:when>
 							<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'">e</xsl:when>
 						</xsl:choose>
 					</xsl:attribute>
@@ -830,7 +830,7 @@
 					<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
-					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
+					<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 					<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
@@ -983,7 +983,7 @@
 								<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 								<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 								<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
-								<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
+								<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 								<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
 							</xsl:choose>
 						</xsl:attribute>
@@ -1239,7 +1239,7 @@
 						<xsl:when test="./etf:status[1]/text() = 'WARNING'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 						<xsl:when test="./etf:status[1]/text() = 'INFORMATION'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 						<xsl:when test="./etf:status[1]/text() = 'SKIPPED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
-						<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
+						<xsl:when test="./etf:status[1]/text() = 'NOT_APPLICABLE'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-g</xsl:when>
 						<xsl:when test="./etf:status[1]/text() = 'UNDEFINED'"><xsl:value-of select="$collapsibleContentJqmClass"/> ui-body-f</xsl:when>
 					</xsl:choose>
 				</xsl:attribute>

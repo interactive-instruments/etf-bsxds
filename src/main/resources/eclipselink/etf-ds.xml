@@ -319,9 +319,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
+               <field name="itemHash/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -635,9 +633,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
+               <field name="itemHash/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -2125,9 +2121,7 @@
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>itemHash</attribute-name>
-               <field name="itemHash/text()" xsi:type="node">
-                  <schema-type>{http://www.w3.org/2001/XMLSchema}base64Binary</schema-type>
-               </field>
+               <field name="itemHash/text()" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>

@@ -63,7 +63,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -701,7 +701,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -1066,7 +1066,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -1739,7 +1739,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -2029,7 +2029,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -2403,7 +2403,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -2737,7 +2737,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -3936,7 +3936,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -4525,7 +4525,7 @@
                                     <name>itemHash</name>
                                     <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                                     <type type="simple-type-ref">
-                                       <name>base64Binary</name>
+                                       <name>string</name>
                                        <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                     </type>
                                  </particle>
@@ -6431,7 +6431,7 @@
                         <name>itemHash</name>
                         <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
                         <type type="simple-type-ref">
-                           <name>base64Binary</name>
+                           <name>string</name>
                            <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                         </type>
                      </particle>

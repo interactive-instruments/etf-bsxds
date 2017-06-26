@@ -14,6 +14,7 @@
     <xsl:param name="limit" select="-1"/>
     <xsl:param name="fields" as="xs:string" select="'*'"/>
     <xsl:variable name="fieldsParam" select="if (empty($fields) or $fields='*') then '' else $fields"/>
+    <xsl:param name="maskSecrets" select="true()"/>
     
     <!-- Overwrite template defaults -->
     <xsl:param name="includeRefType" select="true()"/>

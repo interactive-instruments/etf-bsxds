@@ -55,7 +55,7 @@
 		<x:e key="WARNING">Passed with warnings</x:e>
 		<x:e key="INFO">Passed with notes</x:e>
 		<x:e key="SKIPPED">Skipped</x:e>
-		<x:e key="NOT_APPLICABLE">Disabled</x:e>
+		<x:e key="NOT_APPLICABLE">Not applicable</x:e>
 		<x:e key="UNDEFINED">Undefined</x:e>
 		<x:e key="ExecutionStatement">Test instruction</x:e>
 		<x:e key="Count">Total</x:e>
@@ -105,7 +105,7 @@
 		<x:e key="Author">Autor</x:e>
 		<x:e key="DateCreated">Erstellt</x:e>
 		<x:e key="LastEditor">Zuletzt bearbeitet von</x:e>
-		<x:e key="LastUpdated">Zuletzt ge‰ndert</x:e>
+		<x:e key="LastUpdated">Zuletzt geändert</x:e>
 		<x:e key="Duration">Dauer</x:e>
 		<x:e key="Started">Gestartet</x:e>
 		<x:e key="Resource">Ressource</x:e>

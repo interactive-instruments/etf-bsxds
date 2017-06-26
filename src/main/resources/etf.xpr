@@ -29,6 +29,66 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>xslt/default/Untitled1.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>Report Transformation</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>http://localhost:8080/v2/TestRuns/EIDf1375e25-7f80-4d3e-b41b-c16960e2bf40.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>Report Transformation</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>http://demo-snapshot.etf-validator.net/etf-webapp/v2/TestRuns/EID81386ce2-98d2-4f66-85a5-a605b97d4b38.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>Report Transformation</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../../../etf-tetd/src/test/resources/Untitled1.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>Report Transformation</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../../../../../Desktop/Response_Get_TestTaskResult_TestDataWeb.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -75,21 +135,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>http://35.156.189.36/etf-webapp/v2/TestRuns/EID66aeb47d-30ab-4150-a9fa-b4e98dc9edf0.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>Report Transformation</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>schema/model/Untitled2.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -320,7 +365,7 @@
                                                 </paramDescriptor>
                                             </field>
                                             <field name="value">
-                                                <String>/Users/herrmann/Projects/etf-mbs/etf-reportstyles-default/src/main/resources/default/style</String>
+                                                <String>file:/Users/herrmann/Projects/etf-fbs/etf-bsxds/src/main/resources/xslt/default/style</String>
                                             </field>
                                             <field name="hasXPathValue">
                                                 <Boolean>false</Boolean>

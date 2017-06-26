@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-02T14:14:13.187+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-06-26T11:51:53.064+02:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
