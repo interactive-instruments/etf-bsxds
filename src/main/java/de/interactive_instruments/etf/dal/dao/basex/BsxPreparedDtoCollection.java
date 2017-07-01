@@ -240,7 +240,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 						new ByteArrayInputStream(output.toByteArray()));
 				cachedDtos = getter.getMainDtos(result);
 				if (cachedDtos == null) {
-					throw new IllegalStateException("Data storage returned no data for collection");
+					throw new BsxPreparedDtoException("Data storage returned no data for collection");
 				}
 				// consistency check
 				if (ids != null) {
@@ -258,7 +258,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 				}
 			} catch (IOException | JAXBException e) {
 				logError(e);
-				throw new IllegalStateException(e);
+				throw new BsxPreparedDtoException(e);
 			}
 		}
 	}

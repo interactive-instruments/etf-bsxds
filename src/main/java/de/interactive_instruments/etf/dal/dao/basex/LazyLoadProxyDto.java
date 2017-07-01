@@ -54,12 +54,12 @@ public class LazyLoadProxyDto {
 		}
 		if (proxy.getCached() == null) {
 			if (proxy.getProxiedId() == null) {
-				throw new IllegalStateException("Eid not set");
+				throw new BsxPreparedDtoException("Eid not set");
 			}
 			try {
 				proxy.setCached(dao.getById(proxy.getProxiedId()).getDto());
 			} catch (StorageException | ObjectWithIdNotFoundException e) {
-				throw new IllegalStateException("Unable to load proxied Dto " + proxy.getProxiedId(), e);
+				throw new BsxPreparedDtoException("Unable to load proxied Dto " + proxy.getProxiedId(), e);
 			}
 		}
 		try {
@@ -71,7 +71,7 @@ public class LazyLoadProxyDto {
 				return ret;
 			}
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new IllegalStateException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
+			throw new BsxPreparedDtoException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
 		}
 	}
 

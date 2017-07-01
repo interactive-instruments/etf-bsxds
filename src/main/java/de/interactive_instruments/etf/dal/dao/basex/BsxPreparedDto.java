@@ -62,12 +62,12 @@ final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto impleme
 					cachedDto = getter.getMainDto(result);
 					if (cachedDto == null) {
 						bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
-						throw new IllegalStateException("Data storage returned no data for \"" + id + "\"");
+						throw new BsxPreparedDtoException("Data storage returned no data for \"" + id + "\"");
 					}
 				} catch (IOException | JAXBException e) {
 					bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
 					logError(e);
-					throw new IllegalStateException(e);
+					throw new BsxPreparedDtoException(e);
 				}
 			}
 		}
