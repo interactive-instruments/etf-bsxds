@@ -92,7 +92,7 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 				try {
 					bsXquery.execute(out);
 				} catch (final IOException e) {
-					throw new IllegalStateException(e);
+					throw new BsxPreparedDtoException(e);
 				} finally {
 					try {
 						out.close();
@@ -106,7 +106,7 @@ abstract class AbstractBsxPreparedDto implements OutputFormatStreamable {
 			// bsXquery.execute(outputStream);
 		} catch (IOException e) {
 			logError(e);
-			throw new IllegalStateException(e);
+			throw new BsxPreparedDtoException(e);
 		}
 	}
 

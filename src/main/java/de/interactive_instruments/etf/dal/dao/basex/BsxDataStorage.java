@@ -56,6 +56,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.IoUtils;
 import de.interactive_instruments.TimeUtils;
 import de.interactive_instruments.etf.EtfConstants;
 import de.interactive_instruments.etf.dal.dao.Dao;
@@ -72,7 +73,10 @@ import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
+import de.interactive_instruments.etf.model.DefaultEidSet;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.etf.model.EidHolder;
+import de.interactive_instruments.etf.model.EidSet;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.exceptions.config.MissingPropertyException;
@@ -290,7 +294,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			}
 			sf.setResourceResolver(new BsxSchemaResourceResolver());
 			schema = sf.newSchema(new StreamSource(storageSchema));
-			IFile.closeQuietly(storageSchema);
+			IoUtils.closeQuietly(storageSchema);
 		} catch (SAXException e) {
 			throw new InitializationException("Could not load schema: ", e);
 		}
@@ -764,6 +768,18 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			return dto;
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalArgumentException("Could not initiate Dto proxy: " + e);
+		}
+	}
+
+	@Override
+	public void delete(final Collection<? extends Dto> dtos) {
+		final EidSet<Dto> dtoSet = new DefaultEidSet<>((Collection<Dto>) dtos);
+		for (final Dto dto : dtoSet) {
+			try {
+				((WriteDao) (getDao(dto.getClass()))).delete(dto.getId());
+			} catch (ObjectWithIdNotFoundException | StorageException e) {
+				logger.error("Error deleting {}", dto.getId(), e);
+			}
 		}
 	}
 

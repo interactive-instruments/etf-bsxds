@@ -72,11 +72,6 @@ public class TestRunDaoTest {
 	}
 
 	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(TR_DTO_1);
-	}
-
-	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
 		BsxTestUtils.addTest(TR_DTO_1);
 		BsxTestUtils.forceDeleteAndAdd(TTR_DTO_1);
@@ -91,6 +86,8 @@ public class TestRunDaoTest {
 
 		writeDao.delete(TR_DTO_1.getId());
 		TestCase.assertFalse(writeDao.exists(TR_DTO_1.getId()));
+		// Must be deleted as well
+		BsxTestUtils.notExistsOrDisabled(TTR_DTO_1);
+		BsxTestUtils.notExistsOrDisabled(TTR_DTO_2);
 	}
-
 }

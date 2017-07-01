@@ -15,6 +15,8 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
+import java.util.Collection;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -49,4 +51,5 @@ interface BsxDsCtx {
 
 	Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException;
 
+	void delete(final Collection<? extends Dto> dtos);
 }

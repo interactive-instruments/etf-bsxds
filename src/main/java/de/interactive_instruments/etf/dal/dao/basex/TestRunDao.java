@@ -21,10 +21,13 @@ import javax.xml.transform.TransformerConfigurationException;
 
 import org.basex.core.BaseXException;
 
+import de.interactive_instruments.etf.dal.dao.PreparedDto;
+import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
+import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 import de.interactive_instruments.properties.ConfigProperties;
@@ -49,6 +52,16 @@ final class TestRunDao extends AbstractBsxWriteDao<TestRunDto> {
 			outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
 		} catch (IOException | TransformerConfigurationException e) {
 			throw new InitializationException(e);
+		}
+	}
+
+	@Override
+	protected void doCleanBeforeDelete(final EID eid) throws BaseXException {
+		try {
+			final PreparedDto<TestRunDto> testRun = getById(eid);
+			ctx.delete(testRun.getDto().getTestTaskResults());
+		} catch (BsxPreparedDtoException | ObjectWithIdNotFoundException | StorageException e) {
+			ctx.getLogger().warn("Ignoring error during clean ", e);
 		}
 	}
 

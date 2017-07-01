@@ -23,6 +23,7 @@ import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
@@ -37,9 +38,10 @@ final class TestTaskDao extends AbstractBsxWriteDao<TestTaskDto> {
 	}
 
 	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+	protected void doCleanBeforeDelete(final EID eid) throws BaseXException {}
 
-	}
+	@Override
+	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
 	@Override
 	public boolean exists(final EID eid) {

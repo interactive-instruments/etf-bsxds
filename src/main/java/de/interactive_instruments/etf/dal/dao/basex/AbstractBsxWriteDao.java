@@ -316,12 +316,24 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			throw new ObjectWithIdNotFoundException(this, eid.toString());
 		}
 		try {
+			if (clean) {
+				try {
+					doCleanBeforeDelete(eid);
+				} catch (Exception e) {
+					ExcUtils.suppress(e);
+				}
+			}
+
 			// Delete single item in the etf db
 			new Delete(oldItem.getName()).execute(ctx.getBsxCtx());
 			new Flush().execute(ctx.getBsxCtx());
 
 			if (clean) {
-				doCleanAfterDelete(eid);
+				try {
+					doCleanAfterDelete(eid);
+				} catch (Exception e) {
+					ExcUtils.suppress(e);
+				}
 			}
 		} catch (BaseXException e) {
 			throw new StorageException(e);
@@ -382,6 +394,8 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 			throw new IllegalStateException("Internal error in updateProperty()", e);
 		}
 	}
+
+	protected void doCleanBeforeDelete(final EID eid) throws BaseXException {}
 
 	protected abstract void doCleanAfterDelete(final EID eid) throws BaseXException;
 
