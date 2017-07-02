@@ -457,8 +457,8 @@
 				<table>
 					<tbody>
 					<tr>
-						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureType']"/></th>
-						<th><xsl:value-of select="$lang/x:e[@key = 'FeatureCount']"/></th>
+						<th><xsl:value-of select="$lang/x:e[@key = 'Type']"/></th>
+						<th><xsl:value-of select="$lang/x:e[@key = 'Count']"/></th>
 					</tr>
 					<xsl:for-each select="$stat/etf:entries/etf:entry">
 						<tr>
