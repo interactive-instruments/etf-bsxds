@@ -395,7 +395,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 			throw new InitializationException("FunctX XQuery Function Library installation failed. "
 					+ "If a proxy server is used, set the Java Virtual Machine parameter 'http.proxyHost'. "
 					+ "Otherwise download functx-1.0.xar manually, extract the file (it is a ZIP file) and copy "
-					+ "it to the BaseXRepo folder 'repo' below folder " + ctx.repo.path(), e);
+					+ "it to the BaseXRepo 'repo' folder " + ctx.repo.path(), e);
 		}
 
 		// Do not use auto optimize here: "However, updates can take much longer, so this option
