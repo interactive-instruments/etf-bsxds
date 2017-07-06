@@ -221,6 +221,7 @@ class BsxTestUtils {
 
 		preparedDto.streamTo(outputFormat, null, fop);
 
+		// run the gradle build task or this will return null in tests
 		final IFile cmpResult = new IFile(dto.getClass().getClassLoader().getResource(path).toURI());
 		assertTrue(cmpResult.exists());
 

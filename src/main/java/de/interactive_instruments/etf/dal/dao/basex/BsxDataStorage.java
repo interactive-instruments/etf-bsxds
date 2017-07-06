@@ -496,6 +496,17 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		return daoMapping;
 	}
 
+	@Override
+	public <T extends Dto> Dao<T> getDao(final Class<T> dtoType) {
+		final Dao dao = daoMapping.get(dtoType);
+		if (dao == null && ProxyAccessor.class.isAssignableFrom(dtoType)) {
+			// The generated classes implement the ProxyAccessor interface and
+			// are extending the actual dto class
+			return (Dao<T>) daoMapping.get(dtoType.getSuperclass());
+		}
+		return dao;
+	}
+
 	/**
 	 * Reset the data storage
 	 *

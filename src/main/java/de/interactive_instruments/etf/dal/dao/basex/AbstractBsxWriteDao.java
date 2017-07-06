@@ -309,6 +309,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
 		}
 	}
 
+	// Performance: flush after clean
 	protected void doDelete(final EID eid, boolean clean) throws StorageException, ObjectWithIdNotFoundException {
 		final IFile oldItem = getFile(eid);
 		if (!oldItem.exists()) {

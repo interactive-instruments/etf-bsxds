@@ -21,6 +21,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
@@ -31,6 +32,8 @@ import de.interactive_instruments.etf.dal.dao.PreparedDto;
 import de.interactive_instruments.etf.dal.dao.WriteDao;
 import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
+import de.interactive_instruments.etf.dal.dto.run.TestTaskDto;
+import de.interactive_instruments.etf.test.TestDtos;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
@@ -73,6 +76,16 @@ public class TestRunDaoTest {
 
 	@Test
 	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
+		// Ensure structure
+		TR_DTO_1.setTestTasks(new ArrayList<TestTaskDto>() {
+			{
+				this.add(TestDtos.TASK_DTO_1);
+				this.add(TestDtos.TASK_DTO_2);
+			}
+		});
+		TASK_DTO_1.setTestTaskResult(TTR_DTO_1);
+		TASK_DTO_2.setTestTaskResult(TTR_DTO_2);
+
 		BsxTestUtils.addTest(TR_DTO_1);
 		BsxTestUtils.forceDeleteAndAdd(TTR_DTO_1);
 		BsxTestUtils.forceDeleteAndAdd(TTR_DTO_2);
