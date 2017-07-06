@@ -102,6 +102,8 @@ public class TestTaskResultDaoTest {
 		assertNotNull(preparedDto.getDto().getAttachments());
 		assertEquals(1, preparedDto.getDto().getAttachments().size());
 		assertNotNull(preparedDto.getDto().getTestObject());
+		// force proxied DTO to resolve
+		assertNotNull(preparedDto.getDto().getTestObject().getLabel());
 		assertEquals(TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
 		assertNotNull(preparedDto.getDto().getTestModuleResults());
 
