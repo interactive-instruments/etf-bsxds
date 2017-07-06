@@ -117,7 +117,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 
 	private IFile attachmentDir;
 
-	private Context ctx = new Context();
+	private Context ctx;
 
 	private final AtomicBoolean initialized = new AtomicBoolean(false);
 
@@ -341,6 +341,17 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 	}
 
 	private void initBsxDatabase() throws MissingPropertyException, IOException, InitializationException {
+		if (System.getProperty("org.basex.path") == null) {
+			// BaseX path not set use, set database to data source dir / db
+			final IFile dbDir = this.configProperties.getPropertyAsFile(
+					EtfConstants.ETF_DATASOURCE_DIR).expandPath("db");
+			dbDir.ensureDir();
+			System.setProperty("org.basex.path",
+					dbDir.getAbsolutePath());
+		}
+		// Need to be called after org.basex.path has been set
+		ctx = new Context();
+
 		this.storeDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_DATASOURCE_DIR).expandPath("obj");
 		// TODO get and set backup dir
 		// this.backupDir = this.configProperties.getPropertyAsFile(EtfConstants.ETF_BACKUP_DIR);
