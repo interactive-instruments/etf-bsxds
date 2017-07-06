@@ -20,7 +20,6 @@ import static de.interactive_instruments.etf.dal.dao.basex.BsxDataStorage.ETF_NA
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 import java.util.*;
 
 import javax.xml.bind.JAXBException;

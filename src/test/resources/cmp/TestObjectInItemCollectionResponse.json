@@ -4,7 +4,6 @@
   "ref": "http://localhost/etf-webapp/v2/TestObjects/65899225-31c4-37b3-bce9-31532d45be84.json",
   "testObjects": {"TestObject": {
     "id": "EID65899225-31c4-37b3-bce9-31532d45be84",
-    "remoteResource": "http://notset",
     "label": "TestObjectDto.00001.label",
     "description": "TestObjectDto.00001.description",
     "version": "1.0.0",

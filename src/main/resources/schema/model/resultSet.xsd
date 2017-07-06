@@ -44,7 +44,7 @@
                             modified and can be used to detect changes</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="remoteResource" type="httpUriType" minOccurs="1">
+                <xs:element name="remoteResource" type="httpUriType" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>The remote Http URI from where the item has been fetched
                             and will be synchonized by the ETF, e.g. a git URL</xs:documentation>

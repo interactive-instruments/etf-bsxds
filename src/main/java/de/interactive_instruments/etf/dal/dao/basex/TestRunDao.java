@@ -22,7 +22,6 @@ import javax.xml.transform.TransformerConfigurationException;
 import org.basex.core.BaseXException;
 
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
-import de.interactive_instruments.etf.dal.dto.result.TestTaskResultDto;
 import de.interactive_instruments.etf.dal.dto.run.TestRunDto;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.exceptions.InitializationException;

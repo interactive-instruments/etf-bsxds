@@ -150,7 +150,7 @@
 
     <!-- =============================================================== -->
     <xsl:template priority="7"
-        match="*/etf:tag | */etf:testObject | */etf:testObjectType | */etf:testTaskResult | */etf:executableTestSuite | */etf:testObjectType | */etf:translationTemplateBundle">
+        match="*/etf:tag | */etf:testObject | */etf:testObjectType | */etf:testTaskResult | */etf:executableTestSuite | */etf:translationTemplateBundle">
         <xsl:element name="{name()}">
             <xsl:variable name="reference" select="@ref"/>
             <xsl:variable name="type"
@@ -200,6 +200,24 @@
                 select="concat($serviceUrl, '/TestRuns/', $testRunId, '/log')"
             />
         </xsl:element>
+    </xsl:template>
+    
+    <!-- =============================================================== -->
+    <xsl:template match="*/etf:TestObject/etf:ResourceCollection/etf:resource/@href" priority="8">
+        <xsl:attribute name="{name()}" 
+            xpath-default-namespace="http://www.interactive-instruments.de/etf/2.0">
+            <xsl:choose>
+                <xsl:when test="starts-with(., 'file://')">
+                    <xsl:variable name="testObjectId" select="../../../@id"/>
+                    <xsl:value-of
+                        select="concat($serviceUrl, '/TestObjects/', $testObjectId, '/data')"
+                    />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
     </xsl:template>
     
     <!-- =============================================================== -->

@@ -24,6 +24,7 @@ import org.basex.core.cmd.DropDB;
 
 import de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
@@ -49,11 +50,13 @@ final class TestObjectDao extends AbstractBsxWriteDao<TestObjectDto> {
 	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
 		for (int i = 0; i < 10; i++) {
 			final String testDbName = ETF_TESTDB_PREFIX + eid.toString() + "-" + i;
-			final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));
-			if (dropped) {
-				ctx.getLogger().info("Dropped test database {}", testDbName);
-			} else {
-				break;
+			try {
+				final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));
+				if (dropped) {
+					ctx.getLogger().info("Dropped test database {}", testDbName);
+				}
+			} catch (final Exception e) {
+				ExcUtils.suppress(e);
 			}
 		}
 	}

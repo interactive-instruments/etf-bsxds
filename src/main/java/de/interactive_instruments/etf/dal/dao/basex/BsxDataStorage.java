@@ -75,7 +75,6 @@ import de.interactive_instruments.etf.dal.dto.test.*;
 import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto;
 import de.interactive_instruments.etf.model.DefaultEidSet;
 import de.interactive_instruments.etf.model.EID;
-import de.interactive_instruments.etf.model.EidHolder;
 import de.interactive_instruments.etf.model.EidSet;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;

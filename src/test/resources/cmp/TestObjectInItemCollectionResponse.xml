@@ -8,9 +8,6 @@
     <testObjects xmlns:etf="http://www.interactive-instruments.de/etf/2.0">
         <etf:TestObject xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0"
                         id="EID65899225-31c4-37b3-bce9-31532d45be84">
-
-            <remoteResource>http://notset</remoteResource>
-
             <label>TestObjectDto.00001.label</label>
             <description>TestObjectDto.00001.description</description>
             <version>1.0.0</version>

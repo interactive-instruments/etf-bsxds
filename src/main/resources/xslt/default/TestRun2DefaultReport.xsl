@@ -401,7 +401,7 @@
 				<p><xsl:value-of select="$TestObject/etf:description/text()" disable-output-escaping="yes"/></p>
 			</xsl:if>
 			
-			<xsl:if test="not($TestObject/etf:remoteResource/text()='http://nowhere')">
+			<xsl:if test="$TestObject/etf:remoteResource/text() and not($TestObject/etf:remoteResource/text()='http://nowhere')">
 				<a target="_blank" href="{$TestObject/etf:remoteResource}"><xsl:value-of select="$TestObject/etf:remoteResource"/></a>
 			</xsl:if>
 			
