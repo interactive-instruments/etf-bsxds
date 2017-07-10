@@ -149,7 +149,7 @@ final class XmlTestResultWriter implements Releasable {
 			writer.writeEndElement();
 			if (attachmentFile != null) {
 				writer.writeStartElement("referencedData");
-				writer.writeAttribute("href", "file://" + attachmentFile.getAbsolutePath());
+				writer.writeAttribute("href", "file://" + attachmentFile.toURI().toString());
 				writer.writeEndElement();
 			} else {
 				writer.writeStartElement("embeddedData");
@@ -486,7 +486,7 @@ final class XmlTestResultWriter implements Releasable {
 		errorWriter.writeEndElement();
 
 		errorWriter.writeStartElement("referencedData");
-		errorWriter.writeAttribute("href", "file://" + logFile.getAbsolutePath());
+		errorWriter.writeAttribute("href", "file://" + logFile.toURI().toString());
 		errorWriter.writeEndElement();
 		// end log file attachment
 		errorWriter.writeEndElement();
@@ -509,7 +509,7 @@ final class XmlTestResultWriter implements Releasable {
 			errorWriter.writeEndElement();
 
 			errorWriter.writeStartElement("referencedData");
-			errorWriter.writeAttribute("href", "file://" + errorFile.getAbsolutePath());
+			errorWriter.writeAttribute("href", "file://" + errorFile.toURI().toString());
 			errorWriter.writeEndElement();
 			// end error file attachment
 			errorWriter.writeEndElement();
