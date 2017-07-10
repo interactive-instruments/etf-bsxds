@@ -104,7 +104,7 @@ public class TestTaskResultDaoTest {
 		assertNotNull(preparedDto.getDto().getTestObject());
 		// force proxied DTO to resolve
 		assertNotNull(preparedDto.getDto().getTestObject().getLabel());
-		if (ProxyAccessor.class.isAssignableFrom(preparedDto.getDto().getClass())) {
+		if (ProxyAccessor.class.isAssignableFrom(preparedDto.getDto().getTestObject().getClass())) {
 			assertEquals(TO_DTO_1.toString().trim(),
 					((ProxyAccessor) preparedDto.getDto().getTestObject()).getCached().toString().trim());
 		} else {
