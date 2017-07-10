@@ -17,6 +17,7 @@ package de.interactive_instruments.etf.dal.dao.basex;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
 import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
@@ -149,7 +150,7 @@ final class XmlTestResultWriter implements Releasable {
 			writer.writeEndElement();
 			if (attachmentFile != null) {
 				writer.writeStartElement("referencedData");
-				writer.writeAttribute("href", "file://" + attachmentFile.toURI().toString());
+				writer.writeAttribute("href", fileDoubleSlash(attachmentFile));
 				writer.writeEndElement();
 			} else {
 				writer.writeStartElement("embeddedData");
@@ -444,6 +445,11 @@ final class XmlTestResultWriter implements Releasable {
 		return errorCount >= errorLimit;
 	}
 
+	static private String fileDoubleSlash(final File file) {
+		final String str = file.toURI().toString();
+		return "file:/"+str.substring(5,str.length());
+	}
+
 	static void internalError(
 			final XMLStreamWriter errorWriter, final String resultedFrom, final String testObjectRef,
 			final String errorMessage, final File logFile,
@@ -486,7 +492,7 @@ final class XmlTestResultWriter implements Releasable {
 		errorWriter.writeEndElement();
 
 		errorWriter.writeStartElement("referencedData");
-		errorWriter.writeAttribute("href", "file://" + logFile.toURI().toString());
+		errorWriter.writeAttribute("href", fileDoubleSlash(logFile));
 		errorWriter.writeEndElement();
 		// end log file attachment
 		errorWriter.writeEndElement();
@@ -509,7 +515,7 @@ final class XmlTestResultWriter implements Releasable {
 			errorWriter.writeEndElement();
 
 			errorWriter.writeStartElement("referencedData");
-			errorWriter.writeAttribute("href", "file://" + errorFile.toURI().toString());
+			errorWriter.writeAttribute("href", fileDoubleSlash(errorFile));
 			errorWriter.writeEndElement();
 			// end error file attachment
 			errorWriter.writeEndElement();
