@@ -32,7 +32,7 @@ ext.moxyVersion = '2.6.4'
 
 ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
         project.getProperty('etf.ds.dir') :
-        project.file('./build/tmp/etf-ds').absolutePath
+        project.file('build/tmp/etf-ds').absolutePath
 
 repositories {
 	// BaseX
@@ -72,6 +72,9 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
+
+    // Todo remove
+    testCompile group: 'de.interactive_instruments.etf', name: 'etf-stdtot', version:'1.0.0'+project.snapshotSuffix
 }
 
 test {
