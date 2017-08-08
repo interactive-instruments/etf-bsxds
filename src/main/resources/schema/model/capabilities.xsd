@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://www.interactive-instruments.de/etf/2.0"
-           targetNamespace="http://www.interactive-instruments.de/etf/2.0"
-           xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0"
-           elementFormDefault="qualified" version="1.0">
+    xmlns="http://www.interactive-instruments.de/etf/2.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/2.0"
+    xmlns:etfAppinfo="http://www.interactive-instruments.de/etf/appinfo/1.0"
+    elementFormDefault="qualified" version="1.0">
 
     <xs:annotation>
         <xs:documentation xml:lang="en"> capabilities.xsd. Created by Jon Herrmann, (c) 2016-2017
@@ -25,6 +25,8 @@
     <xs:element name="TestObjectType">
         <xs:annotation>
             <xs:appinfo>
+                <xs:documentation>A Test Object Type describes a Test Object and may possess
+                    information how the type can be detected.</xs:documentation>
                 <etfAppinfo:cacheStrategy>permanent</etfAppinfo:cacheStrategy>
             </xs:appinfo>
         </xs:annotation>
@@ -44,55 +46,71 @@
                 </xs:element>
                 <xs:element name="filenameExtensions" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>
-                            List of filename extensions used to determine the Test Object Type when a new Test Object is defined.
-                        </xs:documentation>
+                        <xs:documentation> List of filename extensions used to determine the Test
+                            Object Type when a new Test Object is defined. </xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="filenameExtension" type="xs:string"></xs:element>
+                            <xs:element name="filenameExtension" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="mimeTypes" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>
-                            List of mime-types used to determine the Test Object Type when a new Test Object is defined.
-                        </xs:documentation>
+                        <xs:documentation> List of mime-types used to determine the Test Object Type
+                            when a new Test Object is defined. </xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="mimeType" type="MimeType"></xs:element>
+                            <xs:element name="mimeType" type="MimeType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="labelExpression" type="ExpressionType" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>
-                            A expression to extract the label for the Test Object from a resource.
-                        </xs:documentation>
+                        <xs:documentation> An expression to extract the label for the Test Object
+                            from a resource. </xs:documentation>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="descriptionExpression" type="ExpressionType" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>
-                            A expression to extract the description for the Test Object from a resource.
-                        </xs:documentation>
+                        <xs:documentation> An expression to extract the description for the Test
+                            Object from a resource. </xs:documentation>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="detectionExpression" type="ExpressionType" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>
-                            A expression to detect the Test Object from a resource.
+                        <xs:documentation> An expression to detect the Test Object from a resource.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="namingConvention" type="xs:string" minOccurs="0"/>
+                <xs:element name="uriDetectionExpression" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>A regular expression to detect the Test Object from an
+                            URI. In most cases the regualar expression is not version specific for
+                            Test Object Types that possess sub types, whereas version specific Test
+                            Object Types with a regular expression identifying the version not
+                            possess any sub types. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="defaultPathAndQuery" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The default path and query to access a remote resource.
+                            This is used as fallback information if an incomplete URI is provided by
+                            a client. Examples: 'serviceX', 'serviceX?request=GetCapabilities',
+                            '?request=GetCapabilities'</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="namingConvention" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Not used yet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="IdentifierAttributeGroup"/>
         </xs:complexType>
     </xs:element>
-    
+
     <!-- =============================================================== -->
     <xs:complexType name="ExpressionType">
         <xs:simpleContent>
