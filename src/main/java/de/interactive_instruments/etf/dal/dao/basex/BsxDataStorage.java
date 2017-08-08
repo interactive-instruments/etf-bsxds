@@ -347,7 +347,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 					EtfConstants.ETF_DATASOURCE_DIR).expandPath("db");
 			dbDir.ensureDir();
 			System.setProperty("org.basex.path",
-					dbDir.getAbsolutePath());
+					dbDir.getCanonicalOrSimplePath());
 		}
 		// Need to be called after org.basex.path has been set
 		ctx = new Context();
