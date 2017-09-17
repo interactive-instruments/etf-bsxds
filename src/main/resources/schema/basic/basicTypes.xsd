@@ -263,7 +263,7 @@
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,65}"/>
+                    <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,85}"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -296,10 +296,10 @@
     <xs:simpleType name="TranslationIdType">
         <xs:annotation>
             <xs:documentation>Translation ID, starting with 'TR.', at least 6 characters (including
-                [0-9] [a-z] [A-Z] . - _ ), max 45</xs:documentation>
+                [0-9] [a-z] [A-Z] . - _ ), max 85</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:ID">
-            <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,45}"/>
+            <xs:pattern value="TR\.(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\.|-|_)).{5,85}"/>
         </xs:restriction>
     </xs:simpleType>
 
