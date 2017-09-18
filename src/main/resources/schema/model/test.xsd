@@ -26,7 +26,8 @@
                 <xs:element name="supportedTestObjectTypes">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element name="testObjectType">
+                            <!--xs:element name="testObjectType">
+                                Error: The xsi:type is not validly derived from the declared type. The requested type loc is not validly derived from the declared type of element testObjectType
                                 <xs:complexType>
                                     <xs:complexContent>
                                         <xs:extension base="RefType">
@@ -43,7 +44,8 @@
                                         </xs:extension>
                                     </xs:complexContent>
                                 </xs:complexType>
-                            </xs:element>
+                            </xs:element-->
+                            <xs:element name="testObjectType" type="RefType"/>
                         </xs:sequence>
                         <xs:attribute name="max" type="xs:positiveInteger">
                             <xs:annotation>
