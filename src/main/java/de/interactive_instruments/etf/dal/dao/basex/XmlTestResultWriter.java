@@ -39,7 +39,7 @@ import de.interactive_instruments.exceptions.StorageException;
 final class XmlTestResultWriter implements Releasable {
 
 	public static final String ETF_NS = "http://www.interactive-instruments.de/etf/2.0";
-	public static final String ETF_RESULT_XSD = "http://services.interactive-instruments.de/etf/schema/model/resultSet.xsd";
+	public static final String ETF_RESULT_XSD = "http://resources.etf-validator.net/schema/v2/model/result.xsd";
 	public static final String ETF_NS_PREFIX = "etf";
 	public static final String ID_PREFIX = "EID";
 	public static final String TR_ERROR_LIMIT_EXCEEDED = "TR.errorLimitExceeded";
