@@ -27,6 +27,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MimeTypeUtils;
@@ -418,7 +419,19 @@ final class BsxDsResultCollector extends AbstractTestResultCollector {
 
 	@Override
 	public void internalError(final Throwable e) {
-		internalError(e.getMessage(), (byte[]) null, null);
+		final String errorMessage;
+		if (e != null) {
+			if (e.getMessage() != null) {
+				errorMessage = e.getMessage();
+			} else if (!SUtils.isNullOrEmpty(ExceptionUtils.getRootCauseMessage(e))) {
+				errorMessage = ExceptionUtils.getRootCauseMessage(e);
+			} else {
+				errorMessage = e.getClass().getName();
+			}
+		} else {
+			errorMessage = "Unknown error";
+		}
+		internalError(errorMessage, (byte[]) null, null);
 	}
 
 	@Override

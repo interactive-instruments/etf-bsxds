@@ -373,13 +373,8 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
 		IFile installFile = null;
 		try {
 			// Install basic XQuery script
-			final InputStream basicXQueryStream = getClass().getClassLoader().getResourceAsStream("xquery/" + etfxdbFileName);
-			Objects.requireNonNull(basicXQueryStream,
-					"Internal error reading the basic data storage XQuery function library");
-			// Copy file to repo
-			installFile = new IFile(ctx.repo.path().file()).expandPath(etfxqmPath);
-			installFile.getParentFile().mkdirs();
-			installFile.write(basicXQueryStream);
+			IoUtils.copyResourceToFile(this, "xquery/" + etfxdbFileName,
+					new IFile(ctx.repo.path().file()).expandPath(etfxqmPath));
 			repoManger.install(installFile.getAbsolutePath());
 		} catch (QueryException e) {
 			throw new InitializationException("XQuery script installation failed: ", e);
