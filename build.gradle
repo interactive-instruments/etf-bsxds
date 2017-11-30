@@ -27,7 +27,7 @@ apply from: 'build/gradle/ii-bda.gradle'
 group = 'de.interactive_instruments.etf'
 description = "ETF BaseX data source"
 
-ext.basexVersion = '8.5.5-ii'
+ext.basexVersion = '8.6.7'
 ext.moxyVersion = '2.6.4'
 
 ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
