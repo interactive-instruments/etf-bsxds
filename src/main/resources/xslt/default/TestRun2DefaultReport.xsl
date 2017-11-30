@@ -11,6 +11,7 @@
 	<xsl:param name="language">en</xsl:param>
 	<xsl:param name="baseUrl" select="'https://localhost/etf'"/>
 	<xsl:param name="serviceUrl" select="'https://localhost/etf/v2'"/>
+	<xsl:param name="forceLocalResLoading">false</xsl:param>
 	<xsl:output method="html" doctype-system="about:legacy-compat" indent="yes" encoding="UTF-8"/>
 	<xsl:key name="translation" match="x:lang/x:e" use="@key"/>
 	<xsl:variable name="lang" select="document('ui-text.xml')/*/x:lang[@xml:lang = $language]"/>

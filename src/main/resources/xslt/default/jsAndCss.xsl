@@ -8,17 +8,19 @@
 	<!-- JQuery Mobile and Styling includes-->
 	<!-- ########################################################################################## -->
 	<xsl:template name="jsfdeclAndCss">
-		
-		<!--
-		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
-		<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
-		-->
-		<link rel="stylesheet" href="http://resources.etf-validator.net/report/v2/css/de.interactive-instruments.min.css"/>
-		<link rel="stylesheet" href="http://resources.etf-validator.net/report/v2/css/de.interactive-instruments.rep.css"/>
-		
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
-		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"/>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"/>
+		<xsl:choose>
+			<xsl:when test="$forceLocalResLoading='true'">
+				<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.min.css"/>
+				<link rel="stylesheet" href="{$stylePath}/de.interactive-instruments.rep.css"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<link rel="stylesheet" href="https://resources.etf-validator.net/report/v2/css/de.interactive-instruments.min.css?v2"/>
+				<link rel="stylesheet" href="https://resources.etf-validator.net/report/v2/css/de.interactive-instruments.rep.css?v2"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"/>
 	</xsl:template>
 	<!-- Report controls-->
 	<!-- ########################################################################################## -->
