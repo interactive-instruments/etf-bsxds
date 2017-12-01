@@ -28,7 +28,7 @@ group = 'de.interactive_instruments.etf'
 description = "ETF BaseX data source"
 
 ext.basexVersion = '8.6.7'
-ext.moxyVersion = '2.6.4'
+ext.moxyVersion = '2.7.0'
 
 ext.testDataStorageDir = project.hasProperty('etf.ds.dir') ?
         project.getProperty('etf.ds.dir') :
@@ -54,7 +54,7 @@ dependencies {
 
     compile group: 'commons-io', name: 'commons-io', version: etf_commonsIoVersion
 
-    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.4'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: moxyVersion
 
     compile group: 'org.basex', name: 'basex', version: basexVersion
 
