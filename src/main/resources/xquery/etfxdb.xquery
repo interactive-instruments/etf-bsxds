@@ -214,7 +214,13 @@ declare function etfxdb:get-tags($dbs as node()*, $levelOfDetail as xs:string, $
 declare function etfxdb:get-translationTemplateBundles($dbs as node()*, $levelOfDetail as xs:string, $item as node()*) {
     if ($levelOfDetail = 'DETAILED_WITHOUT_HISTORY')
     then
-        $dbs[@id = $item/etf:translationTemplateBundle[1]/@ref]
+        let $translationTemplateBundles := $dbs[@id = $item/etf:translationTemplateBundle[1]/@ref]
+        return
+            if (empty($translationTemplateBundles))
+            then
+                ()
+            else
+                ($translationTemplateBundles, etfxdb:get-parentRec($dbs, $translationTemplateBundles))
     else
         ()
 };

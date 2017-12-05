@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-26T11:51:53.064+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-12-01T18:11:53.606+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.dal.dto.ModelItemTreeNode</type-name>
@@ -15,15 +15,6 @@
       </class-handle>
    </interface-handles>
    <attributes>
-      <class-attribute>
-         <name>assertions</name>
-         <modifier>2</modifier>
-         <type-declaration>
-            <type-handle>
-               <type-name>long</type-name>
-            </type-handle>
-         </type-declaration>
-      </class-attribute>
       <class-attribute>
          <name>consumableResultTestObjectTypes</name>
          <modifier>2</modifier>
@@ -39,6 +30,15 @@
          <type-declaration>
             <type-handle>
                <type-name>java.util.List</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>lowestTestLevelItemSize</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>long</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -213,15 +213,6 @@
          </exception-type-handles>
       </method>
       <method>
-         <name>getAssertionsSize</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>long</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
          <name>getChildren</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -254,6 +245,15 @@
          <return-type-declaration>
             <type-handle>
                <type-name>java.util.Collection</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getLowestLevelItemSize</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>long</type-name>
             </type-handle>
          </return-type-declaration>
       </method>

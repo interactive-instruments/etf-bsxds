@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" version="Eclipse Persistence Services - 2.6.3.v20160428-59c81c5">
+<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" version="Eclipse Persistence Services - 2.7.0.v20170811-d680af5">
    <name>etf-ds</name>
    <class-mapping-descriptors>
       <class-mapping-descriptor xsi:type="xml-class-mapping-descriptor">
@@ -3173,6 +3173,19 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-object-reference-mapping">
+               <attribute-name>parent</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBundleDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="parent/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="parent/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>langTranslationTemplates</attribute-name>

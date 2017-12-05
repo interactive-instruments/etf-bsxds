@@ -5,13 +5,22 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-26T11:51:53.009+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-12-01T18:11:53.61+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.capabilities.TestObjectType</type-name>
       </class-handle>
    </interface-handles>
    <attributes>
+      <class-attribute>
+         <name>defaultPathAndQuery</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>descriptionExpression</name>
          <modifier>2</modifier>
@@ -102,6 +111,15 @@
             </type-handle>
          </type-declaration>
       </class-attribute>
+      <class-attribute>
+         <name>uriDetectionExpression</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
    </attributes>
    <methods>
       <method>
@@ -147,6 +165,24 @@
          <return-type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getDefaultAccessPath</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getDefaultQuery</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.Map</type-name>
             </type-handle>
          </return-type-declaration>
       </method>
@@ -239,6 +275,33 @@
                <type-name>java.util.List</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>getUriDetectionExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.lang.String</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>setDefaultPathAndQuery</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>setDescriptionExpression</name>
@@ -401,6 +464,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setUriDetectionExpression</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

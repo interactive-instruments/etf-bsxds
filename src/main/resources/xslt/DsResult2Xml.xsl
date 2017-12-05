@@ -254,6 +254,7 @@
         <entry key="TestStepResult">TestCaseResult</entry>
         <entry key="TestAssertionResult">TestStepResult</entry>
         <entry key="TestObjectType">TestObjectType</entry>
+        <entry key="TranslationTemplateBundle">TranslationTemplateBundle</entry>
         <entry key="TestTask">TestRun</entry>
         <entry key="TestTaskResult">TestRun</entry>
     </xsl:variable>
