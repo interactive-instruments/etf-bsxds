@@ -28,7 +28,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b170610</xsl:variable>
+	<xsl:variable name="reportVersion">2.0.0-b171207</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>

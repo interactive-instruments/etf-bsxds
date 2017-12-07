@@ -19,8 +19,10 @@
 			</xsl:otherwise>
 		</xsl:choose>
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
-		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"/>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"
+				integrity="sha256-rsPUGdUPBXgalvIj4YKJrrUlmLXbOb6Cp7cdxn1qeUc=" crossorigin="anonymous"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"
+				integrity="sha256-MkfSkbXhZoQ1CyPwjC30mPfLF8iKF5n564n9WvCLX4E=" crossorigin="anonymous"/>
 	</xsl:template>
 	<!-- Report controls-->
 	<!-- ########################################################################################## -->
