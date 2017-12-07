@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-26T11:51:53.078+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-12-01T18:11:53.641+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Disableable</type-name>

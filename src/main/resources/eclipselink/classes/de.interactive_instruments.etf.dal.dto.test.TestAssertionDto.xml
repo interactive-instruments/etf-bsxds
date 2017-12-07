@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-26T11:51:52.993+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-12-01T18:11:53.638+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>expectedResult</name>

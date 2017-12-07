@@ -44,6 +44,7 @@
 				'properties_TestCase_dependencies', 
 				'properties_TestCase_TestCase_dependencies_testCase', 
 				'properties_TestCase_testSteps', 
+				'properties_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max', 
 				'properties_TestCase_deselectable');
 var usedByBoxes= new Array('usedBy_ParameterizedTestCase', 
 				'usedBy_TestStep', 
@@ -53,6 +54,7 @@ var usedByBoxes= new Array('usedBy_ParameterizedTestCase',
 				'usedBy_ExecutableTestSuite', 
 				'usedBy_TestModule', 
 				'usedBy_TestCase', 
+				'usedBy_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max', 
 				'usedBy_TestCase_deselectable');
 var sourceBoxes= new Array('source_ParameterizedTestCase', 
 				'source_ParameterizedTestCase_testSteps', 
@@ -91,6 +93,7 @@ var sourceBoxes= new Array('source_ParameterizedTestCase',
 				'source_TestCase_dependencies', 
 				'source_TestCase_TestCase_dependencies_testCase', 
 				'source_TestCase_testSteps', 
+				'source_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max', 
 				'source_TestCase_deselectable');
 var instanceBoxes= new Array('instance_ParameterizedTestCase', 
 				'instance_ParameterizedTestCase_testSteps', 
@@ -161,6 +164,7 @@ var annotationBoxes= new Array('annotations_test.xsd',
 				'annotations_ParameterizedTestAssertion_testItemType', 
 				'annotations_ExecutableTestSuite_consumableResultObjectTypes', 
 				'annotations_TestModule', 
+				'annotations_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max', 
 				'annotations_TestCase_deselectable');
 var attributesBoxes= new Array('attributes_ParameterizedTestCase', 
 				'attributes_TestStep', 
@@ -168,6 +172,7 @@ var attributesBoxes= new Array('attributes_ParameterizedTestCase',
 				'attributes_ParameterizedTestAssertion', 
 				'attributes_TestItemType', 
 				'attributes_ExecutableTestSuite', 
+				'attributes_ExecutableTestSuite_supportedTestObjectTypes', 
 				'attributes_TestModule', 
 				'attributes_TestCase');
 var modelBoxes= new Array('model_ParameterizedTestCase', 
@@ -2947,7 +2952,7 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
   </span><span class="tEl">&lt;testDriver</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/testDriver&gt;</span><span class="tI">
   </span><span class="tEl">&lt;translationTemplateBundle</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/translationTemplateBundle&gt;</span><span class="tI">
   </span><span class="tEl">&lt;ParameterList</span><span class="tT"> </span><span class="tAN">name=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/ParameterList&gt;</span><span class="tI">
-  </span><span class="tEl">&lt;supportedTestObjectTypes</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/supportedTestObjectTypes&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;supportedTestObjectTypes</span><span class="tT"> </span><span class="tAN">max=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/supportedTestObjectTypes&gt;</span><span class="tI">
   </span><span class="tEl">&lt;dependencies</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/dependencies&gt;</span><span class="tI">
   </span><span class="tEl">&lt;consumableResultObjectTypes</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/consumableResultObjectTypes&gt;</span><span class="tI">
   </span><span class="tEl">&lt;parameterizedTestCases</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{0,1}</span><span class="tEl">&lt;/parameterizedTestCases&gt;</span><span class="tI">
@@ -3030,8 +3035,32 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"supportedTestObjectTypes"</span><span class="tEl">&gt;</span><span class="tI">
         </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
           </span><span class="tEl">&lt;xs:sequence</span><span class="tAN"> minOccurs=</span><span class="tAV">"1"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tC">&lt;!--xs:element name="testObjectType"&gt;
+                                Error: The xsi:type is not validly derived from the declared type. The requested type loc is not validly derived from the declared type of element testObjectType
+                                &lt;xs:complexType&gt;
+                                    &lt;xs:complexContent&gt;
+                                        &lt;xs:extension base="RefType"&gt;
+                                            &lt;xs:attribute name="max" type="xs:positiveInteger"&gt;
+                                                &lt;xs:annotation&gt;
+                                                  &lt;xs:documentation&gt; Default: 1. The maximum number
+                                                  of Test Objects of this Test Object Type that can
+                                                  be processed in parallel by this Executable Test
+                                                  Suite. A Executable Test Suite for example, that
+                                                  can compare 2 or more Test Objects need to set a
+                                                  value greater than 1.&lt;/xs:documentation&gt;
+                                                &lt;/xs:annotation&gt;
+                                            &lt;/xs:attribute&gt;
+                                        &lt;/xs:extension&gt;
+                                    &lt;/xs:complexContent&gt;
+                                &lt;/xs:complexType&gt;
+                            &lt;/xs:element--&gt;</span><span class="tI">
             </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testObjectType"</span><span class="tAN"> type=</span><span class="tAV">"RefType"</span><span class="tEl">/&gt;</span><span class="tI">
           </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"max"</span><span class="tAN"> type=</span><span class="tAV">"xs:positiveInteger"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Default: 1. The maximum number of Test Objects this Executable Test Suite can process in parallel. An Executable Test Suite for example, that can compare 2 or more Test Objects need to set a value greater than 1.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
         </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
       </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"dependencies"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tEl">&gt;</span><span class="tI">
@@ -3255,7 +3284,8 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                         </td>
                         <td class="diagram">
                            <div id="diagram_ExecutableTestSuite_supportedTestObjectTypes" style="display:block"><img alt="Diagram" border="0" src="img/test_xsd_Element_supportedTestObjectTypes.jpeg" usemap="#test_xsd_Element_supportedTestObjectTypes" /><map name="test_xsd_Element_supportedTestObjectTypes" id="test_xsd_Element_supportedTestObjectTypes">
-                                 <area alt="test_xsd.tmp#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_testObjectType" href="test_xsd.html#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_testObjectType" coords="297,6,409,30" /></map></div>
+                                 <area alt="test_xsd.tmp#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" href="test_xsd.html#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" coords="240,40,311,64" />
+                                 <area alt="test_xsd.tmp#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_testObjectType" href="test_xsd.html#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_testObjectType" coords="297,141,409,165" /></map></div>
                         </td>
                      </tr>
                      <tr>
@@ -3294,9 +3324,47 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                            <div id="instance_ExecutableTestSuite_supportedTestObjectTypes" style="display:block">
                               <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                  <tr>
-                                    <td width="100%"><pre><span class="tEl">&lt;supportedTestObjectTypes</span><span class="tT"> </span><span class="tAN">xmlns=</span><span class="tAV">"http://www.interactive-instruments.de/etf/2.0"</span><span class="tEl">&gt;</span><span class="tI">
+                                    <td width="100%"><pre><span class="tEl">&lt;supportedTestObjectTypes</span><span class="tT"> </span><span class="tAN">max=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">xmlns=</span><span class="tAV">"http://www.interactive-instruments.de/etf/2.0"</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;testObjectType</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">{1,1}</span><span class="tEl">&lt;/testObjectType&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/supportedTestObjectTypes&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_ExecutableTestSuite_supportedTestObjectTypes" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_ExecutableTestSuite_supportedTestObjectTypes');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="attributes_ExecutableTestSuite_supportedTestObjectTypes" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th width="10%">Type</th>
+                                       <th width="5%">Use</th>
+                                       <th>Annotation</th>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="test_xsd.html#ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for test.xsd')">max</a></b></td>
+                                    <td><b>xs:positiveInteger</b></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tr>
+                                                <td width="100%"><pre><span class="tT">Default: 1. The maximum number of Test Objects</span><span class="tI">
+</span><span class="tT">this Executable Test Suite can process in parallel. An</span><span class="tI">
+</span><span class="tT">Executable Test Suite for example, that can compare 2 or more</span><span class="tI">
+</span><span class="tT">Test Objects need to set a value greater than</span><span class="tI">
+</span><span class="tT">1.</span></pre></td>
+                                             </tr>
+                                          </table>
+                                       </div>
+                                    </td>
                                  </tr>
                               </table>
                            </div>
@@ -3314,8 +3382,32 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                                     <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"supportedTestObjectTypes"</span><span class="tEl">&gt;</span><span class="tI">
   </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
     </span><span class="tEl">&lt;xs:sequence</span><span class="tAN"> minOccurs=</span><span class="tAV">"1"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tC">&lt;!--xs:element name="testObjectType"&gt;
+                                Error: The xsi:type is not validly derived from the declared type. The requested type loc is not validly derived from the declared type of element testObjectType
+                                &lt;xs:complexType&gt;
+                                    &lt;xs:complexContent&gt;
+                                        &lt;xs:extension base="RefType"&gt;
+                                            &lt;xs:attribute name="max" type="xs:positiveInteger"&gt;
+                                                &lt;xs:annotation&gt;
+                                                  &lt;xs:documentation&gt; Default: 1. The maximum number
+                                                  of Test Objects of this Test Object Type that can
+                                                  be processed in parallel by this Executable Test
+                                                  Suite. A Executable Test Suite for example, that
+                                                  can compare 2 or more Test Objects need to set a
+                                                  value greater than 1.&lt;/xs:documentation&gt;
+                                                &lt;/xs:annotation&gt;
+                                            &lt;/xs:attribute&gt;
+                                        &lt;/xs:extension&gt;
+                                    &lt;/xs:complexContent&gt;
+                                &lt;/xs:complexType&gt;
+                            &lt;/xs:element--&gt;</span><span class="tI">
       </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"testObjectType"</span><span class="tAN"> type=</span><span class="tAV">"RefType"</span><span class="tEl">/&gt;</span><span class="tI">
     </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"max"</span><span class="tAN"> type=</span><span class="tAV">"xs:positiveInteger"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Default: 1. The maximum number of Test Objects this Executable Test Suite can process in parallel. An Executable Test Suite for example, that can compare 2 or more Test Objects need to set a value greater than 1.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
   </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
 </span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
                                  </tr>
@@ -4012,9 +4104,9 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">Test Cases are ordered into a Test Module. </span><span class="tI">
-</span><span class="tT">There are different terms for this concept in multiple Tools, </span><span class="tI">
-</span><span class="tT">TestNG for example uses the term "groups", SoapUI uses "Test Suites".</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">Test Cases are ordered into a Test Module. There are different terms</span><span class="tI">
+</span><span class="tT">for this concept in multiple Tools, TestNG for example uses the term "groups",</span><span class="tI">
+</span><span class="tT">SoapUI uses "Test Suites".</span></pre></td>
                                     </tr>
                                  </table>
                               </div>
@@ -4390,8 +4482,8 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                                        <div class="annotation">
                                           <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                              <tr>
-                                                <td width="100%"><pre><span class="tT">If set to "true" the Test Case can be deselected by the user and must be skipped by the test driver.</span><span class="tI">
-</span><span class="tT">Otherwise, it can't be deselected.</span></pre></td>
+                                                <td width="100%"><pre><span class="tT">If set to "true" the Test Case can be deselected by the user</span><span class="tI">
+</span><span class="tT">and must be skipped by the test driver. Otherwise, it can't be deselected.</span></pre></td>
                                              </tr>
                                           </table>
                                        </div>
@@ -4748,6 +4840,108 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
             <td class="rt_lineBottom"></td>
             <td class="rt_cornerBottomRight"></td>
          </tr>
+      </table><a id="ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="test_xsd.html#ExecutableTestSuite" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for test.xsd')">ExecutableTestSuite</a></b> / <b><a href="test_xsd.html#ExecutableTestSuite_supportedTestObjectTypes" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for test.xsd')">supportedTestObjectTypes</a></b> / @max</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="annotations_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tr>
+                                       <td width="100%"><pre><span class="tT">Default: 1. The maximum number of Test Objects</span><span class="tI">
+</span><span class="tT">this Executable Test Suite can process in parallel. An</span><span class="tI">
+</span><span class="tT">Executable Test Suite for example, that can compare 2 or more</span><span class="tI">
+</span><span class="tT">Test Objects need to set a value greater than</span><span class="tI">
+</span><span class="tT">1.</span></pre></td>
+                                    </tr>
+                                 </table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:positiveInteger</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="properties_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;">content</td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="test_xsd.html#ExecutableTestSuite_supportedTestObjectTypes" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for test.xsd')">ExecutableTestSuite/supportedTestObjectTypes</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max');" class="control" /></div>
+                        </td>
+                        <td>
+                           <div id="source_ExecutableTestSuite_ExecutableTestSuite_supportedTestObjectTypes_max" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"max"</span><span class="tAN"> type=</span><span class="tAV">"xs:positiveInteger"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Default: 1. The maximum number of Test Objects this Executable Test Suite can process in parallel. An Executable Test Suite for example, that can compare 2 or more Test Objects need to set a value greater than 1.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
       </table><a id="TestCase_deselectable"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="test_xsd.html#TestCase" target="mainFrame" title="http://www.interactive-instruments.de/etf/2.0" onclick="updatePageTitle('Schema documentation for test.xsd')">TestCase</a></b> / @deselectable</span></div>
       <table class="rt">
          <tr>
@@ -4774,8 +4968,8 @@ var modelBoxes= new Array('model_ParameterizedTestCase',
                               <div class="annotation">
                                  <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
                                     <tr>
-                                       <td width="100%"><pre><span class="tT">If set to "true" the Test Case can be deselected by the user and must be skipped by the test driver.</span><span class="tI">
-</span><span class="tT">Otherwise, it can't be deselected.</span></pre></td>
+                                       <td width="100%"><pre><span class="tT">If set to "true" the Test Case can be deselected by the user</span><span class="tI">
+</span><span class="tT">and must be skipped by the test driver. Otherwise, it can't be deselected.</span></pre></td>
                                     </tr>
                                  </table>
                               </div>

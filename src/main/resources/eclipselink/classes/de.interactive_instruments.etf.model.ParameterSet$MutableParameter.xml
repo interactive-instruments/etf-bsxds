@@ -8,7 +8,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-06-26T11:51:53.007+02:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2017-12-01T18:11:53.591+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
