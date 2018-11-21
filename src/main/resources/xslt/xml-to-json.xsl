@@ -343,7 +343,12 @@
             </xsl:when>
             <xsl:when test="text()">
                 <xsl:choose>
-                    <xsl:when test="translate(., '&quot;&#xA;&#xD;&#x9;', '') ne . or not((string(.) castable as xs:double or . = 'null' or . = 'false' or . = 'true'))">
+                    <!-- Handle invalid JSON numbers like '01', '+1', '-01', '1.', and '.5' -->
+                    <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer and 
+                        not(starts-with(string(.),'+') or starts-with(string(.),'-')) and not(starts-with(string(.),'0') and not(. = '0'))) 
+                        or (string(.) castable as xs:decimal and not(starts-with(string(.),'+')) and not(starts-with(.,'-.')) and 
+                        not(starts-with(.,'.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and 
+                        not(starts-with(.,'0') and not(starts-with(.,'0.'))))) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
                         <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
                     </xsl:when>
                     <xsl:otherwise>
