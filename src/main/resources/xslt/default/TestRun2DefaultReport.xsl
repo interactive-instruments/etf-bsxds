@@ -14,7 +14,8 @@
 	<xsl:param name="forceLocalResLoading">false</xsl:param>
 	<xsl:output method="html" doctype-system="about:legacy-compat" indent="yes" encoding="UTF-8"/>
 	<xsl:key name="translation" match="x:lang/x:e" use="@key"/>
-	<xsl:variable name="lang" select="document('ui-text.xml')/*/x:lang[@xml:lang = $language]"/>
+	<xsl:variable name="allLangs" select="document('ui-text.xml')/*/x:lang"/>
+	<xsl:variable name="lang" select="($allLangs[@*:lang = $language], $allLangs[position() =1])[1]"/>
 	<xsl:template match="x:lang">
 		<xsl:param name="str"/>
 		<xsl:variable name="result" select="key('translation', $str)"/>
@@ -28,7 +29,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- VERSION (todo: integrate into build process) yy-mm-dd -->
-	<xsl:variable name="reportVersion">2.0.0-b171207</xsl:variable>
+	<xsl:variable name="reportVersion">2.1.0-b181101</xsl:variable>
 	<!-- Create lookup tables for faster id lookups -->
 	<xsl:key name="testSuiteKey"
 		match="//etf:executableTestSuites[1]/etf:ExecutableTestSuite" use="@id"/>
@@ -50,9 +51,10 @@
 		use="@id"/>
 	<xsl:key name="testObjectTypeKey"
 		match="//etf:testObjectTypes[1]/etf:TestObjectType" use="@id"/>
-	<xsl:key name="translationKey"
-		match="//etf:translationTemplateBundles[1]/etf:TranslationTemplateBundle/etf:translationTemplateCollections[1]/etf:LangTranslationTemplateCollection/etf:translationTemplates[1]/etf:TranslationTemplate[@language = $language]"
-		use="@name"/>
+	<xsl:variable name="allTemplates" select="//etf:translationTemplateBundles[1]/etf:TranslationTemplateBundle/etf:translationTemplateCollections[1]/
+		etf:LangTranslationTemplateCollection/etf:translationTemplates[1]/etf:TranslationTemplate"/>
+	<xsl:variable name="langTemplate" select="($allTemplates[@language = $language], $allTemplates[not(@language = $language) and @language = 'en'], $allTemplates[not(@language = $language or @language = 'en')])"/>
+	<xsl:key name="translationKey" match="$langTemplate" use="@name"/>
 	<xsl:key name="testTaskKey"
 		match="//etf:testRuns[1]/etf:TestRun/etf:testTasks[1]/etf:TestTask" use="@id"/>
 	<xsl:key name="testTaskResultKey"
@@ -76,6 +78,7 @@
 	<xsl:variable name="statisticAttachments"
 		select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'StatisticalReport'][1]"/>
 	<xsl:variable name="logAttachment" select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'LogFile']"/>
+	<xsl:variable name="htmlAttachment" select="$testTaskResults/etf:attachments[1]/etf:Attachment[@type = 'HtmlFile']"/>
 	
 	<xsl:variable name="textAreaJqmClass">ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-mini ui-textinput-autogrow</xsl:variable>
 	<xsl:variable name="collapsibleJqmClass">ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-collapsed</xsl:variable>
@@ -85,7 +88,7 @@
 	<!-- Test Report -->
 	<!-- ########################################################################################## -->
 	<xsl:template match="/*[self::etf:DsResultSet or self::etf:EtfItemCollection]">
-		<html class="ui-mobile ui-mobile-rendering">
+		<html lang="{$lang}" class="ui-mobile ui-mobile-rendering">
 			<head>
 				<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -124,6 +127,8 @@
 					<xsl:apply-templates select="$statisticAttachments[1]"/>
 					<!-- Logging provided by the test project -->
 					<xsl:apply-templates select="$logAttachment"/>
+					<!-- Html files with additonal information -->
+					<xsl:apply-templates select="$htmlAttachment"/>
 					<!-- Test Suite Results -->
 					<xsl:apply-templates select="$testTaskResults"/>
 				</div>
@@ -495,6 +500,20 @@
 				</div>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+
+	<!-- HTML file (Attachment) -->
+	<!-- ########################################################################################## -->
+	<xsl:template match="etf:Attachment[@type = 'HtmlFile']" priority="4">
+		<xsl:if test="exists(./etf:referencedData/@href)">
+			<xsl:variable name="id" select="./@id"/>
+			<xsl:variable name="testTaskResultId" select="../../@id"/>
+			<xsl:variable name="href" select="concat($serviceUrl, '/TestTaskResults/', $testTaskResultId, '/Attachments/', $id)"/>
+			<div data-role="collapsible" data-collapsed-icon="info" class="DoNotShowInSimpleView">
+				<h3><xsl:value-of select="./etf:label"/></h3>
+				<a target="_blank" rel="noopener noreferrer" href="{$href}"><xsl:value-of select="$lang/x:e[@key = 'OpenInNewTab']"/></a>
+			</div>
+		</xsl:if>
 	</xsl:template>
 	
 	<!-- Test suite result information -->
@@ -1475,6 +1494,8 @@
 		<xsl:variable name="template" select="key('translationKey', $templateId)"/>
 		<xsl:variable name="str" select="$template[1]/text()"/>
 		<xsl:if test="not(normalize-space($str))">
+			<p>ERROR: Translation template for ID <xsl:value-of select="$templateId"/> not found.</p>
+			<p>Please contact the system administrator if the problem persists.</p>
 			<xsl:message terminate="yes">ERROR: Translation template for ID <xsl:value-of
 					select="$templateId"/> not found</xsl:message>
 		</xsl:if>

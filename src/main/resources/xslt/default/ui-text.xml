@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <x:ui-text-elements xmlns:x="http://www.interactive-instruments.de/etf/2.0">
+	<!-- English must be the first language in this file -->
 	<x:lang xml:lang="en">
 		<x:e key="Title">ETF Test Report</x:e>
 		<x:e key="TestReport">test report</x:e>
@@ -85,6 +86,7 @@
 		<x:e key="LogFile">Log path</x:e>
 		<x:e key="Log">Log URI</x:e>
 		<x:e key="LogLink">Link</x:e>
+		<x:e key="OpenInNewTab">Open in new tab</x:e>
 	</x:lang>
 	<x:lang xml:lang="de">
 		<x:e key="Title">ETF Testbericht</x:e>
@@ -171,5 +173,6 @@
 		<x:e key="LogFile">Logdatei</x:e>
 		<x:e key="Log">Protokoll-URI</x:e>
 		<x:e key="LogLink">Link</x:e>
+		<x:e key="OpenInNewTab">Anhang in neuem Tab öffnen</x:e>
 	</x:lang>
 </x:ui-text-elements>
