@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 European Union, interactive instruments GmbH
+ * Copyright 2017-2019 European Union, interactive instruments GmbH
  * Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
  * the European Commission - subsequent versions of the EUPL (the "Licence");
  * You may not use this work except in compliance with the Licence.
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.etf.EtfConstants;
@@ -37,6 +38,7 @@ import de.interactive_instruments.etf.model.Disableable;
 import de.interactive_instruments.etf.model.EID;
 import de.interactive_instruments.etf.model.EidFactory;
 import de.interactive_instruments.etf.model.OutputFormat;
+import de.interactive_instruments.etf.test.XmlTestUtils;
 import de.interactive_instruments.exceptions.*;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
 
@@ -211,8 +213,28 @@ class BsxTestUtils {
 		return sb.toString();
 	}
 
-	public static void compareStreamingContent(final Dto dto, final String path, final String format)
-			throws ObjectWithIdNotFoundException, StorageException, IOException, URISyntaxException {
+	public static void compareStreamingContentRaw(final Dto dto, final String path, final String format)
+			throws ObjectWithIdNotFoundException, IOException {
+		addTest(dto);
+		final WriteDao dao = getDao(dto);
+		final PreparedDto preparedDto = dao.getById(dto.getId());
+
+		final IFile tmpFile = IFile.createTempFile("etf", ".raw");
+		tmpFile.deleteOnExit();
+		final FileOutputStream fop = new FileOutputStream(tmpFile);
+		final OutputFormat outputFormat = (OutputFormat) dao.getOutputFormats().get(
+				EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + format));
+
+		preparedDto.streamTo(outputFormat, null, fop);
+
+		final IFile cmpResult = getTestResourceFile(path);
+		assertTrue(cmpResult.exists());
+		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
+				trimAllWhitespace(tmpFile.readContent().toString()));
+	}
+
+	public static void compareStreamingContentXml(final Dto dto, final String path, final String format)
+			throws ObjectWithIdNotFoundException, IOException {
 		addTest(dto);
 		final WriteDao dao = getDao(dto);
 		final PreparedDto preparedDto = dao.getById(dto.getId());
@@ -225,12 +247,22 @@ class BsxTestUtils {
 
 		preparedDto.streamTo(outputFormat, null, fop);
 
-		// run the gradle build task or this will return null in tests
-		final IFile cmpResult = new IFile(dto.getClass().getClassLoader().getResource(path).toURI());
+		final IFile cmpResult = getTestResourceFile(path);
 		assertTrue(cmpResult.exists());
+		XmlTestUtils.compare(cmpResult.readContent().toString(),
+				tmpFile.readContent().toString());
+	}
 
-		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
-				trimAllWhitespace(tmpFile.readContent().toString()));
+	public static IFile getTestResourceFile(final String path) {
+		final URL resource = BsxDataStorage.class.getClassLoader().getResource(path);
+		if (resource != null) {
+			try {
+				return new IFile(resource.toURI());
+			} catch (URISyntaxException e) {
+				ExcUtils.suppress(e);
+			}
+		}
+		return new IFile("src/test/resources").secureExpandPathDown(path);
 	}
 
 	private static boolean hasLength(CharSequence str) {

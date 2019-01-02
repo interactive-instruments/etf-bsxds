@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 European Union, interactive instruments GmbH
+ * Copyright 2017-2019 European Union, interactive instruments GmbH
  * Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
  * the European Commission - subsequent versions of the EUPL (the "Licence");
  * You may not use this work except in compliance with the Licence.
@@ -20,6 +20,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.getTestResourceFile;
 import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
@@ -489,13 +490,13 @@ public class ExecutableTestSuiteDaoTest {
 	@Test(timeout = 15000)
 	public void test_4_1_streaming_xml()
 			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.xml", "DsResult2Xml");
+		compareStreamingContentXml(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.xml", "DsResult2Xml");
 	}
 
 	@Test(timeout = 15000)
 	public void test_4_2_streaming_json()
 			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		compareStreamingContent(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.json", "DsResult2Json");
+		compareStreamingContentRaw(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.json", "DsResult2Json");
 	}
 
 	@Test(timeout = 15000)
@@ -504,8 +505,8 @@ public class ExecutableTestSuiteDaoTest {
 			URISyntaxException {
 		final EID id = EidFactory.getDefault().createAndPreserveStr("61070ae8-13cb-4303-a340-72c8b877b00a");
 		forceDelete(writeDao, id);
-		final IFile etsFile = new IFile(getClass().getClassLoader().getResource(
-				"database/ets.xml").toURI());
+		final IFile etsFile = getTestResourceFile(
+				"database/ets.xml");
 
 		final ExecutableTestSuiteDto etsId = ((StreamWriteDao<ExecutableTestSuiteDto>) writeDao)
 				.add(new FileInputStream(etsFile));

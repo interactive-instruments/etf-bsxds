@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 European Union, interactive instruments GmbH
+ * Copyright 2017-2019 European Union, interactive instruments GmbH
  * Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
  * the European Commission - subsequent versions of the EUPL (the "Licence");
  * You may not use this work except in compliance with the Licence.
@@ -20,6 +20,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.getTestResourceFile;
 import static de.interactive_instruments.etf.test.TestDtos.TAG_DTO_1;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertEquals;
@@ -156,8 +157,7 @@ public class TagDaoTest {
 	public void test_7_1_testStreamIntoStore()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 		writeDao.deleteAllExisting(Collections.singleton(streamingTagId));
-		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
-				"database/tag.xml").toURI());
+		final IFile tagFile = getTestResourceFile("database/tag.xml");
 		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
 		assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
 		final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
@@ -169,8 +169,7 @@ public class TagDaoTest {
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 
 		final int sizeBefore = writeDao.getAll(ALL).size();
-		final IFile tagFile = new IFile(getClass().getClassLoader().getResource(
-				"database/tag.xml").toURI());
+		final IFile tagFile = getTestResourceFile("database/tag.xml");
 		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
 
 		// assertTrue(exceptionThrown);
