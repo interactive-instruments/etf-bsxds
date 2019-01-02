@@ -67,15 +67,12 @@ dependencies {
     // Testing
 
     testCompile group: 'de.interactive_instruments.etf.test', name: 'etf-unittest', version:'1.1.1'+project.snapshotSuffix
-
     testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
-
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
 
     // Todo remove
-    testCompile group: 'de.interactive_instruments.etf', name: 'etf-stdtot', version:'1.0.1'+project.snapshotSuffix
+    // testCompile group: 'de.interactive_instruments.etf', name: 'etf-stdtot', version:'1.0.1'+project.snapshotSuffix
 }
 
 test {
