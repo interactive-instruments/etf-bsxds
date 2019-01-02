@@ -20,6 +20,7 @@
 package de.interactive_instruments.etf.dal.dao.basex;
 
 import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.getTestResourceFile;
 import static de.interactive_instruments.etf.test.TestDtos.TTB_DTO_1;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
@@ -127,8 +128,8 @@ public class TranslationTemplateBundleDaoTest {
 	public void test_7_0_stream_file_to_store()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
 			URISyntaxException {
-		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
-				"database/translationtemplatebundle.xml").toURI());
+		final IFile testObjectXmlFile = getTestResourceFile(
+				"database/translationtemplatebundle.xml");
 		final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
 
 		final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao)
@@ -143,8 +144,8 @@ public class TranslationTemplateBundleDaoTest {
 	public void test_7_1_stream_file_to_store()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
 			URISyntaxException {
-		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
-				"database/invalidtranslationtemplatebundle.xml").toURI());
+		final IFile testObjectXmlFile = getTestResourceFile(
+				"database/invalidtranslationtemplatebundle.xml");
 		((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
 	}
 }

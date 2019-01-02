@@ -144,8 +144,7 @@ public class TestObjectDaoTest {
 
 	@Test
 	public void test_1_2_unmarshalling() throws JAXBException, IOException, URISyntaxException {
-		final IFile testObjectXmlFile = new IFile(getClass().getClassLoader().getResource(
-				"database/testobjects.xml").toURI());
+		final IFile testObjectXmlFile = getTestResourceFile("database/testobjects.xml");
 		testObjectXmlFile.expectFileIsReadable();
 		final Unmarshaller um = BsxTestUtils.DATA_STORAGE.createUnmarshaller();
 		final DsResultSet dtos = (DsResultSet) um.unmarshal(new StringReader(
@@ -313,14 +312,14 @@ public class TestObjectDaoTest {
 
 	@Test
 	public void test_4_1_streaming_xml()
-			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		compareStreamingContent(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.xml", "DsResult2Xml");
+			throws StorageException, ObjectWithIdNotFoundException, IOException {
+		compareStreamingContentXml(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.xml", "DsResult2Xml");
 	}
 
 	@Test
 	public void test_4_2_streaming_json()
-			throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		compareStreamingContent(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.json", "DsResult2Json");
+			throws StorageException, ObjectWithIdNotFoundException, IOException {
+		compareStreamingContentRaw(TO_DTO_1, "cmp/TestObjectInItemCollectionResponse.json", "DsResult2Json");
 	}
 
 	@Test

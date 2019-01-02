@@ -19,8 +19,7 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.DATA_STORAGE;
-import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.trimAllWhitespace;
+import static de.interactive_instruments.etf.dal.dao.basex.BsxTestUtils.*;
 import static de.interactive_instruments.etf.test.TestDtos.*;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -156,8 +155,8 @@ public class TestTaskResultDaoTest {
 	public void test_7_1_stream_file_to_store()
 			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
 			URISyntaxException {
-		final IFile taskTestResultFile = new IFile(getClass().getClassLoader().getResource(
-				"database/testtaskresult.xml").toURI());
+		final IFile taskTestResultFile = getTestResourceFile(
+				"database/testtaskresult.xml");
 		((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));
 	}
 
