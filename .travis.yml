@@ -1,0 +1,24 @@
+language: java
+jdk:
+- oraclejdk8
+os:
+- linux
+branches:
+  except:
+  - master
+cache:
+  directories:
+  - "$HOME/.gradle"
+before_script:
+- export TZ=Europe/Berlin
+script:
+- "./gradlew init"
+- "./gradlew test"
+before_install:
+- sudo apt-get install jq
+- wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets[0].browser_download_url')
+after_success:
+- java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+env:
+  global:
+    secure: IU70PQMOpBxoNa3voqXilnSUSfKUbEo3yDGB9UuMWUUpspuIQEbZE0gM+Ik0DOJG+tObz+kG/NUxkOI+KpwJdkUOl/3bLFF3OujFOaE42H3UzL7Rwhddh3bwT+Zeci9+nytB8ucog67H0thBq5sr4m7/rzVqG5un8G2U3bbKwTulEV0032wr63T2ya1NKR9i4Q/PMEOfajoYmkrajDgtY4XeLrEvaY7pq10cW+NgOl8rwhysjnGiBjWE/tzQWqLKMZ/UogUQ/mnUFxFUPBIZWydeA3+xoRo3mMGX2iMebRIeBxC4aPNYOdMkfIUTTGix/JzqPHqblboKt68puPyIxD+d8BMWw9r2TbTEF6yTT1DaHW0Xe812kuMZRiklqKV21IZhxyqw/SSOTRfmRgsTCgY2wzlWH4SuhaEH2q2fPki14e5jrGIspKfZmcON8QM2n3dFfc10MJK7E9oNpKLLX2BD8QV0Zvj0U2OxPFWn3ZxfMS1L3Shcu3NHOtHeHe27V4ij3HuwERCuaKNgTGZhfIJOGX/RdeBQwAOmVspK4yb8JT912tJecNX7s+0cC3CMj/xcB1ssRlIofYZJlp0upX/YxFmlfkStnmH+ZP5H0Dl/OjSWvJpSvLuGgUadwo0Mhu+Mgk5XCHKF+V1lZisB6R81CF8CFRbvsyxzsbA9izU=
