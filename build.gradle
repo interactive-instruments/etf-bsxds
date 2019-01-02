@@ -47,7 +47,7 @@ configurations {
 dependencies {
     compileOnly group: 'de.interactive_instruments', name: 'ii-commons-util', version:'3.0.0'+project.snapshotSuffix
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.1.0'+project.snapshotSuffix
-    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.0'+project.snapshotSuffix
+    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.1'+project.snapshotSuffix
 
     compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.5.6'
 
@@ -66,7 +66,7 @@ dependencies {
 
     // Testing
 
-    testCompile group: 'de.interactive_instruments.etf.test', name: 'etf-unittest', version:'1.1.0'+project.snapshotSuffix
+    testCompile group: 'de.interactive_instruments.etf.test', name: 'etf-unittest', version:'1.1.1'+project.snapshotSuffix
 
     testCompile group: 'junit', name: 'junit', version: etf_junitTestVersion
 
