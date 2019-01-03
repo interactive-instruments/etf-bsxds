@@ -13,11 +13,11 @@ before_script:
 - export TZ=Europe/Berlin
 script:
 - "./gradlew init"
-- "./gradlew test"
+- "./gradlew -Dorg.gradle.project.ii.etfdev.quality.reports=true test jacocoTestReport"
 before_install:
-- wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://search.maven.org/remotecontent?filepath=com/codacy/codacy-coverage-reporter/4.0.5/codacy-coverage-reporter-4.0.5.jar
+- wget -O ~/codacy-coverage-reporter-assembly.jar https://repo.jenkins-ci.org/public/com/codacy/codacy-coverage-reporter/5.0.310/codacy-coverage-reporter-5.0.310-assembly.jar
 after_success:
-- java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+- java -jar ~/codacy-coverage-reporter-assembly.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
 env:
   global:
     secure: IU70PQMOpBxoNa3voqXilnSUSfKUbEo3yDGB9UuMWUUpspuIQEbZE0gM+Ik0DOJG+tObz+kG/NUxkOI+KpwJdkUOl/3bLFF3OujFOaE42H3UzL7Rwhddh3bwT+Zeci9+nytB8ucog67H0thBq5sr4m7/rzVqG5un8G2U3bbKwTulEV0032wr63T2ya1NKR9i4Q/PMEOfajoYmkrajDgtY4XeLrEvaY7pq10cW+NgOl8rwhysjnGiBjWE/tzQWqLKMZ/UogUQ/mnUFxFUPBIZWydeA3+xoRo3mMGX2iMebRIeBxC4aPNYOdMkfIUTTGix/JzqPHqblboKt68puPyIxD+d8BMWw9r2TbTEF6yTT1DaHW0Xe812kuMZRiklqKV21IZhxyqw/SSOTRfmRgsTCgY2wzlWH4SuhaEH2q2fPki14e5jrGIspKfZmcON8QM2n3dFfc10MJK7E9oNpKLLX2BD8QV0Zvj0U2OxPFWn3ZxfMS1L3Shcu3NHOtHeHe27V4ij3HuwERCuaKNgTGZhfIJOGX/RdeBQwAOmVspK4yb8JT912tJecNX7s+0cC3CMj/xcB1ssRlIofYZJlp0upX/YxFmlfkStnmH+ZP5H0Dl/OjSWvJpSvLuGgUadwo0Mhu+Mgk5XCHKF+V1lZisB6R81CF8CFRbvsyxzsbA9izU=
