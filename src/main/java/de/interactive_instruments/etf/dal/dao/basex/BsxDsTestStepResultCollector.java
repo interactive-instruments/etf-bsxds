@@ -37,160 +37,160 @@ import de.interactive_instruments.etf.testdriver.TestTaskEndListener;
  */
 final class BsxDsTestStepResultCollector extends AbstractTestStepResultCollector implements BsxDsResultCollectorWriter {
 
-	private final XmlTestResultWriter writer;
-	private final File testCaseResultFile;
-	private final ByteArrayOutputStream bos;
-	private final List<String> testStepAttachmentIds;
+    private final XmlTestResultWriter writer;
+    private final File testCaseResultFile;
+    private final ByteArrayOutputStream bos;
+    private final List<String> testStepAttachmentIds;
 
-	/**
-	 * Ctor for called Test Steps
-	 *
-	 * @param parentCollector
-	 */
-	BsxDsTestStepResultCollector(final AbstractTestCollector parentCollector, final List<String> testStepAttachmentIds,
-			final String testStepId, final long startTimestamp) {
-		super(parentCollector, testStepId);
-		this.testStepAttachmentIds = testStepAttachmentIds;
-		bos = new ByteArrayOutputStream(512);
-		testCaseResultFile = null;
-		try {
-			writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"), 100);
-			writer.writeStartTestStepResult(testStepId, startTimestamp);
-		} catch (XMLStreamException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    /**
+     * Ctor for called Test Steps
+     *
+     * @param parentCollector
+     */
+    BsxDsTestStepResultCollector(final AbstractTestCollector parentCollector, final List<String> testStepAttachmentIds,
+            final String testStepId, final long startTimestamp) {
+        super(parentCollector, testStepId);
+        this.testStepAttachmentIds = testStepAttachmentIds;
+        bos = new ByteArrayOutputStream(512);
+        testCaseResultFile = null;
+        try {
+            writer = new XmlTestResultWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(bos, "UTF-8"), 100);
+            writer.writeStartTestStepResult(testStepId, startTimestamp);
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-	public void writeTo(OutputStream outputStream) throws IOException {
-		if (bos != null) {
-			bos.flush();
-			bos.writeTo(outputStream);
-		} else {
-			IOUtils.copy(new FileInputStream(testCaseResultFile), outputStream);
-		}
-	}
+    public void writeTo(OutputStream outputStream) throws IOException {
+        if (bos != null) {
+            bos.flush();
+            bos.writeTo(outputStream);
+        } else {
+            IOUtils.copy(new FileInputStream(testCaseResultFile), outputStream);
+        }
+    }
 
-	@Override
-	protected String doStartTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
-		return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
-	}
+    @Override
+    protected String doStartTestStepResult(final String resultedFrom, final long startTimestamp) throws Exception {
+        return writer.writeStartTestStepResult(resultedFrom, startTimestamp);
+    }
 
-	@Override
-	protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
-		return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
-	}
+    @Override
+    protected String doStartTestAssertionResult(final String resultedFrom, final long startTimestamp) throws Exception {
+        return writer.writeStartTestAssertionResult(resultedFrom, startTimestamp);
+    }
 
-	@Override
-	protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
-			throws Exception {
-		writer.finalizeMessages();
-		if (!testStepAttachmentIds.isEmpty()) {
-			writer.addAttachmentRefs(testStepAttachmentIds);
-			testStepAttachmentIds.clear();
-		}
-		return writer.writeEndTestStepResult(testModelItemId, status, stopTimestamp);
-	}
+    @Override
+    protected String endTestStepResult(final String testModelItemId, final int status, final long stopTimestamp)
+            throws Exception {
+        writer.finalizeMessages();
+        if (!testStepAttachmentIds.isEmpty()) {
+            writer.addAttachmentRefs(testStepAttachmentIds);
+            testStepAttachmentIds.clear();
+        }
+        return writer.writeEndTestStepResult(testModelItemId, status, stopTimestamp);
+    }
 
-	@Override
-	protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
-			throws Exception {
-		writer.finalizeMessages();
-		return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
-	}
+    @Override
+    protected String endTestAssertionResult(final String testModelItemId, final int status, final long stopTimestamp)
+            throws Exception {
+        writer.finalizeMessages();
+        return writer.writeEndTestAssertionResult(testModelItemId, status, stopTimestamp);
+    }
 
-	@Override
-	protected void startInvokedTests() {
-		try {
-			writer.writeStartInvokedTests();
-		} catch (XMLStreamException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    @Override
+    protected void startInvokedTests() {
+        try {
+            writer.writeStartInvokedTests();
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-	@Override
-	protected void endInvokedTests() {
-		try {
-			writer.writeEndInvokedTests();
-		} catch (XMLStreamException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    @Override
+    protected void endInvokedTests() {
+        try {
+            writer.writeEndInvokedTests();
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-	@Override
-	protected void startTestAssertionResults() {
-		try {
-			writer.writeStartTestAssertionResults();
-		} catch (XMLStreamException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    @Override
+    protected void startTestAssertionResults() {
+        try {
+            writer.writeStartTestAssertionResults();
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-	@Override
-	protected void endTestAssertionResults() {
-		try {
-			writer.writeEndTestAssertionResults();
-		} catch (XMLStreamException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    @Override
+    protected void endTestAssertionResults() {
+        try {
+            writer.writeEndTestAssertionResults();
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-	@Override
-	protected void doAddMessage(final String s) {
-		writer.addMessage(s);
-	}
+    @Override
+    protected void doAddMessage(final String s) {
+        writer.addMessage(s);
+    }
 
-	@Override
-	protected void doAddMessage(final String s, final Map<String, String> map) {
-		writer.addMessage(s, map);
-	}
+    @Override
+    protected void doAddMessage(final String s, final Map<String, String> map) {
+        writer.addMessage(s, map);
+    }
 
-	@Override
-	protected void doAddMessage(final String s, final String... strings) {
-		writer.addMessage(s, strings);
-	}
+    @Override
+    protected void doAddMessage(final String s, final String... strings) {
+        writer.addMessage(s, strings);
+    }
 
-	@Override
-	protected void notifyError() {
-		// TODO
-	}
+    @Override
+    protected void notifyError() {
+        // TODO
+    }
 
-	@Override
-	protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector,
-			final String testModelItemId, final long startTimestamp) {
-		return new BsxDsTestCaseResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
-	}
+    @Override
+    protected AbstractTestCollector createCalledTestCaseResultCollector(final AbstractTestCollector parentCollector,
+            final String testModelItemId, final long startTimestamp) {
+        return new BsxDsTestCaseResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
+    }
 
-	@Override
-	protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector,
-			final String testModelItemId, final long startTimestamp) {
-		return new BsxDsTestStepResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
-	}
+    @Override
+    protected AbstractTestCollector createCalledTestStepResultCollector(final AbstractTestCollector parentCollector,
+            final String testModelItemId, final long startTimestamp) {
+        return new BsxDsTestStepResultCollector(this, testStepAttachmentIds, testModelItemId, startTimestamp);
+    }
 
-	@Override
-	protected void mergeResultFromCollector(final AbstractTestCollector collector) {
-		try {
-			writer.flush();
-			((BsxDsResultCollectorWriter) collector).writeTo(bos);
-		} catch (Exception e) {
-			logger.error("Failed to append collector results: ", e);
-			throw new IllegalStateException(e);
-		}
-	}
+    @Override
+    protected void mergeResultFromCollector(final AbstractTestCollector collector) {
+        try {
+            writer.flush();
+            ((BsxDsResultCollectorWriter) collector).writeTo(bos);
+        } catch (Exception e) {
+            logger.error("Failed to append collector results: ", e);
+            throw new IllegalStateException(e);
+        }
+    }
 
-	@Override
-	protected String currentResultItemId() {
-		return writer.currentResultItemId();
-	}
+    @Override
+    protected String currentResultItemId() {
+        return writer.currentResultItemId();
+    }
 
-	@Override
-	public void release() {
+    @Override
+    public void release() {
 
-	}
+    }
 
-	@Override
-	public void registerTestTaskEndListener(final TestTaskEndListener listener) {
-		throw new UnsupportedOperationException(
-				"Operation not supported by collector, "
-						+ "illegal delegation from parent collector");
-	}
+    @Override
+    public void registerTestTaskEndListener(final TestTaskEndListener listener) {
+        throw new UnsupportedOperationException(
+                "Operation not supported by collector, "
+                        + "illegal delegation from parent collector");
+    }
 }

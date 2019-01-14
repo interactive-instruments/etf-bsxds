@@ -25,15 +25,15 @@ package de.interactive_instruments.etf.dal.dao.basex;
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public class BsxPreparedDtoException extends IllegalStateException {
-	public BsxPreparedDtoException(final String s) {
-		super(s);
-	}
+    public BsxPreparedDtoException(final String s) {
+        super(s);
+    }
 
-	public BsxPreparedDtoException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
+    public BsxPreparedDtoException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-	public BsxPreparedDtoException(final Throwable cause) {
-		super(cause);
-	}
+    public BsxPreparedDtoException(final Throwable cause) {
+        super(cause);
+    }
 }

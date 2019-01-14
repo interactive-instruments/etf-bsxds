@@ -44,63 +44,63 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class ExecutableTestSuiteDao extends AbstractBsxStreamWriteDao<ExecutableTestSuiteDto> {
 
-	private final Schema schema;
+    private final Schema schema;
 
-	protected ExecutableTestSuiteDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:ExecutableTestSuite", "ExecutableTestSuite", ctx,
-				(dsResultSet) -> dsResultSet.getExecutableTestSuites());
-		schema = ((BsxDataStorage) ctx).getSchema();
-	}
+    protected ExecutableTestSuiteDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:ExecutableTestSuite", "ExecutableTestSuite", ctx,
+                (dsResultSet) -> dsResultSet.getExecutableTestSuites());
+        schema = ((BsxDataStorage) ctx).getSchema();
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public Class<ExecutableTestSuiteDto> getDtoType() {
-		return ExecutableTestSuiteDto.class;
-	}
+    @Override
+    public Class<ExecutableTestSuiteDto> getDtoType() {
+        return ExecutableTestSuiteDto.class;
+    }
 
-	private static class ValidationErrorHandler implements ErrorHandler {
+    private static class ValidationErrorHandler implements ErrorHandler {
 
-		private final Logger logger;
+        private final Logger logger;
 
-		private ValidationErrorHandler(final Logger logger) {
-			this.logger = logger;
-		}
+        private ValidationErrorHandler(final Logger logger) {
+            this.logger = logger;
+        }
 
-		@Override
-		public void warning(final SAXParseException exception) throws SAXException {
+        @Override
+        public void warning(final SAXParseException exception) throws SAXException {
 
-		}
+        }
 
-		@Override
-		public void error(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				throw new SAXException(exception);
-			}
-		}
+        @Override
+        public void error(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                throw new SAXException(exception);
+            }
+        }
 
-		@Override
-		public void fatalError(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				throw new SAXException(exception);
-			}
-		}
-	}
+        @Override
+        public void fatalError(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                throw new SAXException(exception);
+            }
+        }
+    }
 
-	private void updateChildrenIds(final List<? extends TestModelItemDto> children, int maxDepth) {
-		if (children != null && maxDepth > 0) {
-			for (final ModelItemTreeNode child : children) {
-				if (child instanceof Dto) {
-					((Dto) child).setId(EidFactory.getDefault().createRandomId());
-				}
-				updateChildrenIds(child.getChildren(), --maxDepth);
-			}
-		}
-	}
+    private void updateChildrenIds(final List<? extends TestModelItemDto> children, int maxDepth) {
+        if (children != null && maxDepth > 0) {
+            for (final ModelItemTreeNode child : children) {
+                if (child instanceof Dto) {
+                    ((Dto) child).setId(EidFactory.getDefault().createRandomId());
+                }
+                updateChildrenIds(child.getChildren(), --maxDepth);
+            }
+        }
+    }
 
-	@Override
-	protected void doUpdateProperties(final ExecutableTestSuiteDto executableTestSuiteDto) {
-		updateChildrenIds(executableTestSuiteDto.getChildren(), 8);
-	}
+    @Override
+    protected void doUpdateProperties(final ExecutableTestSuiteDto executableTestSuiteDto) {
+        updateChildrenIds(executableTestSuiteDto.getChildren(), 8);
+    }
 }

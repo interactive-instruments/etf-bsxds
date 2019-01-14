@@ -37,36 +37,36 @@ import de.interactive_instruments.properties.PropertyHolder;
  */
 final class BsxResolvedDto<T extends Dto> implements PreparedDto<T> {
 
-	private final T dto;
+    private final T dto;
 
-	BsxResolvedDto(final T dto) {
-		this.dto = dto;
-	}
+    BsxResolvedDto(final T dto) {
+        this.dto = dto;
+    }
 
-	@Override
-	public EID getDtoId() {
-		return dto.getId();
-	}
+    @Override
+    public EID getDtoId() {
+        return dto.getId();
+    }
 
-	@Override
-	public T getDto() {
-		return dto;
-	}
+    @Override
+    public T getDto() {
+        return dto;
+    }
 
-	@Override
-	public void streamTo(final OutputFormat outputFormat, final PropertyHolder propertyHolder, final OutputStream outputStream)
-			throws IOException {
-		try {
-			DataStorageRegistry.instance().get("default").getDao(dto.getClass()).getById(dto.getId()).streamTo(outputFormat,
-					propertyHolder, outputStream);
-		} catch (StorageException | ObjectWithIdNotFoundException e) {
-			ExcUtils.suppress(e);
-			outputStream.close();
-		}
-	}
+    @Override
+    public void streamTo(final OutputFormat outputFormat, final PropertyHolder propertyHolder, final OutputStream outputStream)
+            throws IOException {
+        try {
+            DataStorageRegistry.instance().get("default").getDao(dto.getClass()).getById(dto.getId()).streamTo(outputFormat,
+                    propertyHolder, outputStream);
+        } catch (StorageException | ObjectWithIdNotFoundException e) {
+            ExcUtils.suppress(e);
+            outputStream.close();
+        }
+    }
 
-	@Override
-	public int compareTo(final PreparedDto o) {
-		return dto.getId().compareTo(o.getDtoId());
-	}
+    @Override
+    public int compareTo(final PreparedDto o) {
+        return dto.getId().compareTo(o.getDtoId());
+    }
 }

@@ -36,92 +36,92 @@ import de.interactive_instruments.exceptions.ExcUtils;
  */
 final class BsxSchemaResourceResolver implements LSResourceResolver {
 
-	private static class Input implements LSInput {
+    private static class Input implements LSInput {
 
-		private final String publicId;
+        private final String publicId;
 
-		private final String systemId;
+        private final String systemId;
 
-		private final BufferedInputStream inputStream;
+        private final BufferedInputStream inputStream;
 
-		public String getPublicId() {
-			return publicId;
-		}
+        public String getPublicId() {
+            return publicId;
+        }
 
-		public void setPublicId(String publicId) {
-			throw new IllegalStateException("Not allowed");
-		}
+        public void setPublicId(String publicId) {
+            throw new IllegalStateException("Not allowed");
+        }
 
-		public String getBaseURI() {
-			return null;
-		}
+        public String getBaseURI() {
+            return null;
+        }
 
-		public InputStream getByteStream() {
-			return null;
-		}
+        public InputStream getByteStream() {
+            return null;
+        }
 
-		public boolean getCertifiedText() {
-			return false;
-		}
+        public boolean getCertifiedText() {
+            return false;
+        }
 
-		public Reader getCharacterStream() {
-			return null;
-		}
+        public Reader getCharacterStream() {
+            return null;
+        }
 
-		public String getEncoding() {
-			return null;
-		}
+        public String getEncoding() {
+            return null;
+        }
 
-		public String getStringData() {
-			synchronized (inputStream) {
-				try {
-					final byte[] input = new byte[inputStream.available()];
-					inputStream.read(input);
-					return new String(input, "UTF-8");
-				} catch (IOException e) {
-					ExcUtils.suppress(e);
-					throw new IllegalStateException("Cannot access schema file: " + e);
-				}
-			}
-		}
+        public String getStringData() {
+            synchronized (inputStream) {
+                try {
+                    final byte[] input = new byte[inputStream.available()];
+                    inputStream.read(input);
+                    return new String(input, "UTF-8");
+                } catch (IOException e) {
+                    ExcUtils.suppress(e);
+                    throw new IllegalStateException("Cannot access schema file: " + e);
+                }
+            }
+        }
 
-		public void setBaseURI(String baseURI) {}
+        public void setBaseURI(String baseURI) {}
 
-		public void setByteStream(InputStream byteStream) {}
+        public void setByteStream(InputStream byteStream) {}
 
-		public void setCertifiedText(boolean certifiedText) {}
+        public void setCertifiedText(boolean certifiedText) {}
 
-		public void setCharacterStream(Reader characterStream) {}
+        public void setCharacterStream(Reader characterStream) {}
 
-		public void setEncoding(String encoding) {}
+        public void setEncoding(String encoding) {}
 
-		public void setStringData(String stringData) {}
+        public void setStringData(String stringData) {}
 
-		public String getSystemId() {
-			return systemId;
-		}
+        public String getSystemId() {
+            return systemId;
+        }
 
-		public void setSystemId(String systemId) {
-			throw new IllegalStateException("Not allowed");
-		}
+        public void setSystemId(String systemId) {
+            throw new IllegalStateException("Not allowed");
+        }
 
-		public Input(String publicId, String sysId, InputStream input) {
-			this.publicId = publicId;
-			this.systemId = sysId;
-			this.inputStream = new BufferedInputStream(input);
-		}
-	}
+        public Input(String publicId, String sysId, InputStream input) {
+            this.publicId = publicId;
+            this.systemId = sysId;
+            this.inputStream = new BufferedInputStream(input);
+        }
+    }
 
-	public LSInput resolveResource(String type, String namespaceURI,
-			String publicId, String systemId, String baseURI) {
-		final String path;
-		if (!systemId.startsWith("../")) {
-			path = "schema/model/" + systemId;
-		} else {
-			path = "schema/" + systemId.substring(3);
-		}
-		final InputStream resourceAsStream = this.getClass().getClassLoader()
-				.getResourceAsStream(path);
-		return new Input(publicId, systemId, resourceAsStream);
-	}
+    public LSInput resolveResource(String type, String namespaceURI,
+            String publicId, String systemId, String baseURI) {
+        final String path;
+        if (!systemId.startsWith("../")) {
+            path = "schema/model/" + systemId;
+        } else {
+            path = "schema/" + systemId.substring(3);
+        }
+        final InputStream resourceAsStream = this.getClass().getClassLoader()
+                .getResourceAsStream(path);
+        return new Input(publicId, systemId, resourceAsStream);
+    }
 }

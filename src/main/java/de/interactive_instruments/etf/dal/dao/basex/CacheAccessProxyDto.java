@@ -40,57 +40,57 @@ import de.interactive_instruments.etf.model.EID;
  */
 public class CacheAccessProxyDto {
 
-	private final BsxDsCtx ctx;
-	private final Logger logger;
+    private final BsxDsCtx ctx;
+    private final Logger logger;
 
-	CacheAccessProxyDto(final BsxDsCtx ctx, final Logger logger) {
-		this.ctx = ctx;
-		this.logger = logger;
-	}
+    CacheAccessProxyDto(final BsxDsCtx ctx, final Logger logger) {
+        this.ctx = ctx;
+        this.logger = logger;
+    }
 
-	@RuntimeType
-	public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
-		logger.trace("Intercepted {} method call", method.getName());
-		if (proxy.getCached() == null) {
-			if (proxy.getProxiedId() == null) {
-				throw new IllegalStateException("Eid not set");
-			}
-			proxy.setCached(ctx.getFromCache(proxy.getProxiedId()));
-			if (proxy.getCached() == null) {
-				throw new IllegalStateException("Unable to load cached Dto " + proxy.getProxiedId() + " ! "
-						+ "This may happen if the root object of this reference is not loaded!");
-			}
-		}
-		try {
-			return method.invoke(proxy.getCached(), args);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new IllegalStateException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
-		}
-	}
+    @RuntimeType
+    public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
+        logger.trace("Intercepted {} method call", method.getName());
+        if (proxy.getCached() == null) {
+            if (proxy.getProxiedId() == null) {
+                throw new IllegalStateException("Eid not set");
+            }
+            proxy.setCached(ctx.getFromCache(proxy.getProxiedId()));
+            if (proxy.getCached() == null) {
+                throw new IllegalStateException("Unable to load cached Dto " + proxy.getProxiedId() + " ! "
+                        + "This may happen if the root object of this reference is not loaded!");
+            }
+        }
+        try {
+            return method.invoke(proxy.getCached(), args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
+        }
+    }
 
-	@RuntimeType
-	public EID getId(@This ProxyAccessor proxy) {
-		if (proxy.getCached() != null) {
-			return proxy.getCached().getId();
-		}
-		return proxy.getProxiedId();
-	}
+    @RuntimeType
+    public EID getId(@This ProxyAccessor proxy) {
+        if (proxy.getCached() != null) {
+            return proxy.getCached().getId();
+        }
+        return proxy.getProxiedId();
+    }
 
-	@RuntimeType
-	public String getDescriptiveLabel(@This ProxyAccessor proxy) {
-		return "\'CACHEACCESS." + proxy.getProxiedId() + "\'";
-	}
+    @RuntimeType
+    public String getDescriptiveLabel(@This ProxyAccessor proxy) {
+        return "\'CACHEACCESS." + proxy.getProxiedId() + "\'";
+    }
 
-	@RuntimeType
-	public String toString(@This ProxyAccessor proxy) {
-		final StringBuilder sb = new StringBuilder("CacheAccessProxy{");
-		sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
-		if (proxy.getCached() != null) {
-			sb.append(proxy.getCached().toString());
-		} else {
-			sb.append("UNRESOLVED");
-		}
-		sb.append('}');
-		return sb.toString();
-	}
+    @RuntimeType
+    public String toString(@This ProxyAccessor proxy) {
+        final StringBuilder sb = new StringBuilder("CacheAccessProxy{");
+        sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
+        if (proxy.getCached() != null) {
+            sb.append(proxy.getCached().toString());
+        } else {
+            sb.append("UNRESOLVED");
+        }
+        sb.append('}');
+        return sb.toString();
+    }
 }

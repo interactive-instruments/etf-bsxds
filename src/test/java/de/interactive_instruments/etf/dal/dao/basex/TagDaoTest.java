@@ -54,129 +54,129 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TagDaoTest {
 
-	private static WriteDao<TagDto> writeDao;
+    private static WriteDao<TagDto> writeDao;
 
-	private static EID streamingTagId = EidFactory.getDefault().createUUID("EIDfe1f3796-0ebf-4960-a6f7-f935e087fa4b");
+    private static EID streamingTagId = EidFactory.getDefault().createUUID("EIDfe1f3796-0ebf-4960-a6f7-f935e087fa4b");
 
-	private final static Filter ALL = new Filter() {
-		@Override
-		public int offset() {
-			return 0;
-		}
+    private final static Filter ALL = new Filter() {
+        @Override
+        public int offset() {
+            return 0;
+        }
 
-		@Override
-		public int limit() {
-			return 2000;
-		}
-	};
+        @Override
+        public int limit() {
+            return 2000;
+        }
+    };
 
-	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			IOException {
-		BsxTestUtils.ensureInitialization();
-		writeDao = ((WriteDao) DATA_STORAGE.getDao(TagDto.class));
-	}
+    @BeforeClass
+    public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+            IOException {
+        BsxTestUtils.ensureInitialization();
+        writeDao = ((WriteDao) DATA_STORAGE.getDao(TagDto.class));
+    }
 
-	@Before
-	public void clean() {
-		try {
-			writeDao.delete(TAG_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StorageException e) {}
-	}
+    @Before
+    public void clean() {
+        try {
+            writeDao.delete(TAG_DTO_1.getId());
+        } catch (ObjectWithIdNotFoundException | StorageException e) {}
+    }
 
-	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(TAG_DTO_1);
-	}
+    @Test
+    public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
+        BsxTestUtils.existsAndAddAndDeleteTest(TAG_DTO_1);
+    }
 
-	@Test
-	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(TAG_DTO_1.getId()));
-		writeDao.add(TAG_DTO_1);
-		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
+    @Test
+    public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
+        assertFalse(writeDao.exists(TAG_DTO_1.getId()));
+        writeDao.add(TAG_DTO_1);
+        assertTrue(writeDao.exists(TAG_DTO_1.getId()));
 
-		final PreparedDto<TagDto> preparedDto = writeDao.getById(TAG_DTO_1.getId());
+        final PreparedDto<TagDto> preparedDto = writeDao.getById(TAG_DTO_1.getId());
 
-		// Check internal ID
-		assertEquals(TAG_DTO_1.getId(), preparedDto.getDtoId());
-		final TagDto dto = preparedDto.getDto();
-		assertNotNull(dto);
-		assertEquals(TAG_DTO_1.getId(), dto.getId());
-		assertEquals(TAG_DTO_1.toString(), dto.toString());
-	}
+        // Check internal ID
+        assertEquals(TAG_DTO_1.getId(), preparedDto.getDtoId());
+        final TagDto dto = preparedDto.getDto();
+        assertNotNull(dto);
+        assertEquals(TAG_DTO_1.getId(), dto.getId());
+        assertEquals(TAG_DTO_1.toString(), dto.toString());
+    }
 
-	@Test
-	public void test_2_1_delete() throws StorageException, ObjectWithIdNotFoundException {
-		writeDao.deleteAllExisting(Collections.singleton(TAG_DTO_1.getId()));
-		assertFalse(writeDao.exists(TAG_DTO_1.getId()));
-		assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
-		assertFalse(writeDao.available(TAG_DTO_1.getId()));
+    @Test
+    public void test_2_1_delete() throws StorageException, ObjectWithIdNotFoundException {
+        writeDao.deleteAllExisting(Collections.singleton(TAG_DTO_1.getId()));
+        assertFalse(writeDao.exists(TAG_DTO_1.getId()));
+        assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
+        assertFalse(writeDao.available(TAG_DTO_1.getId()));
 
-		boolean exceptionThrown = false;
-		try {
-			writeDao.getById(TAG_DTO_1.getId()).getDto();
-		} catch (ObjectWithIdNotFoundException e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
+        boolean exceptionThrown = false;
+        try {
+            writeDao.getById(TAG_DTO_1.getId()).getDto();
+        } catch (ObjectWithIdNotFoundException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
 
-		writeDao.add(TAG_DTO_1);
-		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
-		assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
-		assertTrue(writeDao.available(TAG_DTO_1.getId()));
-		assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
-	}
+        writeDao.add(TAG_DTO_1);
+        assertTrue(writeDao.exists(TAG_DTO_1.getId()));
+        assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
+        assertTrue(writeDao.available(TAG_DTO_1.getId()));
+        assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
+    }
 
-	@Test
-	public void test_2_2_doubleAdd() throws StorageException, ObjectWithIdNotFoundException {
-		writeDao.deleteAllExisting(Collections.singleton(TAG_DTO_1.getId()));
-		assertFalse(writeDao.exists(TAG_DTO_1.getId()));
-		assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
-		assertFalse(writeDao.available(TAG_DTO_1.getId()));
+    @Test
+    public void test_2_2_doubleAdd() throws StorageException, ObjectWithIdNotFoundException {
+        writeDao.deleteAllExisting(Collections.singleton(TAG_DTO_1.getId()));
+        assertFalse(writeDao.exists(TAG_DTO_1.getId()));
+        assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
+        assertFalse(writeDao.available(TAG_DTO_1.getId()));
 
-		writeDao.add(TAG_DTO_1);
-		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
-		assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
-		assertTrue(writeDao.available(TAG_DTO_1.getId()));
-		assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
+        writeDao.add(TAG_DTO_1);
+        assertTrue(writeDao.exists(TAG_DTO_1.getId()));
+        assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
+        assertTrue(writeDao.available(TAG_DTO_1.getId()));
+        assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
 
-		boolean exceptionThrown = false;
-		try {
-			writeDao.add(TAG_DTO_1);
-		} catch (StorageException e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
-		assertTrue(writeDao.exists(TAG_DTO_1.getId()));
-		assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
-		assertTrue(writeDao.available(TAG_DTO_1.getId()));
-		assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
-	}
+        boolean exceptionThrown = false;
+        try {
+            writeDao.add(TAG_DTO_1);
+        } catch (StorageException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+        assertTrue(writeDao.exists(TAG_DTO_1.getId()));
+        assertFalse(writeDao.isDisabled(TAG_DTO_1.getId()));
+        assertTrue(writeDao.available(TAG_DTO_1.getId()));
+        assertEquals(TAG_DTO_1.getLabel(), writeDao.getById(TAG_DTO_1.getId()).getDto().getLabel());
+    }
 
-	@Test
-	public void test_7_1_testStreamIntoStore()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
-		writeDao.deleteAllExisting(Collections.singleton(streamingTagId));
-		final IFile tagFile = getTestResourceFile("database/tag.xml");
-		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
-		assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
-		final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
-		assertTrue(collectionResult.keySet().contains(streamingTagId));
-	}
+    @Test
+    public void test_7_1_testStreamIntoStore()
+            throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
+        writeDao.deleteAllExisting(Collections.singleton(streamingTagId));
+        final IFile tagFile = getTestResourceFile("database/tag.xml");
+        ((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
+        assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
+        final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
+        assertTrue(collectionResult.keySet().contains(streamingTagId));
+    }
 
-	@Test
-	public void test_7_2_testDoubleStreamIntoStore()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
+    @Test
+    public void test_7_2_testDoubleStreamIntoStore()
+            throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, URISyntaxException {
 
-		final int sizeBefore = writeDao.getAll(ALL).size();
-		final IFile tagFile = getTestResourceFile("database/tag.xml");
-		((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
+        final int sizeBefore = writeDao.getAll(ALL).size();
+        final IFile tagFile = getTestResourceFile("database/tag.xml");
+        ((StreamWriteDao<TagDto>) writeDao).add(new FileInputStream(tagFile));
 
-		// assertTrue(exceptionThrown);
-		assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
-		final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
-		assertEquals(sizeBefore, collectionResult.size());
-		assertTrue(collectionResult.keySet().contains(streamingTagId));
-	}
+        // assertTrue(exceptionThrown);
+        assertEquals("TAG LABEL", writeDao.getById(streamingTagId).getDto().getLabel());
+        final PreparedDtoCollection<TagDto> collectionResult = writeDao.getAll(ALL);
+        assertEquals(sizeBefore, collectionResult.size());
+        assertTrue(collectionResult.keySet().contains(streamingTagId));
+    }
 
 }

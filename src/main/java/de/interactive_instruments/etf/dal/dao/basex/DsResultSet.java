@@ -31,71 +31,66 @@ import de.interactive_instruments.etf.dal.dto.translation.TranslationTemplateBun
 /**
  * Data storage result
  *
- * The object holds all unmarshaled data from a XQuery result. A XQuery result
- * may include different object types that are all unmarshaled in the specific
- * lists. Although only one specific type is accessed through the
- * generic {@link BsxPreparedDto } or {@link BsxPreparedDtoCollection }, the objects
- * may possess references to other object types that were unmarshaled into the other
- * lists.
+ * The object holds all unmarshaled data from a XQuery result. A XQuery result may include different object types that are all unmarshaled in the specific lists. Although only one specific type is accessed through the generic {@link BsxPreparedDto } or {@link BsxPreparedDtoCollection }, the objects may possess references to other object types that were unmarshaled into the other lists.
  *
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class DsResultSet {
 
-	private List<ComponentDto> components;
-	//private List<ParameterizedTestCaseDto> testCases;
-	//private List<ParameterizedTestAssertionDto> testAssertions;
-	private List<TestItemTypeDto> testItemTypes;
-	private List<ExecutableTestSuiteDto> executableTestSuites;
-	private List<TestObjectTypeDto> testObjectTypes;
-	private List<TestObjectDto> testObjects;
-	//private List<CredentialDto> credentials;
-	//private List<UserDto> users;
-	private List<TagDto> tags;
-	private List<TranslationTemplateBundleDto> translationTemplateBundles;
-	private List<ResultStyleDto> resultStyles;
-	// private List<AbstractTestSuiteDto> abstractTestSuites;
-	// private List<TestRunTemplateDto> testRunTemplates;
-	private List<TestRunDto> testRuns;
-	private List<TestTaskResultDto> testTaskResults;
+    private List<ComponentDto> components;
+    // private List<ParameterizedTestCaseDto> testCases;
+    // private List<ParameterizedTestAssertionDto> testAssertions;
+    private List<TestItemTypeDto> testItemTypes;
+    private List<ExecutableTestSuiteDto> executableTestSuites;
+    private List<TestObjectTypeDto> testObjectTypes;
+    private List<TestObjectDto> testObjects;
+    // private List<CredentialDto> credentials;
+    // private List<UserDto> users;
+    private List<TagDto> tags;
+    private List<TranslationTemplateBundleDto> translationTemplateBundles;
+    private List<ResultStyleDto> resultStyles;
+    // private List<AbstractTestSuiteDto> abstractTestSuites;
+    // private List<TestRunTemplateDto> testRunTemplates;
+    private List<TestRunDto> testRuns;
+    private List<TestTaskResultDto> testTaskResults;
 
-	public List<ComponentDto> getComponents() {
-		return components;
-	}
+    public List<ComponentDto> getComponents() {
+        return components;
+    }
 
-	public List<TestItemTypeDto> getTestItemTypes() {
-		return testItemTypes;
-	}
+    public List<TestItemTypeDto> getTestItemTypes() {
+        return testItemTypes;
+    }
 
-	public List<ExecutableTestSuiteDto> getExecutableTestSuites() {
-		return executableTestSuites;
-	}
+    public List<ExecutableTestSuiteDto> getExecutableTestSuites() {
+        return executableTestSuites;
+    }
 
-	public List<TestObjectTypeDto> getTestObjectTypes() {
-		return testObjectTypes;
-	}
+    public List<TestObjectTypeDto> getTestObjectTypes() {
+        return testObjectTypes;
+    }
 
-	public List<TestObjectDto> getTestObjects() {
-		return testObjects;
-	}
+    public List<TestObjectDto> getTestObjects() {
+        return testObjects;
+    }
 
-	public List<TagDto> getTags() {
-		return tags;
-	}
+    public List<TagDto> getTags() {
+        return tags;
+    }
 
-	public List<TranslationTemplateBundleDto> getTranslationTemplateBundles() {
-		return translationTemplateBundles;
-	}
+    public List<TranslationTemplateBundleDto> getTranslationTemplateBundles() {
+        return translationTemplateBundles;
+    }
 
-	public List<ResultStyleDto> getResultStyles() {
-		return resultStyles;
-	}
+    public List<ResultStyleDto> getResultStyles() {
+        return resultStyles;
+    }
 
-	public List<TestRunDto> getTestRuns() {
-		return testRuns;
-	}
+    public List<TestRunDto> getTestRuns() {
+        return testRuns;
+    }
 
-	public List<TestTaskResultDto> getTestTaskResults() {
-		return testTaskResults;
-	}
+    public List<TestTaskResultDto> getTestTaskResults() {
+        return testTaskResults;
+    }
 }

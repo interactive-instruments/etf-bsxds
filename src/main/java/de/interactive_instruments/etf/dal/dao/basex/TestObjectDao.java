@@ -38,30 +38,30 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class TestObjectDao extends AbstractBsxWriteDao<TestObjectDto> {
 
-	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
+    private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	public TestObjectDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
-		super("/etf:TestObject", "TestObject", ctx,
-				(dsResultSet) -> dsResultSet.getTestObjects());
-	}
+    public TestObjectDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
+        super("/etf:TestObject", "TestObject", ctx,
+                (dsResultSet) -> dsResultSet.getTestObjects());
+    }
 
-	@Override
-	public Class<TestObjectDto> getDtoType() {
-		return TestObjectDto.class;
-	}
+    @Override
+    public Class<TestObjectDto> getDtoType() {
+        return TestObjectDto.class;
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
-		for (int i = 0; i < 10; i++) {
-			final String testDbName = ETF_TESTDB_PREFIX + eid.toString() + "-" + i;
-			try {
-				final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));
-				if (dropped) {
-					ctx.getLogger().info("Dropped test database {}", testDbName);
-				}
-			} catch (final Exception e) {
-				ExcUtils.suppress(e);
-			}
-		}
-	}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+        for (int i = 0; i < 10; i++) {
+            final String testDbName = ETF_TESTDB_PREFIX + eid.toString() + "-" + i;
+            try {
+                final boolean dropped = Boolean.valueOf(new DropDB(testDbName).execute(ctx.getBsxCtx()));
+                if (dropped) {
+                    ctx.getLogger().info("Dropped test database {}", testDbName);
+                }
+            } catch (final Exception e) {
+                ExcUtils.suppress(e);
+            }
+        }
+    }
 }

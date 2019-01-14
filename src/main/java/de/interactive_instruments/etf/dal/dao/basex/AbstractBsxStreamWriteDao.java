@@ -63,155 +63,155 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWriteDao<T> implements StreamWriteDao<T> {
 
-	private final Schema schema;
+    private final Schema schema;
 
-	protected AbstractBsxStreamWriteDao(final String queryPath, final String typeName,
-			final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
-		super(queryPath, typeName, ctx, getDtoResultCmd);
-		schema = ((BsxDataStorage) ctx).getSchema();
-	}
+    protected AbstractBsxStreamWriteDao(final String queryPath, final String typeName,
+            final BsxDsCtx ctx, final GetDtoResultCmd<T> getDtoResultCmd) throws StorageException {
+        super(queryPath, typeName, ctx, getDtoResultCmd);
+        schema = ((BsxDataStorage) ctx).getSchema();
+    }
 
-	private static class ValidationErrorHandler implements ErrorHandler {
+    private static class ValidationErrorHandler implements ErrorHandler {
 
-		private final Logger logger;
+        private final Logger logger;
 
-		public ValidationErrorHandler(final Logger logger) {
-			this.logger = logger;
-		}
+        public ValidationErrorHandler(final Logger logger) {
+            this.logger = logger;
+        }
 
-		@Override
-		public void warning(final SAXParseException exception) throws SAXException {
+        @Override
+        public void warning(final SAXParseException exception) throws SAXException {
 
-		}
+        }
 
-		@Override
-		public void error(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				logger.error("Validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
-						exception.getMessage());
-				throw new SAXException(exception);
-			}
-		}
+        @Override
+        public void error(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                logger.error("Validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
+                        exception.getMessage());
+                throw new SAXException(exception);
+            }
+        }
 
-		@Override
-		public void fatalError(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				logger.error("Fatal validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
-						exception.getMessage());
-				throw new SAXException(exception);
-			}
-		}
-	}
+        @Override
+        public void fatalError(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                logger.error("Fatal validation error ({}:{}): {} ", exception.getColumnNumber(), exception.getLineNumber(),
+                        exception.getMessage());
+                throw new SAXException(exception);
+            }
+        }
+    }
 
-	EID addAndValidate(final InputStream inputStream) throws StorageException {
-		try {
-			// Create copy of stream in memory
-			final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-			IOUtils.copy(inputStream, byteArrayOutputStream);
-			final byte[] buffer = byteArrayOutputStream.toByteArray();
-			return addAndValidate(buffer);
-		} catch (IOException e) {
-			throw new StorageException(e);
-		}
-	}
+    EID addAndValidate(final InputStream inputStream) throws StorageException {
+        try {
+            // Create copy of stream in memory
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            IOUtils.copy(inputStream, byteArrayOutputStream);
+            final byte[] buffer = byteArrayOutputStream.toByteArray();
+            return addAndValidate(buffer);
+        } catch (IOException e) {
+            throw new StorageException(e);
+        }
+    }
 
-	private EID addAndValidate(final byte[] buffer) throws StorageException {
-		IFile itemFile = null;
-		try {
-			// Parse ID
-			final XPath xpath = XmlUtils.newXPath();
-			final String xpathExpression = this.queryPath + "[1]/@id";
-			final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)),
-					XPathConstants.STRING);
-			if (SUtils.isNullOrEmpty((String) oid)) {
-				throw new StorageException("Could not query id (" + xpathExpression + ")");
-			}
-			final String withoutEID = ((String) oid).substring(3);
-			final EID id = EidFactory.getDefault().createAndPreserveStr(withoutEID);
+    private EID addAndValidate(final byte[] buffer) throws StorageException {
+        IFile itemFile = null;
+        try {
+            // Parse ID
+            final XPath xpath = XmlUtils.newXPath();
+            final String xpathExpression = this.queryPath + "[1]/@id";
+            final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)),
+                    XPathConstants.STRING);
+            if (SUtils.isNullOrEmpty((String) oid)) {
+                throw new StorageException("Could not query id (" + xpathExpression + ")");
+            }
+            final String withoutEID = ((String) oid).substring(3);
+            final EID id = EidFactory.getDefault().createAndPreserveStr(withoutEID);
 
-			// Validate input
-			final SAXParserFactory spf = SAXParserFactory.newInstance();
-			spf.setNamespaceAware(true);
-			final XMLReader reader = spf.newSAXParser().getXMLReader();
-			final ValidatorHandler vh = schema.newValidatorHandler();
-			final ValidationErrorHandler eh = new ValidationErrorHandler(ctx.getLogger());
-			vh.setErrorHandler(eh);
-			reader.setContentHandler(vh);
+            // Validate input
+            final SAXParserFactory spf = SAXParserFactory.newInstance();
+            spf.setNamespaceAware(true);
+            final XMLReader reader = spf.newSAXParser().getXMLReader();
+            final ValidatorHandler vh = schema.newValidatorHandler();
+            final ValidationErrorHandler eh = new ValidationErrorHandler(ctx.getLogger());
+            vh.setErrorHandler(eh);
+            reader.setContentHandler(vh);
 
-			try {
-				reader.parse(new InputSource(new ByteArrayInputStream(buffer)));
-			} catch (IOException | SAXException e) {
-				// Validation failed. Check if the intermediate file should be kept
-				if (ctx.getLogger().isDebugEnabled()) {
-					// Write the buffer to a temp file
-					itemFile = IFile.createTempFile("etf_stream", UUID.randomUUID().toString());
-					FileUtils.writeByteArrayToFile(itemFile, buffer);
-				}
-				throw e;
-			}
+            try {
+                reader.parse(new InputSource(new ByteArrayInputStream(buffer)));
+            } catch (IOException | SAXException e) {
+                // Validation failed. Check if the intermediate file should be kept
+                if (ctx.getLogger().isDebugEnabled()) {
+                    // Write the buffer to a temp file
+                    itemFile = IFile.createTempFile("etf_stream", UUID.randomUUID().toString());
+                    FileUtils.writeByteArrayToFile(itemFile, buffer);
+                }
+                throw e;
+            }
 
-			if (exists(id)) {
-				doDelete(id, false);
-			}
+            if (exists(id)) {
+                doDelete(id, false);
+            }
 
-			// Create file
-			itemFile = getFile(id);
-			itemFile.createNewFile();
-			FileUtils.writeByteArrayToFile(itemFile, buffer);
+            // Create file
+            itemFile = getFile(id);
+            itemFile.createNewFile();
+            FileUtils.writeByteArrayToFile(itemFile, buffer);
 
-			new Add(itemFile.getName(), itemFile.getAbsolutePath()).execute(ctx.getBsxCtx());
-			new Flush().execute(ctx.getBsxCtx());
-			ctx.getLogger().trace("Wrote result to {}", itemFile.getPath());
-			if (!exists(id)) {
-				throw new StorageException("Unable to query streamed Dto by ID");
-			}
-			return id;
-		} catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException
-				| IOException | ParserConfigurationException | SAXException e) {
-			if (itemFile != null) {
-				try {
-					if (ctx.getLogger().isDebugEnabled()) {
-						ctx.getLogger().debug("Failed to add streamed Dto. Intermediate file has been kept: {}", itemFile);
-					} else {
-						ctx.getLogger().error(
-								"Failed to add streamed Dto. Intermediate file has been deleted as Log level is not set to debug.");
-						itemFile.delete();
-						new Delete(itemFile.getName()).execute(ctx.getBsxCtx());
-						new Flush().execute(ctx.getBsxCtx());
-					}
-				} catch (final BaseXException e2) {
-					ExcUtils.suppress(e2);
-				}
-			}
-			throw new StoreException(e);
-		}
+            new Add(itemFile.getName(), itemFile.getAbsolutePath()).execute(ctx.getBsxCtx());
+            new Flush().execute(ctx.getBsxCtx());
+            ctx.getLogger().trace("Wrote result to {}", itemFile.getPath());
+            if (!exists(id)) {
+                throw new StorageException("Unable to query streamed Dto by ID");
+            }
+            return id;
+        } catch (ObjectWithIdNotFoundException | ClassCastException | XPathExpressionException | IllegalStateException
+                | IOException | ParserConfigurationException | SAXException e) {
+            if (itemFile != null) {
+                try {
+                    if (ctx.getLogger().isDebugEnabled()) {
+                        ctx.getLogger().debug("Failed to add streamed Dto. Intermediate file has been kept: {}", itemFile);
+                    } else {
+                        ctx.getLogger().error(
+                                "Failed to add streamed Dto. Intermediate file has been deleted as Log level is not set to debug.");
+                        itemFile.delete();
+                        new Delete(itemFile.getName()).execute(ctx.getBsxCtx());
+                        new Flush().execute(ctx.getBsxCtx());
+                    }
+                } catch (final BaseXException e2) {
+                    ExcUtils.suppress(e2);
+                }
+            }
+            throw new StoreException(e);
+        }
 
-	}
+    }
 
-	@Override
-	public final T add(final InputStream inputStream, final ChangeBeforeStoreHook<T> hook) throws StorageException {
-		try {
-			// Create copy of stream in memory
-			final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-			IOUtils.copy(inputStream, byteArrayOutputStream);
-			final byte[] buffer = byteArrayOutputStream.toByteArray();
+    @Override
+    public final T add(final InputStream inputStream, final ChangeBeforeStoreHook<T> hook) throws StorageException {
+        try {
+            // Create copy of stream in memory
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            IOUtils.copy(inputStream, byteArrayOutputStream);
+            final byte[] buffer = byteArrayOutputStream.toByteArray();
 
-			final EID id = addAndValidate(buffer);
-			T dto = getById(id).getDto();
-			if (dto instanceof RepositoryItemDto) {
-				((RepositoryItemDto) dto).setItemHash(MdUtils.checksumAsHexStr(buffer));
-			}
-			if (hook != null) {
-				dto = hook.doChangeBeforeStore(dto);
-				Objects.requireNonNull(dto, "Implementation error: doChangeBeforeStreamUpdate() returned null")
-						.ensureBasicValidity();
-			}
-			// do not update as Id would change
-			doDelete(dto.getId(), false);
-			add(dto);
-			return dto;
-		} catch (IncompleteDtoException | ObjectWithIdNotFoundException | IOException e) {
-			throw new StoreException(e);
-		}
-	}
+            final EID id = addAndValidate(buffer);
+            T dto = getById(id).getDto();
+            if (dto instanceof RepositoryItemDto) {
+                ((RepositoryItemDto) dto).setItemHash(MdUtils.checksumAsHexStr(buffer));
+            }
+            if (hook != null) {
+                dto = hook.doChangeBeforeStore(dto);
+                Objects.requireNonNull(dto, "Implementation error: doChangeBeforeStreamUpdate() returned null")
+                        .ensureBasicValidity();
+            }
+            // do not update as Id would change
+            doDelete(dto.getId(), false);
+            add(dto);
+            return dto;
+        } catch (IncompleteDtoException | ObjectWithIdNotFoundException | IOException e) {
+            throw new StoreException(e);
+        }
+    }
 }

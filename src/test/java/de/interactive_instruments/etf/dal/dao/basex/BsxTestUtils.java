@@ -47,226 +47,226 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  */
 class BsxTestUtils {
 
-	final static BsxDataStorage DATA_STORAGE = new BsxDataStorage();
+    final static BsxDataStorage DATA_STORAGE = new BsxDataStorage();
 
-	static IFile DATA_STORAGE_DIR;
+    static IFile DATA_STORAGE_DIR;
 
-	static String toStrWithTrailingZeros(int i) {
-		return String.format("%05d", i);
-	}
+    static String toStrWithTrailingZeros(int i) {
+        return String.format("%05d", i);
+    }
 
-	static String toStrWithTrailingZeros(long i) {
-		return String.format("%05d", i);
-	}
+    static String toStrWithTrailingZeros(long i) {
+        return String.format("%05d", i);
+    }
 
-	static void ensureInitialization()
-			throws ConfigurationException, InvalidStateTransitionException, InitializationException, IOException {
-		if (!DATA_STORAGE.isInitialized()) {
+    static void ensureInitialization()
+            throws ConfigurationException, InvalidStateTransitionException, InitializationException, IOException {
+        if (!DATA_STORAGE.isInitialized()) {
 
-			DATA_STORAGE_DIR = new IFile("./build/tmp/etf-ds");
-			DATA_STORAGE_DIR.mkdirs();
+            DATA_STORAGE_DIR = new IFile("./build/tmp/etf-ds");
+            DATA_STORAGE_DIR.mkdirs();
 
-			final IFile styleDir = new IFile("./src/main/resources/xslt/default/style");
-			styleDir.expectDirIsReadable();
+            final IFile styleDir = new IFile("./src/main/resources/xslt/default/style");
+            styleDir.expectDirIsReadable();
 
-			assertTrue(DATA_STORAGE_DIR != null && DATA_STORAGE_DIR.exists());
-			DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR,
-					DATA_STORAGE_DIR.getAbsolutePath());
-			DATA_STORAGE.getConfigurationProperties().setProperty("etf.webapp.base.url", styleDir.getAbsolutePath());
-			DATA_STORAGE.getConfigurationProperties().setProperty("etf.api.base.url", "http://localhost/etf-webapp/v2");
-			DATA_STORAGE.init();
-			DATA_STORAGE.reset();
-		}
-	}
+            assertTrue(DATA_STORAGE_DIR != null && DATA_STORAGE_DIR.exists());
+            DATA_STORAGE.getConfigurationProperties().setProperty(EtfConstants.ETF_DATASOURCE_DIR,
+                    DATA_STORAGE_DIR.getAbsolutePath());
+            DATA_STORAGE.getConfigurationProperties().setProperty("etf.webapp.base.url", styleDir.getAbsolutePath());
+            DATA_STORAGE.getConfigurationProperties().setProperty("etf.api.base.url", "http://localhost/etf-webapp/v2");
+            DATA_STORAGE.init();
+            DATA_STORAGE.reset();
+        }
+    }
 
-	static void forceDelete(final Dto dto) throws StorageException {
-		forceDelete(getDao(dto), dto.getId());
-	}
+    static void forceDelete(final Dto dto) throws StorageException {
+        forceDelete(getDao(dto), dto.getId());
+    }
 
-	static void forceDelete(final Dao dao, final EID eid) throws StorageException {
-		try {
-			((WriteDao) dao).delete(eid);
-		} catch (ObjectWithIdNotFoundException e) {
-			ExcUtils.suppress(e);
-		}
-		if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
-			if (dao.exists(eid)) {
-				assertTrue(dao.isDisabled(eid));
-			}
-		} else {
-			assertFalse(dao.exists(eid));
-			assertFalse(dao.isDisabled(eid));
-		}
-	}
+    static void forceDelete(final Dao dao, final EID eid) throws StorageException {
+        try {
+            ((WriteDao) dao).delete(eid);
+        } catch (ObjectWithIdNotFoundException e) {
+            ExcUtils.suppress(e);
+        }
+        if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
+            if (dao.exists(eid)) {
+                assertTrue(dao.isDisabled(eid));
+            }
+        } else {
+            assertFalse(dao.exists(eid));
+            assertFalse(dao.isDisabled(eid));
+        }
+    }
 
-	static void notExistsOrDisabled(final Dto dto) {
-		final WriteDao dao = getDao(dto);
-		if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
-			if (dao.exists(dto.getId())) {
-				assertTrue(dao.isDisabled(dto.getId()));
-			}
-		} else {
-			assertFalse(dao.exists(dto.getId()));
-			assertFalse(dao.isDisabled(dto.getId()));
-		}
-	}
+    static void notExistsOrDisabled(final Dto dto) {
+        final WriteDao dao = getDao(dto);
+        if (Disableable.class.isAssignableFrom(dao.getDtoType())) {
+            if (dao.exists(dto.getId())) {
+                assertTrue(dao.isDisabled(dto.getId()));
+            }
+        } else {
+            assertFalse(dao.exists(dto.getId()));
+            assertFalse(dao.isDisabled(dto.getId()));
+        }
+    }
 
-	static void existsAndNotDisabled(final Dto dto) {
-		final WriteDao dao = getDao(dto);
-		assertTrue(dao.exists(dto.getId()));
-		assertFalse(dao.isDisabled(dto.getId()));
-	}
+    static void existsAndNotDisabled(final Dto dto) {
+        final WriteDao dao = getDao(dto);
+        assertTrue(dao.exists(dto.getId()));
+        assertFalse(dao.isDisabled(dto.getId()));
+    }
 
-	static WriteDao getDao(final Dto dto) {
-		assertNotNull(dto);
-		final Dao dao = DATA_STORAGE.getDao(dto.getClass());
-		assertNotNull(dao);
-		assertTrue(dao.isInitialized());
-		return (WriteDao) dao;
-	}
+    static WriteDao getDao(final Dto dto) {
+        assertNotNull(dto);
+        final Dao dao = DATA_STORAGE.getDao(dto.getClass());
+        assertNotNull(dao);
+        assertTrue(dao.isInitialized());
+        return (WriteDao) dao;
+    }
 
-	static void forceDeleteAndAdd(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
-		forceDeleteAndAdd(dto, true);
-	}
+    static void forceDeleteAndAdd(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
+        forceDeleteAndAdd(dto, true);
+    }
 
-	static void forceDeleteAndAdd(final Dto dto, boolean check) throws StorageException, ObjectWithIdNotFoundException {
-		final WriteDao dao = getDao(dto);
+    static void forceDeleteAndAdd(final Dto dto, boolean check) throws StorageException, ObjectWithIdNotFoundException {
+        final WriteDao dao = getDao(dto);
 
-		forceDelete(dao, dto.getId());
-		try {
-			dao.add(dto);
-		} catch (StorageException e) {
-			ExcUtils.suppress(e);
-		}
-		assertTrue(dao.exists(dto.getId()));
-		if (check) {
-			assertNotNull(dao.getById(dto.getId()).getDto());
-		}
-	}
+        forceDelete(dao, dto.getId());
+        try {
+            dao.add(dto);
+        } catch (StorageException e) {
+            ExcUtils.suppress(e);
+        }
+        assertTrue(dao.exists(dto.getId()));
+        if (check) {
+            assertNotNull(dao.getById(dto.getId()).getDto());
+        }
+    }
 
-	static void existsAndAddAndDeleteTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
-		final WriteDao dao = getDao(dto);
+    static void existsAndAddAndDeleteTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
+        final WriteDao dao = getDao(dto);
 
-		assertFalse(dao.exists(dto.getId()));
-		dao.add(dto);
-		assertTrue(dao.exists(dto.getId()));
-		dao.delete(dto.getId());
-		assertFalse(dao.exists(dto.getId()));
-	}
+        assertFalse(dao.exists(dto.getId()));
+        dao.add(dto);
+        assertTrue(dao.exists(dto.getId()));
+        dao.delete(dto.getId());
+        assertFalse(dao.exists(dto.getId()));
+    }
 
-	static void addTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
-		final WriteDao dao = getDao(dto);
-		assertTrue(!dao.exists(dto.getId()) || dao.isDisabled(dto.getId()));
-		dao.add(dto);
-		assertTrue(dao.exists(dto.getId()) && !dao.isDisabled(dto.getId()));
-	}
+    static void addTest(final Dto dto) throws StorageException, ObjectWithIdNotFoundException {
+        final WriteDao dao = getDao(dto);
+        assertTrue(!dao.exists(dto.getId()) || dao.isDisabled(dto.getId()));
+        dao.add(dto);
+        assertTrue(dao.exists(dto.getId()) && !dao.isDisabled(dto.getId()));
+    }
 
-	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {
-		return getByIdTest(dto, null);
-	}
+    static <T extends Dto> PreparedDto<T> getByIdTest(final T dto) throws StorageException, ObjectWithIdNotFoundException {
+        return getByIdTest(dto, null);
+    }
 
-	static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter)
-			throws StorageException, ObjectWithIdNotFoundException {
-		final WriteDao dao = getDao(dto);
+    static <T extends Dto> PreparedDto<T> getByIdTest(final T dto, final Filter filter)
+            throws StorageException, ObjectWithIdNotFoundException {
+        final WriteDao dao = getDao(dto);
 
-		final PreparedDto<T> preparedDto = dao.getById(dto.getId(), filter);
-		// Check internal ID
-		assertEquals(dto.getId(), preparedDto.getDtoId());
-		final T queriedDto = preparedDto.getDto();
-		assertNotNull(dto);
-		assertEquals(dto.getId(), queriedDto.getId());
-		assertEquals(dto.getDescriptiveLabel(), queriedDto.getDescriptiveLabel());
+        final PreparedDto<T> preparedDto = dao.getById(dto.getId(), filter);
+        // Check internal ID
+        assertEquals(dto.getId(), preparedDto.getDtoId());
+        final T queriedDto = preparedDto.getDto();
+        assertNotNull(dto);
+        assertEquals(dto.getId(), queriedDto.getId());
+        assertEquals(dto.getDescriptiveLabel(), queriedDto.getDescriptiveLabel());
 
-		// Check compareTo
-		final PreparedDto<T> preparedDto2 = dao.getById(dto.getId(), filter);
-		assertEquals(0, preparedDto2.compareTo(preparedDto));
-		// Will execute the query
-		assertEquals(preparedDto2.getDtoId(), preparedDto2.getDto().getId());
-		assertEquals(0, preparedDto2.compareTo(preparedDto));
+        // Check compareTo
+        final PreparedDto<T> preparedDto2 = dao.getById(dto.getId(), filter);
+        assertEquals(0, preparedDto2.compareTo(preparedDto));
+        // Will execute the query
+        assertEquals(preparedDto2.getDtoId(), preparedDto2.getDto().getId());
+        assertEquals(0, preparedDto2.compareTo(preparedDto));
 
-		return preparedDto;
-	}
+        return preparedDto;
+    }
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto)
-			throws StorageException, ObjectWithIdNotFoundException {
-		return addAndGetByIdTest(dto, null);
-	}
+    static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto)
+            throws StorageException, ObjectWithIdNotFoundException {
+        return addAndGetByIdTest(dto, null);
+    }
 
-	static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter)
-			throws StorageException, ObjectWithIdNotFoundException {
-		addTest(dto);
-		return getByIdTest(dto, filter);
-	}
+    static <T extends Dto> PreparedDto<T> addAndGetByIdTest(final T dto, final Filter filter)
+            throws StorageException, ObjectWithIdNotFoundException {
+        addTest(dto);
+        return getByIdTest(dto, filter);
+    }
 
-	public static String trimAllWhitespace(String str) {
-		if (!hasLength(str)) {
-			return str;
-		}
-		int len = str.length();
-		StringBuilder sb = new StringBuilder(str.length());
-		for (int i = 0; i < len; i++) {
-			char c = str.charAt(i);
-			if (!Character.isWhitespace(c)) {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
-	}
+    public static String trimAllWhitespace(String str) {
+        if (!hasLength(str)) {
+            return str;
+        }
+        int len = str.length();
+        StringBuilder sb = new StringBuilder(str.length());
+        for (int i = 0; i < len; i++) {
+            char c = str.charAt(i);
+            if (!Character.isWhitespace(c)) {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 
-	public static void compareStreamingContentRaw(final Dto dto, final String path, final String format)
-			throws ObjectWithIdNotFoundException, IOException {
-		addTest(dto);
-		final WriteDao dao = getDao(dto);
-		final PreparedDto preparedDto = dao.getById(dto.getId());
+    public static void compareStreamingContentRaw(final Dto dto, final String path, final String format)
+            throws ObjectWithIdNotFoundException, IOException {
+        addTest(dto);
+        final WriteDao dao = getDao(dto);
+        final PreparedDto preparedDto = dao.getById(dto.getId());
 
-		final IFile tmpFile = IFile.createTempFile("etf", ".raw");
-		tmpFile.deleteOnExit();
-		final FileOutputStream fop = new FileOutputStream(tmpFile);
-		final OutputFormat outputFormat = (OutputFormat) dao.getOutputFormats().get(
-				EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + format));
+        final IFile tmpFile = IFile.createTempFile("etf", ".raw");
+        tmpFile.deleteOnExit();
+        final FileOutputStream fop = new FileOutputStream(tmpFile);
+        final OutputFormat outputFormat = (OutputFormat) dao.getOutputFormats().get(
+                EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + format));
 
-		preparedDto.streamTo(outputFormat, null, fop);
+        preparedDto.streamTo(outputFormat, null, fop);
 
-		final IFile cmpResult = getTestResourceFile(path);
-		assertTrue(cmpResult.exists());
-		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
-				trimAllWhitespace(tmpFile.readContent().toString()));
-	}
+        final IFile cmpResult = getTestResourceFile(path);
+        assertTrue(cmpResult.exists());
+        assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
+                trimAllWhitespace(tmpFile.readContent().toString()));
+    }
 
-	public static void compareStreamingContentXml(final Dto dto, final String path, final String format)
-			throws ObjectWithIdNotFoundException, IOException {
-		addTest(dto);
-		final WriteDao dao = getDao(dto);
-		final PreparedDto preparedDto = dao.getById(dto.getId());
+    public static void compareStreamingContentXml(final Dto dto, final String path, final String format)
+            throws ObjectWithIdNotFoundException, IOException {
+        addTest(dto);
+        final WriteDao dao = getDao(dto);
+        final PreparedDto preparedDto = dao.getById(dto.getId());
 
-		final IFile tmpFile = IFile.createTempFile("etf", ".xml");
-		tmpFile.deleteOnExit();
-		final FileOutputStream fop = new FileOutputStream(tmpFile);
-		final OutputFormat outputFormat = (OutputFormat) dao.getOutputFormats().get(
-				EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + format));
+        final IFile tmpFile = IFile.createTempFile("etf", ".xml");
+        tmpFile.deleteOnExit();
+        final FileOutputStream fop = new FileOutputStream(tmpFile);
+        final OutputFormat outputFormat = (OutputFormat) dao.getOutputFormats().get(
+                EidFactory.getDefault().createUUID(dao.getDtoType().getSimpleName() + format));
 
-		preparedDto.streamTo(outputFormat, null, fop);
+        preparedDto.streamTo(outputFormat, null, fop);
 
-		final IFile cmpResult = getTestResourceFile(path);
-		assertTrue(cmpResult.exists());
-		XmlTestUtils.compare(cmpResult.readContent().toString(),
-				tmpFile.readContent().toString());
-	}
+        final IFile cmpResult = getTestResourceFile(path);
+        assertTrue(cmpResult.exists());
+        XmlTestUtils.compare(cmpResult.readContent().toString(),
+                tmpFile.readContent().toString());
+    }
 
-	public static IFile getTestResourceFile(final String path) {
-		final URL resource = BsxDataStorage.class.getClassLoader().getResource(path);
-		if (resource != null) {
-			try {
-				return new IFile(resource.toURI());
-			} catch (URISyntaxException e) {
-				ExcUtils.suppress(e);
-			}
-		}
-		return new IFile("src/test/resources").secureExpandPathDown(path);
-	}
+    public static IFile getTestResourceFile(final String path) {
+        final URL resource = BsxDataStorage.class.getClassLoader().getResource(path);
+        if (resource != null) {
+            try {
+                return new IFile(resource.toURI());
+            } catch (URISyntaxException e) {
+                ExcUtils.suppress(e);
+            }
+        }
+        return new IFile("src/test/resources").secureExpandPathDown(path);
+    }
 
-	private static boolean hasLength(CharSequence str) {
-		return (str != null && str.length() > 0);
-	}
+    private static boolean hasLength(CharSequence str) {
+        return (str != null && str.length() > 0);
+    }
 
 }

@@ -42,42 +42,42 @@ import de.interactive_instruments.properties.ConfigProperties;
  */
 final class TestRunDao extends AbstractBsxWriteDao<TestRunDto> {
 
-	protected TestRunDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:TestRun", "TestRun", ctx,
-				(dsResultSet) -> dsResultSet.getTestRuns());
-		configProperties = new ConfigProperties("etf.webapp.base.url");
-	}
+    protected TestRunDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:TestRun", "TestRun", ctx,
+                (dsResultSet) -> dsResultSet.getTestRuns());
+        configProperties = new ConfigProperties("etf.webapp.base.url");
+    }
 
-	@Override
-	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
-		try {
-			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
-			outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
-		} catch (IOException | TransformerConfigurationException e) {
-			throw new InitializationException(e);
-		}
-	}
+    @Override
+    protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
+        try {
+            final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
+            outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
+        } catch (IOException | TransformerConfigurationException e) {
+            throw new InitializationException(e);
+        }
+    }
 
-	@Override
-	protected void doCleanBeforeDelete(final EID eid) throws BaseXException {
-		try {
-			final PreparedDto<TestRunDto> testRun = getById(eid);
-			ctx.delete(testRun.getDto().getTestTaskResults());
-		} catch (BsxPreparedDtoException | ObjectWithIdNotFoundException | StorageException e) {
-			ctx.getLogger().warn("Ignoring error during clean ", e);
-		}
-	}
+    @Override
+    protected void doCleanBeforeDelete(final EID eid) throws BaseXException {
+        try {
+            final PreparedDto<TestRunDto> testRun = getById(eid);
+            ctx.delete(testRun.getDto().getTestTaskResults());
+        } catch (BsxPreparedDtoException | ObjectWithIdNotFoundException | StorageException e) {
+            ctx.getLogger().warn("Ignoring error during clean ", e);
+        }
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public Class<TestRunDto> getDtoType() {
-		return TestRunDto.class;
-	}
+    @Override
+    public Class<TestRunDto> getDtoType() {
+        return TestRunDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

@@ -45,65 +45,65 @@ import de.interactive_instruments.properties.ConfigProperties;
  */
 final class TestTaskResultDao extends AbstractBsxStreamWriteDao<TestTaskResultDto> {
 
-	private final Schema schema;
+    private final Schema schema;
 
-	private static class ValidationErrorHandler implements ErrorHandler {
+    private static class ValidationErrorHandler implements ErrorHandler {
 
-		private final Logger logger;
+        private final Logger logger;
 
-		private ValidationErrorHandler(final Logger logger) {
-			this.logger = logger;
-		}
+        private ValidationErrorHandler(final Logger logger) {
+            this.logger = logger;
+        }
 
-		@Override
-		public void warning(final SAXParseException exception) throws SAXException {
+        @Override
+        public void warning(final SAXParseException exception) throws SAXException {
 
-		}
+        }
 
-		@Override
-		public void error(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				throw new SAXException(exception);
-			}
-		}
+        @Override
+        public void error(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                throw new SAXException(exception);
+            }
+        }
 
-		@Override
-		public void fatalError(final SAXParseException exception) throws SAXException {
-			if (!exception.getMessage().startsWith("cvc-id")) {
-				throw new SAXException(exception);
-			}
-		}
-	}
+        @Override
+        public void fatalError(final SAXParseException exception) throws SAXException {
+            if (!exception.getMessage().startsWith("cvc-id")) {
+                throw new SAXException(exception);
+            }
+        }
+    }
 
-	protected TestTaskResultDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
-		super("/etf:TestTaskResult", "TestTaskResult", ctx,
-				(dsResultSet) -> dsResultSet.getTestTaskResults());
-		schema = ((BsxDataStorage) ctx).getSchema();
-		configProperties = new ConfigProperties("etf.webapp.base.url");
-	}
+    protected TestTaskResultDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
+        super("/etf:TestTaskResult", "TestTaskResult", ctx,
+                (dsResultSet) -> dsResultSet.getTestTaskResults());
+        schema = ((BsxDataStorage) ctx).getSchema();
+        configProperties = new ConfigProperties("etf.webapp.base.url");
+    }
 
-	@Override
-	protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
-		try {
-			final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
-			outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
-		} catch (IOException | TransformerConfigurationException e) {
-			throw new InitializationException(e);
-		}
-	}
+    @Override
+    protected void doInit() throws ConfigurationException, InitializationException, InvalidStateTransitionException {
+        try {
+            final XsltOutputTransformer reportTransformer = DsUtils.loadReportTransformer(this);
+            outputFormatIdMap.put(reportTransformer.getId(), reportTransformer);
+        } catch (IOException | TransformerConfigurationException e) {
+            throw new InitializationException(e);
+        }
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {
 
-	}
+    }
 
-	@Override
-	public Class<TestTaskResultDto> getDtoType() {
-		return TestTaskResultDto.class;
-	}
+    @Override
+    public Class<TestTaskResultDto> getDtoType() {
+        return TestTaskResultDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

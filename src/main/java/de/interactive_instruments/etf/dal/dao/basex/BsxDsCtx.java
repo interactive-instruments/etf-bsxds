@@ -41,19 +41,19 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 interface BsxDsCtx {
 
-	IFile getStoreDir();
+    IFile getStoreDir();
 
-	Context getBsxCtx();
+    Context getBsxCtx();
 
-	Unmarshaller createUnmarshaller() throws JAXBException;
+    Unmarshaller createUnmarshaller() throws JAXBException;
 
-	Marshaller createMarshaller() throws JAXBException;
+    Marshaller createMarshaller() throws JAXBException;
 
-	Logger getLogger();
+    Logger getLogger();
 
-	Dto getFromCache(final EID eid);
+    Dto getFromCache(final EID eid);
 
-	Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException;
+    Object createProxy(final EID eid, final Class<? extends Dto> type) throws ObjectWithIdNotFoundException, StorageException;
 
-	void delete(final Collection<? extends Dto> dtos);
+    void delete(final Collection<? extends Dto> dtos);
 }

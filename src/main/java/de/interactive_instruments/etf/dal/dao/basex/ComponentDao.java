@@ -30,22 +30,22 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class ComponentDao extends AbstractBsxWriteDao<ComponentDto> {
 
-	protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:Component", "Component", ctx,
-				(dsResultSet) -> dsResultSet.getComponents());
-	}
+    protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:Component", "Component", ctx,
+                (dsResultSet) -> dsResultSet.getComponents());
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public Class<ComponentDto> getDtoType() {
-		return ComponentDto.class;
-	}
+    @Override
+    public Class<ComponentDto> getDtoType() {
+        return ComponentDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 
 }

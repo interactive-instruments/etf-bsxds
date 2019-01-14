@@ -30,76 +30,75 @@ import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.EID;
 
 /**
- * A prepared XQuery statement for querying a single item and its references.
- * The getDto() or the streamTo() method will execute the request.
+ * A prepared XQuery statement for querying a single item and its references. The getDto() or the streamTo() method will execute the request.
  *
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 final class BsxPreparedDto<T extends Dto> extends AbstractBsxPreparedDto implements PreparedDto<T> {
 
-	private final EID id;
-	private final GetDtoResultCmd<T> getter;
-	private T cachedDto;
+    private final EID id;
+    private final GetDtoResultCmd<T> getter;
+    private T cachedDto;
 
-	BsxPreparedDto(final EID id, final BsXQuery bsXquery, final GetDtoResultCmd<T> getter) {
-		super(bsXquery);
-		this.id = id;
-		this.getter = getter;
-	}
+    BsxPreparedDto(final EID id, final BsXQuery bsXquery, final GetDtoResultCmd<T> getter) {
+        super(bsXquery);
+        this.id = id;
+        this.getter = getter;
+    }
 
-	@Override
-	public EID getDtoId() {
-		return id;
-	}
+    @Override
+    public EID getDtoId() {
+        return id;
+    }
 
-	public T getDto() {
-		if (cachedDto == null) {
+    public T getDto() {
+        if (cachedDto == null) {
 
-			// cachedDto = (T) bsXquery.getCtx().getFromCache(id);
+            // cachedDto = (T) bsXquery.getCtx().getFromCache(id);
 
-			if (cachedDto == null) {
-				try {
-					final ByteArrayOutputStream output = new ByteArrayOutputStream();
-					bsXquery.execute(output);
-					final DsResultSet result = (DsResultSet) bsXquery.getCtx().createUnmarshaller().unmarshal(
-							new ByteArrayInputStream(output.toByteArray()));
-					cachedDto = getter.getMainDto(result);
-					if (cachedDto == null) {
-						bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
-						throw new BsxPreparedDtoException("Data storage returned no data for \"" + id + "\"");
-					}
-				} catch (IOException | JAXBException e) {
-					bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
-					logError(e);
-					throw new BsxPreparedDtoException(e);
-				}
-			}
-		}
-		return cachedDto;
-	}
+            if (cachedDto == null) {
+                try {
+                    final ByteArrayOutputStream output = new ByteArrayOutputStream();
+                    bsXquery.execute(output);
+                    final DsResultSet result = (DsResultSet) bsXquery.getCtx().createUnmarshaller().unmarshal(
+                            new ByteArrayInputStream(output.toByteArray()));
+                    cachedDto = getter.getMainDto(result);
+                    if (cachedDto == null) {
+                        bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
+                        throw new BsxPreparedDtoException("Data storage returned no data for \"" + id + "\"");
+                    }
+                } catch (IOException | JAXBException e) {
+                    bsXquery.getCtx().getLogger().error("Query ID: {}", "EID" + id);
+                    logError(e);
+                    throw new BsxPreparedDtoException(e);
+                }
+            }
+        }
+        return cachedDto;
+    }
 
-	@Override
-	public int compareTo(final PreparedDto o) {
-		if (!(o instanceof BsxPreparedDto)) {
-			return -1;
-		}
-		final BsxPreparedDto bsxO = (BsxPreparedDto) o;
-		if (cachedDto != null && bsxO.cachedDto != null) {
-			final int cmp = cachedDto.getId().compareTo(bsxO.cachedDto.getId());
-			if (cmp != 0) {
-				return cmp;
-			}
-		}
-		return this.id.compareTo(bsxO.id);
-	}
+    @Override
+    public int compareTo(final PreparedDto o) {
+        if (!(o instanceof BsxPreparedDto)) {
+            return -1;
+        }
+        final BsxPreparedDto bsxO = (BsxPreparedDto) o;
+        if (cachedDto != null && bsxO.cachedDto != null) {
+            final int cmp = cachedDto.getId().compareTo(bsxO.cachedDto.getId());
+            if (cmp != 0) {
+                return cmp;
+            }
+        }
+        return this.id.compareTo(bsxO.id);
+    }
 
-	@Override
-	public String toString() {
-		final StringBuffer sb = new StringBuffer("BsxPreparedDto{");
-		sb.append("xquery=").append(bsXquery.toString());
-		sb.append(", id=").append(id);
-		sb.append(", cachedDto=").append(cachedDto != null ? cachedDto.getId() : "unresolved");
-		sb.append('}');
-		return sb.toString();
-	}
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("BsxPreparedDto{");
+        sb.append("xquery=").append(bsXquery.toString());
+        sb.append(", id=").append(id);
+        sb.append(", cachedDto=").append(cachedDto != null ? cachedDto.getId() : "unresolved");
+        sb.append('}');
+        return sb.toString();
+    }
 }

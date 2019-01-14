@@ -26,5 +26,5 @@ import java.io.OutputStream;
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public interface BsxDsResultCollectorWriter {
-	void writeTo(OutputStream outputStream) throws IOException;
+    void writeTo(OutputStream outputStream) throws IOException;
 }

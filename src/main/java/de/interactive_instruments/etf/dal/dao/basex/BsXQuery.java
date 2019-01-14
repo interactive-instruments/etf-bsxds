@@ -36,82 +36,82 @@ import de.interactive_instruments.etf.dal.dao.Filter;
  */
 final class BsXQuery {
 
-	private XQuery xQuery;
-	private final BsxDsCtx ctx;
-	private final String queryStr;
-	private final HashMap<String, String[]> parameter;
+    private XQuery xQuery;
+    private final BsxDsCtx ctx;
+    private final String queryStr;
+    private final HashMap<String, String[]> parameter;
 
-	BsXQuery(final BsxDsCtx ctx, final String queryStr) {
-		this.ctx = ctx;
-		this.queryStr = queryStr;
-		this.parameter = new HashMap<>();
-	}
+    BsXQuery(final BsxDsCtx ctx, final String queryStr) {
+        this.ctx = ctx;
+        this.queryStr = queryStr;
+        this.parameter = new HashMap<>();
+    }
 
-	private BsXQuery(final BsxDsCtx ctx, final String queryStr, final HashMap parameter) {
-		this.ctx = ctx;
-		this.queryStr = queryStr;
-		this.parameter = new HashMap<>(parameter);
-	}
+    private BsXQuery(final BsxDsCtx ctx, final String queryStr, final HashMap parameter) {
+        this.ctx = ctx;
+        this.queryStr = queryStr;
+        this.parameter = new HashMap<>(parameter);
+    }
 
-	BsXQuery parameter(final String name, final String value, final String type) {
-		if (xQuery != null) {
-			// reset query
-			xQuery = null;
-		}
-		parameter.put(name, new String[]{value, type});
-		return this;
-	}
+    BsXQuery parameter(final String name, final String value, final String type) {
+        if (xQuery != null) {
+            // reset query
+            xQuery = null;
+        }
+        parameter.put(name, new String[]{value, type});
+        return this;
+    }
 
-	BsXQuery parameter(final String name, final String value) {
-		return parameter(name, value, null);
-	}
+    BsXQuery parameter(final String name, final String value) {
+        return parameter(name, value, null);
+    }
 
-	BsXQuery parameter(final Filter filter) {
-		if (filter == null) {
-			return this;
-		}
-		return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer")
-				.parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer")
-				.parameter("levelOfDetail",
-						valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)))
-				.parameter("fields", valueOfOrDefault(filter.fields(), "*"));
-	}
+    BsXQuery parameter(final Filter filter) {
+        if (filter == null) {
+            return this;
+        }
+        return parameter("offset", valueOfOrDefault(filter.offset(), "0"), "xs:integer")
+                .parameter("limit", valueOfOrDefault(filter.limit(), "100"), "xs:integer")
+                .parameter("levelOfDetail",
+                        valueOfOrDefault(filter.levelOfDetail(), String.valueOf(Filter.LevelOfDetail.SIMPLE)))
+                .parameter("fields", valueOfOrDefault(filter.fields(), "*"));
+    }
 
-	String getParameter(final String name) {
-		final String[] res = parameter.get(name);
-		if (res != null) {
-			return res[0];
-		}
-		return null;
-	}
+    String getParameter(final String name) {
+        final String[] res = parameter.get(name);
+        if (res != null) {
+            return res[0];
+        }
+        return null;
+    }
 
-	BsxDsCtx getCtx() {
-		return ctx;
-	}
+    BsxDsCtx getCtx() {
+        return ctx;
+    }
 
-	private void ensureInitializedQuery() {
-		if (xQuery == null) {
-			xQuery = new XQuery(queryStr);
-			parameter.entrySet().forEach(e -> xQuery.bind("$" + e.getKey(), e.getValue()[0], e.getValue()[1]));
-		}
-	}
+    private void ensureInitializedQuery() {
+        if (xQuery == null) {
+            xQuery = new XQuery(queryStr);
+            parameter.entrySet().forEach(e -> xQuery.bind("$" + e.getKey(), e.getValue()[0], e.getValue()[1]));
+        }
+    }
 
-	void execute(final OutputStream os) throws BaseXException {
-		ensureInitializedQuery();
-		xQuery.execute(ctx.getBsxCtx(), os);
-	}
+    void execute(final OutputStream os) throws BaseXException {
+        ensureInitializedQuery();
+        xQuery.execute(ctx.getBsxCtx(), os);
+    }
 
-	String execute() throws BaseXException {
-		ensureInitializedQuery();
-		return xQuery.execute(ctx.getBsxCtx());
-	}
+    String execute() throws BaseXException {
+        ensureInitializedQuery();
+        return xQuery.execute(ctx.getBsxCtx());
+    }
 
-	BsXQuery createCopy() {
-		return new BsXQuery(ctx, queryStr, this.parameter);
-	}
+    BsXQuery createCopy() {
+        return new BsXQuery(ctx, queryStr, this.parameter);
+    }
 
-	@Override
-	public String toString() {
-		return xQuery != null ? xQuery.toString() : "Note compiled: " + queryStr;
-	}
+    @Override
+    public String toString() {
+        return xQuery != null ? xQuery.toString() : "Note compiled: " + queryStr;
+    }
 }
