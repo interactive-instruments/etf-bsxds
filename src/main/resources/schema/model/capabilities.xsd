@@ -274,23 +274,26 @@
 
     <!-- =============================================================== -->
     <xs:element name="TestRunTemplate">
-        <xs:annotation>
-            <xs:appinfo>
-                <etfAppinfo:cacheStrategy>evictable</etfAppinfo:cacheStrategy>
-            </xs:appinfo>
-        </xs:annotation>
         <xs:complexType>
+            <xs:annotation>
+                <xs:documentation> A template to start one ore multiple Test Runs
+                </xs:documentation>
+            </xs:annotation>
             <xs:sequence>
                 <xs:group ref="RepositoryItemGroup"/>
-                <xs:element name="testTasks">
+                <xs:element ref="Properties" minOccurs="0"/>
+                <xs:element ref="ParameterList"/>
+                <xs:element name="executableTestSuites">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="TestTask">
-                                <xs:complexType>
-                                    <xs:group ref="TestTaskConfigurationGroup" minOccurs="0"
-                                        maxOccurs="unbounded"/>
-                                </xs:complexType>
-                            </xs:element>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                            <xs:element name="executableTestSuite" type="RefType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="testObjects" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="testObject" type="RefType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

@@ -46,7 +46,7 @@ import org.xml.sax.*;
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.MdUtils;
 import de.interactive_instruments.SUtils;
-import de.interactive_instruments.etf.XmlUtils;
+import de.interactive_instruments.etf.EtfXpathEvaluator;
 import de.interactive_instruments.etf.dal.dao.StreamWriteDao;
 import de.interactive_instruments.etf.dal.dao.exceptions.StoreException;
 import de.interactive_instruments.etf.dal.dto.Dto;
@@ -119,7 +119,7 @@ abstract class AbstractBsxStreamWriteDao<T extends Dto> extends AbstractBsxWrite
         IFile itemFile = null;
         try {
             // Parse ID
-            final XPath xpath = XmlUtils.newXPath();
+            final XPath xpath = EtfXpathEvaluator.newXPath();
             final String xpathExpression = this.queryPath + "[1]/@id";
             final Object oid = xpath.evaluate(xpathExpression, new InputSource(new ByteArrayInputStream(buffer)),
                     XPathConstants.STRING);

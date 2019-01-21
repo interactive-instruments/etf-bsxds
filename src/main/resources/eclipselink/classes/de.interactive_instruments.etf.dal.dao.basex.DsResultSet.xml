@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-12-01T18:11:53.612+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2019-01-15T13:51:18.761+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>components</name>
@@ -72,6 +72,15 @@
       </class-attribute>
       <class-attribute>
          <name>testRuns</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>testRunTemplates</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
@@ -168,6 +177,15 @@
       </method>
       <method>
          <name>getTestRuns</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getTestRunTemplates</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>

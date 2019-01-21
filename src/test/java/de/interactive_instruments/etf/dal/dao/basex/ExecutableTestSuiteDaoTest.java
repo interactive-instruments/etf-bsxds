@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.*;
@@ -488,6 +489,37 @@ public class ExecutableTestSuiteDaoTest {
     }
 
     @Test(timeout = 15000)
+    public void test_2_4_getByIds() throws StorageException, ObjectWithIdNotFoundException {
+
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1, true);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2, true);
+
+        final Set<EID> ids = new HashSet<EID>() {
+            {
+                add(ETS_DTO_1.getId());
+                add(ETS_DTO_2.getId());
+            }
+        };
+
+        final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getByIds(ids);
+        assertNotNull(etsCollection);
+
+        assertEquals(2, etsCollection.size());
+
+        assertNotNull(etsCollection.get(ETS_DTO_1.getId()));
+        assertNotNull(etsCollection.get(ETS_DTO_1.getId()).getTags());
+        assertEquals(2, etsCollection.get(ETS_DTO_1.getId()).getTags().size());
+        assertEquals(TAG_DTO_1.getId(), etsCollection.get(ETS_DTO_1.getId()).getTags().get(0).getId());
+        assertEquals(TAG_DTO_2.getId(), etsCollection.get(ETS_DTO_1.getId()).getTags().get(1).getId());
+
+        assertNotNull(etsCollection.get(ETS_DTO_2.getId()));
+        assertNotNull(etsCollection.get(ETS_DTO_2.getId()).getTags());
+        assertEquals(2, etsCollection.get(ETS_DTO_2.getId()).getTags().size());
+        assertEquals(TAG_DTO_2.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(0).getId());
+        assertEquals(TAG_DTO_3.getId(), etsCollection.get(ETS_DTO_2.getId()).getTags().get(1).getId());
+    }
+
+    @Test(timeout = 15000)
     public void test_4_1_streaming_xml()
             throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
         compareStreamingContentXml(ETS_DTO_1, "cmp/ExecutableTestSuiteInItemCollectionResponse.xml", "DsResult2Xml");
@@ -537,7 +569,7 @@ public class ExecutableTestSuiteDaoTest {
         getAndCheckCollection();
     }
 
-    private void getAndCheckCollection() throws StorageException {
+    private void getAndCheckCollection() throws StorageException, ObjectWithIdNotFoundException {
         final PreparedDtoCollection<ExecutableTestSuiteDto> etsCollection = writeDao.getAll(ALL);
         assertNotNull(etsCollection);
 

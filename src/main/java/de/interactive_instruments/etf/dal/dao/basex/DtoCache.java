@@ -205,7 +205,6 @@ final class DtoCache implements WriteDaoListener {
         final Dto dto = dtoCache.getIfPresent(eid.toString());
         if (logger.isDebugEnabled() && dto != null) {
             logger.debug("Returning {} from cache", dto.getDescriptiveLabel());
-            return dto;
         }
         return dto;
     }

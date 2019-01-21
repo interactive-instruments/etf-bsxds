@@ -53,6 +53,7 @@ final class DsResultSet {
     // private List<TestRunTemplateDto> testRunTemplates;
     private List<TestRunDto> testRuns;
     private List<TestTaskResultDto> testTaskResults;
+    private List<TestRunTemplateDto> testRunTemplates;
 
     public List<ComponentDto> getComponents() {
         return components;
@@ -92,5 +93,9 @@ final class DsResultSet {
 
     public List<TestTaskResultDto> getTestTaskResults() {
         return testTaskResults;
+    }
+
+    public List<TestRunTemplateDto> getTestRunTemplates() {
+        return testRunTemplates;
     }
 }

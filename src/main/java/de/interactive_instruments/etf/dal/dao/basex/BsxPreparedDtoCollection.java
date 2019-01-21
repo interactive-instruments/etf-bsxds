@@ -33,7 +33,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import de.interactive_instruments.SUtils;
-import de.interactive_instruments.etf.XmlUtils;
+import de.interactive_instruments.etf.EtfXpathEvaluator;
 import de.interactive_instruments.etf.dal.dao.PreparedDtoCollection;
 import de.interactive_instruments.etf.dal.dto.Dto;
 import de.interactive_instruments.etf.model.DefaultEidMap;
@@ -53,11 +53,23 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
     private final GetDtoResultCmd<T> getter;
     private List<T> cachedDtos;
     private HashMap<EID, T> mappedDtos;
-    private HashSet<EID> ids;
+    private Set<EID> ids;
 
     BsxPreparedDtoCollection(final BsXQuery bsXQuery, final GetDtoResultCmd<T> getter) {
         super(bsXQuery);
         this.getter = getter;
+    }
+
+    BsxPreparedDtoCollection(final Set<EID> ids, final BsXQuery bsXQuery, final GetDtoResultCmd<T> getter) {
+        super(bsXQuery);
+        this.getter = getter;
+        this.ids = ids;
+        mappedDtos = new HashMap<>();
+        for (final EID id : ids) {
+            final T dtoFromCache = (T) bsXQuery.getCtx().getFromCache(id);
+            // TODO(performance): remove valid cached dtos from query
+            mappedDtos.put(id, dtoFromCache);
+        }
     }
 
     private BsxPreparedDtoCollection(final BsxPreparedDtoCollection<T> preparedDtoCollection) {
@@ -214,7 +226,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
         try {
             final ByteArrayOutputStream output = new ByteArrayOutputStream(32784);
             bsXquery.createCopy().parameter("fields", "@id").execute(output);
-            final XPath xpath = XmlUtils.newXPath();
+            final XPath xpath = EtfXpathEvaluator.newXPath();
             final String xpathExpression = "/etf:DsResultSet/etf:*[1]/etf:*/@id";
             final NodeList ns = ((NodeList) xpath.evaluate(xpathExpression, new InputSource(
                     new ByteArrayInputStream(output.toByteArray())), XPathConstants.NODESET));
@@ -283,11 +295,7 @@ final class BsxPreparedDtoCollection<T extends Dto> extends AbstractBsxPreparedD
 
     @Override
     public int compareTo(final PreparedDtoCollection o) {
-        if (!(o instanceof PreparedDtoCollection)) {
-            return -1;
-        }
-        final BsxPreparedDtoCollection bsxO = (BsxPreparedDtoCollection) o;
-        return toString().compareTo(bsxO.toString());
+        return toString().compareTo(o.toString());
     }
 
     @Override

@@ -33,6 +33,7 @@ import org.basex.core.BaseXException;
 import org.basex.core.cmd.XQuery;
 
 import de.interactive_instruments.IFile;
+import de.interactive_instruments.SUtils;
 import de.interactive_instruments.etf.dal.dao.Dao;
 import de.interactive_instruments.etf.dal.dao.Filter;
 import de.interactive_instruments.etf.dal.dao.PreparedDto;
@@ -78,7 +79,7 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
         try {
             xqueryStatement = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(
                     "xquery/" + typeName + "-xdb.xquery"), "UTF-8");
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             throw new StorageException("Could not load XQuery resource for " + typeName, e);
         }
     }
@@ -218,18 +219,41 @@ abstract class AbstractBsxDao<T extends Dto> implements Dao<T> {
     }
 
     @Override
-    public PreparedDtoCollection<T> getByIds(final Set<EID> set, final Filter filter)
-            throws StorageException, ObjectWithIdNotFoundException {
-        throw new StorageException("Not implemented yet");
+    public PreparedDtoCollection<T> getByIds(final Set<EID> ids, final Filter filter)
+            throws StorageException {
+        try {
+            for (final EID id : ids) {
+                // TODO(performance): provoke cache call. Could be optimized.
+                getById(id).getDto();
+            }
+            final BsXQuery bsXQuery = createIdsQuery(ids, filter);
+            return new BsxPreparedDtoCollection(ids, bsXQuery, getDtoResultCmd);
+        } catch (ObjectWithIdNotFoundException | IOException e) {
+            ctx.getLogger().error(e.getMessage());
+            throw new StorageException(e);
+        }
     }
 
     private BsXQuery createPagedQuery(final Filter filter) throws BaseXException {
-        return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("function", "paged").parameter("selection",
-                typeName);
+        return new BsXQuery(this.ctx, xqueryStatement).parameter(filter)
+                .parameter("function", "paged")
+                .parameter("selection",
+                        typeName);
     }
 
     private BsXQuery createIdQuery(final String id, final Filter filter) throws BaseXException {
-        return new BsXQuery(this.ctx, xqueryStatement).parameter(filter).parameter("qids", id).parameter("function", "byId")
+        return new BsXQuery(this.ctx, xqueryStatement).parameter(filter)
+                .parameter("qids", id)
+                .parameter("function", "byId")
+                .parameter("selection", typeName);
+    }
+
+    private BsXQuery createIdsQuery(final Set<EID> ids, final Filter filter) throws BaseXException {
+        return new BsXQuery(this.ctx, xqueryStatement).parameter(filter)
+                .parameter("qids", SUtils.concatStrWithPrefixAndSuffix(
+                        ",", BsxDataStorage.ID_PREFIX, "", ids),
+                        "xs:string")
+                .parameter("function", "byId")
                 .parameter("selection", typeName);
     }
 

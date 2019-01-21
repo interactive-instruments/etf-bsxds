@@ -1,192 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
-   <name>de.interactive_instruments.properties.Properties</name>
+   <name>de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto</name>
    <modifier>1</modifier>
    <superclass-handle>
-      <type-name>java.lang.Object</type-name>
+      <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2019-01-15T13:51:18.774+01:00</last-refresh-timestamp>
-   <interface-handles>
-      <class-handle>
-         <type-name>de.interactive_instruments.properties.ClassifyingPropertyHolder</type-name>
-      </class-handle>
-      <class-handle>
-         <type-name>de.interactive_instruments.properties.MutablePropertyHolder</type-name>
-      </class-handle>
-   </interface-handles>
+   <last-refresh-timestamp>2019-01-21T15:43:18.775+01:00</last-refresh-timestamp>
    <attributes>
+      <class-attribute>
+         <name>executableTestSuites</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>parameters</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
       <class-attribute>
          <name>properties</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>java.util.Map</type-name>
+               <type-name>de.interactive_instruments.properties.Properties</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>testObjects</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
    </attributes>
    <methods>
       <method>
-         <name>Properties</name>
+         <name>TestRunTemplateDto</name>
          <constructor>true</constructor>
          <modifier>1</modifier>
       </method>
       <method>
-         <name>Properties</name>
+         <name>TestRunTemplateDto</name>
          <constructor>true</constructor>
-         <modifier>1</modifier>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>de.interactive_instruments.properties.PropertyHolder</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>Properties</name>
-         <constructor>true</constructor>
-         <modifier>1</modifier>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.util.Map</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>getAsMap</name>
          <modifier>2</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Map</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getFirstLevelClassifications</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Set</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>getFlattenedPropertiesByClassification</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.properties.ClassifyingPropertyHolder</type-name>
-            </type-handle>
-         </return-type-declaration>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.lang.String</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>getPropertiesByClassification</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>de.interactive_instruments.properties.ClassifyingPropertyHolder</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>getProperty</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.lang.String</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>getPropertyNames</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Set</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>hasProperty</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>boolean</type-name>
-            </type-handle>
-         </return-type-declaration>
-         <method-parameters>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-         </method-parameters>
-      </method>
-      <method>
-         <name>isEmpty</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>boolean</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>iterator</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Iterator</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>namePropertyPairs</name>
-         <modifier>1</modifier>
-         <return-type-declaration>
-            <type-handle>
-               <type-name>java.util.Set</type-name>
-            </type-handle>
-         </return-type-declaration>
-      </method>
-      <method>
-         <name>removeProperty</name>
+         <name>addExecutableTestSuite</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -197,15 +76,15 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.lang.String</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>set</name>
-         <modifier>2</modifier>
+         <name>addTestObject</name>
+         <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>void</type-name>
@@ -215,50 +94,142 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.util.Map</type-name>
+                     <type-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>setProperty</name>
+         <name>createCopy</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.Dto</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>ensureBasicValidity</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <exception-type-handles>
+            <class-handle>
+               <type-name>de.interactive_instruments.etf.dal.dto.IncompleteDtoException</type-name>
+            </class-handle>
+         </exception-type-handles>
+      </method>
+      <method>
+         <name>getExecutableTestSuites</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getParameters</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>getTestObjects</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.List</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
+         <name>properties</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.properties.Properties</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>properties</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
          <method-parameters>
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.lang.String</type-name>
-                  </type-handle>
-               </type-declaration>
-            </method-parameter>
-            <method-parameter>
-               <type-declaration>
-                  <type-handle>
-                     <type-name>java.lang.String</type-name>
+                     <type-name>de.interactive_instruments.properties.Properties</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
          </method-parameters>
       </method>
       <method>
-         <name>size</name>
+         <name>setExecutableTestSuites</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
-               <type-name>int</type-name>
+               <type-name>void</type-name>
             </type-handle>
          </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setParameters</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setTestObjects</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.util.List</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
    </methods>
-   <type-handles>
-      <class-handle>
-         <type-name>de.interactive_instruments.properties.Properties$Property</type-name>
-      </class-handle>
-   </type-handles>
 </class>
