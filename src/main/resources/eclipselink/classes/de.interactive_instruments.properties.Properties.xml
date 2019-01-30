@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-12-01T18:11:53.63+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2019-01-29T21:30:18.123+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.properties.ClassifyingPropertyHolder</type-name>
@@ -76,6 +76,24 @@
                <type-name>java.util.Set</type-name>
             </type-handle>
          </return-type-declaration>
+      </method>
+      <method>
+         <name>getFlattenedPropertiesByClassification</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>de.interactive_instruments.properties.ClassifyingPropertyHolder</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.lang.String</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
       </method>
       <method>
          <name>getPropertiesByClassification</name>

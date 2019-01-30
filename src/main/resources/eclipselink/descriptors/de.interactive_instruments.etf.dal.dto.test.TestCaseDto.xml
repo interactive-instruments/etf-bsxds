@@ -119,6 +119,19 @@
             </field-pair>
          </xml-field-pairs>
       </mapping>
+      <mapping type="composite-object">
+         <name>properties</name>
+         <inherited>true</inherited>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</attribute-declaring-type-name>
+            <attribute-name>properties</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.properties.Properties</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>etf:Properties</xpath>
+      </mapping>
       <mapping type="xml-direct">
          <name>reference</name>
          <inherited>true</inherited>
@@ -157,6 +170,10 @@
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</attribute-declaring-type-name>
          <attribute-name>parent</attribute-name>
+      </attribute-handle>
+      <attribute-handle>
+         <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.TestModelItemDto</attribute-declaring-type-name>
+         <attribute-name>properties</attribute-name>
       </attribute-handle>
       <attribute-handle>
          <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</attribute-declaring-type-name>
