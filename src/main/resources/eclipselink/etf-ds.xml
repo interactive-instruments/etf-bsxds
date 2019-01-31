@@ -770,6 +770,11 @@
                </containerpolicy>
                <uses-single-node>false</uses-single-node>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testDriver</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</reference-class>
@@ -1417,6 +1422,11 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>expectedResult</attribute-name>
                <field name="expectedResult/text()" xsi:type="node"/>
@@ -1659,6 +1669,11 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>dependencies</attribute-name>
@@ -1957,6 +1972,11 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>children</attribute-name>
@@ -2813,6 +2833,11 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>statementForExecution</attribute-name>

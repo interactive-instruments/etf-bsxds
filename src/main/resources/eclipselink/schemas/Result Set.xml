@@ -1264,6 +1264,11 @@
                                  </particle>
                               </particles>
                            </particle>
+                           <particle type="element-ref">
+                              <name>Properties</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
                            <particle type="element">
                               <name>testDriver</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -3193,6 +3198,11 @@
                                  </particle>
                               </particles>
                            </particle>
+                           <particle type="element-ref">
+                              <name>Properties</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <min-occurs>0</min-occurs>
+                           </particle>
                            <particle type="element">
                               <name>expectedResult</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -3444,6 +3454,11 @@
                                     </particles>
                                  </particle>
                               </particles>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>Properties</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>dependencies</name>
@@ -3787,6 +3802,11 @@
                                     </particles>
                                  </particle>
                               </particles>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>Properties</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>testCases</name>
@@ -4919,6 +4939,11 @@
                                     </particles>
                                  </particle>
                               </particles>
+                           </particle>
+                           <particle type="element-ref">
+                              <name>Properties</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>statementForExecution</name>
