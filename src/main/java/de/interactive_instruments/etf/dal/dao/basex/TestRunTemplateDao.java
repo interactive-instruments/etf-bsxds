@@ -19,33 +19,38 @@
  */
 package de.interactive_instruments.etf.dal.dao.basex;
 
-import org.basex.core.BaseXException;
+import java.util.Collection;
 
-import de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto;
+import de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto;
 import de.interactive_instruments.etf.model.EID;
+import de.interactive_instruments.exceptions.ObjectWithIdNotFoundException;
 import de.interactive_instruments.exceptions.StorageException;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
-final class ComponentDao extends AbstractBsxWriteDao<ComponentDto> {
+final class TestRunTemplateDao extends AbstractBsxStreamWriteDao<TestRunTemplateDto> {
 
-    protected ComponentDao(final BsxDsCtx ctx) throws StorageException {
-        super("/etf:Component", "Component", ctx,
-                (dsResultSet) -> dsResultSet.getComponents());
+    protected TestRunTemplateDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:TestRunTemplate", "TestRunTemplate", ctx,
+                (dsResultSet) -> dsResultSet.getTestRunTemplates());
     }
 
     @Override
-    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    protected void doCleanAfterDelete(final EID eid) {}
 
     @Override
-    public Class<ComponentDto> getDtoType() {
-        return ComponentDto.class;
+    protected void doDeleteOrDisable(final Collection<EID> eids, final boolean clean)
+            throws StorageException, ObjectWithIdNotFoundException {
+        for (final EID eid : eids) {
+            // ID checks are done in doDelete()
+            doDelete(eid, clean);
+        }
     }
 
     @Override
-    public boolean isDisabled(final EID eid) {
-        return false;
+    public Class<TestRunTemplateDto> getDtoType() {
+        return TestRunTemplateDto.class;
     }
 
 }

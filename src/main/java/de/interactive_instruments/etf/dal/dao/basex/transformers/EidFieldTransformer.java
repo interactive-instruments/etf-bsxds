@@ -33,14 +33,14 @@ import de.interactive_instruments.etf.dal.dto.Dto;
  */
 public final class EidFieldTransformer implements FieldTransformer {
 
-	@Override
-	public void initialize(final AbstractTransformationMapping mapping) {
-		mapping.getFieldTransformations().get(0).getField().setPrimaryKey(true);
-		mapping.getFieldTransformations().get(0).getField().setType(String.class);
-	}
+    @Override
+    public void initialize(final AbstractTransformationMapping mapping) {
+        mapping.getFieldTransformations().get(0).getField().setPrimaryKey(true);
+        mapping.getFieldTransformations().get(0).getField().setType(String.class);
+    }
 
-	@Override
-	public Object buildFieldValue(final Object instance, final String fieldName, final Session session) {
-		return BsxDataStorage.ID_PREFIX + ((Dto) instance).getId();
-	}
+    @Override
+    public Object buildFieldValue(final Object instance, final String fieldName, final Session session) {
+        return BsxDataStorage.ID_PREFIX + ((Dto) instance).getId();
+    }
 }

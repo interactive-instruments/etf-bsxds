@@ -44,33 +44,33 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  */
 public class TestItemTypeDaoTest {
 
-	private static WriteDao<TestItemTypeDto> writeDao;
+    private static WriteDao<TestItemTypeDto> writeDao;
 
-	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			StorageException, IOException {
-		BsxTestUtils.ensureInitialization();
-		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestItemTypeDto.class));
-	}
+    @BeforeClass
+    public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+            StorageException, IOException {
+        BsxTestUtils.ensureInitialization();
+        writeDao = ((WriteDao) DATA_STORAGE.getDao(TestItemTypeDto.class));
+    }
 
-	@Before
-	public void clean() {
-		try {
-			writeDao.delete(ASSERTION_TYPE_1.getId());
-		} catch (ObjectWithIdNotFoundException | StorageException e) {}
-	}
+    @Before
+    public void clean() {
+        try {
+            writeDao.delete(ASSERTION_TYPE_1.getId());
+        } catch (ObjectWithIdNotFoundException | StorageException e) {}
+    }
 
-	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(ASSERTION_TYPE_1);
-	}
+    @Test
+    public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
+        BsxTestUtils.existsAndAddAndDeleteTest(ASSERTION_TYPE_1);
+    }
 
-	@Test
-	public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
-		final PreparedDto<TestItemTypeDto> preparedDto = BsxTestUtils.addAndGetByIdTest(ASSERTION_TYPE_1);
+    @Test
+    public void test_2_0_getById() throws StorageException, ObjectWithIdNotFoundException {
+        final PreparedDto<TestItemTypeDto> preparedDto = BsxTestUtils.addAndGetByIdTest(ASSERTION_TYPE_1);
 
-		writeDao.delete(ASSERTION_TYPE_1.getId());
-		TestCase.assertFalse(writeDao.exists(ASSERTION_TYPE_1.getId()));
-	}
+        writeDao.delete(ASSERTION_TYPE_1.getId());
+        TestCase.assertFalse(writeDao.exists(ASSERTION_TYPE_1.getId()));
+    }
 
 }

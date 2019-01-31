@@ -36,35 +36,35 @@ import de.interactive_instruments.properties.PropertyUtils;
  */
 final class DsUtils {
 
-	private DsUtils() {
+    private DsUtils() {
 
-	}
+    }
 
-	static String valueOfOrDefault(final Object obj, final String defaultVal) {
-		if (obj != null) {
-			final String val = String.valueOf(obj);
-			if (!SUtils.isNullOrEmpty(val)) {
-				return val;
-			}
-		}
-		return defaultVal;
-	}
+    static String valueOfOrDefault(final Object obj, final String defaultVal) {
+        if (obj != null) {
+            final String val = String.valueOf(obj);
+            if (!SUtils.isNullOrEmpty(val)) {
+                return val;
+            }
+        }
+        return defaultVal;
+    }
 
-	static XsltOutputTransformer loadReportTransformer(final Dao dao) throws IOException, ConfigurationException,
-			InvalidStateTransitionException, InitializationException, TransformerConfigurationException {
-		final XsltOutputTransformer reportTransformer;
-		final String resultStylePath = PropertyUtils.getenvOrProperty("etf.result.style.file", null);
-		if (resultStylePath == null) {
-			reportTransformer = new XsltOutputTransformer(
-					dao, "html", "text/html", "xslt/default/TestRun2DefaultReport.xsl", "xslt/default/");
-		} else {
-			final IFile resultStyleFile = new IFile(resultStylePath, "Report Stylesheet File");
-			resultStyleFile.expectFileIsReadable();
-			reportTransformer = new XsltOutputTransformer(
-					dao, "html", "text/html", resultStyleFile);
-		}
-		reportTransformer.getConfigurationProperties().setPropertiesFrom(dao.getConfigurationProperties(), true);
-		reportTransformer.init();
-		return reportTransformer;
-	}
+    static XsltOutputTransformer loadReportTransformer(final Dao dao) throws IOException, ConfigurationException,
+            InvalidStateTransitionException, InitializationException, TransformerConfigurationException {
+        final XsltOutputTransformer reportTransformer;
+        final String resultStylePath = PropertyUtils.getenvOrProperty("etf.result.style.file", null);
+        if (resultStylePath == null) {
+            reportTransformer = new XsltOutputTransformer(
+                    dao, "html", "text/html", "xslt/default/TestRun2DefaultReport.xsl", "xslt/default/");
+        } else {
+            final IFile resultStyleFile = new IFile(resultStylePath, "Report Stylesheet File");
+            resultStyleFile.expectFileIsReadable();
+            reportTransformer = new XsltOutputTransformer(
+                    dao, "html", "text/html", resultStyleFile);
+        }
+        reportTransformer.getConfigurationProperties().setPropertiesFrom(dao.getConfigurationProperties(), true);
+        reportTransformer.init();
+        return reportTransformer;
+    }
 }

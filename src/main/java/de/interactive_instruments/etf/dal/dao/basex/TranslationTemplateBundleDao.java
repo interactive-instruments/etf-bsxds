@@ -32,23 +32,23 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class TranslationTemplateBundleDao extends AbstractBsxStreamWriteDao<TranslationTemplateBundleDto> {
 
-	protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
-				(dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
-	}
+    protected TranslationTemplateBundleDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:TranslationTemplateBundle", "TranslationTemplateBundle", ctx,
+                (dsResultSet) -> dsResultSet.getTranslationTemplateBundles());
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {
 
-	}
+    }
 
-	@Override
-	public Class<TranslationTemplateBundleDto> getDtoType() {
-		return TranslationTemplateBundleDto.class;
-	}
+    @Override
+    public Class<TranslationTemplateBundleDto> getDtoType() {
+        return TranslationTemplateBundleDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

@@ -30,21 +30,21 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class TestItemTypeDao extends AbstractBsxWriteDao<TestItemTypeDto> {
 
-	protected TestItemTypeDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:TestItemType", "TestItemType", ctx,
-				(dsResultSet) -> dsResultSet.getTestItemTypes());
-	}
+    protected TestItemTypeDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:TestItemType", "TestItemType", ctx,
+                (dsResultSet) -> dsResultSet.getTestItemTypes());
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public Class<TestItemTypeDto> getDtoType() {
-		return TestItemTypeDto.class;
-	}
+    @Override
+    public Class<TestItemTypeDto> getDtoType() {
+        return TestItemTypeDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

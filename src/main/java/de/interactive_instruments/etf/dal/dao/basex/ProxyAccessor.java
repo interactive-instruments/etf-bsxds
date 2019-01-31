@@ -30,11 +30,11 @@ import de.interactive_instruments.etf.model.EID;
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
  */
 public interface ProxyAccessor {
-	Dto getCached();
+    Dto getCached();
 
-	void setCached(Dto dto);
+    void setCached(Dto dto);
 
-	EID getProxiedId();
+    EID getProxiedId();
 
-	void setProxiedId(EID eid);
+    void setProxiedId(EID eid);
 }

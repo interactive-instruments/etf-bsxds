@@ -31,10 +31,10 @@ import de.interactive_instruments.etf.dal.dto.Dto;
 @FunctionalInterface
 interface GetDtoResultCmd<T extends Dto> {
 
-	List<T> getMainDtos(final DsResultSet dsResultSet);
+    List<T> getMainDtos(final DsResultSet dsResultSet);
 
-	default T getMainDto(final DsResultSet dsResultSet) {
-		final List<T> colResult = getMainDtos(dsResultSet);
-		return colResult != null && !colResult.isEmpty() ? colResult.get(0) : null;
-	}
+    default T getMainDto(final DsResultSet dsResultSet) {
+        final List<T> colResult = getMainDtos(dsResultSet);
+        return colResult != null && !colResult.isEmpty() ? colResult.get(0) : null;
+    }
 }

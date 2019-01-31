@@ -34,31 +34,31 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class TestTaskDao extends AbstractBsxWriteDao<TestTaskDto> {
 
-	protected TestTaskDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
-		super("/etf:TestRun", "TestRun", ctx,
-				null);
-		// TODO get test run result
-	}
+    protected TestTaskDao(final BsxDsCtx ctx) throws StorageException, IOException, TransformerConfigurationException {
+        super("/etf:TestRun", "TestRun", ctx,
+                null);
+        // TODO get test run result
+    }
 
-	@Override
-	protected void doCleanBeforeDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanBeforeDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public boolean exists(final EID eid) {
-		// TODO check TestRun
-		return true;
-	}
+    @Override
+    public boolean exists(final EID eid) {
+        // TODO check TestRun
+        return true;
+    }
 
-	@Override
-	public Class<TestTaskDto> getDtoType() {
-		return TestTaskDto.class;
-	}
+    @Override
+    public Class<TestTaskDto> getDtoType() {
+        return TestTaskDto.class;
+    }
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

@@ -32,23 +32,23 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 final class TestObjectTypeDao extends AbstractBsxStreamWriteDao<TestObjectTypeDto> {
 
-	private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
+    private static final String ETF_TESTDB_PREFIX = "etf-tdb-";
 
-	public TestObjectTypeDao(final BsxDsCtx ctx) throws StorageException {
-		super("/etf:TestObjectType", "TestObjectType", ctx,
-				(dsResultSet) -> dsResultSet.getTestObjectTypes());
-	}
+    public TestObjectTypeDao(final BsxDsCtx ctx) throws StorageException {
+        super("/etf:TestObjectType", "TestObjectType", ctx,
+                (dsResultSet) -> dsResultSet.getTestObjectTypes());
+    }
 
-	@Override
-	public Class<TestObjectTypeDto> getDtoType() {
-		return TestObjectTypeDto.class;
-	}
+    @Override
+    public Class<TestObjectTypeDto> getDtoType() {
+        return TestObjectTypeDto.class;
+    }
 
-	@Override
-	protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
+    @Override
+    protected void doCleanAfterDelete(final EID eid) throws BaseXException {}
 
-	@Override
-	public boolean isDisabled(final EID eid) {
-		return false;
-	}
+    @Override
+    public boolean isDisabled(final EID eid) {
+        return false;
+    }
 }

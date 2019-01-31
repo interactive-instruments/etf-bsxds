@@ -31,19 +31,19 @@ import de.interactive_instruments.etf.testdriver.TestRunLogger;
  */
 public class BsxDsResultCollectorFactory implements TestResultCollectorFactory {
 
-	private final BsxDataStorage dataStorage = (BsxDataStorage) DataStorageRegistry.instance()
-			.get(BsxDataStorage.class.getName());
+    private final BsxDataStorage dataStorage = (BsxDataStorage) DataStorageRegistry.instance()
+            .get(BsxDataStorage.class.getName());
 
-	@Override
-	public TestResultCollector createTestResultCollector(final TestRunLogger testRunLogger, final TestTaskDto testTaskDto) {
-		// ATTACHMENT_DIR / TESTRUN_ID / TESTTASK_ID
-		final IFile testTaskAttachmentDir = dataStorage.getAttachmentDir()
-				.secureExpandPathDown(testTaskDto.getParent().getId().getId())
-				.secureExpandPathDown(testTaskDto.getId().getId());
-		return new BsxDsResultCollector(dataStorage,
-				testRunLogger,
-				testTaskAttachmentDir.secureExpandPathDown("TmpTestTaskResult-EID" + testTaskDto.getId().getId() + ".xml"),
-				testTaskAttachmentDir,
-				testTaskDto);
-	}
+    @Override
+    public TestResultCollector createTestResultCollector(final TestRunLogger testRunLogger, final TestTaskDto testTaskDto) {
+        // ATTACHMENT_DIR / TESTRUN_ID / TESTTASK_ID
+        final IFile testTaskAttachmentDir = dataStorage.getAttachmentDir()
+                .secureExpandPathDown(testTaskDto.getParent().getId().getId())
+                .secureExpandPathDown(testTaskDto.getId().getId());
+        return new BsxDsResultCollector(dataStorage,
+                testRunLogger,
+                testTaskAttachmentDir.secureExpandPathDown("TmpTestTaskResult-EID" + testTaskDto.getId().getId() + ".xml"),
+                testTaskAttachmentDir,
+                testTaskDto);
+    }
 }

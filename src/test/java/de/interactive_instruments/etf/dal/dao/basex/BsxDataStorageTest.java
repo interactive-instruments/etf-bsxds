@@ -39,29 +39,28 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
  */
 public class BsxDataStorageTest {
 
-	/**
-	 * Check if the BsxSchemaResourceResolver resolves all schema files
-	 * and ensure the schema is valid
-	 *
-	 * @throws SAXException
-	 */
-	@Test(timeout = 35000)
-	public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException,
-			InitializationException, StorageException, IOException {
-		BsxTestUtils.ensureInitialization();
-		assertTrue(DATA_STORAGE.isInitialized());
-		assertNotNull(DATA_STORAGE.getSchema());
-		assertNotNull(DATA_STORAGE.getSchema().newValidator());
-	}
+    /**
+     * Check if the BsxSchemaResourceResolver resolves all schema files and ensure the schema is valid
+     *
+     * @throws SAXException
+     */
+    @Test(timeout = 35000)
+    public void loadSchema() throws SAXException, ConfigurationException, InvalidStateTransitionException,
+            InitializationException, StorageException, IOException {
+        BsxTestUtils.ensureInitialization();
+        assertTrue(DATA_STORAGE.isInitialized());
+        assertNotNull(DATA_STORAGE.getSchema());
+        assertNotNull(DATA_STORAGE.getSchema().newValidator());
+    }
 
-	@Test(timeout = 35000)
-	public void releaseAndInit() throws ConfigurationException, InvalidStateTransitionException, InitializationException {
-		assertTrue(DATA_STORAGE.isInitialized());
-		DATA_STORAGE.release();
-		assertFalse(DATA_STORAGE.isInitialized());
-		DATA_STORAGE.init();
-		assertTrue(DATA_STORAGE.isInitialized());
-		assertNotNull(DATA_STORAGE.getBsxCtx());
-	}
+    @Test(timeout = 35000)
+    public void releaseAndInit() throws ConfigurationException, InvalidStateTransitionException, InitializationException {
+        assertTrue(DATA_STORAGE.isInitialized());
+        DATA_STORAGE.release();
+        assertFalse(DATA_STORAGE.isInitialized());
+        DATA_STORAGE.init();
+        assertTrue(DATA_STORAGE.isInitialized());
+        assertNotNull(DATA_STORAGE.getBsxCtx());
+    }
 
 }

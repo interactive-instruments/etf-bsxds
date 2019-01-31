@@ -43,65 +43,65 @@ import de.interactive_instruments.exceptions.StorageException;
  */
 public class LazyLoadProxyDto {
 
-	private final Dao dao;
-	private final Logger logger;
+    private final Dao dao;
+    private final Logger logger;
 
-	LazyLoadProxyDto(final Dao dao, final Logger logger) {
-		this.dao = dao;
-		this.logger = logger;
-	}
+    LazyLoadProxyDto(final Dao dao, final Logger logger) {
+        this.dao = dao;
+        this.logger = logger;
+    }
 
-	@RuntimeType
-	public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
-		if (logger.isTraceEnabled()) {
-			logger.trace("({}) Intercepted {} method call", proxy.getProxiedId(), method.getName());
-		}
-		if (proxy.getCached() == null) {
-			if (proxy.getProxiedId() == null) {
-				throw new BsxPreparedDtoException("Eid not set");
-			}
-			try {
-				proxy.setCached(dao.getById(proxy.getProxiedId()).getDto());
-			} catch (StorageException | ObjectWithIdNotFoundException e) {
-				throw new BsxPreparedDtoException("Unable to load proxied Dto " + proxy.getProxiedId(), e);
-			}
-		}
-		try {
-			if (!logger.isTraceEnabled()) {
-				return method.invoke(proxy.getCached(), args);
-			} else {
-				final Object ret = method.invoke(proxy.getCached(), args);
-				logger.trace("Return value: {}", ret);
-				return ret;
-			}
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new BsxPreparedDtoException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
-		}
-	}
+    @RuntimeType
+    public Object intercept(@Origin Method method, @This ProxyAccessor proxy, @AllArguments Object[] args) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("({}) Intercepted {} method call", proxy.getProxiedId(), method.getName());
+        }
+        if (proxy.getCached() == null) {
+            if (proxy.getProxiedId() == null) {
+                throw new BsxPreparedDtoException("Eid not set");
+            }
+            try {
+                proxy.setCached(dao.getById(proxy.getProxiedId()).getDto());
+            } catch (StorageException | ObjectWithIdNotFoundException e) {
+                throw new BsxPreparedDtoException("Unable to load proxied Dto " + proxy.getProxiedId(), e);
+            }
+        }
+        try {
+            if (!logger.isTraceEnabled()) {
+                return method.invoke(proxy.getCached(), args);
+            } else {
+                final Object ret = method.invoke(proxy.getCached(), args);
+                logger.trace("Return value: {}", ret);
+                return ret;
+            }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new BsxPreparedDtoException("Unable to proxy Dto " + proxy.getProxiedId() + " method call", e);
+        }
+    }
 
-	@RuntimeType
-	public EID getId(@This ProxyAccessor proxy) {
-		if (proxy.getCached() != null) {
-			return proxy.getCached().getId();
-		}
-		return proxy.getProxiedId();
-	}
+    @RuntimeType
+    public EID getId(@This ProxyAccessor proxy) {
+        if (proxy.getCached() != null) {
+            return proxy.getCached().getId();
+        }
+        return proxy.getProxiedId();
+    }
 
-	@RuntimeType
-	public String getDescriptiveLabel(@This ProxyAccessor proxy) {
-		return "\'LAZY." + proxy.getProxiedId() + "\'";
-	}
+    @RuntimeType
+    public String getDescriptiveLabel(@This ProxyAccessor proxy) {
+        return "\'LAZY." + proxy.getProxiedId() + "\'";
+    }
 
-	@RuntimeType
-	public String toString(@This ProxyAccessor proxy) {
-		final StringBuilder sb = new StringBuilder("LazyDtoProxy{");
-		sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
-		if (proxy.getCached() != null) {
-			sb.append(proxy.getCached().toString());
-		} else {
-			sb.append("UNRESOLVED");
-		}
-		sb.append('}');
-		return sb.toString();
-	}
+    @RuntimeType
+    public String toString(@This ProxyAccessor proxy) {
+        final StringBuilder sb = new StringBuilder("LazyDtoProxy{");
+        sb.append("id=").append(proxy.getProxiedId()).append(", proxies=");
+        if (proxy.getCached() != null) {
+            sb.append(proxy.getCached().toString());
+        } else {
+            sb.append("UNRESOLVED");
+        }
+        sb.append('}');
+        return sb.toString();
+    }
 }

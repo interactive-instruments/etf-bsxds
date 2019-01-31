@@ -56,108 +56,108 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestTaskResultDaoTest {
 
-	private static WriteDao<TestTaskResultDto> writeDao;
+    private static WriteDao<TestTaskResultDto> writeDao;
 
-	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			StorageException, ObjectWithIdNotFoundException, IOException {
-		BsxTestUtils.ensureInitialization();
-		writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
+    @BeforeClass
+    public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+            StorageException, ObjectWithIdNotFoundException, IOException {
+        BsxTestUtils.ensureInitialization();
+        writeDao = ((WriteDao) DATA_STORAGE.getDao(TestTaskResultDto.class));
 
-		ExecutableTestSuiteDaoTest.setUp();
+        ExecutableTestSuiteDaoTest.setUp();
 
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
 
-		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
-	}
+        BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
+    }
 
-	@AfterClass
-	public static void tearDown()
-			throws InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
-		ExecutableTestSuiteDaoTest.tearDown();
-	}
+    @AfterClass
+    public static void tearDown()
+            throws InvalidStateTransitionException, StorageException, InitializationException, ConfigurationException {
+        ExecutableTestSuiteDaoTest.tearDown();
+    }
 
-	@Before
-	public void clean() {
-		try {
-			BsxTestUtils.forceDelete(writeDao, TTR_DTO_1.getId());
-			BsxTestUtils.forceDelete(writeDao, TTR_DTO_2.getId());
-			BsxTestUtils.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), TR_DTO_1.getId());
-		} catch (StorageException e) {}
-	}
+    @Before
+    public void clean() {
+        try {
+            BsxTestUtils.forceDelete(writeDao, TTR_DTO_1.getId());
+            BsxTestUtils.forceDelete(writeDao, TTR_DTO_2.getId());
+            BsxTestUtils.forceDelete(DATA_STORAGE.getDao(TestTaskResultDto.class), TR_DTO_1.getId());
+        } catch (StorageException e) {}
+    }
 
-	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.existsAndAddAndDeleteTest(TTR_DTO_1);
-	}
+    @Test
+    public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
+        BsxTestUtils.existsAndAddAndDeleteTest(TTR_DTO_1);
+    }
 
-	@Test
-	public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
-		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
-		// TestTask required for parent reference
-		BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
+    @Test
+    public void test_2_0_add_and_get() throws StorageException, ObjectWithIdNotFoundException {
+        BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
+        // TestTask required for parent reference
+        BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
+        final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
 
-		assertNotNull(preparedDto.getDto().getAttachments());
-		assertEquals(1, preparedDto.getDto().getAttachments().size());
-		assertNotNull(preparedDto.getDto().getTestObject());
-		// force proxied DTO to resolve
-		assertNotNull(preparedDto.getDto().getTestObject().getLabel());
-		if (ProxyAccessor.class.isAssignableFrom(preparedDto.getDto().getTestObject().getClass())) {
-			assertEquals(TO_DTO_1.toString().trim(),
-					((ProxyAccessor) preparedDto.getDto().getTestObject()).getCached().toString().trim());
-		} else {
-			assertEquals(TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
-		}
-		assertNotNull(preparedDto.getDto().getTestModuleResults());
+        assertNotNull(preparedDto.getDto().getAttachments());
+        assertEquals(1, preparedDto.getDto().getAttachments().size());
+        assertNotNull(preparedDto.getDto().getTestObject());
+        // force proxied DTO to resolve
+        assertNotNull(preparedDto.getDto().getTestObject().getLabel());
+        if (ProxyAccessor.class.isAssignableFrom(preparedDto.getDto().getTestObject().getClass())) {
+            assertEquals(TO_DTO_1.toString().trim(),
+                    ((ProxyAccessor) preparedDto.getDto().getTestObject()).getCached().toString().trim());
+        } else {
+            assertEquals(TO_DTO_1.toString().trim(), preparedDto.getDto().getTestObject().toString().trim());
+        }
+        assertNotNull(preparedDto.getDto().getTestModuleResults());
 
-		writeDao.delete(TTR_DTO_1.getId());
-		TestCase.assertFalse(writeDao.exists(TTR_DTO_1.getId()));
-	}
+        writeDao.delete(TTR_DTO_1.getId());
+        TestCase.assertFalse(writeDao.exists(TTR_DTO_1.getId()));
+    }
 
-	// @Test
-	public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
-		BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
-		BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
-		// TestTask required for parent reference
-		BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
+    // @Test
+    public void test_4_0_streaming() throws StorageException, ObjectWithIdNotFoundException, IOException, URISyntaxException {
+        BsxTestUtils.forceDeleteAndAdd(TO_DTO_1);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_1);
+        BsxTestUtils.forceDeleteAndAdd(ETS_DTO_2);
+        // TestTask required for parent reference
+        BsxTestUtils.forceDeleteAndAdd(TR_DTO_1, false);
 
-		final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
+        final PreparedDto<TestTaskResultDto> preparedDto = BsxTestUtils.addAndGetByIdTest(TTR_DTO_1);
 
-		final IFile tmpFile = IFile.createTempFile("etf", ".html");
-		tmpFile.deleteOnExit();
-		final FileOutputStream fop = new FileOutputStream(tmpFile);
+        final IFile tmpFile = IFile.createTempFile("etf", ".html");
+        tmpFile.deleteOnExit();
+        final FileOutputStream fop = new FileOutputStream(tmpFile);
 
-		OutputFormat htmlReportFormat = null;
-		for (final OutputFormat outputFormat : writeDao.getOutputFormats().values()) {
-			if ("text/html".equals(outputFormat.getMediaTypeType().getType())) {
-				htmlReportFormat = outputFormat;
-				break;
-			}
-		}
-		assertNotNull(htmlReportFormat);
+        OutputFormat htmlReportFormat = null;
+        for (final OutputFormat outputFormat : writeDao.getOutputFormats().values()) {
+            if ("text/html".equals(outputFormat.getMediaTypeType().getType())) {
+                htmlReportFormat = outputFormat;
+                break;
+            }
+        }
+        assertNotNull(htmlReportFormat);
 
-		preparedDto.streamTo(htmlReportFormat, null, fop);
+        preparedDto.streamTo(htmlReportFormat, null, fop);
 
-		final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestTaskResult.html").toURI());
-		assertTrue(cmpResult.exists());
+        final IFile cmpResult = new IFile(getClass().getClassLoader().getResource("cmp/TestTaskResult.html").toURI());
+        assertTrue(cmpResult.exists());
 
-		assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
-				trimAllWhitespace(tmpFile.readContent().toString()));
-	}
+        assertEquals(trimAllWhitespace(cmpResult.readContent().toString()),
+                trimAllWhitespace(tmpFile.readContent().toString()));
+    }
 
-	@Test(expected = StoreException.class)
-	public void test_7_1_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
-			URISyntaxException {
-		final IFile taskTestResultFile = getTestResourceFile(
-				"database/testtaskresult.xml");
-		((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));
-	}
+    @Test(expected = StoreException.class)
+    public void test_7_1_stream_file_to_store()
+            throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+            URISyntaxException {
+        final IFile taskTestResultFile = getTestResourceFile(
+                "database/testtaskresult.xml");
+        ((StreamWriteDao<TestTaskResultDto>) writeDao).add(new FileInputStream(taskTestResultFile));
+    }
 
 }

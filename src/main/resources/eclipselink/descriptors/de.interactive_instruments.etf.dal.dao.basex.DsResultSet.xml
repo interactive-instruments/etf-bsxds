@@ -140,6 +140,24 @@
          </container-policy>
       </mapping>
       <mapping type="composite-collection">
+         <name>testRunTemplates</name>
+         <read-only>true</read-only>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</attribute-declaring-type-name>
+            <attribute-name>testRunTemplates</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>testRunTemplates/TestRunTemplate</xpath>
+         <container-policy type="list">
+            <container-class>
+               <uses-default-container-class>true</uses-default-container-class>
+            </container-class>
+         </container-policy>
+      </mapping>
+      <mapping type="composite-collection">
          <name>testTaskResults</name>
          <read-only>true</read-only>
          <attribute-handle>

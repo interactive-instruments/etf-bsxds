@@ -15,7 +15,7 @@ buildscript {
             }}
     }
     dependencies {
-        classpath group: 'de.interactive_instruments.bda', name: 'etf-bda', version: '[1.0.29,1.0.99]'
+        classpath group: 'de.interactive_instruments.bda', name: 'etf-bda', version: '[1.0.30,1.0.99]'
     }
     dependencies {
         ant.unjar src: configurations.classpath.files.find {it.path.contains('etf')}, dest: 'build/gradle'
@@ -47,7 +47,7 @@ configurations {
 dependencies {
     compileOnly group: 'de.interactive_instruments', name: 'ii-commons-util', version:'3.0.0'+project.snapshotSuffix
     compileOnly group: 'de.interactive_instruments.etf', name: 'etf-core', version:'1.2.0'+project.snapshotSuffix
-    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.1'+project.snapshotSuffix
+    compileOnly group: 'de.interactive_instruments.etf', name: 'etf-spi', version:'1.0.2'+project.snapshotSuffix
 
     compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.5.6'
 

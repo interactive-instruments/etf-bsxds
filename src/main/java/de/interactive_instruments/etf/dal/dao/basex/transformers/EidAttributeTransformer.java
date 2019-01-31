@@ -34,15 +34,15 @@ import de.interactive_instruments.etf.model.EidFactory;
  */
 public final class EidAttributeTransformer implements AttributeTransformer {
 
-	private final EidFactory factory = EidFactory.getDefault();
+    private final EidFactory factory = EidFactory.getDefault();
 
-	@Override
-	public void initialize(final AbstractTransformationMapping mapping) {}
+    @Override
+    public void initialize(final AbstractTransformationMapping mapping) {}
 
-	@Override
-	public Object buildAttributeValue(final Record record, final Object object, final Session session) {
-		return factory.createAndPreserveStr(
-				SUtils.requireNonNullOrEmpty(((String) record.get("@id")).substring(3),
-						"ID attribute is null or empty"));
-	}
+    @Override
+    public Object buildAttributeValue(final Record record, final Object object, final Session session) {
+        return factory.createAndPreserveStr(
+                SUtils.requireNonNullOrEmpty(((String) record.get("@id")).substring(3),
+                        "ID attribute is null or empty"));
+    }
 }

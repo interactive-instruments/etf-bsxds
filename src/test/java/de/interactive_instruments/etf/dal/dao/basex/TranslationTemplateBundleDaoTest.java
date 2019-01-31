@@ -62,90 +62,90 @@ import de.interactive_instruments.exceptions.config.ConfigurationException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TranslationTemplateBundleDaoTest {
 
-	private static WriteDao<TranslationTemplateBundleDto> writeDao;
+    private static WriteDao<TranslationTemplateBundleDto> writeDao;
 
-	@BeforeClass
-	public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
-			StorageException, IOException {
-		BsxTestUtils.ensureInitialization();
-		writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
-	}
+    @BeforeClass
+    public static void setUp() throws ConfigurationException, InvalidStateTransitionException, InitializationException,
+            StorageException, IOException {
+        BsxTestUtils.ensureInitialization();
+        writeDao = ((WriteDao) DATA_STORAGE.getDao(TranslationTemplateBundleDto.class));
+    }
 
-	@Before
-	public void clean() {
-		try {
-			writeDao.delete(TTB_DTO_1.getId());
-		} catch (ObjectWithIdNotFoundException | StorageException e) {}
-	}
+    @Before
+    public void clean() {
+        try {
+            writeDao.delete(TTB_DTO_1.getId());
+        } catch (ObjectWithIdNotFoundException | StorageException e) {}
+    }
 
-	@Test
-	public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
-		assertNotNull(writeDao);
-		assertTrue(writeDao.isInitialized());
-		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
-		writeDao.add(TTB_DTO_1);
-		assertTrue(writeDao.exists(TTB_DTO_1.getId()));
-		writeDao.delete(TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
-	}
+    @Test
+    public void test_1_1_existsAndAddAndDelete() throws StorageException, ObjectWithIdNotFoundException {
+        assertNotNull(writeDao);
+        assertTrue(writeDao.isInitialized());
+        assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+        writeDao.add(TTB_DTO_1);
+        assertTrue(writeDao.exists(TTB_DTO_1.getId()));
+        writeDao.delete(TTB_DTO_1.getId());
+        assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+    }
 
-	@Test
-	public void test_2_getById() throws StorageException, ObjectWithIdNotFoundException {
-		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
-		writeDao.add(TTB_DTO_1);
-		assertTrue(writeDao.exists(TTB_DTO_1.getId()));
-		final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(TTB_DTO_1.getId());
+    @Test
+    public void test_2_getById() throws StorageException, ObjectWithIdNotFoundException {
+        assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+        writeDao.add(TTB_DTO_1);
+        assertTrue(writeDao.exists(TTB_DTO_1.getId()));
+        final PreparedDto<TranslationTemplateBundleDto> preparedDto = writeDao.getById(TTB_DTO_1.getId());
 
-		// Check internal ID
-		assertEquals(TTB_DTO_1.getId(), preparedDto.getDtoId());
-		final TranslationTemplateBundleDto dto = preparedDto.getDto();
-		assertNotNull(dto);
-		assertEquals(TTB_DTO_1.getId(), dto.getId());
+        // Check internal ID
+        assertEquals(TTB_DTO_1.getId(), preparedDto.getDtoId());
+        final TranslationTemplateBundleDto dto = preparedDto.getDto();
+        assertNotNull(dto);
+        assertEquals(TTB_DTO_1.getId(), dto.getId());
 
-		assertNotNull(dto.getTranslationTemplateCollection("TR.Template.1"));
-		assertArrayEquals(new String[]{"de", "en"},
-				dto.getTranslationTemplateCollection("TR.Template.1").getLanguages().toArray(new String[2]));
+        assertNotNull(dto.getTranslationTemplateCollection("TR.Template.1"));
+        assertArrayEquals(new String[]{"de", "en"},
+                dto.getTranslationTemplateCollection("TR.Template.1").getLanguages().toArray(new String[2]));
 
-		assertNull(dto.getTranslationTemplate("en", "TR.Template.1"));
-		assertNotNull(dto.getTranslationTemplate("TR.Template.1", "en"));
-		assertEquals("TR.Template.1", dto.getTranslationTemplate("TR.Template.1", "en").getName());
-		assertEquals(Locale.ENGLISH.toLanguageTag(), dto.getTranslationTemplate("TR.Template.1", "en").getLanguage());
-		assertEquals("TR.Template.1 with three tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}",
-				dto.getTranslationTemplate("TR.Template.1", "en").getStrWithTokens());
+        assertNull(dto.getTranslationTemplate("en", "TR.Template.1"));
+        assertNotNull(dto.getTranslationTemplate("TR.Template.1", "en"));
+        assertEquals("TR.Template.1", dto.getTranslationTemplate("TR.Template.1", "en").getName());
+        assertEquals(Locale.ENGLISH.toLanguageTag(), dto.getTranslationTemplate("TR.Template.1", "en").getLanguage());
+        assertEquals("TR.Template.1 with three tokens: {TOKEN.3} {TOKEN.1} {TOKEN.2}",
+                dto.getTranslationTemplate("TR.Template.1", "en").getStrWithTokens());
 
-		assertNull(dto.getTranslationTemplate("de", "TR.Template.2"));
-		assertNotNull(dto.getTranslationTemplate("TR.Template.2", "de"));
-		assertEquals("TR.Template.2", dto.getTranslationTemplate("TR.Template.2", "de").getName());
-		assertEquals(Locale.GERMAN.toLanguageTag(), dto.getTranslationTemplate("TR.Template.2", "de").getLanguage());
-		assertEquals("TR.Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}",
-				dto.getTranslationTemplate("TR.Template.2", "de").getStrWithTokens());
+        assertNull(dto.getTranslationTemplate("de", "TR.Template.2"));
+        assertNotNull(dto.getTranslationTemplate("TR.Template.2", "de"));
+        assertEquals("TR.Template.2", dto.getTranslationTemplate("TR.Template.2", "de").getName());
+        assertEquals(Locale.GERMAN.toLanguageTag(), dto.getTranslationTemplate("TR.Template.2", "de").getLanguage());
+        assertEquals("TR.Template.2 mit drei tokens: {TOKEN.5} {TOKEN.4} {TOKEN.6}",
+                dto.getTranslationTemplate("TR.Template.2", "de").getStrWithTokens());
 
-		writeDao.delete(TTB_DTO_1.getId());
-		assertFalse(writeDao.exists(TTB_DTO_1.getId()));
-	}
+        writeDao.delete(TTB_DTO_1.getId());
+        assertFalse(writeDao.exists(TTB_DTO_1.getId()));
+    }
 
-	@Test
-	public void test_7_0_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
-			URISyntaxException {
-		final IFile testObjectXmlFile = getTestResourceFile(
-				"database/translationtemplatebundle.xml");
-		final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
+    @Test
+    public void test_7_0_stream_file_to_store()
+            throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+            URISyntaxException {
+        final IFile testObjectXmlFile = getTestResourceFile(
+                "database/translationtemplatebundle.xml");
+        final EID id = EidFactory.getDefault().createAndPreserveStr("70a263c0-0ad7-42f2-9d4d-0d8a4ca71b52");
 
-		final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao)
-				.add(new FileInputStream(testObjectXmlFile));
-		translationTemplateBundle.ensureBasicValidity();
+        final TranslationTemplateBundleDto translationTemplateBundle = ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao)
+                .add(new FileInputStream(testObjectXmlFile));
+        translationTemplateBundle.ensureBasicValidity();
 
-		assertEquals(id.getId(), translationTemplateBundle.getId().getId());
+        assertEquals(id.getId(), translationTemplateBundle.getId().getId());
 
-	}
+    }
 
-	@Test(expected = StoreException.class)
-	public void test_7_1_stream_file_to_store()
-			throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
-			URISyntaxException {
-		final IFile testObjectXmlFile = getTestResourceFile(
-				"database/invalidtranslationtemplatebundle.xml");
-		((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
-	}
+    @Test(expected = StoreException.class)
+    public void test_7_1_stream_file_to_store()
+            throws StorageException, ObjectWithIdNotFoundException, FileNotFoundException, IncompleteDtoException,
+            URISyntaxException {
+        final IFile testObjectXmlFile = getTestResourceFile(
+                "database/invalidtranslationtemplatebundle.xml");
+        ((StreamWriteDao<TranslationTemplateBundleDto>) writeDao).add(new FileInputStream(testObjectXmlFile));
+    }
 }
