@@ -5,7 +5,7 @@
    <superclass-handle>
       <type-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2019-01-21T15:43:18.775+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2019-02-17T15:40:48.904+01:00</last-refresh-timestamp>
    <attributes>
       <class-attribute>
          <name>executableTestSuites</name>
@@ -31,6 +31,15 @@
          <type-declaration>
             <type-handle>
                <type-name>de.interactive_instruments.properties.Properties</type-name>
+            </type-handle>
+         </type-declaration>
+      </class-attribute>
+      <class-attribute>
+         <name>supportedTestObjectTypes</name>
+         <modifier>2</modifier>
+         <type-declaration>
+            <type-handle>
+               <type-name>java.util.Set</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -142,6 +151,15 @@
          </return-type-declaration>
       </method>
       <method>
+         <name>getSupportedTestObjectTypes</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>java.util.Collection</type-name>
+            </type-handle>
+         </return-type-declaration>
+      </method>
+      <method>
          <name>getTestObjects</name>
          <modifier>1</modifier>
          <return-type-declaration>
@@ -208,6 +226,24 @@
                <type-declaration>
                   <type-handle>
                      <type-name>de.interactive_instruments.etf.model.ParameterSet</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>setSupportedTestObjectTypes</name>
+         <modifier>1</modifier>
+         <return-type-declaration>
+            <type-handle>
+               <type-name>void</type-name>
+            </type-handle>
+         </return-type-declaration>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
+                     <type-name>java.util.Collection</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>

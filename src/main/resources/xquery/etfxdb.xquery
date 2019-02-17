@@ -47,11 +47,7 @@ declare function etfxdb:get-all($items as node()*, $levelOfDetail as xs:string, 
             ($levelOfDetail = 'HISTORY' or not(exists($item/etf:replacedBy[1]))) and not($item/etf:disabled = 'true')
         order by $item/etf:label/text() ascending
         return
-            if ($fields = '*')
-            then
-              $item
-            else 
-              etfxdb:filter-fields($item, $fields)
+            etfxdb:filter-fields($item, $fields)
      )[position() > $offset and position() <= $offset + $limit]
 };
 
@@ -62,21 +58,20 @@ declare function etfxdb:get-all($items as node()*, $offset as xs:integer, $limit
             not($item/etf:disabled = 'true')
         order by $item/etf:label/text() ascending
          return
-            if ($fields = '*')
-            then
-              $item
-            else 
-              etfxdb:filter-fields($item, $fields)
+            etfxdb:filter-fields($item, $fields)
     )[position() > $offset and position() <= $offset + $limit]
 };
 
 declare function etfxdb:filter-fields($item as node(), $fields as xs:string) {
-       element {
-         node-name($item)
-       }{
-        $item/@*,
-        $item/*[contains($fields, local-name())]
-       }
+        if ($fields = '*') then
+            $item
+        else
+            element {
+                node-name($item)
+            }{
+                $item/@*,
+                $item/*[contains($fields, local-name())]
+            }
 };
 
 (:~
@@ -224,3 +219,4 @@ declare function etfxdb:get-translationTemplateBundles($dbs as node()*, $levelOf
     else
         ()
 };
+

@@ -13,7 +13,7 @@ declare variable $limit external := 0;
 declare variable $levelOfDetail external := 'SIMPLE';
 declare variable $fields external := '*';
 
-declare function local:get-testruntemplates($offset as xs:integer, $limit as xs:integer) {
+declare function local:get-testruntemplates($offset as xs:integer, $limit as xs:integer, $fields as xs:string) {
         <DsResultSet
             xmlns="http://www.interactive-instruments.de/etf/2.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,7 +25,7 @@ declare function local:get-testruntemplates($offset as xs:integer, $limit as xs:
         </DsResultSet>
 };
 
-declare function local:get-testruntemplate($ids as xs:string*) {
+declare function local:get-testruntemplate($ids as xs:string*, $fields as xs:string) {
     let $testRunTemplateDb := db:open('etf-ds')/etf:TestRunTemplate
     let $testObjectsDb := db:open('etf-ds')/etf:TestObject
     let $executableTestSuiteDb := db:open('etf-ds')/etf:ExecutableTestSuite
@@ -41,23 +41,30 @@ declare function local:get-testruntemplate($ids as xs:string*) {
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:etf="http://www.interactive-instruments.de/etf/2.0"
         xsi:schemaLocation="http://www.interactive-instruments.de/etf/2.0 http://resources.etf-validator.net/schema/v2/model/resultSet.xsd">
-            <executableTestSuites>
-                {$executableTestSuites}
-            </executableTestSuites>
-            <testObjects>
-                {$testObjects}
-            </testObjects>
-            <translationTemplateBundles>
-                {etfxdb:get-translationTemplateBundles($translationTemplateBundleDb, $levelOfDetail, $executableTestSuites)}
-            </translationTemplateBundles>
-            <testRunTemplates>
-                {$testRunTemplate}
-            </testRunTemplates>
+            {if ($fields = '*') then
+                (
+                    element executableTestSuites {
+                        $executableTestSuites
+                    },
+                    element testObjects {
+                        $testObjects
+                    },
+                    element translationTemplateBundles {
+                        etfxdb:get-translationTemplateBundles($translationTemplateBundleDb, $levelOfDetail, $executableTestSuites)
+                    },
+                    element testRunTemplates {
+                        $testRunTemplate
+                    }
+                )
+            else
+                element testRunTemplates {
+                    etfxdb:filter-fields($testRunTemplate, $fields)}
+                }
         </DsResultSet>
 };
 
 if ($function = 'byId')
 then
-    local:get-testruntemplate($qids)
+    local:get-testruntemplate($qids, $fields)
 else
-    local:get-testruntemplates($offset, $limit)
+    local:get-testruntemplates($offset, $limit, $fields)
