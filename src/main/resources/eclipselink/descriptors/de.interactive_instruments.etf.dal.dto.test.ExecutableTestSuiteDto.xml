@@ -184,6 +184,18 @@
          </reference-descriptor-handle>
          <xpath>ParameterList</xpath>
       </mapping>
+      <mapping type="composite-object">
+         <name>properties</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.test.ExecutableTestSuiteDto</attribute-declaring-type-name>
+            <attribute-name>properties</attribute-name>
+         </attribute-handle>
+         <uses-container-accessor>false</uses-container-accessor>
+         <reference-descriptor-handle>
+            <descriptor-name>de.interactive_instruments.properties.Properties</descriptor-name>
+         </reference-descriptor-handle>
+         <xpath>etf:Properties</xpath>
+      </mapping>
       <mapping type="xml-direct">
          <name>reference</name>
          <inherited>true</inherited>
