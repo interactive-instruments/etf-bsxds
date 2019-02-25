@@ -50,6 +50,23 @@
          <xml-field>@excludesParameter</xml-field>
       </mapping>
       <mapping type="xml-direct">
+         <name>immutable</name>
+         <attribute-handle>
+            <attribute-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</attribute-declaring-type-name>
+            <attribute-name>immutable</attribute-name>
+         </attribute-handle>
+         <uses-method-accessing>true</uses-method-accessing>
+         <get-method-handle>
+            <method-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</method-declaring-type-name>
+            <method-signature>isStatic()</method-signature>
+         </get-method-handle>
+         <set-method-handle>
+            <method-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</method-declaring-type-name>
+            <method-signature>setStatic(boolean)</method-signature>
+         </set-method-handle>
+         <xml-field>@static</xml-field>
+      </mapping>
+      <mapping type="xml-direct">
          <name>name</name>
          <attribute-handle>
             <attribute-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</attribute-declaring-type-name>

@@ -1668,6 +1668,14 @@
                                           <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
                                        </type>
                                     </attribute>
+                                    <attribute type="attribute">
+                                       <name>static</name>
+                                       <use>optional</use>
+                                       <type type="simple-type-ref">
+                                          <name>boolean</name>
+                                          <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                       </type>
+                                    </attribute>
                                  </attributes>
                                  <content type="complex">
                                     <mixed-flag>false</mixed-flag>
