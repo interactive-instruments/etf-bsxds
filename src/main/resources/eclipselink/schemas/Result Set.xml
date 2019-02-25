@@ -4776,14 +4776,6 @@
                                  </particle>
                               </particles>
                            </particle>
-                           <particle type="element">
-                              <name>defaultLang</name>
-                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
-                              <type type="simple-type-ref">
-                                 <name>language</name>
-                                 <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
-                              </type>
-                           </particle>
                            <particle type="element-ref">
                               <name>Properties</name>
                               <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
@@ -4821,6 +4813,36 @@
                                     </particle>
                                  </content>
                               </type>
+                           </particle>
+                           <particle type="element">
+                              <name>supportedTestObjectTypes</name>
+                              <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                              <type type="complex-type">
+                                 <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                 <abstract>false</abstract>
+                                 <derivation-method>restriction</derivation-method>
+                                 <base-type type="complex-type-ref">
+                                    <name>anyType</name>
+                                    <namespace-url>http://www.w3.org/2001/XMLSchema</namespace-url>
+                                 </base-type>
+                                 <content type="complex">
+                                    <mixed-flag>false</mixed-flag>
+                                    <particle compositor="sequence" type="model-group">
+                                       <max-occurs>2147483640</max-occurs>
+                                       <particles>
+                                          <particle type="element">
+                                             <name>testObjectType</name>
+                                             <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             <type type="complex-type-ref">
+                                                <name>RefType</name>
+                                                <namespace-url>http://www.interactive-instruments.de/etf/2.0</namespace-url>
+                                             </type>
+                                          </particle>
+                                       </particles>
+                                    </particle>
+                                 </content>
+                              </type>
+                              <min-occurs>0</min-occurs>
                            </particle>
                            <particle type="element">
                               <name>testObjects</name>

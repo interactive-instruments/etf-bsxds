@@ -2731,6 +2731,23 @@
                <uses-single-node>false</uses-single-node>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
+               <attribute-name>supportedTestObjectTypes</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</reference-class>
+               <source-to-target-key-field-association>
+                  <field-reference>
+                     <source-field name="supportedTestObjectTypes/testObjectType/@ref" xsi:type="node"/>
+                     <target-field name="@id" xsi:type="node"/>
+                  </field-reference>
+               </source-to-target-key-field-association>
+               <source-to-target-key-fields>
+                  <field name="supportedTestObjectTypes/testObjectType/@ref" xsi:type="node"/>
+               </source-to-target-key-fields>
+               <containerpolicy xsi:type="container-policy">
+                  <collection-type>java.util.HashSet</collection-type>
+               </containerpolicy>
+               <uses-single-node>false</uses-single-node>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>testObjects</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</reference-class>
                <source-to-target-key-field-association>

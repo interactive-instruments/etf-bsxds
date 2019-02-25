@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project type="o-x">
    <name>etf-ds</name>
-   <product-version>2.6.3</product-version>
+   <product-version>2.6.5</product-version>
    <schema-version>7.0</schema-version>
    <class-repository>
       <classpath-entries>
-         <entry>../../../../../etf-core/build/libs/etf-core-1.0.0-SNAPSHOT.jar</entry>
-         <entry>../../../../build/libs/etf-bsxds-2.0.0-SNAPSHOT.jar</entry>
-         <entry>../../../../../ii-commons-util/build/libs/ii-commons-util-2.0.0-SNAPSHOT.jar</entry>
+         <entry>../../../../../../../ETF governance/src/ii-commons-util/build/libs/ii-commons-util-3.0.1-SNAPSHOT.jar</entry>
+         <entry>../../../../build/libs/etf-bsxds-2.1.0-SNAPSHOT.jar</entry>
+         <entry>../../../../../etf-core/build/libs/etf-core-1.2.0-SNAPSHOT.jar</entry>
       </classpath-entries>
       <user-type-names>
          <name>de.interactive_instruments.etf.dal.dao.basex.DsResultSet</name>
@@ -19,6 +19,7 @@
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</name>
          <name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</name>
+         <name>de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto</name>
          <name>de.interactive_instruments.etf.dal.dto.DefaultReferenceDto</name>
          <name>de.interactive_instruments.etf.dal.dto.Dto</name>
          <name>de.interactive_instruments.etf.dal.dto.ExternalReferenceDto</name>
@@ -66,6 +67,7 @@
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TagDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestObjectTypeDto</descriptor-name>
+      <descriptor-name>de.interactive_instruments.etf.dal.dto.capabilities.TestRunTemplateDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.MetaDataItemDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.ModelItemDto</descriptor-name>
       <descriptor-name>de.interactive_instruments.etf.dal.dto.RepositoryItemDto</descriptor-name>

@@ -276,21 +276,51 @@
     <xs:element name="TestRunTemplate">
         <xs:complexType>
             <xs:annotation>
-                <xs:documentation> A template to start one ore multiple Test Runs
-                </xs:documentation>
+                <xs:documentation> A template to start one ore multiple Test Runs with a
+                    set of Executable Test Suites</xs:documentation>
             </xs:annotation>
             <xs:sequence>
                 <xs:group ref="RepositoryItemGroup"/>
-                <xs:element ref="Properties" minOccurs="0"/>
-                <xs:element ref="ParameterList"/>
+                <xs:element ref="Properties" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Metainformation to describe the
+                            templat.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="ParameterList">
+                    <xs:annotation>
+                        <xs:documentation>Parameters that overrider the (default) parameters in the
+                            Executable Test Suites.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:element name="executableTestSuites">
+                    <xs:annotation>
+                        <xs:documentation>The Executable Test Suites that are executed with this
+                            template.</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element name="executableTestSuite" type="RefType"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="supportedTestObjectTypes" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Restricts the Test Object Types that can be used with this
+                            template. The passed Test Object Types must be compatible with the
+                            Executable Test Suites and the Test Object.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="testObjectType" type="RefType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="testObjects" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Binds the template to one or multiple Test
+                            Objects.</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                         <xs:sequence maxOccurs="unbounded">
                             <xs:element name="testObject" type="RefType"/>
