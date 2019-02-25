@@ -384,7 +384,7 @@ abstract class AbstractBsxWriteDao<T extends Dto> extends AbstractBsxDao<T> impl
             final Iter iter = proc.iter();
             for (Item item; (item = iter.next()) != null;) {
                 final EID eid = EidFactory.getDefault().createUUID(
-                        new String(((DBNode) item).attribute("id")));
+                        new String(((DBNode) item).attribute("id".getBytes())));
                 final IFile file = getFile(eid);
                 if (!file.exists()) {
                     ctx.getLogger().error("Can not find backup file for {}", eid);
