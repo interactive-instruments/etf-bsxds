@@ -384,7 +384,7 @@ public final class BsxDataStorage implements BsxDsCtx, DataStorage {
         try {
             // Check for functx
             boolean functxFound = false;
-            for (final Pkg pkg : repoManger.all()) {
+            for (final Pkg pkg : repoManger.packages()) {
                 if ("http://www.functx.com".equals(pkg.name())) {
                     functxFound = true;
                 }
