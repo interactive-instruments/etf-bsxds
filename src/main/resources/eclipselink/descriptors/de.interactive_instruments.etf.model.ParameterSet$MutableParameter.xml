@@ -64,6 +64,14 @@
             <method-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</method-declaring-type-name>
             <method-signature>setStatic(boolean)</method-signature>
          </set-method-handle>
+         <null-value-policy>
+            <null-value-type>
+               <type-handle>
+                  <type-name>java.lang.Boolean</type-name>
+               </type-handle>
+            </null-value-type>
+            <null-value>false</null-value>
+         </null-value-policy>
          <xml-field>@static</xml-field>
       </mapping>
       <mapping type="xml-direct">

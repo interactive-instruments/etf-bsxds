@@ -770,6 +770,11 @@
                </containerpolicy>
                <uses-single-node>false</uses-single-node>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testDriver</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.capabilities.ComponentDto</reference-class>
@@ -851,11 +856,6 @@
                   <collection-type>java.util.Vector</collection-type>
                </containerpolicy>
                <uses-single-node>false</uses-single-node>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-object-mapping">
-               <attribute-name>properties</attribute-name>
-               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>testModules</attribute-name>
@@ -1030,6 +1030,7 @@
                <get-method>isStatic</get-method>
                <set-method>setStatic</set-method>
                <field name="@static" xsi:type="node"/>
+               <null-value xsi:type="xsd:boolean">false</null-value>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -1432,6 +1433,11 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>expectedResult</attribute-name>
                <field name="expectedResult/text()" xsi:type="node"/>
@@ -1447,11 +1453,6 @@
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-object-mapping">
-               <attribute-name>properties</attribute-name>
-               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testAssertionType</attribute-name>
@@ -1680,6 +1681,11 @@
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
                </null-policy>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>dependencies</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
@@ -1705,11 +1711,6 @@
                   <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
                   <map-key-method>getId</map-key-method>
                </container>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-object-mapping">
-               <attribute-name>properties</attribute-name>
-               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -1975,6 +1976,19 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>reference</attribute-name>
+               <field name="reference/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>children</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestCaseDto</reference-class>
@@ -1983,19 +1997,6 @@
                   <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
                   <map-key-method>getId</map-key-method>
                </container>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-object-mapping">
-               <attribute-name>properties</attribute-name>
-               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>reference</attribute-name>
-               <field name="reference/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
@@ -2853,6 +2854,27 @@
                   <field name="parent/@ref" xsi:type="node"/>
                </source-to-target-key-fields>
             </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>reference</attribute-name>
+               <field name="reference/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>properties</attribute-name>
+               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
+               <field name="etf:Properties" xsi:type="node"/>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-direct-mapping">
+               <attribute-name>statementForExecution</attribute-name>
+               <field name="statementForExecution/text()" xsi:type="node"/>
+               <null-policy xsi:type="null-policy">
+                  <empty-node-represents-null>true</empty-node-represents-null>
+                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
+               </null-policy>
+            </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testStepType</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.test.TestItemTypeDto</reference-class>
@@ -2874,27 +2896,6 @@
                   <collection-type>de.interactive_instruments.etf.model.DefaultEidMap</collection-type>
                   <map-key-method>getId</map-key-method>
                </container>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-composite-object-mapping">
-               <attribute-name>properties</attribute-name>
-               <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>reference</attribute-name>
-               <field name="reference/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>statementForExecution</attribute-name>
-               <field name="statementForExecution/text()" xsi:type="node"/>
-               <null-policy xsi:type="null-policy">
-                  <empty-node-represents-null>true</empty-node-represents-null>
-                  <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
-               </null-policy>
             </attribute-mapping>
          </attribute-mappings>
          <descriptor-type>aggregate</descriptor-type>
