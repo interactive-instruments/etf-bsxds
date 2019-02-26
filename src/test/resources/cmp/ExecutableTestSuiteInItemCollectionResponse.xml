@@ -34,6 +34,27 @@
                 <parameter name="Parameter.2.key" required="false">
                     <defaultValue>Parameter.2.value</defaultValue>
                 </parameter>
+                <parameter name="TestCasesToExecute" required="false">
+                    <defaultValue>*</defaultValue>
+                    <type>choice</type>
+                </parameter>
+                <parameter name="TestCasesToIgnore" required="false">
+                    <defaultValue>$^</defaultValue>
+                    <type>choice</type>
+                </parameter>
+                <parameter name="AssertionsToExecute" required="false">
+                    <defaultValue>*</defaultValue>
+                    <type>choice</type>
+                </parameter>
+                <parameter name="AssertionsToIgnore" required="false">
+                    <defaultValue>$^</defaultValue>
+                    <type>choice</type>
+                </parameter>
+                <parameter name="maxErrors" required="false">
+                    <defaultValue>-1</defaultValue>
+                    <allowedValues>(-1|[1-9]\d*)$</allowedValues>
+                    <type>int</type>
+                </parameter>
             </ParameterList>
             <supportedTestObjectTypes>
                 <testObjectType xsi:type="loc" ref="EIDd700c137-5d0f-3444-bd74-4616f80c332a"/>

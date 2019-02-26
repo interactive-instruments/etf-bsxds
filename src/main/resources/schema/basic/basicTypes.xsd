@@ -113,9 +113,9 @@
                         <xs:attribute name="name" type="xs:string" use="required"/>
                         <xs:attribute name="required" type="xs:boolean" default="false"/>
                         <xs:attribute name="static" type="xs:boolean" default="false"/>
-                        <xs:attribute name="excludesParameter" type="xs:string">
+                        <xs:attribute name="excludesParameters" type="xs:string">
                             <xs:annotation>
-                                <xs:documentation>Name of a parameter that may not be set if this
+                                <xs:documentation>Name parameters that may not be set if this
                                     parameter is set</xs:documentation>
                             </xs:annotation>
                         </xs:attribute>

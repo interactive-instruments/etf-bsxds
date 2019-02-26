@@ -42,12 +42,12 @@
          <xml-field>description/@ref</xml-field>
       </mapping>
       <mapping type="xml-direct">
-         <name>excludingParameter</name>
+         <name>excludingParameters</name>
          <attribute-handle>
             <attribute-declaring-type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</attribute-declaring-type-name>
-            <attribute-name>excludingParameter</attribute-name>
+            <attribute-name>excludingParameters</attribute-name>
          </attribute-handle>
-         <xml-field>@excludesParameter</xml-field>
+         <xml-field>@excludesParameters</xml-field>
       </mapping>
       <mapping type="xml-direct">
          <name>immutable</name>

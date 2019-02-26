@@ -27,6 +27,27 @@ Pre-requisite conformance classes:
             <allowedValues>.*</allowedValues>
             <type>string</type>
         </parameter>
+        <parameter name="TestCasesToExecute" required="false">
+            <defaultValue>*</defaultValue>
+            <type>choice</type>
+        </parameter>
+        <parameter name="TestCasesToIgnore" required="false">
+            <defaultValue>$^</defaultValue>
+            <type>choice</type>
+        </parameter>
+        <parameter name="AssertionsToExecute" required="false">
+            <defaultValue>*</defaultValue>
+            <type>choice</type>
+        </parameter>
+        <parameter name="AssertionsToIgnore" required="false">
+            <defaultValue>$^</defaultValue>
+            <type>choice</type>
+        </parameter>
+        <parameter name="maxErrors" required="false">
+            <defaultValue>-1</defaultValue>
+            <allowedValues>(-1|[1-9]\\d*)$</allowedValues>
+            <type>int</type>
+        </parameter>
     </ParameterList>
     <supportedTestObjectTypes>
         <testObjectType ref="EIDe1d4a306-7a78-4a3b-ae2d-cf5f0810853e"/>

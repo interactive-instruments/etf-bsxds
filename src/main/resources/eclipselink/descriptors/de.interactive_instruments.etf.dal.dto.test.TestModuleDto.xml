@@ -109,7 +109,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.properties.Properties</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>etf:Properties</xpath>
+         <xpath>Properties</xpath>
       </mapping>
       <mapping type="xml-direct">
          <name>reference</name>

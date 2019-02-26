@@ -773,7 +773,7 @@
             <attribute-mapping xsi:type="xml-composite-object-mapping">
                <attribute-name>properties</attribute-name>
                <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
+               <field name="Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-object-reference-mapping">
                <attribute-name>testDriver</attribute-name>
@@ -1018,8 +1018,8 @@
          <querying/>
          <attribute-mappings>
             <attribute-mapping xsi:type="xml-direct-mapping">
-               <attribute-name>excludingParameter</attribute-name>
-               <field name="@excludesParameter" xsi:type="node"/>
+               <attribute-name>excludingParameters</attribute-name>
+               <field name="@excludesParameters" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -1436,7 +1436,7 @@
             <attribute-mapping xsi:type="xml-composite-object-mapping">
                <attribute-name>properties</attribute-name>
                <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
+               <field name="Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>expectedResult</attribute-name>
@@ -1684,7 +1684,7 @@
             <attribute-mapping xsi:type="xml-composite-object-mapping">
                <attribute-name>properties</attribute-name>
                <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
+               <field name="Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-collection-reference-mapping">
                <attribute-name>dependencies</attribute-name>
@@ -1987,7 +1987,7 @@
             <attribute-mapping xsi:type="xml-composite-object-mapping">
                <attribute-name>properties</attribute-name>
                <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
+               <field name="Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>children</attribute-name>
@@ -2865,7 +2865,7 @@
             <attribute-mapping xsi:type="xml-composite-object-mapping">
                <attribute-name>properties</attribute-name>
                <reference-class>de.interactive_instruments.properties.Properties</reference-class>
-               <field name="etf:Properties" xsi:type="node"/>
+               <field name="Properties" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>statementForExecution</attribute-name>

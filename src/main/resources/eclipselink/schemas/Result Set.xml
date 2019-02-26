@@ -1650,7 +1650,7 @@
                                  </base-type>
                                  <attributes>
                                     <attribute type="attribute">
-                                       <name>excludesParameter</name>
+                                       <name>excludesParameters</name>
                                        <use>optional</use>
                                        <type type="simple-type-ref">
                                           <name>string</name>

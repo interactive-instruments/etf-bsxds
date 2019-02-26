@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class>
    <name>de.interactive_instruments.etf.model.ParameterSet</name>
-   <modifier>1</modifier>
+   <modifier>17</modifier>
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2017-12-01T18:11:53.626+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2019-02-26T03:31:02.61+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Parameterizable</type-name>
@@ -150,6 +150,9 @@
       </method>
    </methods>
    <type-handles>
+      <class-handle>
+         <type-name>de.interactive_instruments.etf.model.ParameterSet$ImmutableParameter</type-name>
+      </class-handle>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</type-name>
       </class-handle>

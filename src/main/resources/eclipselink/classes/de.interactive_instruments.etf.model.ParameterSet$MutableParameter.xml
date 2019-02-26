@@ -8,7 +8,7 @@
    <superclass-handle>
       <type-name>java.lang.Object</type-name>
    </superclass-handle>
-   <last-refresh-timestamp>2019-02-26T00:39:09.096+01:00</last-refresh-timestamp>
+   <last-refresh-timestamp>2019-02-26T03:31:02.607+01:00</last-refresh-timestamp>
    <interface-handles>
       <class-handle>
          <type-name>de.interactive_instruments.etf.model.Parameterizable$Parameter</type-name>
@@ -43,11 +43,11 @@
          </type-declaration>
       </class-attribute>
       <class-attribute>
-         <name>excludingParameter</name>
+         <name>excludingParameters</name>
          <modifier>2</modifier>
          <type-declaration>
             <type-handle>
-               <type-name>java.util.Set</type-name>
+               <type-name>java.lang.String</type-name>
             </type-handle>
          </type-declaration>
       </class-attribute>
@@ -116,6 +116,20 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
+                     <type-name>de.interactive_instruments.etf.model.ParameterSet$MutableParameter</type-name>
+                  </type-handle>
+               </type-declaration>
+            </method-parameter>
+         </method-parameters>
+      </method>
+      <method>
+         <name>ParameterSet$MutableParameter</name>
+         <constructor>true</constructor>
+         <modifier>1</modifier>
+         <method-parameters>
+            <method-parameter>
+               <type-declaration>
+                  <type-handle>
                      <type-name>java.lang.String</type-name>
                   </type-handle>
                </type-declaration>
@@ -157,7 +171,7 @@
          </return-type-declaration>
       </method>
       <method>
-         <name>getExcludingParameter</name>
+         <name>getExcludingParameters</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -256,7 +270,7 @@
          </method-parameters>
       </method>
       <method>
-         <name>setExcludingParameter</name>
+         <name>setExcludingParameters</name>
          <modifier>1</modifier>
          <return-type-declaration>
             <type-handle>
@@ -267,7 +281,7 @@
             <method-parameter>
                <type-declaration>
                   <type-handle>
-                     <type-name>java.util.Set</type-name>
+                     <type-name>java.util.Collection</type-name>
                   </type-handle>
                </type-declaration>
             </method-parameter>
