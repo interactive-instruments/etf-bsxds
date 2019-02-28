@@ -19,7 +19,7 @@
             <attribute-declaring-type-name>de.interactive_instruments.etf.dal.dto.Arguments</attribute-declaring-type-name>
             <attribute-name>applicableParamTypeName</attribute-name>
          </attribute-handle>
-         <xml-field>arguments/@parameterList</xml-field>
+         <xml-field>etf:arguments/@parameterList</xml-field>
       </mapping>
       <mapping type="composite-collection">
          <name>values</name>
@@ -31,7 +31,7 @@
          <reference-descriptor-handle>
             <descriptor-name>de.interactive_instruments.etf.dal.dto.Arguments$Argument</descriptor-name>
          </reference-descriptor-handle>
-         <xpath>arguments/argument</xpath>
+         <xpath>etf:arguments/etf:argument</xpath>
          <container-policy type="map">
             <key-method-handle>
                <method-declaring-type-name>de.interactive_instruments.etf.dal.dto.Arguments$Argument</method-declaring-type-name>

@@ -10,7 +10,7 @@
          <attribute-mappings>
             <attribute-mapping xsi:type="xml-direct-mapping">
                <attribute-name>applicableParamTypeName</attribute-name>
-               <field name="arguments/@parameterList" xsi:type="node"/>
+               <field name="etf:arguments/@parameterList" xsi:type="node"/>
                <null-policy xsi:type="null-policy">
                   <empty-node-represents-null>true</empty-node-represents-null>
                   <null-representation-for-xml>ABSENT_NODE</null-representation-for-xml>
@@ -19,7 +19,7 @@
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>values</attribute-name>
                <reference-class>de.interactive_instruments.etf.dal.dto.Arguments$Argument</reference-class>
-               <field name="arguments/argument" xsi:type="node"/>
+               <field name="etf:arguments/etf:argument" xsi:type="node"/>
                <container xsi:type="map-container-policy">
                   <collection-type>java.util.HashMap</collection-type>
                   <map-key-method>getName</map-key-method>
@@ -1533,6 +1533,11 @@
                      <transformer-class>de.interactive_instruments.etf.dal.dao.basex.transformers.EidFieldTransformer</transformer-class>
                   </field-transformation>
                </field-transformations>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="xml-composite-object-mapping">
+               <attribute-name>arguments</attribute-name>
+               <reference-class>de.interactive_instruments.etf.dal.dto.Arguments</reference-class>
+               <field name="etf:ArgumentList" xsi:type="node"/>
             </attribute-mapping>
             <attribute-mapping xsi:type="xml-composite-collection-mapping">
                <attribute-name>messages</attribute-name>
