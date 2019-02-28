@@ -118,7 +118,7 @@
 		<x:e key="Version">Version</x:e>
 		<x:e key="sizeHR">Größe</x:e>
 		<x:e key="size">Größe in byte</x:e>
-		<x:e key="Hash">Pr¸fsumme</x:e>
+		<x:e key="Hash">Prüfsumme</x:e>
 		<x:e key="uploaded">Hochgeladen</x:e>
 		<x:e key="files">Dateien</x:e>
 		<x:e key="TestSuites">Testsuites</x:e>
