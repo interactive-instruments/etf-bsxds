@@ -116,8 +116,8 @@
 		<x:e key="SpecificationReference">Spezifikation</x:e>
 		<x:e key="Reference">Referenz</x:e>
 		<x:e key="Version">Version</x:e>
-		<x:e key="sizeHR">Grˆﬂe</x:e>
-		<x:e key="size">Grˆﬂe in byte</x:e>
+		<x:e key="sizeHR">Größe</x:e>
+		<x:e key="size">Größe in byte</x:e>
 		<x:e key="Hash">Pr¸fsumme</x:e>
 		<x:e key="uploaded">Hochgeladen</x:e>
 		<x:e key="files">Dateien</x:e>
